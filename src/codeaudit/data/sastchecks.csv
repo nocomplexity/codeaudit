@@ -1,0 +1,59 @@
+name,construct,severity,info
+Check on assert,assert,Low,Assertions are for debugging and development. Misuse can lead to security vulnerabilities.
+Binding All Interfaces,s.bind,Medium,Network sockets require additional measurements.
+Check for chmod,os.chmod,High,Operating System calls can have a  security impact and should be inspected in detail.
+Directory Creation,os.makedirs,Low,Operating System calls can have a  security impact and should be inspected in detail.
+Directory Creation,os.mkdir,Low,Operating System calls can have a  security impact and should be inspected in detail.
+Directory Creation,os.mkfifo,Low,Operating System calls can have a  security impact and should be inspected in detail.
+Directory Creation,os.mknod,Low,Operating System calls can have a  security impact and should be inspected in detail.
+Directory Creation,os.makedev,Low,Operating System calls can have a  security impact and should be inspected in detail.
+OS System call - Fork a child process,os.fork,Low,"On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request."
+Check on eval usuage,eval,High,This function can executes arbitrary code.
+Check on input statement,input,Low,Use of input requires strict sanitizing and validation.
+Exception Handling,pass,Low,Too broad exception handling risk when not used correctly.
+Exception Handling- Continue statement,continue,Low,Too broad exception handling risk when not used correctly.
+Built-in Functions: Check for exec usuage.,exec,High,This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.
+Built-in Functions: Check on compile usuage.,compile,High,It is possible to crash the Python interpreter when using this function.
+Hash Check - md5,hashlib.md5,High,Use of insecure hashing algorithms detected.
+Hash Check -sha1,hashlib.sha1,High,Use of insecure hashing algorithms detected.
+Logging - configuration ,logging.config,Low,Potential security issues can arise with parsing objects and incorrect sanitizing.
+Pickle use,pickle.loads,High,unpickling will import any class or function that it finds in the pickle data
+Pickle use,pickle.load,High,unpickling will import any class or function that it finds in the pickle data
+OS  - direct calls,os.system,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execl,os.execl,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execle,os.execle,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execlp,os.execlp,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execlpe,os.execlpe,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execv,os.execv,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execve,os.execve,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execvp,os.execvp,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - execvpe,os.execvpe,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS  - popen,os.popen,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS Access,os.access,High,Operating System calls can have a  security impact and should be inspected in detail.
+OS Interfaces,os.write,Low,os.write can cause availability issues if not done correct.
+OS Interfaces,os.writev,Low,os.writev can cause availability issues if not done correct.
+OS Interfaces,os.forkpty,Low,Use of forkpty can be unsafe when used on MacOS.
+OS Interface,os.read,Low,"When files can be read from , they can be transfered to some place you do not want."
+Marshal,marshal.loads,High,The marshal module is not intended to be secure against erroneous or maliciously constructed data. 
+Marshal,marshal.load,High,The marshal module is not intended to be secure against erroneous or maliciously constructed data. 
+Subprocesses - call,subprocess.call,High,Use of the subprocess module calls should be analyzed in-depth.
+Subprocesses - check_call,subprocess.check_call,High,Use of the subprocess module calls should be analyzed in-depth.
+Subprocesses - Popen,subprocess.Popen,Medium,Use of the subprocess module calls should be analyzed in-depth.
+Subprocesses - run,subprocess.run,Medium,Use of the subprocess module calls should be analyzed in-depth.
+Tarfile,tarfile.TarFile,High,Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.
+Encodings,base64,Low,"Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality."
+XML - client,xmlrpc.client,High,xmlrpc is vulnerable to the “decompression bomb” attack.
+XML - server,xmlrpc.server.SimpleXMLRPCServer,High,xmlrpc.server is vulnerable to the “decompression bomb” attack.
+Random numbers generation module,random.random,Low,The pseudo-random generators of this module should not be used for security purposes.
+Random numbers generation module,random.seed,Low,The pseudo-random generators of this module should not be used for security purposes.
+Shelve module,shelve.open,High,Only loading a shelve from a trusted source is secure. So check if this is the case.
+Multiprocessing ,connection.recv,High,Connection.recv() uses pickle
+Multiprocessing ,multiprocessing.connection.Connection,High,Connection.recv() uses pickle
+Zipfile,zipfile.ZipFile,High,Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.
+shutil,shutil.unpack_archive,Medium,Extracting files within a program should not be trusted by default.
+shutil,shutil.copy,Medium,Information can be transfered without permission.
+shutil,shutil.copy2,Medium,Information can be transfered without permission.
+shutil,shutil.copytree,Medium,Information can be transfered without permission.
+shutil,shutil.chown,Medium,Programs should not change access rights on files they do not own.
+HTTP servers: Check on usuage.,http.server.BaseHTTPRequestHandler,High,Insecure for production use.
+HTTP servers: Check on usuage.,http.server.HTTPServer,High,Insecure for production use.

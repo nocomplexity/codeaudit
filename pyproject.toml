@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "codeaudit"
+dynamic = ["version"] # This tells Hatch that version is dynamically determined
+description = 'Simplified static security checks for Python '
+readme = "README.md"
+dependencies = ["fire>=0.7.0","pandas>=2.3","altair>=5.5"]
+requires-python = ">=3.8"
+license = "GPL-3.0-or-later"
+keywords = []
+authors = [
+  { name = "Maikel Mardjan", email = "mike@bm-support.org" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13", 
+]
+
+
+[project.urls]
+Documentation = "https://github.com/nocomplexity/codeaudit#readme"
+Issues = "https://github.com/nocomplexity/codeaudit/issues"
+Source = "https://github.com/nocomplexity/codeaudit"
+
+[tool.hatch.version]
+path = "src/codeaudit/__about__.py"
+
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/codeaudit"]
+include = ["codeaudit/data/*.csv"]
+
+[project.scripts]
+codeaudit = "codeaudit.codeaudit:main"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/codeaudit tests}"
+
+[tool.coverage.run]
+source_pkgs = ["codeaudit", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/codeaudit/__about__.py",
+]
+
+[tool.coverage.paths]
+codeaudit = ["src/codeaudit", "*/codeaudit/src/codeaudit"]
+tests = ["tests", "*/codeaudit/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
