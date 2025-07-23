@@ -10,11 +10,16 @@ readme = "README.md"
 dependencies = ["fire>=0.7.0","pandas>=2.3","altair>=5.5"]
 requires-python = ">=3.8"
 license = "GPL-3.0-or-later"
-keywords = []
+keywords = ["SAST", "Python SAST", "SAST API", "Complexity Checker"]
 authors = [
   { name = "Maikel Mardjan", email = "mike@bm-support.org" },
 ]
 classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",  
+  "Topic :: Security",
+  "Topic :: Software Development :: Quality Assurance",
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.12",

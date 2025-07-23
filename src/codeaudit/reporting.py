@@ -280,7 +280,9 @@ def create_htmlfile(html_input,outputfile):
     else:
         file_url = f'file://{directory_for_output}/{filename_only}'
     # Print the result
-    print(f'Codeaudit report file created!\nCheck the report file: {file_url}')
+    print("\n=====================================================================")
+    print(f'Codeaudit report file created!\nPaste the line below directly into your browser bar:\n\t{file_url}\n')
+    print("=====================================================================\n")
 
 
 
