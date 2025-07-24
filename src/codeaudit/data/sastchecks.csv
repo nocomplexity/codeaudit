@@ -8,12 +8,12 @@ Directory Creation,os.mkfifo,Low,Operating System calls can have a  security imp
 Directory Creation,os.mknod,Low,Operating System calls can have a  security impact and should be inspected in detail.
 Directory Creation,os.makedev,Low,Operating System calls can have a  security impact and should be inspected in detail.
 OS System call - Fork a child process,os.fork,Low,"On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request."
-Check on eval usuage,eval,High,This function can executes arbitrary code.
+Check on eval usage,eval,High,This function can executes arbitrary code.
 Check on input statement,input,Low,Use of input requires strict sanitizing and validation.
 Exception Handling,pass,Low,Too broad exception handling risk when not used correctly.
 Exception Handling- Continue statement,continue,Low,Too broad exception handling risk when not used correctly.
-Built-in Functions: Check for exec usuage.,exec,High,This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.
-Built-in Functions: Check on compile usuage.,compile,High,It is possible to crash the Python interpreter when using this function.
+Built-in Functions: Check for exec usage.,exec,High,This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.
+Built-in Functions: Check on compile usage.,compile,High,It is possible to crash the Python interpreter when using this function.
 Hash Check - md5,hashlib.md5,High,Use of insecure hashing algorithms detected.
 Hash Check -sha1,hashlib.sha1,High,Use of insecure hashing algorithms detected.
 Logging - configuration ,logging.config,Low,Potential security issues can arise with parsing objects and incorrect sanitizing.
@@ -55,5 +55,5 @@ shutil,shutil.copy,Medium,Information can be transfered without permission.
 shutil,shutil.copy2,Medium,Information can be transfered without permission.
 shutil,shutil.copytree,Medium,Information can be transfered without permission.
 shutil,shutil.chown,Medium,Programs should not change access rights on files they do not own.
-HTTP servers: Check on usuage.,http.server.BaseHTTPRequestHandler,High,Insecure for production use.
-HTTP servers: Check on usuage.,http.server.HTTPServer,High,Insecure for production use.
+HTTP servers: Check on usage.,http.server.BaseHTTPRequestHandler,High,Insecure for production use.
+HTTP servers: Check on usage.,http.server.HTTPServer,High,Insecure for production use.
