@@ -1,9 +1,9 @@
-# codeaudit
+# Codeaudit
 
 [![PyPI - Version](https://img.shields.io/pypi/v/codeaudit.svg)](https://pypi.org/project/codeaudit)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/codeaudit.svg)](https://pypi.org/project/codeaudit)
 
-Codeaudit - A modern Python source code analyzer based on distrust.
+Python Codeaudit - A modern Python source code analyzer based on distrust.
 
 Codeaudit is a tool designed to find security issues in Python code. This static application security testing (SAST) tool has great features to simplify the necessary security tasks and make it fun and easy. 
 
@@ -14,17 +14,17 @@ This tool is created for:
 
 
 > [!WARNING]
-> Codeaudit is still is currently in *beta status*. There are still bugs in the software that need to be fixed. Consider [contributing](CONTRIBUTING.md) to make Codeaudit a cool modern Python SAST tool. Codeaudit is currently in a thorough testing period and changes and fixes are frequently applied. 
+> Python Codeaudit is still is currently in *beta status*. There are still bugs in the software that need to be fixed. Consider [contributing](CONTRIBUTING.md) to make Codeaudit a cool modern Python SAST tool. Codeaudit is currently in a thorough testing period and changes and fixes are frequently applied. 
 
 ## Features
 
-Codeaudit has the following features:
+Python Codeaudit has the following features:
 
 * Detecting and reporting potential vulnerabilities of from all Python files collected in a directory. This is a must **do** check when researching python packages on possible security issues.
 
 *  Detect and reports complexity and statistics relevant for security per Python file or from Python files found in a directory. 
 
-* Codeaudit implements a light weight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) using Python’s Abstract Syntax Tree module. The codeaudit implemented check is by far good enough for determining security risks in Python files very quick!
+* Python Codeaudit implements a light weight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) using Python’s Abstract Syntax Tree module. The codeaudit implemented check is by far good enough for determining security risks in Python files very quick!
 
 
 *  Detect and reports which module are used within a Python file. Also vulnerability information found from used external modules is shown.
@@ -35,7 +35,7 @@ Codeaudit has the following features:
 
 
 > [!IMPORTANT]
-> Codeaudit uses the Python's Abstract Syntax Tree (AST) to get robust and reliable result. Using the Python AST makes contextual Vulnerability Detection possible and false positive are minimized.
+> Python Codeaudit uses the Python's Abstract Syntax Tree (AST) to get robust and reliable result. Using the Python AST makes contextual Vulnerability Detection possible and false positive are minimized.
 
 
 ## Installation
