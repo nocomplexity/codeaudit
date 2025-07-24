@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+/* Reset some default styles for consistency */
+/* GPLv3 - (c) Maikel Mardjan - simple works fine */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Base container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Remove default margins/paddings */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body base styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ff0000; /* Set heading text color to red */
+}
+
+/* Headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs and links */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lists */
+ul,
+ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #d8d8dd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Altair (Vega-Embed) tweaks */
+#vis.vega-embed {
+    width: 100%;
+    display: flex;
+}
+
+#vis.vega-embed details,
+#vis.vega-embed details summary {
+    position: relative;
+}
+
+/* Code blocks */
+pre {
+    font-size: 1.25em;        
+    border-radius: 5px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Base style for Python code blocks */
+.language-python {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: red;
+    text-align: center;
+    padding: 10px;
+  }
+
+.json-display {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    white-space: pre-wrap;         /* Preserves indentation & wraps lines */
+    word-wrap: break-word;         /* Breaks long words */
+    overflow-wrap: break-word;     /* Modern equivalent */    
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    
+  }
+  
+
+/* nocxdataframe for table css */
+
+  
+</style><script src="https://cdn.jsdelivr.net/npm/vega@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script></head><body><div class="container"><h1>Codeaudit Report</h1><h2>Module information for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/modulecheck.py</h2><h3>Core_modules</h3>
+<ul>
+  <li>os</li>
+  <li>random</li>
+</ul>
+<h3>Imported_modules</h3>
+<ul>
+  <li>linkaudit</li>
+  <li>pandas</li>
+  <li>requests</li>
+</ul>
+<h2>Vulnerability information for detected modules</h2><h3>Vulnerability information for module <b>linkaudit</b></h3> <li>No information found in OSV Database for module: <b>linkaudit</b>.</li> <h3>Vulnerability information for module: <b>pandas</b></h3> <li>Found vulnerability information in OSV Database for module: <b>pandas</b>:</li><div class="json-display">[
+  {
+    &quot;id&quot;: &quot;PYSEC-2020-73&quot;,
+    &quot;details&quot;: &quot;** DISPUTED ** pandas through 1.0.3 can unserialize and execute commands from an untrusted file that is passed to the read_pickle() function, if __reduce__ makes an os.system call. NOTE: third parties dispute this issue because the read_pickle() function is documented as unsafe and it is the user&#x27;s responsibility to use the function in a secure manner.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2020-13091&quot;
+    ]
+  }
+]</div><h3>Vulnerability information for module: <b>requests</b></h3> <li>Found vulnerability information in OSV Database for module: <b>requests</b>:</li><div class="json-display">[
+  {
+    &quot;id&quot;: &quot;GHSA-652x-xj99-gmcc&quot;,
+    &quot;details&quot;: &quot;Requests (aka python-requests) before 2.3.0 allows remote servers to obtain sensitive information by reading the Proxy-Authorization header in a redirected request.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2014-1830&quot;,
+      &quot;PYSEC-2014-14&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;GHSA-9hjg-9r4m-mvj7&quot;,
+    &quot;details&quot;: &quot;### Impact\n\nDue to a URL parsing issue, Requests releases prior to 2.32.4 may leak .netrc credentials to third parties for specific maliciously-crafted URLs.\n\n### Workarounds\nFor older versions of Requests, use of the .netrc file can be disabled with `trust_env=False` on your Requests Session ([docs](https://requests.readthedocs.io/en/latest/api/#requests.Session.trust_env)).\n\n### References\nhttps://github.com/psf/requests/pull/6965\nhttps://seclists.org/fulldisclosure/2025/Jun/2&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2024-47081&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;GHSA-9wx4-h78v-vm56&quot;,
+    &quot;details&quot;: &quot;When making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same origin will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool.\n\n### Remediation\nAny of these options can be used to remediate the current issue, we highly recommend upgrading as the preferred mitigation.\n\n* Upgrade to `requests&gt;=2.32.0`.\n* For `requests&lt;2.32.0`, avoid setting `verify=False` for the first request to a host while using a Requests Session.\n* For `requests&lt;2.32.0`, call `close()` on `Session` objects to clear existing connections if `verify=False` is used.\n\n### Related Links\n* https://github.com/psf/requests/pull/6655&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2024-35195&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;GHSA-cfj3-7x9c-4p3h&quot;,
+    &quot;details&quot;: &quot;Requests (aka python-requests) before 2.3.0 allows remote servers to obtain a netrc password by reading the Authorization header in a redirected request.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2014-1829&quot;,
+      &quot;PYSEC-2014-13&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;GHSA-j8r2-6x86-q33q&quot;,
+    &quot;details&quot;: &quot;### Impact\n\nSince Requests v2.3.0, Requests has been vulnerable to potentially leaking `Proxy-Authorization` headers to destination servers, specifically during redirects to an HTTPS origin. This is a product of how `rebuild_proxies` is used to recompute and [reattach the `Proxy-Authorization` header](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/sessions.py#L319-L328) to requests when redirected. Note this behavior has _only_ been observed to affect proxied requests when credentials are supplied in the URL user information component (e.g. `https://username:password@proxy:8080`).\n\n**Current vulnerable behavior(s):**\n\n1. HTTP \u2192 HTTPS: **leak**\n2. HTTPS \u2192 HTTP: **no leak**\n3. HTTPS \u2192 HTTPS: **leak**\n4. HTTP \u2192 HTTP: **no leak**\n\nFor HTTP connections sent through the proxy, the proxy will identify the header in the request itself and remove it prior to forwarding to the destination server. However when sent over HTTPS, the `Proxy-Authorization` header must be sent in the CONNECT request as the proxy has no visibility into further tunneled requests. This results in Requests forwarding the header to the destination server unintentionally, allowing a malicious actor to potentially exfiltrate those credentials.\n\nThe reason this currently works for HTTPS connections in Requests is the `Proxy-Authorization` header is also handled by urllib3 with our usage of the ProxyManager in adapters.py with [`proxy_manager_for`](https://github.com/psf/requests/blob/f2629e9e3c7ce3c3c8c025bcd8db551101cbc773/requests/adapters.py#L199-L235). This will compute the required proxy headers in `proxy_headers` and pass them to the Proxy Manager, avoiding attaching them directly to the Request object. This will be our preferred option going forward for default usage.\n\n### Patches\nStarting in Requests v2.31.0, Requests will no longer attach this header to redirects with an HTTPS destination. This should have no negative impacts on the default behavior of the library as the proxy credentials are already properly being handled by urllib3&#x27;s ProxyManager.\n\nFor users with custom adapters, this _may_ be potentially breaking if you were already working around this behavior. The previous functionality of `rebuild_proxies` doesn&#x27;t make sense in any case, so we would encourage any users impacted to migrate any handling of Proxy-Authorization directly into their custom adapter.\n\n### Workarounds\nFor users who are not able to update Requests immediately, there is one potential workaround.\n\nYou may disable redirects by setting `allow_redirects` to `False` on all calls through Requests top-level APIs. Note that if you&#x27;re currently relying on redirect behaviors, you will need to capture the 3xx response codes and ensure a new request is made to the redirect destination.\n```\nimport requests\nr = requests.get(&#x27;http://github.com/&#x27;, allow_redirects=False)\n```\n\n### Credits\n\nThis vulnerability was discovered and disclosed by the following individuals.\n\nDennis Brinkrolf, Haxolot (https://haxolot.com/)\nTobias Funke, (tobiasfunke93@gmail.com)&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2023-32681&quot;,
+      &quot;PYSEC-2023-74&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;GHSA-pg2w-x9wp-vw92&quot;,
+    &quot;details&quot;: &quot;The `resolve_redirects` function in sessions.py in requests 2.1.0 through 2.5.3 allows remote attackers to conduct session fixation attacks via a cookie without a host value in a redirect.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2015-2296&quot;,
+      &quot;PYSEC-2015-17&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;GHSA-x84v-xcm2-53pg&quot;,
+    &quot;details&quot;: &quot;The Requests package through 2.19.1 before 2018-09-14 for Python sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2018-18074&quot;,
+      &quot;PYSEC-2018-28&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;PYSEC-2014-13&quot;,
+    &quot;details&quot;: &quot;Requests (aka python-requests) before 2.3.0 allows remote servers to obtain a netrc password by reading the Authorization header in a redirected request.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2014-1829&quot;,
+      &quot;GHSA-cfj3-7x9c-4p3h&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;PYSEC-2014-14&quot;,
+    &quot;details&quot;: &quot;Requests (aka python-requests) before 2.3.0 allows remote servers to obtain sensitive information by reading the Proxy-Authorization header in a redirected request.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2014-1830&quot;,
+      &quot;GHSA-652x-xj99-gmcc&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;PYSEC-2015-17&quot;,
+    &quot;details&quot;: &quot;The resolve_redirects function in sessions.py in requests 2.1.0 through 2.5.3 allows remote attackers to conduct session fixation attacks via a cookie without a host value in a redirect.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2015-2296&quot;,
+      &quot;GHSA-pg2w-x9wp-vw92&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;PYSEC-2018-28&quot;,
+    &quot;details&quot;: &quot;The Requests package before 2.20.0 for Python sends an HTTP Authorization header to an http URI upon receiving a same-hostname https-to-http redirect, which makes it easier for remote attackers to discover credentials by sniffing the network.&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2018-18074&quot;,
+      &quot;GHSA-x84v-xcm2-53pg&quot;
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;PYSEC-2023-74&quot;,
+    &quot;details&quot;: &quot;Requests is a HTTP library. Since Requests 2.3.0, Requests has been leaking Proxy-Authorization headers to destination servers when redirected to an HTTPS endpoint. This is a product of how we use `rebuild_proxies` to reattach the `Proxy-Authorization` header to requests. For HTTP connections sent through the tunnel, the proxy will identify the header in the request itself and remove it prior to forwarding to the destination server. However when sent over HTTPS, the `Proxy-Authorization` header must be sent in the CONNECT request as the proxy has no visibility into the tunneled request. This results in Requests forwarding proxy credentials to the destination server unintentionally, allowing a malicious actor to potentially exfiltrate sensitive information. This issue has been patched in version 2.31.0.\n\n&quot;,
+    &quot;aliases&quot;: [
+      &quot;CVE-2023-32681&quot;,
+      &quot;GHSA-j8r2-6x86-q33q&quot;
+    ]
+  }
+]</div><footer><hr><p><small>This security report is created on: 2025-07-22 17:17, with <a href="https://github.com/nocomplexity">codeaudit</a> version 0.1.1 </small></p><p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>

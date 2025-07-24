@@ -1,0 +1,600 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+/* Reset some default styles for consistency */
+/* GPLv3 - (c) Maikel Mardjan - simple works fine */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Base container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Remove default margins/paddings */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body base styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ff0000; /* Set heading text color to red */
+}
+
+/* Headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs and links */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lists */
+ul,
+ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #d8d8dd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Altair (Vega-Embed) tweaks */
+#vis.vega-embed {
+    width: 100%;
+    display: flex;
+}
+
+#vis.vega-embed details,
+#vis.vega-embed details summary {
+    position: relative;
+}
+
+/* Code blocks */
+pre {
+    font-size: 1.25em;        
+    border-radius: 5px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Base style for Python code blocks */
+.language-python {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: red;
+    text-align: center;
+    padding: 10px;
+  }
+
+.json-display {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    white-space: pre-wrap;         /* Preserves indentation & wraps lines */
+    word-wrap: break-word;         /* Breaks long words */
+    overflow-wrap: break-word;     /* Modern equivalent */    
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    
+  }
+  
+
+/* nocxdataframe for table css */
+
+  
+</style><script src="https://cdn.jsdelivr.net/npm/vega@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script></head><body><div class="container"><h1>Codeaudit report</h1><h2>Result of scan of file allshit.py</h2><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/allshit.py </p><p>Number of potential security issues found: 51</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+      <td><pre><code class="language-python">    # If 'b' is 0, an AssertionError will be raised with the given message.<br>    assert b != 0, "Cannot divide by zero!"<br>    return a / b<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
+      <td><pre><code class="language-python">print("-" * 20)<br>exec("4*23") ; exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>s.bind</td>
+      <td>Medium</td>
+      <td>Network sockets require additional measurements.</td>
+      <td><pre><code class="language-python">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>s.bind(('0.0.0.0', 31137))<br>s.bind(('192.168.0.1', 8080))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>s.bind</td>
+      <td>Medium</td>
+      <td>Network sockets require additional measurements.</td>
+      <td><pre><code class="language-python">s.bind(('0.0.0.0', 31137))<br>s.bind(('192.168.0.1', 8080))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+      <td><pre><code class="language-python"># Assert that x is greater than 5.<br>assert x > 5, "x should be greater than 5"<br>print(f"Assertion passed: x ({x}) is greater than 5.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">  do_some_stuff()<br>except ZeroDivisionError:<br>  pass<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>continue</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">    do_some_stuff()<br>  except ZeroDivisionError:<br>    continue  #bad security practice - strange things can happen without catching and logging<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td>hashlib.md5</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  # Create an MD5 hash object<br>  md5_hash_object = hashlib.md5()<br>  sha1_hash_object = hashlib.sha1()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  md5_hash_object = hashlib.md5()<br>  sha1_hash_object = hashlib.sha1()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  # Create an MD5 hash object<br>  sha1_hash_object = tooweak()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">def nogood():<br>    if check_access("file.txt", os.R_OK):<br>        print("Accessible")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+      <td><pre><code class="language-python"><br>    eval("2 + 2")<br>    exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
+      <td><pre><code class="language-python">    eval("2 + 2")<br>    exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python"><br>    if os.access("myfile", os.R_OK):<br>        with open("myfile") as fp:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">            return fp.read()<br>    os.chmod("myfile", 0o644) # The 0o prefix denotes an octal number<br>    print(f"Permissions for '{myfile}' set to 644 (octal).")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>141</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">        result = None                        # handle and recover<br>    except Exception as exc:                 # catches *any* other error<br>        # In real code, consider logging exc instead of pass<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>154</td>
+      <td>os.system</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">from os import system as clown<br>clown('ls -la')<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>158</td>
+      <td>os.popen</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">import os<br>os.popen('malware -all')<br>bytes_written = os.write(fd, data_to_write)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>159</td>
+      <td>os.write</td>
+      <td>Low</td>
+      <td>os.write can cause availability issues if not done correct.</td>
+      <td><pre><code class="language-python">os.popen('malware -all')<br>bytes_written = os.write(fd, data_to_write)<br>bytes_written2 = os.writev(fd, buffers)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>160</td>
+      <td>os.writev</td>
+      <td>Low</td>
+      <td>os.writev can cause availability issues if not done correct.</td>
+      <td><pre><code class="language-python">bytes_written = os.write(fd, data_to_write)<br>bytes_written2 = os.writev(fd, buffers)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>163</td>
+      <td>logging.config</td>
+      <td>Low</td>
+      <td>Potential security issues can arise with parsing objects and incorrect sanitizing.</td>
+      <td><pre><code class="language-python">import logging.config <br>logging.config.listen(port=DEFAULT_LOGGING_CONFIG_PORT, verify=None) <br></code></pre></td>
+    </tr>
+    <tr>
+      <td>166</td>
+      <td>logging.config</td>
+      <td>Low</td>
+      <td>Potential security issues can arise with parsing objects and incorrect sanitizing.</td>
+      <td><pre><code class="language-python"><br>logging.config.fileConfig(fname, defaults=None, disable_existing_loggers=True, encoding=None)<br>#<END LOGGING checks><br></code></pre></td>
+    </tr>
+    <tr>
+      <td>174</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    with tarfile.open(file_path, 'r:gz') as tar:<br>        tar.extractall(path=extract_path)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>178</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    with tarfile.open(file_path, 'r:gz') as donot:<br>        donot.extractall(path=extract_path)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>185</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">extractor = MyExtractor()<br>extractor.extractall("/some/directory")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>202</td>
+      <td>xmlrpc.server<br>SimpleXMLRPCServer</td>
+      <td>High</td>
+      <td>xmlrpc.server is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>server = SimpleXMLRPCServer(("localhost", 8000))<br>print("Listening on port 8000...")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>209</td>
+      <td>xmlrpc.client</td>
+      <td>High</td>
+      <td>xmlrpc is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>with xmlrpc.client.ServerProxy("http://localhost:8000/") as proxy:<br>    print("3 is even: %s" % str(proxy.is_even(3)))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>215</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python"><br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>217</td>
+      <td>os.forkpty</td>
+      <td>Low</td>
+      <td>Use of forkpty can be unsafe when used on MacOS.</td>
+      <td><pre><code class="language-python"><br>pid_zero = os.forkpty() <br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>218</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python">pid_zero = os.forkpty() <br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>224</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python">while True and nobreak:<br>    cannothurt()  # Creates a new child process<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>227</td>
+      <td>compile</td>
+      <td>High</td>
+      <td>It is possible to crash the Python interpreter when using this function.</td>
+      <td><pre><code class="language-python"><br>compile('nasty-string' ,'malware.bin',mode=single, flags=0, dont_inherit=False, optimize=-1)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>230</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+      <td><pre><code class="language-python">import base64<br>encoded = base64.b64encode(b'data to be encoded')<br>data = base64.b64decode(encoded)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>231</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+      <td><pre><code class="language-python">encoded = base64.b64encode(b'data to be encoded')<br>data = base64.b64decode(encoded)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>236</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># Define a custom request handler<br>class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>255</td>
+      <td>http.server<br>HTTPServer</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># The function to run the HTTP server<br>def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>255</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># The function to run the HTTP server<br>def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>291</td>
+      <td>connection.recv</td>
+      <td>High</td>
+      <td>Connection.recv() uses pickle</td>
+      <td><pre><code class="language-python">    # This call blocks until data is available.<br>    received_data = connection.recv()<br>    print(f"Receiver process: Received '{received_data}'")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>304</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python">import pickle<br>pickle.loads(b"cos\nsystem\n(S'echo hello world'\ntR.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>308</td>
+      <td>pickle.load</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python">    with open('data.pickle', 'rb') as f:<br>        data = pickle.load(f)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>312</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python"><br>importmalware('mysafefile.txt')<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>326</td>
+      <td>random.seed</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+      <td><pre><code class="language-python">  """<br>  random.seed(23)<br>  random_number = random.random()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>327</td>
+      <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+      <td><pre><code class="language-python">  random.seed(23)<br>  random_number = random.random()<br>  return random_number<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>331</td>
+      <td>shelve.open</td>
+      <td>High</td>
+      <td>Only loading a shelve from a trusted source is secure. So check if this is the case.</td>
+      <td><pre><code class="language-python">import shelve<br>with shelve.open('spam') as db:<br>    db['eggs'] = 'eggs'<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>343</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    print(f"--- INSECURE EXTRACTION of {zip_path} to {extract_to_dir} ---")<br>    os.makedirs(extract_to_dir, exist_ok=True)<br>    with zipfile.ZipFile(zip_path, 'r') as zip_ref:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>344</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    os.makedirs(extract_to_dir, exist_ok=True)<br>    with zipfile.ZipFile(zip_path, 'r') as zip_ref:<br>        # This line is the vulnerability: it extracts directly without path validation.<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>346</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">        # This line is the vulnerability: it extracts directly without path validation.<br>        zip_ref.extractall(extract_to_dir)<br>    print("Extraction attempted (might be insecure).")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>355</td>
+      <td>shutil.unpack_archive</td>
+      <td>Medium</td>
+      <td>Extracting files within a program should not be trusted by default.</td>
+      <td><pre><code class="language-python">import shutil<br>shutil.unpack_archive("example.zip", "extracted_files", format="zip", filter="data")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>358</td>
+      <td>shutil.copy</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+      <td><pre><code class="language-python">from shutil import copy as stealmydata <br>stealmydata("source_file.txt", "backup/source_file.txt", follow_symlinks=True)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>373</td>
+      <td>marshal.loads</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+      <td><pre><code class="language-python">     <br>    nastyobjects = marshal.loads('/tmp/plantedmalware.obj', allow_code=True)<br>    print(nastyobjects)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>379</td>
+      <td>marshal.load</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+      <td><pre><code class="language-python">            # The allow_code parameter is passed directly to marshal.load()<br>            loaded_object = marshal.load(f, allow_code=allow_code)<br>        return loaded_object<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/allshit.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>allshit.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/allshit.py</td>
+      <td>390</td>
+      <td>205</td>
+      <td>28</td>
+      <td>19</td>
+      <td>3</td>
+      <td>78</td>
+      <td>34</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><br><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-07-22 17:50, with <a href="https://github.com/nocomplexity">codeaudit</a> version 0.1.1 </small></p><p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>

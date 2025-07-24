@@ -1,0 +1,2157 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+/* Reset some default styles for consistency */
+/* GPLv3 - (c) Maikel Mardjan - simple works fine */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Base container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Remove default margins/paddings */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body base styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ff0000; /* Set heading text color to red */
+}
+
+/* Headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs and links */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lists */
+ul,
+ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #d8d8dd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Altair (Vega-Embed) tweaks */
+#vis.vega-embed {
+    width: 100%;
+    display: flex;
+}
+
+#vis.vega-embed details,
+#vis.vega-embed details summary {
+    position: relative;
+}
+
+/* Code blocks */
+pre {
+    font-size: 1.25em;        
+    border-radius: 5px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Base style for Python code blocks */
+.language-python {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: red;
+    text-align: center;
+    padding: 10px;
+  }
+
+.json-display {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    white-space: pre-wrap;         /* Preserves indentation & wraps lines */
+    word-wrap: break-word;         /* Breaks long words */
+    overflow-wrap: break-word;     /* Modern equivalent */    
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    
+  }
+  
+
+/* nocxdataframe for table css */
+
+  
+</style><script src="https://cdn.jsdelivr.net/npm/vega@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script></head><body><div class="container"><h1>Codeaudit report</h1><h2>Directory scan report</h2><p>Below the result of the Codeaudit scan of the directory:<b> /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/</b></p><p>Total Python files found: 26</p><h3>Result for file marshal.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/marshal.py </p><p>Number of potential security issues found: 2</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>30</td>
+      <td>marshal.loads</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+      <td><pre><code class="language-python">     <br>    nastyobjects = marshal.loads('/tmp/plantedmalware.obj', allow_code=True)<br>    print(nastyobjects)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>marshal.load</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+      <td><pre><code class="language-python">            # The allow_code parameter is passed directly to marshal.load()<br>            loaded_object = marshal.load(f, allow_code=allow_code)<br>        return loaded_object<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/marshal.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>marshal.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/marshal.py</td>
+      <td>47</td>
+      <td>19</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>21</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file chmod_things.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/chmod_things.py </p><p>Number of potential security issues found: 4</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">     """testfile for codeaudit"""<br>     if os.access("myfile", os.R_OK):<br>        with open("myfile") as fp:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">            return fp.read()<br>        os.chmod("myfile", 0o644) # The 0o prefix denotes an octal number<br>        myfile='/tmp/notmine.obj'<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    """function has chmode in name , but should not give a false positive on function name!"""<br>    yourfilesaremine( '*',0x777)<br>    chmodulus = "/usr/bin/*"<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    chmodulus = "/usr/bin/*"<br>    chmodel = yourfilesaremine(chmodulus, 0x777)<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/chmod_things.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>chmod_things.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/chmod_things.py</td>
+      <td>29</td>
+      <td>20</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>5</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file directorycreation.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/directorycreation.py </p><p>Number of potential security issues found: 5</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.makedirs(path, exist_ok=True)<br>        print(f"Directory created or already exists: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>os.mkdir</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.mkdir(path)<br>        print(f"Directory created: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>45</td>
+      <td>os.mkfifo</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.mkfifo(fifo_path)<br>        print(f"FIFO '{fifo_path}' created successfully.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>62</td>
+      <td>os.mknod</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.mknod(path)<br>        print(f"File created: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.makedirs(path, exist_ok=True)<br>        print(f"Directory created or already exists: {path}")<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/directorycreation.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>directorycreation.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/directorycreation.py</td>
+      <td>82</td>
+      <td>39</td>
+      <td>1</td>
+      <td>5</td>
+      <td>0</td>
+      <td>26</td>
+      <td>16</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file shelve.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/shelve.py </p><p>Number of potential security issues found: 1</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>shelve.open</td>
+      <td>High</td>
+      <td>Only loading a shelve from a trusted source is secure. So check if this is the case.</td>
+      <td><pre><code class="language-python"><br>with shelve.open('spam') as db:<br>    db['eggs'] = 'eggs'</code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/shelve.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>shelve.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/shelve.py</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file file3.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/file3.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>4</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+      <td><pre><code class="language-python">from math import sqrt<br>eval("print('hi')")<br>if os.access("file.txt", os.R_OK): pass<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">eval("print('hi')")<br>if os.access("file.txt", os.R_OK): pass<br>acc("file.txt")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">if os.access("file.txt", os.R_OK): pass<br>acc("file.txt")<br>os.path.exists("file.txt")<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/file3.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>file3.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/file3.py</td>
+      <td>9</td>
+      <td>8</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file subprocess.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/subprocess.py </p><p>Number of potential security issues found: 5</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20</td>
+      <td>subprocess.run</td>
+      <td>Medium</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+      <td><pre><code class="language-python">    # 'check=True' raises a CalledProcessError if the command returns a non-zero exit code (kept for demonstration, but no try-except).<br>    result_ls = subprocess.run(['ls', '-l'], capture_output=True, text=True, check=True)<br>    print("\nCommand: ls -l")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>44</td>
+      <td>subprocess.Popen</td>
+      <td>Medium</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+      <td><pre><code class="language-python">    # shell=True is used here because '&&' is a shell-specific operator.<br>    process = subprocess.Popen("echo 'Hello from Popen' && sleep 1 && echo 'Popen finished'",<br>                               shell=True,<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>subprocess.Popen</td>
+      <td>Medium</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+      <td><pre><code class="language-python">    print("\nCommand: grep 'line' (piping input)")<br>    process_grep = subprocess.Popen(['grep', 'line'],<br>                                    stdin=subprocess.PIPE,<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td>subprocess.check_call</td>
+      <td>High</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+      <td><pre><code class="language-python">    #Old things<br>    subprocess.check_call(['ls', '-l'])<br>    return_code = subprocess.call(['ls', '-l'])<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td>subprocess.call</td>
+      <td>High</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+      <td><pre><code class="language-python">    subprocess.check_call(['ls', '-l'])<br>    return_code = subprocess.call(['ls', '-l'])<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/subprocess.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>subprocess.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/subprocess.py</td>
+      <td>83</td>
+      <td>36</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file shutil.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/shutil.py </p><p>Number of potential security issues found: 6</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>shutil.unpack_archive</td>
+      <td>Medium</td>
+      <td>Extracting files within a program should not be trusted by default.</td>
+      <td><pre><code class="language-python"><br>shutil.unpack_archive("example.zip", "extracted_files", format="zip", filter="data")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>shutil.copy2</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+      <td><pre><code class="language-python"><br>shutil.copy2("source_file.txt", "backup/source_file.txt", follow_symlinks=True)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>shutil.copy2</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+      <td><pre><code class="language-python"><br>shutil.copytree("project", "project_backup", symlinks=False, ignore=None, copy_function=shutil.copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>shutil.copytree</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+      <td><pre><code class="language-python"><br>shutil.copytree("project", "project_backup", symlinks=False, ignore=None, copy_function=shutil.copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>shutil.chown</td>
+      <td>Medium</td>
+      <td>Programs should not change access rights on files they do not own.</td>
+      <td><pre><code class="language-python"><br>shutil.chown("logs/server.log", user="admin", group="admin", dir_fd=None, follow_symlinks=True)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>shutil.copy</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+      <td><pre><code class="language-python">from shutil import copy as stealmydata <br>stealmydata("source_file.txt", "backup/source_file.txt", follow_symlinks=True)<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/shutil.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>shutil.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/shutil.py</td>
+      <td>13</td>
+      <td>7</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file hashcheck.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/hashcheck.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>19</td>
+      <td>hashlib.md5</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  # Create an MD5 hash object<br>  md5_hash_object = hashlib.md5()<br>  sha1_hash_object = hashlib.sha1()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  md5_hash_object = hashlib.md5()<br>  sha1_hash_object = hashlib.sha1()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  # Create an MD5 hash object<br>  sha1_hash_object = tooweak()<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/hashcheck.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hashcheck.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/hashcheck.py</td>
+      <td>56</td>
+      <td>18</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>19</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file tarfilevalidation.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/tarfilevalidation.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    with tarfile.open(file_path, 'r:gz') as tar:<br>        tar.extractall(path=extract_path)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    with tarfile.open(file_path, 'r:gz') as donot:<br>        donot.extractall(path=extract_path)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">extractor = MyExtractor()<br>extractor.extractall("/some/directory")</code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/tarfilevalidation.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>tarfilevalidation.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/tarfilevalidation.py</td>
+      <td>17</td>
+      <td>12</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file httpserver.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/httpserver.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>4</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># Define a custom request handler<br>class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># The function to run the HTTP server<br>def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>http.server<br>HTTPServer</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># The function to run the HTTP server<br>def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/httpserver.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>httpserver.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/httpserver.py</td>
+      <td>35</td>
+      <td>16</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>16</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file directorycreation2.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/directorycreation2.py </p><p>Number of potential security issues found: 6</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>13</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        smurf(path, exist_ok=True)<br>        print(f"Directory created or already exists: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>os.mkdir</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        frog(path)<br>        print(f"Directory created: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td>os.mkfifo</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        spider(fifo_path)<br>        print(f"FIFO '{fifo_path}' created successfully.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>65</td>
+      <td>os.mknod</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.mknod(path)<br>        print(f"File created: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>82</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.makedirs(path, exist_ok=True)<br>        print(f"Directory created or already exists: {path}")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>94</td>
+      <td>os.makedev</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    try:<br>        os.makedev(path, exist_ok=True)<br>        print(f"Directory created or already exists: {path}")<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/directorycreation2.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>directorycreation2.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/directorycreation2.py</td>
+      <td>97</td>
+      <td>48</td>
+      <td>4</td>
+      <td>6</td>
+      <td>0</td>
+      <td>30</td>
+      <td>18</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file pickle.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/pickle.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python">import pickle<br>pickle.loads(b"cos\nsystem\n(S'echo hello world'\ntR.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>pickle.load</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python">    with open('data.pickle', 'rb') as f:<br>        data = pickle.load(f)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python"><br>importmalware('mysafefile.txt')</code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/pickle.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>pickle.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/pickle.py</td>
+      <td>12</td>
+      <td>7</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file allshit.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/allshit.py </p><p>Number of potential security issues found: 51</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+      <td><pre><code class="language-python">    # If 'b' is 0, an AssertionError will be raised with the given message.<br>    assert b != 0, "Cannot divide by zero!"<br>    return a / b<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
+      <td><pre><code class="language-python">print("-" * 20)<br>exec("4*23") ; exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>s.bind</td>
+      <td>Medium</td>
+      <td>Network sockets require additional measurements.</td>
+      <td><pre><code class="language-python">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>s.bind(('0.0.0.0', 31137))<br>s.bind(('192.168.0.1', 8080))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>s.bind</td>
+      <td>Medium</td>
+      <td>Network sockets require additional measurements.</td>
+      <td><pre><code class="language-python">s.bind(('0.0.0.0', 31137))<br>s.bind(('192.168.0.1', 8080))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+      <td><pre><code class="language-python"># Assert that x is greater than 5.<br>assert x > 5, "x should be greater than 5"<br>print(f"Assertion passed: x ({x}) is greater than 5.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">  do_some_stuff()<br>except ZeroDivisionError:<br>  pass<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>continue</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">    do_some_stuff()<br>  except ZeroDivisionError:<br>    continue  #bad security practice - strange things can happen without catching and logging<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td>hashlib.md5</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  # Create an MD5 hash object<br>  md5_hash_object = hashlib.md5()<br>  sha1_hash_object = hashlib.sha1()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  md5_hash_object = hashlib.md5()<br>  sha1_hash_object = hashlib.sha1()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+      <td><pre><code class="language-python">  # Create an MD5 hash object<br>  sha1_hash_object = tooweak()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">def nogood():<br>    if check_access("file.txt", os.R_OK):<br>        print("Accessible")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+      <td><pre><code class="language-python"><br>    eval("2 + 2")<br>    exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
+      <td><pre><code class="language-python">    eval("2 + 2")<br>    exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python"><br>    if os.access("myfile", os.R_OK):<br>        with open("myfile") as fp:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">            return fp.read()<br>    os.chmod("myfile", 0o644) # The 0o prefix denotes an octal number<br>    print(f"Permissions for '{myfile}' set to 644 (octal).")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>141</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">        result = None                        # handle and recover<br>    except Exception as exc:                 # catches *any* other error<br>        # In real code, consider logging exc instead of pass<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>154</td>
+      <td>os.system</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">from os import system as clown<br>clown('ls -la')<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>158</td>
+      <td>os.popen</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">import os<br>os.popen('malware -all')<br>bytes_written = os.write(fd, data_to_write)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>159</td>
+      <td>os.write</td>
+      <td>Low</td>
+      <td>os.write can cause availability issues if not done correct.</td>
+      <td><pre><code class="language-python">os.popen('malware -all')<br>bytes_written = os.write(fd, data_to_write)<br>bytes_written2 = os.writev(fd, buffers)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>160</td>
+      <td>os.writev</td>
+      <td>Low</td>
+      <td>os.writev can cause availability issues if not done correct.</td>
+      <td><pre><code class="language-python">bytes_written = os.write(fd, data_to_write)<br>bytes_written2 = os.writev(fd, buffers)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>163</td>
+      <td>logging.config</td>
+      <td>Low</td>
+      <td>Potential security issues can arise with parsing objects and incorrect sanitizing.</td>
+      <td><pre><code class="language-python">import logging.config <br>logging.config.listen(port=DEFAULT_LOGGING_CONFIG_PORT, verify=None) <br></code></pre></td>
+    </tr>
+    <tr>
+      <td>166</td>
+      <td>logging.config</td>
+      <td>Low</td>
+      <td>Potential security issues can arise with parsing objects and incorrect sanitizing.</td>
+      <td><pre><code class="language-python"><br>logging.config.fileConfig(fname, defaults=None, disable_existing_loggers=True, encoding=None)<br>#<END LOGGING checks><br></code></pre></td>
+    </tr>
+    <tr>
+      <td>174</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    with tarfile.open(file_path, 'r:gz') as tar:<br>        tar.extractall(path=extract_path)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>178</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    with tarfile.open(file_path, 'r:gz') as donot:<br>        donot.extractall(path=extract_path)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>185</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">extractor = MyExtractor()<br>extractor.extractall("/some/directory")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>202</td>
+      <td>xmlrpc.server<br>SimpleXMLRPCServer</td>
+      <td>High</td>
+      <td>xmlrpc.server is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>server = SimpleXMLRPCServer(("localhost", 8000))<br>print("Listening on port 8000...")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>209</td>
+      <td>xmlrpc.client</td>
+      <td>High</td>
+      <td>xmlrpc is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>with xmlrpc.client.ServerProxy("http://localhost:8000/") as proxy:<br>    print("3 is even: %s" % str(proxy.is_even(3)))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>215</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python"><br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>217</td>
+      <td>os.forkpty</td>
+      <td>Low</td>
+      <td>Use of forkpty can be unsafe when used on MacOS.</td>
+      <td><pre><code class="language-python"><br>pid_zero = os.forkpty() <br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>218</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python">pid_zero = os.forkpty() <br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>224</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python">while True and nobreak:<br>    cannothurt()  # Creates a new child process<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>227</td>
+      <td>compile</td>
+      <td>High</td>
+      <td>It is possible to crash the Python interpreter when using this function.</td>
+      <td><pre><code class="language-python"><br>compile('nasty-string' ,'malware.bin',mode=single, flags=0, dont_inherit=False, optimize=-1)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>230</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+      <td><pre><code class="language-python">import base64<br>encoded = base64.b64encode(b'data to be encoded')<br>data = base64.b64decode(encoded)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>231</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+      <td><pre><code class="language-python">encoded = base64.b64encode(b'data to be encoded')<br>data = base64.b64decode(encoded)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>236</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># Define a custom request handler<br>class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>255</td>
+      <td>http.server<br>HTTPServer</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># The function to run the HTTP server<br>def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>255</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+      <td><pre><code class="language-python"># The function to run the HTTP server<br>def run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):<br>    """<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>291</td>
+      <td>connection.recv</td>
+      <td>High</td>
+      <td>Connection.recv() uses pickle</td>
+      <td><pre><code class="language-python">    # This call blocks until data is available.<br>    received_data = connection.recv()<br>    print(f"Receiver process: Received '{received_data}'")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>304</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python">import pickle<br>pickle.loads(b"cos\nsystem\n(S'echo hello world'\ntR.")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>308</td>
+      <td>pickle.load</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python">    with open('data.pickle', 'rb') as f:<br>        data = pickle.load(f)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>312</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+      <td><pre><code class="language-python"><br>importmalware('mysafefile.txt')<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>326</td>
+      <td>random.seed</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+      <td><pre><code class="language-python">  """<br>  random.seed(23)<br>  random_number = random.random()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>327</td>
+      <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+      <td><pre><code class="language-python">  random.seed(23)<br>  random_number = random.random()<br>  return random_number<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>331</td>
+      <td>shelve.open</td>
+      <td>High</td>
+      <td>Only loading a shelve from a trusted source is secure. So check if this is the case.</td>
+      <td><pre><code class="language-python">import shelve<br>with shelve.open('spam') as db:<br>    db['eggs'] = 'eggs'<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>343</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    print(f"--- INSECURE EXTRACTION of {zip_path} to {extract_to_dir} ---")<br>    os.makedirs(extract_to_dir, exist_ok=True)<br>    with zipfile.ZipFile(zip_path, 'r') as zip_ref:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>344</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    os.makedirs(extract_to_dir, exist_ok=True)<br>    with zipfile.ZipFile(zip_path, 'r') as zip_ref:<br>        # This line is the vulnerability: it extracts directly without path validation.<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>346</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">        # This line is the vulnerability: it extracts directly without path validation.<br>        zip_ref.extractall(extract_to_dir)<br>    print("Extraction attempted (might be insecure).")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>355</td>
+      <td>shutil.unpack_archive</td>
+      <td>Medium</td>
+      <td>Extracting files within a program should not be trusted by default.</td>
+      <td><pre><code class="language-python">import shutil<br>shutil.unpack_archive("example.zip", "extracted_files", format="zip", filter="data")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>358</td>
+      <td>shutil.copy</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+      <td><pre><code class="language-python">from shutil import copy as stealmydata <br>stealmydata("source_file.txt", "backup/source_file.txt", follow_symlinks=True)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>373</td>
+      <td>marshal.loads</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+      <td><pre><code class="language-python">     <br>    nastyobjects = marshal.loads('/tmp/plantedmalware.obj', allow_code=True)<br>    print(nastyobjects)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>379</td>
+      <td>marshal.load</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+      <td><pre><code class="language-python">            # The allow_code parameter is passed directly to marshal.load()<br>            loaded_object = marshal.load(f, allow_code=allow_code)<br>        return loaded_object<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/allshit.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>allshit.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/allshit.py</td>
+      <td>390</td>
+      <td>205</td>
+      <td>28</td>
+      <td>19</td>
+      <td>3</td>
+      <td>78</td>
+      <td>34</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file base64.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/base64.py </p><p>Number of potential security issues found: 2</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+      <td><pre><code class="language-python">import base64<br>encoded = base64.b64encode(b'data to be encoded')<br>data = base64.b64decode(encoded)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+      <td><pre><code class="language-python">encoded = base64.b64encode(b'data to be encoded')<br>data = base64.b64decode(encoded)<br>print(data)</code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/base64.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>base64.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/base64.py</td>
+      <td>4</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file zipfile.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/zipfile.py </p><p>Number of potential security issues found: 4</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    """       <br>    with ZipFile(zip_path, 'r') as zip_ref:<br>        # This line is the vulnerability: it extracts directly without path validation.<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">    <br>    with ZipFile('spam.zip','r') as myzip:<br>        with myzip.open('eggs.txt') as myfile:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python"><br>    with ZipFile('example.zip') as zf:<br>        with zf.open('file_inside.txt', 'r') as file:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+      <td><pre><code class="language-python">def another_function():<br>    with ZipFile('example.zip') as zf:<br>        with zf.open('file_inside.txt', 'r') as file:<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/zipfile.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>zipfile.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/zipfile.py</td>
+      <td>26</td>
+      <td>18</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>4</td>
+      <td>8</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file multiprocessing.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/multiprocessing.py </p><p>Number of potential security issues found: 2</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20</td>
+      <td>connection.recv</td>
+      <td>High</td>
+      <td>Connection.recv() uses pickle</td>
+      <td><pre><code class="language-python">    print("Receiver process: Waiting to receive data...")    <br>    received_data = connection.recv()<br>    print(f"Receiver process: Received '{received_data}'")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td>multiprocessing.connection<br>Connection</td>
+      <td>High</td>
+      <td>Connection.recv() uses pickle</td>
+      <td><pre><code class="language-python"><br>def receive_data(conn: Connection):<br>    data = conn.recv()<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/multiprocessing.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>multiprocessing.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/multiprocessing.py</td>
+      <td>47</td>
+      <td>31</td>
+      <td>4</td>
+      <td>6</td>
+      <td>0</td>
+      <td>7</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file inputstatement.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/inputstatement.py </p><p>Number of potential security issues found: 1</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>input</td>
+      <td>Low</td>
+      <td>Use of input requires strict sanitizing and validation.</td>
+      <td><pre><code class="language-python">def greet_user():<br>    name = input("What is your name? ")<br>    print(f"Hello, {name}!")<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/inputstatement.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inputstatement.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/inputstatement.py</td>
+      <td>7</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file oschecks.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/oschecks.py </p><p>Number of potential security issues found: 11</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">def nogood():<br>    if check_access("file.txt", os.R_OK):<br>        print("Accessible")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+      <td><pre><code class="language-python"><br>    eval("2 + 2")<br>    exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
+      <td><pre><code class="language-python">    eval("2 + 2")<br>    exec("4*23")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python"><br>    if os.access("myfile", os.R_OK):<br>        with open("myfile") as fp:<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">            return fp.read()<br>    os.chmod("myfile", 0o644) # The 0o prefix denotes an octal number<br>    print(f"Permissions for '{myfile}' set to 644 (octal).")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>os.popen</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">import os<br>os.popen('malware -all')<br>bytes_written = os.write(fd, data_to_write)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>os.write</td>
+      <td>Low</td>
+      <td>os.write can cause availability issues if not done correct.</td>
+      <td><pre><code class="language-python">os.popen('malware -all')<br>bytes_written = os.write(fd, data_to_write)<br>bytes_written2 = os.writev(fd, buffers)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>os.writev</td>
+      <td>Low</td>
+      <td>os.writev can cause availability issues if not done correct.</td>
+      <td><pre><code class="language-python">bytes_written = os.write(fd, data_to_write)<br>bytes_written2 = os.writev(fd, buffers)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>os.forkpty</td>
+      <td>Low</td>
+      <td>Use of forkpty can be unsafe when used on MacOS.</td>
+      <td><pre><code class="language-python"><br>pid_zero = os.forkpty() <br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python">pid_zero = os.forkpty() <br>pid = os.fork()<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+      <td><pre><code class="language-python">while True:<br>    cannothurt()  # Creates a new child process<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/oschecks.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>oschecks.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/oschecks.py</td>
+      <td>32</td>
+      <td>22</td>
+      <td>4</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file validation1.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/validation1.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">import os <br>if check_access("file.txt", os.R_OK):<br>    print("Accessible")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+      <td><pre><code class="language-python"><br>eval("2 + 2")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python"><br>if os.access("myfile", os.R_OK):<br>    with open("myfile") as fp:<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/validation1.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>validation1.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/validation1.py</td>
+      <td>20</td>
+      <td>11</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file random.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/random.py </p><p>Number of potential security issues found: 2</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>14</td>
+      <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+      <td><pre><code class="language-python">  """<br>  random_number = random.random()<br>  random.seed(23)<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>random.seed</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+      <td><pre><code class="language-python">  random_number = random.random()<br>  random.seed(23)<br>  return random_number</code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/random.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>random.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/random.py</td>
+      <td>16</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file assert.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/assert.py </p><p>Number of potential security issues found: 2</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>5</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+      <td><pre><code class="language-python">    # If 'b' is 0, an AssertionError will be raised with the given message.<br>    assert b != 0, "Cannot divide by zero!"<br>    return a / b<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+      <td><pre><code class="language-python"># Assert that x is greater than 5.<br>assert x > 5, "x should be greater than 5"<br>print(f"Assertion passed: x ({x}) is greater than 5.")<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/assert.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>assert.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/assert.py</td>
+      <td>32</td>
+      <td>16</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file exception.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/exception.py </p><p>Number of potential security issues found: 2</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>11</td>
+      <td>continue</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">            do_some_stuff()<br>        except Exception:<br>            continue<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+      <td><pre><code class="language-python">        result = None                        # handle and recover<br>    except Exception as exc:                 # catches *any* other error<br>        # In real code, consider logging exc instead of pass<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/exception.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>exception.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/exception.py</td>
+      <td>30</td>
+      <td>16</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file validation2.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/validation2.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python"><br>if x("file.txt", os.R_OK):<br>    print("Accessible")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+      <td><pre><code class="language-python">    print("Accessible")<br>eval("2 + 2")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python"><br>if x("myfile", os.R_OK):<br>    with open("myfile") as fp:<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/validation2.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>validation2.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/validation2.py</td>
+      <td>18</td>
+      <td>11</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file xml.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/xml.py </p><p>Number of potential security issues found: 3</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7</td>
+      <td>xmlrpc.server<br>SimpleXMLRPCServer</td>
+      <td>High</td>
+      <td>xmlrpc.server is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>server = SimpleXMLRPCServer(("localhost", 8000))<br>print("Listening on port 8000...")<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>xmlrpc.client</td>
+      <td>High</td>
+      <td>xmlrpc is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>with xmlrpc.client.ServerProxy("http://localhost:8000/") as proxy:<br>    print("3 is even: %s" % str(proxy.is_even(3)))<br></code></pre></td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>xmlrpc.server<br>SimpleXMLRPCServer</td>
+      <td>High</td>
+      <td>xmlrpc.server is vulnerable to the “decompression bomb” attack.</td>
+      <td><pre><code class="language-python"><br>with SimpleXMLRPCServer(('localhost', 8000),<br>                        requestHandler=RequestHandler) as server:<br></code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/xml.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>xml.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/xml.py</td>
+      <td>46</td>
+      <td>23</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h3>Result for file modulecheck.py</h3><p>Location of the file: /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/modulecheck.py </p><p>Number of potential security issues found: 1</p><details><summary>Click to see the details for found security issues.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>line</th>
+      <th>validation</th>
+      <th>severity</th>
+      <th>info</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>13</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+      <td><pre><code class="language-python">    print('no way!')<br>    os.chmod('ooooooooooooono.txt',0x777) #this will give an alert on codeaudit filescan!</code></pre></td>
+    </tr>
+  </tbody>
+</table></details><br><details><summary>Click to see details for file /home/maikel/projects/pythondev/codeaudit/tests/validationfiles/modulecheck.py</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>modulecheck.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/modulecheck.py</td>
+      <td>13</td>
+      <td>9</td>
+      <td>5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><h2>Files in directory with no security issues</h2><p>Total Python files with no detected security issue: 1</p><p>The Python files with no security issues <b>detected</b> by codeaudit are:<p><table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>filename</th>
+      <th>directory</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>file_with_warnings.py</td>
+      <td>/home/maikel/projects/pythondev/codeaudit/tests/validationfiles/file_with_warnings.py</td>
+    </tr>
+  </tbody>
+</table><br><p><b>Disclaimer:</b><i>Only Python source files are taken into account for this scan. Sometimes security issues are present in configuration files, like ini,yaml or json files!</i></p><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-07-22 21:15, with <a href="https://github.com/nocomplexity">codeaudit</a> version 0.1.1 </small></p><p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>

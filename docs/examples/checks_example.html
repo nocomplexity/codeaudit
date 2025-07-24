@@ -1,0 +1,561 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+/* Reset some default styles for consistency */
+/* GPLv3 - (c) Maikel Mardjan - simple works fine */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Base container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Remove default margins/paddings */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body base styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ff0000; /* Set heading text color to red */
+}
+
+/* Headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs and links */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lists */
+ul,
+ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #d8d8dd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Altair (Vega-Embed) tweaks */
+#vis.vega-embed {
+    width: 100%;
+    display: flex;
+}
+
+#vis.vega-embed details,
+#vis.vega-embed details summary {
+    position: relative;
+}
+
+/* Code blocks */
+pre {
+    font-size: 1.25em;        
+    border-radius: 5px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Base style for Python code blocks */
+.language-python {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: red;
+    text-align: center;
+    padding: 10px;
+  }
+
+.json-display {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    white-space: pre-wrap;         /* Preserves indentation & wraps lines */
+    word-wrap: break-word;         /* Breaks long words */
+    overflow-wrap: break-word;     /* Modern equivalent */    
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    
+  }
+  
+
+/* nocxdataframe for table css */
+
+  
+</style><script src="https://cdn.jsdelivr.net/npm/vega@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script></head><body><div class="container"><h1>Codeaudit Implemented validations</h1><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>construct</th>
+      <th>severity</th>
+      <th>info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Check on assert</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Misuse can lead to security vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Encodings</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
+    </tr>
+    <tr>
+      <td>Built-in Functions: Check on compile usuage.</td>
+      <td>compile</td>
+      <td>High</td>
+      <td>It is possible to crash the Python interpreter when using this function.</td>
+    </tr>
+    <tr>
+      <td>Multiprocessing</td>
+      <td>connection.recv</td>
+      <td>High</td>
+      <td>Connection.recv() uses pickle</td>
+    </tr>
+    <tr>
+      <td>Exception Handling- Continue statement</td>
+      <td>continue</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+    </tr>
+    <tr>
+      <td>Check on eval usuage</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can executes arbitrary code.</td>
+    </tr>
+    <tr>
+      <td>Built-in Functions: Check for exec usuage.</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
+    </tr>
+    <tr>
+      <td>Hash Check - md5</td>
+      <td>hashlib.md5</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+    </tr>
+    <tr>
+      <td>Hash Check -sha1</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>Use of insecure hashing algorithms detected.</td>
+    </tr>
+    <tr>
+      <td>HTTP servers: Check on usuage.</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+    </tr>
+    <tr>
+      <td>HTTP servers: Check on usuage.</td>
+      <td>http.server<br>HTTPServer</td>
+      <td>High</td>
+      <td>Insecure for production use.</td>
+    </tr>
+    <tr>
+      <td>Check on input statement</td>
+      <td>input</td>
+      <td>Low</td>
+      <td>Use of input requires strict sanitizing and validation.</td>
+    </tr>
+    <tr>
+      <td>Logging - configuration</td>
+      <td>logging.config</td>
+      <td>Low</td>
+      <td>Potential security issues can arise with parsing objects and incorrect sanitizing.</td>
+    </tr>
+    <tr>
+      <td>Marshal</td>
+      <td>marshal.load</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+    </tr>
+    <tr>
+      <td>Marshal</td>
+      <td>marshal.loads</td>
+      <td>High</td>
+      <td>The marshal module is not intended to be secure against erroneous or maliciously constructed data.</td>
+    </tr>
+    <tr>
+      <td>Multiprocessing</td>
+      <td>multiprocessing.connection<br>Connection</td>
+      <td>High</td>
+      <td>Connection.recv() uses pickle</td>
+    </tr>
+    <tr>
+      <td>OS Access</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>Check for chmod</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execl</td>
+      <td>os.execl</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execle</td>
+      <td>os.execle</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execlp</td>
+      <td>os.execlp</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execlpe</td>
+      <td>os.execlpe</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execv</td>
+      <td>os.execv</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execve</td>
+      <td>os.execve</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execvp</td>
+      <td>os.execvp</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - execvpe</td>
+      <td>os.execvpe</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS System call - Fork a child process</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+    </tr>
+    <tr>
+      <td>OS Interfaces</td>
+      <td>os.forkpty</td>
+      <td>Low</td>
+      <td>Use of forkpty can be unsafe when used on MacOS.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.makedev</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.mkdir</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.mkfifo</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.mknod</td>
+      <td>Low</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS  - popen</td>
+      <td>os.popen</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS Interface</td>
+      <td>os.read</td>
+      <td>Low</td>
+      <td>When files can be read from , they can be transfered to some place you do not want.</td>
+    </tr>
+    <tr>
+      <td>OS  - direct calls</td>
+      <td>os.system</td>
+      <td>High</td>
+      <td>Operating System calls can have a  security impact and should be inspected in detail.</td>
+    </tr>
+    <tr>
+      <td>OS Interfaces</td>
+      <td>os.write</td>
+      <td>Low</td>
+      <td>os.write can cause availability issues if not done correct.</td>
+    </tr>
+    <tr>
+      <td>OS Interfaces</td>
+      <td>os.writev</td>
+      <td>Low</td>
+      <td>os.writev can cause availability issues if not done correct.</td>
+    </tr>
+    <tr>
+      <td>Exception Handling</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Too broad exception handling risk when not used correctly.</td>
+    </tr>
+    <tr>
+      <td>Pickle use</td>
+      <td>pickle.load</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+    </tr>
+    <tr>
+      <td>Pickle use</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>unpickling will import any class or function that it finds in the pickle data</td>
+    </tr>
+    <tr>
+      <td>Random numbers generation module</td>
+      <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Random numbers generation module</td>
+      <td>random.seed</td>
+      <td>Low</td>
+      <td>The pseudo-random generators of this module should not be used for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Binding All Interfaces</td>
+      <td>s.bind</td>
+      <td>Medium</td>
+      <td>Network sockets require additional measurements.</td>
+    </tr>
+    <tr>
+      <td>Shelve module</td>
+      <td>shelve.open</td>
+      <td>High</td>
+      <td>Only loading a shelve from a trusted source is secure. So check if this is the case.</td>
+    </tr>
+    <tr>
+      <td>shutil</td>
+      <td>shutil.chown</td>
+      <td>Medium</td>
+      <td>Programs should not change access rights on files they do not own.</td>
+    </tr>
+    <tr>
+      <td>shutil</td>
+      <td>shutil.copy</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+    </tr>
+    <tr>
+      <td>shutil</td>
+      <td>shutil.copy2</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+    </tr>
+    <tr>
+      <td>shutil</td>
+      <td>shutil.copytree</td>
+      <td>Medium</td>
+      <td>Information can be transfered without permission.</td>
+    </tr>
+    <tr>
+      <td>shutil</td>
+      <td>shutil.unpack_archive</td>
+      <td>Medium</td>
+      <td>Extracting files within a program should not be trusted by default.</td>
+    </tr>
+    <tr>
+      <td>Subprocesses - Popen</td>
+      <td>subprocess.Popen</td>
+      <td>Medium</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+    </tr>
+    <tr>
+      <td>Subprocesses - call</td>
+      <td>subprocess.call</td>
+      <td>High</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+    </tr>
+    <tr>
+      <td>Subprocesses - check_call</td>
+      <td>subprocess.check_call</td>
+      <td>High</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+    </tr>
+    <tr>
+      <td>Subprocesses - run</td>
+      <td>subprocess.run</td>
+      <td>Medium</td>
+      <td>Use of the subprocess module calls should be analyzed in-depth.</td>
+    </tr>
+    <tr>
+      <td>Tarfile</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+    </tr>
+    <tr>
+      <td>XML - client</td>
+      <td>xmlrpc.client</td>
+      <td>High</td>
+      <td>xmlrpc is vulnerable to the “decompression bomb” attack.</td>
+    </tr>
+    <tr>
+      <td>XML - server</td>
+      <td>xmlrpc.server<br>SimpleXMLRPCServer</td>
+      <td>High</td>
+      <td>xmlrpc.server is vulnerable to the “decompression bomb” attack.</td>
+    </tr>
+    <tr>
+      <td>Zipfile</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+    </tr>
+  </tbody>
+</table><br><p>Number of implemented security validations:<b>58</b></p><p>Version of codeaudit: <b>0.1.1</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-07-22 21:30, with <a href="https://github.com/nocomplexity">codeaudit</a> version 0.1.1 </small></p><p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>

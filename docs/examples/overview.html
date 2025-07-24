@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+/* Reset some default styles for consistency */
+/* GPLv3 - (c) Maikel Mardjan - simple works fine */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Base container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Remove default margins/paddings */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body base styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ff0000; /* Set heading text color to red */
+}
+
+/* Headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs and links */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lists */
+ul,
+ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #d8d8dd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Altair (Vega-Embed) tweaks */
+#vis.vega-embed {
+    width: 100%;
+    display: flex;
+}
+
+#vis.vega-embed details,
+#vis.vega-embed details summary {
+    position: relative;
+}
+
+/* Code blocks */
+pre {
+    font-size: 1.25em;        
+    border-radius: 5px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Base style for Python code blocks */
+.language-python {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: red;
+    text-align: center;
+    padding: 10px;
+  }
+
+.json-display {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    white-space: pre-wrap;         /* Preserves indentation & wraps lines */
+    word-wrap: break-word;         /* Breaks long words */
+    overflow-wrap: break-word;     /* Modern equivalent */    
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    
+  }
+  
+
+/* nocxdataframe for table css */
+
+  
+</style><script src="https://cdn.jsdelivr.net/npm/vega@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script></head><body><div class="container"><h1>Codeaudit overview report</h1><br><p>Codeaudit overview scan of the directory:<b> /home/maikel/projects/pythondev/linkaudit</b></p><h2>Summary</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Number_Of_Files</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Median_Complexity</th>
+      <th>Maximum_Complexity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>459</td>
+      <td>212</td>
+      <td>14</td>
+      <td>16</td>
+      <td>0</td>
+      <td>149</td>
+      <td>8.7</td>
+      <td>24</td>
+    </tr>
+  </tbody>
+</table><br><br><p>Based on the maximum found complexity in a source file: Security concern rate is <b>LOW</b><p>Based on the total Lines of Code (LoC) : Security concern rate is <b>LOW</b><br><br><h2>Detailed overview per source file</h2><details><summary>Click to see the report details.</summary><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FileName</th>
+      <th>FilePath</th>
+      <th>Number_Of_Lines</th>
+      <th>AST_Nodes</th>
+      <th>Modules</th>
+      <th>Functions</th>
+      <th>Classes</th>
+      <th>Comment_Lines</th>
+      <th>Complexity_Score</th>
+      <th>warnings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>__init__.py</td>
+      <td>/home/maikel/projects/pythondev/linkaudit/src/linkaudit/__init__.py</td>
+      <td>10</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>html_result.py</td>
+      <td>/home/maikel/projects/pythondev/linkaudit/src/linkaudit/html_result.py</td>
+      <td>72</td>
+      <td>23</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>46</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>markdownhelpers.py</td>
+      <td>/home/maikel/projects/pythondev/linkaudit/src/linkaudit/markdownhelpers.py</td>
+      <td>128</td>
+      <td>50</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0</td>
+      <td>37</td>
+      <td>20</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>linkaudit.py</td>
+      <td>/home/maikel/projects/pythondev/linkaudit/src/linkaudit/linkaudit.py</td>
+      <td>218</td>
+      <td>127</td>
+      <td>10</td>
+      <td>9</td>
+      <td>0</td>
+      <td>39</td>
+      <td>24</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>_version.py</td>
+      <td>/home/maikel/projects/pythondev/linkaudit/src/linkaudit/_version.py</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>nocxhelpers.py</td>
+      <td>/home/maikel/projects/pythondev/linkaudit/src/linkaudit/nocxhelpers.py</td>
+      <td>30</td>
+      <td>9</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>19</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></details><br><br><h2>Visual Overview</h2><div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "vconcat": [{"hconcat": [{"data": {"name": "data-361dc54f4ced7aa091a675d275b1312e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "color", "legend": null, "scale": {"domain": ["red", "grey"], "range": ["#d62728", "#7f7f7f"]}, "type": "nominal"}, "tooltip": [{"field": "FileName", "type": "nominal"}, {"field": "Number_Of_Lines", "type": "quantitative"}], "x": {"field": "FileName", "sort": null, "title": "File Name", "type": "nominal"}, "y": {"field": "Number_Of_Lines", "title": "Number_Of_Lines", "type": "quantitative"}}, "height": 400, "title": "Number_Of_Lines", "width": 400}, {"data": {"name": "data-361dc54f4ced7aa091a675d275b1312e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "color", "legend": null, "scale": {"domain": ["red", "grey"], "range": ["#d62728", "#7f7f7f"]}, "type": "nominal"}, "tooltip": [{"field": "FileName", "type": "nominal"}, {"field": "AST_Nodes", "type": "quantitative"}], "x": {"field": "FileName", "sort": null, "title": "File Name", "type": "nominal"}, "y": {"field": "AST_Nodes", "title": "AST_Nodes", "type": "quantitative"}}, "height": 400, "title": "AST_Nodes", "width": 400}]}, {"hconcat": [{"data": {"name": "data-badb02458192bcabd4847222492b7e92"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "color", "legend": null, "scale": {"domain": ["red", "grey"], "range": ["#d62728", "#7f7f7f"]}, "type": "nominal"}, "tooltip": [{"field": "FileName", "type": "nominal"}, {"field": "Modules", "type": "quantitative"}], "x": {"field": "FileName", "sort": null, "title": "File Name", "type": "nominal"}, "y": {"field": "Modules", "title": "Modules", "type": "quantitative"}}, "height": 400, "title": "Modules", "width": 400}, {"data": {"name": "data-361dc54f4ced7aa091a675d275b1312e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "color", "legend": null, "scale": {"domain": ["red", "grey"], "range": ["#d62728", "#7f7f7f"]}, "type": "nominal"}, "tooltip": [{"field": "FileName", "type": "nominal"}, {"field": "Functions", "type": "quantitative"}], "x": {"field": "FileName", "sort": null, "title": "File Name", "type": "nominal"}, "y": {"field": "Functions", "title": "Functions", "type": "quantitative"}}, "height": 400, "title": "Functions", "width": 400}]}, {"hconcat": [{"data": {"name": "data-361dc54f4ced7aa091a675d275b1312e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "color", "legend": null, "scale": {"domain": ["red", "grey"], "range": ["#d62728", "#7f7f7f"]}, "type": "nominal"}, "tooltip": [{"field": "FileName", "type": "nominal"}, {"field": "Comment_Lines", "type": "quantitative"}], "x": {"field": "FileName", "sort": null, "title": "File Name", "type": "nominal"}, "y": {"field": "Comment_Lines", "title": "Comment_Lines", "type": "quantitative"}}, "height": 400, "title": "Comment_Lines", "width": 400}, {"data": {"name": "data-361dc54f4ced7aa091a675d275b1312e"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "color", "legend": null, "scale": {"domain": ["red", "grey"], "range": ["#d62728", "#7f7f7f"]}, "type": "nominal"}, "tooltip": [{"field": "FileName", "type": "nominal"}, {"field": "Complexity_Score", "type": "quantitative"}], "x": {"field": "FileName", "sort": null, "title": "File Name", "type": "nominal"}, "y": {"field": "Complexity_Score", "title": "Complexity_Score", "type": "quantitative"}}, "height": 400, "title": "Complexity_Score", "width": 400}]}], "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-361dc54f4ced7aa091a675d275b1312e": [{"FileName": "__init__.py", "Number_Of_Lines": 10, "AST_Nodes": 2, "Modules": 1, "Functions": 0, "Classes": 0, "Comment_Lines": 8, "Complexity_Score": 1, "warnings": 0, "color": "grey"}, {"FileName": "html_result.py", "Number_Of_Lines": 72, "AST_Nodes": 23, "Modules": 1, "Functions": 2, "Classes": 0, "Comment_Lines": 46, "Complexity_Score": 4, "warnings": 0, "color": "red"}, {"FileName": "markdownhelpers.py", "Number_Of_Lines": 128, "AST_Nodes": 50, "Modules": 2, "Functions": 4, "Classes": 0, "Comment_Lines": 37, "Complexity_Score": 20, "warnings": 0, "color": "red"}, {"FileName": "linkaudit.py", "Number_Of_Lines": 218, "AST_Nodes": 127, "Modules": 10, "Functions": 9, "Classes": 0, "Comment_Lines": 39, "Complexity_Score": 24, "warnings": 0, "color": "red"}, {"FileName": "_version.py", "Number_Of_Lines": 1, "AST_Nodes": 1, "Modules": 0, "Functions": 0, "Classes": 0, "Comment_Lines": 0, "Complexity_Score": 1, "warnings": 0, "color": "grey"}, {"FileName": "nocxhelpers.py", "Number_Of_Lines": 30, "AST_Nodes": 9, "Modules": 0, "Functions": 1, "Classes": 0, "Comment_Lines": 19, "Complexity_Score": 2, "warnings": 0, "color": "grey"}], "data-badb02458192bcabd4847222492b7e92": [{"FileName": "__init__.py", "Number_Of_Lines": 10, "AST_Nodes": 2, "Modules": 1, "Functions": 0, "Classes": 0, "Comment_Lines": 8, "Complexity_Score": 1, "warnings": 0, "color": "grey"}, {"FileName": "html_result.py", "Number_Of_Lines": 72, "AST_Nodes": 23, "Modules": 1, "Functions": 2, "Classes": 0, "Comment_Lines": 46, "Complexity_Score": 4, "warnings": 0, "color": "grey"}, {"FileName": "markdownhelpers.py", "Number_Of_Lines": 128, "AST_Nodes": 50, "Modules": 2, "Functions": 4, "Classes": 0, "Comment_Lines": 37, "Complexity_Score": 20, "warnings": 0, "color": "red"}, {"FileName": "linkaudit.py", "Number_Of_Lines": 218, "AST_Nodes": 127, "Modules": 10, "Functions": 9, "Classes": 0, "Comment_Lines": 39, "Complexity_Score": 24, "warnings": 0, "color": "red"}, {"FileName": "_version.py", "Number_Of_Lines": 1, "AST_Nodes": 1, "Modules": 0, "Functions": 0, "Classes": 0, "Comment_Lines": 0, "Complexity_Score": 1, "warnings": 0, "color": "grey"}, {"FileName": "nocxhelpers.py", "Number_Of_Lines": 30, "AST_Nodes": 9, "Modules": 0, "Functions": 1, "Classes": 0, "Comment_Lines": 19, "Complexity_Score": 2, "warnings": 0, "color": "grey"}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+<footer><hr><p><small>This security report is created on: 2025-07-22 15:08, with <a href="https://github.com/nocomplexity">codeaudit</a> version 0.1.1 </small></p><p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>
