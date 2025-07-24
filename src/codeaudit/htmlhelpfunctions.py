@@ -7,10 +7,11 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 HTML helper functions for codeaudit
 """
+
 import json
 from html import escape
 
@@ -23,7 +24,7 @@ def dict_to_html(data):
     html_output = ""
 
     if not isinstance(data, dict):
-        html_output += "<p>None</p>\n"        
+        html_output += "<p>None</p>\n"
         return
 
     for key, items in data.items():
@@ -73,18 +74,18 @@ def dict_list_to_html_table(data):
 
     # Start the HTML table
     html = '<table border="1" cellpadding="5" cellspacing="0">\n'
-    html += '  <thead>\n    <tr>\n'
+    html += "  <thead>\n    <tr>\n"
     for header in headers:
-        html += f'      <th>{header}</th>\n'
-    html += '    </tr>\n  </thead>\n  <tbody>\n'
+        html += f"      <th>{header}</th>\n"
+    html += "    </tr>\n  </thead>\n  <tbody>\n"
 
     # Add rows
     for row in data:
-        html += '    <tr>\n'
+        html += "    <tr>\n"
         for header in headers:
             html += f'      <td>{row.get(header, "")}</td>\n'
-        html += '    </tr>\n'
+        html += "    </tr>\n"
 
-    html += '  </tbody>\n</table>'
+    html += "  </tbody>\n</table>"
 
     return html

@@ -7,7 +7,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Simple Cyclomatic Complexity check for Python source files
 See the docs for in-depth and why this is a simple way , but good enough!
@@ -15,6 +15,7 @@ See the docs for in-depth and why this is a simple way , but good enough!
 
 import ast
 import warnings
+
 
 class ComplexityVisitor(ast.NodeVisitor):
     def __init__(self):
@@ -33,23 +34,23 @@ class ComplexityVisitor(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Try(self, node):
-        self.complexity += 1 # For the try block
+        self.complexity += 1  # For the try block
         self.generic_visit(node)
 
     def visit_ExceptHandler(self, node):
-        self.complexity += 1 # For each except clause
+        self.complexity += 1  # For each except clause
         self.generic_visit(node)
 
     def visit_With(self, node):
-        self.complexity += 1 # For 'with' statements
+        self.complexity += 1  # For 'with' statements
         self.generic_visit(node)
 
     def visit_BoolOp(self, node):
         # Count 'and' and 'or' operators
         # Each 'and' or 'or' introduces a new predicate
-        self.complexity += (len(node.values) - 1)
+        self.complexity += len(node.values) - 1
         self.generic_visit(node)
-    
+
     def visit_Match(self, node):
         # A 'match' statement itself adds to complexity
         self.complexity += 1
@@ -98,8 +99,8 @@ def count_static_warnings_in_file(file_path):
         with warnings.catch_warnings(record=True) as caught_warnings:
             warnings.simplefilter("always")  # Capture all warnings
             ast.parse(source, filename=file_path)
-        
-        result = { 'warnings' : len(caught_warnings)} 
+
+        result = {"warnings": len(caught_warnings)}
 
         return result
 

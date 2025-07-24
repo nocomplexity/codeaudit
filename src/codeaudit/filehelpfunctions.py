@@ -24,7 +24,7 @@ def read_in_source_file(file_path):
 
     if file_path.is_dir():
         print(
-            "Error: The given path is a directory.\nUse the function: codeaudit directoryscan\nUse codeaudit -h for help"
+            "Error: The given path is a directory.\nUse 'codeaudit directoryscan' to audit all Python files in a directory.\nThe 'codeaudit modulescan' command works per file only, not on a directory.\nUse codeaudit -h for help"
         )
         sys.exit(1)
 
