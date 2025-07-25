@@ -89,7 +89,7 @@ Commands:
   checks               Generate an HTML report of all implemented codeaudit security checks.
   version              Prints the module version. Use [-v] [--v] [-version] or [--version].
 
-Use the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!
+Use the [Codeaudit documentation](https://nocomplexity.com/documents/codeaudit/intro.html) to check the security of Python programs and make your Python programs more secure!
 Check https://simplifysecurity.nocomplexity.com/ 
 ```
 
@@ -126,7 +126,7 @@ When you contribute to Codeaudit, your contributions are made under the same lic
 
 
 > [!NOTE]
-> This is an open community driven project. Contributors will be mentioned in the documentation.
+> This is an open community driven project. Contributors will be mentioned in the [documentation](https://nocomplexity.com/documents/codeaudit/intro.html).
 
 We adopt the [Collective Code Construction Contract(C4)](https://rfc.zeromq.org/spec/42/) to streamline collaboration.
 

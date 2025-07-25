@@ -263,7 +263,7 @@ def create_htmlfile(html_input,outputfile):
     output += '<footer>'
     output += '<hr>'
     output += f'<p><small>This security report is created on: {timestamp_str}, with <a href="https://github.com/nocomplexity">codeaudit</a> version {code_audit_version} </small></p>'
-    output += '<p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p>'    
+    output += '<p><small>Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues. <a href="https://github.com/nocomplexity/codeaudit">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p>'    
     output += '</footer>' 
     output += '</div>' #base container
     output += '</body></html>'
