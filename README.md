@@ -5,7 +5,7 @@
 
 Python Codeaudit - A modern Python source code analyzer based on distrust.
 
-Codeaudit is a tool designed to find security issues in Python code. This static application security testing (SAST) tool has great features to simplify the necessary security tasks and make it fun and easy. 
+Codeaudit is a tool to find security issues in Python code. This static application security testing (SAST) tool has **great** features to simplify the necessary security tasks and make it fun and easy. 
 
 This tool is created for:
 * Anyone who want or must check security risks with Python programs.
@@ -14,7 +14,7 @@ This tool is created for:
 
 
 > [!WARNING]
-> Python Codeaudit is still is currently in *beta status*. There are still bugs in the software that need to be fixed. Consider [contributing](CONTRIBUTING.md) to make Codeaudit a cool modern Python SAST tool. Codeaudit is currently in a thorough testing period and changes and fixes are frequently applied. 
+> Python Codeaudit is currently in *beta status*. Consider [contributing](CONTRIBUTING.md) to make Codeaudit the coolest open source Python SAST tool. Codeaudit is currently in a thorough testing phase. So use the Codeaudit now to and contribute to make it better!
 
 ## Features
 
