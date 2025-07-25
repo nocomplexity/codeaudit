@@ -26,10 +26,10 @@ Python Codeaudit has the following features:
 
 *  Detect and reports complexity and statistics relevant for security per Python file or from Python files found in a directory. 
 
-* Python Codeaudit implements a light weight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) using Python’s Abstract Syntax Tree module. The codeaudit implemented check is by far good enough for determining security risks in Python files very quick!
+* Python Codeaudit implements a light weight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count, using Python’s Abstract Syntax Tree module. The codeaudit complexity check is designed to determine security risks in Python files very quick!
 
 
-*  Detect and reports which module are used within a Python file. Also vulnerability information found from used external modules is shown.
+*  Detect and reports which module are used within a Python file. Also vulnerability information found from used external modules is reported.
 
 *  Detecting and reporting potential vulnerability issues within a Python file. Per detected issue the line number shown, with the lines that *could* cause a security issue.
 
