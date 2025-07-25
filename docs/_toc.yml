@@ -15,7 +15,7 @@ parts:
   - file: whysast
   
 
-- caption: Validations
+- caption: Security Checks
   chapters:
   - file: checksinformation
     sections:
@@ -61,7 +61,7 @@ parts:
 - caption: About
   chapters:  
   - file: help
-  - file: contribute
+  - file: CONTRIBUTE
   - file: sponsors
   - file: license
   - file: about

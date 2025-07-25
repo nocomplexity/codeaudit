@@ -1,4 +1,4 @@
-# Overview of implemented validations
+# Overview of checks
 
 Python `Codeaudit` has many implemented checks.
 

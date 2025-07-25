@@ -1,8 +1,15 @@
 # Sponsors 
 
 We offer sponsor options for:
-* Your logo in this manual.
-* Our [NO|Complexity Playbooks](about). 
+* Your logo and some text about your company in this manual.
+* Your advertisement for a cyber security vacancy in our frequently published [Open Security News Overview](https://nocomplexity.com/open-security-news/).
+* Your logo in one or more [NO|Complexity Playbooks](about). 
+
+
+:::{note} 
+**Note: We only display ethical ads as static images. So no ad networks or tracking technologies are used.**
+:::
+
 
 Our Playbooks and manuals are, and always will be, free, without tracking or other breaches of your privacy.
 

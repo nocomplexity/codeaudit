@@ -1,5 +1,6 @@
 # Introduction
 
+![CodeauditLogo](images/codeauditlogo.png)
 
 Codeaudit is a Python Static Application Security Testing (SAST) tool to find **potential security issues** in Python source files.
 

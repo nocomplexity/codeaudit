@@ -3,13 +3,15 @@
 Static Application Security Testing (SAST) for Python is a **MUST**.
 
 :::{note} 
-Static application security testing(SAST) for python source code is a MUST do to:
+Static application security testing(SAST) for python source code is a MUST:
 1. Prevent security issues when creating Python software.
 2. Inspect Python code (packages, modules, etc) from other before running.
 :::
 
 
 Python is for one of the most used programming language to date. Especially in the AI/ML world and the cyber security world, most tools are based on Python programs. This is a consequence of the fact that the Python programming language is simple use for problem solving. And programming is fundamentally about problem-solving. 
+
+Large and small businesses use and trust Python to run their business. Python is from security perspective a **good** choice. However even when using Python the risk on security issues is never zero.
 
 When creating solutions for problems creating new cyber security problems is never on the list. But creating secure software is not simple. 
 

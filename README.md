@@ -1,5 +1,7 @@
 # Codeaudit
 
+![CodeauditLogo](docs/images/codeauditlogo.png)
+
 [![PyPI - Version](https://img.shields.io/pypi/v/codeaudit.svg)](https://pypi.org/project/codeaudit)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/codeaudit.svg)](https://pypi.org/project/codeaudit)
 

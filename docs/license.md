@@ -56,7 +56,8 @@ material.
 
    
 Codeaudit is a Python program to check potential security issues in Python files.
-Copyright (C) 2025  BM-Support.org Foundation and Maikel Mardjan 
+
+Copyright (C) 2025  BM-Support.org Foundation and Maikel Mardjan. 
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
