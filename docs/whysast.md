@@ -1,23 +1,31 @@
 # Why Security testing on code
 
-Static Application Security Testing (SAST) for Python is a **MUST**.
-
 :::{note} 
-Static application security testing(SAST) for python source code is a MUST:
-1. Prevent security issues when creating Python software.
-2. Inspect Python code (packages, modules, etc) from other before running.
+Static application security testing(SAST) for python source code is a MUST!
+
+1. To prevent security issues when creating Python software and
+2. To inspect downloaded Python software (packages, modules, etc) before running.
 :::
 
 
-Python is for one of the most used programming language to date. Especially in the AI/ML world and the cyber security world, most tools are based on Python programs. This is a consequence of the fact that the Python programming language is simple use for problem solving. And programming is fundamentally about problem-solving. 
+Python is for one of the most used programming language to date. Especially in the AI/ML world and the cyber security world, most tools are based on Python programs. 
 
 Large and small businesses use and trust Python to run their business. Python is from security perspective a **good** choice. However even when using Python the risk on security issues is never zero.
 
-When creating solutions for problems creating new cyber security problems is never on the list. But creating secure software is not simple. 
+When creating solutions practicing [Security-By-Design](https://nocomplexity.com/documents/securitybydesign/intro.html) to prevent security issues is too often not the standard way-of-working. 
 
-So when you create software that in potential will be used by others and will be run on different systems than yours **MUST** take security into account.
+:::{warning} 
+Creating secure software by design is not simple. 
+:::
 
+
+When you create software that in potential will be used by others you **MUST** take security into account.
+
+:::{tip} 
 Static application security testing (SAST) tools , like this `codeaudit` program **SHOULD BE** used to prevent security risks or be aware of potential risks that comes with running the software.
+
+:::
+
 
 This `codeaudit` SAST tool is an advanced tool to automate reviewing source code of Python software to identify sources of potential security issues.
 
