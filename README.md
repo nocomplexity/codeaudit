@@ -1,9 +1,10 @@
 # Codeaudit
 
-![CodeauditLogo](docs/images/codeauditlogo.png)
+![CodeauditLogo](https://github.com/nocomplexity/codeaudit/raw/main/docs/images/codeauditlogo.png)
 
 [![PyPI - Version](https://img.shields.io/pypi/v/codeaudit.svg)](https://pypi.org/project/codeaudit)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/codeaudit.svg)](https://pypi.org/project/codeaudit)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10970/badge)](https://www.bestpractices.dev/projects/10970)
 
 Python Codeaudit - A modern Python source code analyzer based on distrust.
 
