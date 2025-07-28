@@ -13,18 +13,26 @@ Codeaudit is designed to be:
 :::{admonition} This Python Code Audit tool has the following features:
 :class: tip
 
-* Detect and report potential vulnerabilities of from all Python files collected in a directory. This is a must **do** check when researching python packages on possible security issues.
 
-*  Reports complexity and statistics relevant for security per Python file or from Python files found in a directory. 
+* **Vulnerability Detection**: Identifies security vulnerabilities in Python files, essential for package security research.
 
-* Codeaudit implements a light weight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) using Python’s Abstract Syntax Tree module. The codeaudit complexity check is to determine security risks in Python files very quick!
++++
+
+* **Complexity & Statistics**: Reports security-relevant complexity using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count via Python's AST.
+
++++
+
+* **Module Usage & External Vulnerabilities**: Detects used modules and reports vulnerabilities in external ones.
 
 
-*  Detect and reports which module are used within a Python file. Also vulnerability information found from used external modules is shown.
++++
+* **Inline Issue Reporting**: Shows potential security issues with line numbers and code snippets.
 
-*  Detecting and reporting potential vulnerability issues within a Python file. Per detected issue the line number shown, with the lines that *could* cause a security issue.
 
-* All output is saved in simple static HTML-reports. These reports can be examined in every browser. 
++++
+* **HTML Reports**: All output is saved in simple, static HTML reports viewable in any browser.
+
+
 :::
 
 

@@ -16,24 +16,22 @@ This tool is created for:
 
 
 > [!WARNING]
-> Python Codeaudit is currently in *beta status*. Consider [contributing](CONTRIBUTING.md) to make Codeaudit the coolest open source Python SAST tool. Codeaudit is currently in a thorough testing phase. So use the Codeaudit now to and contribute to make it better!
+> Python Codeaudit is currently in *beta status*. Consider [contributing](CONTRIBUTING.md) to make Codeaudit the coolest open source Python SAST tool. Codeaudit is currently in a thorough testing phase. Use Python Codeaudit now and contribute to make it better!
 
 ## Features
 
 Python Codeaudit has the following features:
 
-* Detecting and reporting potential vulnerabilities of from all Python files collected in a directory. This is a must **do** check when researching python packages on possible security issues.
+* **Vulnerability Detection**: Identifies security vulnerabilities in Python files, essential for package security research.
 
-*  Detect and reports complexity and statistics relevant for security per Python file or from Python files found in a directory. 
+* **Complexity & Statistics**: Reports security-relevant complexity using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count via Python's AST.
 
-* Python Codeaudit implements a light weight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count, using Python’s Abstract Syntax Tree module. The codeaudit complexity check is designed to determine security risks in Python files very quick!
+* **Module Usage & External Vulnerabilities**: Detects used modules and reports vulnerabilities in external ones.
 
+* **Inline Issue Reporting**: Shows potential security issues with line numbers and code snippets.
 
-*  Detect and reports which module are used within a Python file. Also vulnerability information found from used external modules is reported.
+* **HTML Reports**: All output is saved in simple, static HTML reports viewable in any browser.
 
-*  Detecting and reporting potential vulnerability issues within a Python file. Per detected issue the line number shown, with the lines that *could* cause a security issue.
-
-* All output is saved in simple static HTML-reports. These reports can be examined in every browser. 
 
 
 > [!IMPORTANT]
@@ -103,10 +101,16 @@ Per line a the in construct that can cause a security risks is shown, along with
 
 To scan a Python file on possible security issues, do:
 
-```
-codeaudit filescan ./codeaudit/tests/validationfiles/allshit.py 
+```bash
+codeaudit filescan ../codeaudit/tests/validationfiles/allshit.py 
+
+=====================================================================
 Codeaudit report file created!
-Check the report file: file:///home/jamesbrown/tmp/codeaudit-report.html
+Paste the line below directly into your browser bar:
+	file:///home/usainbolt/tmp/codeaudit-report.html
+
+=====================================================================
+
 ```
 
 ![Example view of filescan report](filescan.png)
