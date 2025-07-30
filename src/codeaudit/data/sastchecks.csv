@@ -29,6 +29,9 @@ OS  - execve,os.execve,High,Operating System calls can have a  security impact a
 OS  - execvp,os.execvp,High,Operating System calls can have a  security impact and should be inspected in detail.
 OS  - execvpe,os.execvpe,High,Operating System calls can have a  security impact and should be inspected in detail.
 OS  - popen,os.popen,High,Operating System calls can have a  security impact and should be inspected in detail.
+Sys calls,sys.call_tracing,Medium,Sys functions that can give ow-level access to the interpreter's execution flow.
+Sys calls,sys.setprofile,Medium,Sys functions that can give ow-level access to the interpreter's execution flow.
+Sys calls,sys.settrace,Medium,Sys functions that can give ow-level access to the interpreter's execution flow.
 OS Access,os.access,High,Operating System calls can have a  security impact and should be inspected in detail.
 OS Interfaces,os.write,Low,os.write can cause availability issues if not done correct.
 OS Interfaces,os.writev,Low,os.writev can cause availability issues if not done correct.

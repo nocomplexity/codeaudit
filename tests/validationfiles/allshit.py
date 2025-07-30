@@ -388,3 +388,23 @@ def load_marshalled_data(filepath: str, allow_code: bool = False):
     except Exception as e:
         print(f"An unexpected error occurred while loading '{filepath}': {e}", file=sys.stderr)
         raise
+
+"""checking catching of sys things that are dangerous in normal programs"""
+import sys 
+
+def my_func(x, y):
+    print("Inside my_func")
+    result = x + y
+    print(f"Result is {result}")
+    return result
+
+def run_with_profile():
+    sys.setprofile(profile_func)
+    result = my_func(5, 7)
+    sys.setprofile(None)  # Turn off profiling
+    print(f"Result: {result}")
+
+def run_with_trace2():
+    sys.settrace(trace_func)
+    my_func(2, 3)
+    sys.settrace(None)  # Disable tracing

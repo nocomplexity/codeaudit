@@ -93,3 +93,19 @@ def test_os_makedev():
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
+
+
+def test_sys_calls():
+    current_file_directory = Path(__file__).parent
+    # validation1.py is in a subfolder:
+    validation_file_path = current_file_directory / "validationfiles" / "syslibrary.py"
+    source = read_in_source_file(validation_file_path)
+    constructs = {'sys.call_tracing', 'sys.setprofile', 'sys.settrace'}
+
+    actual_data = find_constructs(source, constructs) 
+
+    # This is the expected dictionary
+    expected_data = {'sys.call_tracing': [12], 'sys.setprofile': [29, 31], 'sys.settrace': [35, 37]}
+
+    # Assert that the actual data matches the expected data
+    assert actual_data == expected_data
