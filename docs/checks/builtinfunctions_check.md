@@ -10,10 +10,20 @@ Should always be reviewed within the full context. By default use of this functi
 
 
 ## Why check on `eval`
- 
-This function executes arbitrary code. Calling it with user-supplied input may lead to security vulnerabilities.
 
-This function can also be used to execute arbitrary code objects (such as those created by compile()).
+:::{admonition} Security risk
+:class: danger
+`eval()` can execute arbitrary Python code. 
+
+If the input is user-controlled or from an untrusted source, this can be exploited.
+:::
+
+So calling `eval` with user-supplied input may lead to security vulnerabilities.
+
+The `eval` function can also be used to execute arbitrary code objects (such as those created by `compile()`). 
+
+Most Python programs should not need to use this built-in function.
+
 
 ## Why Check on `exec`
 
