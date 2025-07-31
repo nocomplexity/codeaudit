@@ -15,3 +15,10 @@ class MyExtractor:
 
 extractor = MyExtractor()
 extractor.extractall("/some/directory")
+
+def func():
+    with tarfile.open('archive.tar', 'r') as tf:
+        # Extract a specific file (replace 'file.txt' with actual member name)
+        tf.extract('file.txt')         
+        # Extract all files
+        tf.extractall()

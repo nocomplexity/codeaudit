@@ -112,3 +112,43 @@ def test_marshal_usage():
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
+
+
+def test_tar_methods_use():
+    current_file_directory = Path(__file__).parent
+
+    # validation1.py is in a subfolder:
+    validation_file_path = current_file_directory / "validationfiles" / "tarfilevalidation.py"
+
+            
+    result = perform_validations(validation_file_path)
+
+    #actual_data = find_constructs(source, constructs) 
+    actual_data = result['result']
+
+    # This is the expected dictionary
+    expected_data = {'tarfile.TarFile': [6, 10, 17, 22, 24]}
+    
+
+    # Assert that the actual data matches the expected data
+    assert actual_data == expected_data
+
+
+def test_tempfile_incorrect_use():
+    current_file_directory = Path(__file__).parent
+
+    # validation1.py is in a subfolder:
+    validation_file_path = current_file_directory / "validationfiles" / "tempcheck.py"
+
+            
+    result = perform_validations(validation_file_path)
+
+    #actual_data = find_constructs(source, constructs) 
+    actual_data = result['result']
+
+    # This is the expected dictionary
+    expected_data = {'tempfile.mktemp': [3]}
+    
+
+    # Assert that the actual data matches the expected data
+    assert actual_data == expected_data

@@ -37,6 +37,7 @@ OS Interfaces,os.write,Low,os.write can cause availability issues if not done co
 OS Interfaces,os.writev,Low,os.writev can cause availability issues if not done correct.
 OS Interfaces,os.forkpty,Low,Use of forkpty can be unsafe when used on MacOS.
 OS Interface,os.read,Low,"When files can be read from , they can be transfered to some place you do not want."
+tempfile ,tempfile.mktemp,Low,This function may introduce race conditions which could negatively impact security.
 Marshal,marshal.loads,High,The marshal module is not intended to be secure against erroneous or maliciously constructed data. 
 Marshal,marshal.load,High,The marshal module is not intended to be secure against erroneous or maliciously constructed data. 
 Subprocesses - call,subprocess.call,High,Use of the subprocess module calls should be analyzed in-depth.

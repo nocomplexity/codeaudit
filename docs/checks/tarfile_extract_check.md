@@ -1,7 +1,11 @@
 # Using TarFile statement
 
+Code Audit checks on the use of:
+* `TarFile.extract` and
+* `TarFile.extractall`
+
 :::{danger} 
-Using `TarFile.extractall` is dangerous.
+Using `TarFile.extractall` or `TarFile.extract` is dangerous.
 Always. So good mitigation measurement **must** be present in the code!
 :::
 

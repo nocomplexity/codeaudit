@@ -177,6 +177,14 @@ def extract_tar_gz(file_path, extract_path):
     with tarfile.open(file_path, 'r:gz') as donot:
         donot.extractall(path=extract_path)
 
+def func():
+    with tarfile.open('archive.tar', 'r') as tf:
+        # Extract a specific file (replace 'file.txt' with actual member name)
+        tf.extract('file.txt')         
+        # Extract all files
+        tf.extractall()
+
+
 class MyExtractor:
     def extractall(self, path):
         print(f"Extracting files to: {path}")
@@ -408,3 +416,7 @@ def run_with_trace2():
     sys.settrace(trace_func)
     my_func(2, 3)
     sys.settrace(None)  # Disable tracing
+
+import tempfile
+
+temp_filename = tempfile.mktemp()

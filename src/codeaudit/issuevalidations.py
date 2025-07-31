@@ -70,7 +70,7 @@ def find_constructs(source_code, constructs_to_detect):
                     full_resolved = resolved_prefix + full[len(prefix) :]                                
                     if full_resolved in constructs_to_detect:
                         construct = full_resolved                
-                    elif node.func.attr == 'extractall' and 'tarfile' in core_modules:   #note only in combination with tarfile import or alias - see step 1                                      
+                    elif node.func.attr in ('extractall', 'extract') and 'tarfile' in core_modules:   #note only in combination with tarfile import or alias - see step 1                                      
                         #construct = full_resolved
                         construct = 'tarfile.TarFile'
                 elif isinstance(func, ast.Name):

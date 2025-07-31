@@ -29,6 +29,7 @@ parts:
     - file: checks/tarfile_extract_check
     - file: checks/hash_check
     - file: checks/marshal_check
+    - file: checks/mktemp_check
     - file: checks/subprocess_check
     - file: checks/systemcalls_check
     - file: checks/loggingconf_check
