@@ -222,7 +222,7 @@ footer {
       <td>Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality.</td>
     </tr>
     <tr>
-      <td>Built-in Functions: Check on compile usuage.</td>
+      <td>Built-in Functions: Check on compile usage.</td>
       <td>compile</td>
       <td>High</td>
       <td>It is possible to crash the Python interpreter when using this function.</td>
@@ -240,13 +240,13 @@ footer {
       <td>Too broad exception handling risk when not used correctly.</td>
     </tr>
     <tr>
-      <td>Check on eval usuage</td>
+      <td>Check on eval usage</td>
       <td>eval</td>
       <td>High</td>
       <td>This function can executes arbitrary code.</td>
     </tr>
     <tr>
-      <td>Built-in Functions: Check for exec usuage.</td>
+      <td>Built-in Functions: Check for exec usage.</td>
       <td>exec</td>
       <td>High</td>
       <td>This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.</td>
@@ -264,13 +264,13 @@ footer {
       <td>Use of insecure hashing algorithms detected.</td>
     </tr>
     <tr>
-      <td>HTTP servers: Check on usuage.</td>
+      <td>HTTP servers: Check on usage.</td>
       <td>http.server<br>BaseHTTPRequestHandler</td>
       <td>High</td>
       <td>Insecure for production use.</td>
     </tr>
     <tr>
-      <td>HTTP servers: Check on usuage.</td>
+      <td>HTTP servers: Check on usage.</td>
       <td>http.server<br>HTTPServer</td>
       <td>High</td>
       <td>Insecure for production use.</td>
@@ -534,10 +534,34 @@ footer {
       <td>Use of the subprocess module calls should be analyzed in-depth.</td>
     </tr>
     <tr>
+      <td>Sys calls</td>
+      <td>sys.call_tracing</td>
+      <td>Medium</td>
+      <td>Sys functions that can give ow-level access to the interpreter's execution flow.</td>
+    </tr>
+    <tr>
+      <td>Sys calls</td>
+      <td>sys.setprofile</td>
+      <td>Medium</td>
+      <td>Sys functions that can give ow-level access to the interpreter's execution flow.</td>
+    </tr>
+    <tr>
+      <td>Sys calls</td>
+      <td>sys.settrace</td>
+      <td>Medium</td>
+      <td>Sys functions that can give ow-level access to the interpreter's execution flow.</td>
+    </tr>
+    <tr>
       <td>Tarfile</td>
       <td>tarfile.TarFile</td>
       <td>High</td>
       <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
+    </tr>
+    <tr>
+      <td>tempfile</td>
+      <td>tempfile.mktemp</td>
+      <td>Low</td>
+      <td>This function may introduce race conditions which could negatively impact security.</td>
     </tr>
     <tr>
       <td>XML - client</td>
@@ -558,4 +582,4 @@ footer {
       <td>Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.</td>
     </tr>
   </tbody>
-</table><br><p>Number of implemented security validations:<b>58</b></p><p>Version of codeaudit: <b>0.1.1</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-07-22 21:30, with <a href="https://github.com/nocomplexity">codeaudit</a> version 0.1.1 </small></p><p><small>Check the documentation for help on found issues. <a href="https://github.com/nocomplexity">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>
+</table><br><p>Number of implemented security validations:<b>62</b></p><p>Version of codeaudit: <b>0.8.0</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-08-01 19:24, with <a href="https://github.com/nocomplexity/codeaudit">codeaudit</a> version 0.8.0 </small></p><p><small>Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues. <a href="https://github.com/nocomplexity/codeaudit">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">simpler cyber solutions</a> that are transparent and just work. Help to make this FOSS software better!</small></p></footer></div></body></html>

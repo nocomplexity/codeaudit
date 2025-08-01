@@ -1,4 +1,4 @@
-# Codeaudit modulescan
+# Command `codeaudit modulescan`
 
 The Codeaudit `modulescan` command creates a report with valuable security information on used modules.
 

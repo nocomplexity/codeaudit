@@ -1,26 +1,34 @@
 
-# Codeaudit Overview
+# Command `codeaudit overview`
 
 The command:
 
 ```
-Codeaudit overview
+codeaudit overview
 ```
 is created to give a quick insights in possible security concerns.
 
 For every Python file the following **security** relevant statistics are determined:
-* Number Of Code Lines: Too much means more energy to keep the security risks manageable. Files with a large number of LoCs (Lines Of Code) means besides extra effort for maintenance and activities needed to keep security risks zero.
-* Number of AST_Nodes: Codeaudit calculates Abstract Syntax Trees (ASTs) to give a solid insight in the complexity of Python source code.
-* Number of Modules: A high the number of used modules can mean more security risks. To get more insight in modules used in a Python file you **SHOULD** use the `codeaudit modulescan` command!
-* Number of Functions.
-* Number of Classes 
-* Number of Comment_Lines
-* Complexity_Score: Per file the complexity of file is determined. A high score means more possible security risks.
-* Number of Warnings: A normal Python source file should not give Warnings. Warnings should be solved to prevent security risks in future.
+
+* **Number Of Code Lines**: Too many Lines Of Code (LoC) means a higher risk. Large code bases require a lot of effort to keep the security risks manageable. A large number of LoCs (Lines Of Code) means extra effort for maintenance there is a severe risks that new features or fixes will introduce new security risks.
+
+* **Number of AST_Nodes**: Codeaudit calculates the number or 'AST Nodes' based on creating an Abstract Syntax Tree (AST) of a file. This to give a solid insight in the complexity of Python source code. Code Audit does not simply counts nodes, but complexity is determined by an algorithm where e.g. the number of `if-else` loops is counted and weighted. More information about complexity can be found in the section [Codeaudit complexity Check](complexitycheck).
+
+* **Number of Modules**: A high the number of used modules used within a Python file can mean more security risks. This since there are more dependencies to manage. To get more insight in modules used in a Python file you **SHOULD** use the `codeaudit modulescan` command!
+
+* **Number of Functions**. There is no such thing as a perfect architecture for Python programs. However there are many programs that are simple **bad** designed. Too many functions in one Python file in combination with one of the other statistics is an indication for possible security risks.
+
+* **Number of Classes**. 
+
+* **Number of Comment_Lines**. Python files with too little or too many comment lines can have impact on maintenance from a security point of view. 
+
+* **Complexity_Score**: Per file the complexity of file is determined. A high complexity score can in potential result in more possible security risks. More information about complexity can be found in the section [Codeaudit complexity Check](complexitycheck).
+
+* **Number of Warnings**: A normal Python source file should not give Warnings. Warnings should be solved to prevent security risks in future. 
 
 
 
-To get a quick overview and core statistics that give a **solid** insight in the security of Python files of a directory do:
+To get a quick overview and core statistics that gives a **solid** insight in possible security risks of Python files of a Python program (module) or directory of Python files do:
 
 ```text
 codeaudit overview <DIRECTORY> [OUTPUTFILE]

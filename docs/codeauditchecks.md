@@ -1,4 +1,4 @@
-# Codeaudit checks
+# Command `codeaudit checks`
 
 The Codeaudit checks command creates a report with all security validation implemented for that are used for the `filescan` or `directory` scan commands. 
 

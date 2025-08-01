@@ -1,4 +1,4 @@
-# Codeaudit filescan
+# Command `codeaudit filescan`
 
 The Codeaudit filescan command creates a report with valuable security information for potential security issues in the Python file.
 See section [validations](checksinformation) for all security checks implemented!

@@ -1,4 +1,4 @@
-# Codeaudit directoryscan
+# Command `codeaudit directoryscan`
 
 The Codeaudit directoryscan command creates a report with valuable security information for potential security issues from all Python file present in a directory.
 
