@@ -2,7 +2,7 @@
 
 ## Installation
 
-Codeaudit can be installed using `pip`:
+Codeaudit **SHOULD** be installed using `pip`:
 
 ```bash
 pip install codeaudit
@@ -14,10 +14,12 @@ or use:
 pip install -U codeaudit
 ```
 
-If you have installed Python Codeaudit in the past and want to make sure you use the latest checks and features.
+If you have installed and used Python Codeaudit in the past and want to make benefit  of new checks and features.
 
 :::{hint} 
-It is recommended to use `pip` for installation. `Hatch` is used for packaging. By default [`Hatch`](https://hatch.pypa.io/latest/config/build/#reproducible-builds) supports [reproducible builds](https://nocomplexity.com/documents/securityarchitecture/prevention/reproduciblebuilds.html#reproducible-builds).
+It is recommended to use `pip` for installation. 
+
+`Hatch` is used for packaging. By default [`Hatch`](https://hatch.pypa.io/latest/config/build/#reproducible-builds) supports [reproducible builds](https://nocomplexity.com/documents/securityarchitecture/prevention/reproduciblebuilds.html#reproducible-builds).
 :::
 
 ## CodeAudit commands
@@ -29,12 +31,11 @@ Codeaudit has a few powerful CLI commands to satisfy your curiosity about securi
 
 
 
-
 ## Getting help
 
-After installation you can get an overview of all implemented commands. Just type in your terminal:
+After installation you can get an overview of all implemented commands. Type in your terminal:
 
-```text
+```bash
 codeaudit
 ```
 

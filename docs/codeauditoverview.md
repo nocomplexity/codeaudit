@@ -1,9 +1,14 @@
 
 # Codeaudit Overview
 
-`Codeaudit overview` is created to give a quick insight in possible security issues.
+The command:
 
-For every Python file the following security relevant statistics are determined:
+```
+Codeaudit overview
+```
+is created to give a quick insights in possible security concerns.
+
+For every Python file the following **security** relevant statistics are determined:
 * Number Of Code Lines: Too much means more energy to keep the security risks manageable. Files with a large number of LoCs (Lines Of Code) means besides extra effort for maintenance and activities needed to keep security risks zero.
 * Number of AST_Nodes: Codeaudit calculates Abstract Syntax Trees (ASTs) to give a solid insight in the complexity of Python source code.
 * Number of Modules: A high the number of used modules can mean more security risks. To get more insight in modules used in a Python file you **SHOULD** use the `codeaudit modulescan` command!
