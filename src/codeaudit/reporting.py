@@ -82,8 +82,9 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     html += '</details>'           
     html += f'<h2>Detailed overview per source file</h2>'
     html += '<details>'     
-    html += '<summary>Click to see the report details.</summary>'         
-    html += df.to_html(escape=True,index=False)        
+    html += '<summary>Click to see the report details.</summary>'
+    df_plot = pd.DataFrame(result) # again make the df from the result variable         
+    html += df_plot.to_html(escape=True,index=False)        
     html += '</details>'           
     # I now want only a plot for LoC, so drop other columns from Dataframe
     df_plot = pd.DataFrame(result) # again make the df from the result variable
