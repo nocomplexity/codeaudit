@@ -15,7 +15,7 @@ The `<INPUTFILE>` is mandatory. Codeaudit will create a modulescan report for th
 If you do not specify [OUTPUTFILE], a HTML output file, a HTML report file is created in the current directory and will be named `codeaudit-report.html`.
 
 When running `codeaudit modulescan` detailed information is determined for a Python file of:
-* Core modules used and
+* Core modules used (aka "built-in modules" or "standard modules") and
 * Imported modules used (aka external modules that are not part of the Python Standard Library)
 * Vulnerability information (**if available**) for all imported modules. The OSV (Open Source Vulnerability Data is used) for retrieving vulnerability information. OSV is a Google FOSS project to improve the security of FOSS projects. See the [Open Security Architecture](https://nocomplexity.com/documents/securityarchitecture/references/vulnerabilitydatabases.html#vulnerability-databases) for more information.
 

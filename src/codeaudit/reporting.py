@@ -22,7 +22,7 @@ import datetime
 from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file 
 from codeaudit.altairplots import multi_bar_chart
-from codeaudit.totals import get_statistics , overview_count , overview_per_file
+from codeaudit.totals import get_statistics , overview_count , overview_per_file , total_modules
 from codeaudit.checkmodules import get_imported_modules , check_module_on_vuln , get_all_modules , get_imported_modules_by_file
 from codeaudit.htmlhelpfunctions import dict_to_html , json_to_html , dict_list_to_html_table
 from codeaudit import __version__
@@ -51,8 +51,11 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         print(f"ERROR: '{directory}' is not a directory (maybe you try to run it for a single file)")
         print(f"This function only works for directories which contains one or more Python source code files (*.py). ")
         exit(1)
-    result = get_statistics(directory)    
+    result = get_statistics(directory)
+    modules = total_modules(directory)    
     df = pd.DataFrame(result)
+    df['Std-Modules'] = modules['Std-Modules']
+    df['External-Modules'] = modules['External-Modules']
     overview_df = overview_count(df)
     html = '<h1>' + f'Codeaudit overview report' + '</h1><br>'
     html += f'<p>Codeaudit overview scan of the directory:<b> {directory}</b></p>' 
@@ -83,8 +86,9 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     html += df.to_html(escape=True,index=False)        
     html += '</details>'           
     # I now want only a plot for LoC, so drop other columns from Dataframe
-    df = df.drop(columns=['FilePath'])
-    plot = multi_bar_chart(df)
+    df_plot = pd.DataFrame(result) # again make the df from the result variable
+    df_plot = df_plot.drop(columns=['FilePath'])
+    plot = multi_bar_chart(df_plot)
     plot_html = plot.to_html()    
     html += '<br><br>'
     html += '<h2>Visual Overview</h2>'    

@@ -120,16 +120,11 @@ def get_all_modules(directory_to_scan):
 
 
 def get_imported_modules_by_file(python_file_name):
-    "Function to get all modules of a package or directory of Python files - never trust requirements.txt or project.toml"
-    #total_result=[]        
+    "Function to get all modules of a single Python file - never trust requirements.txt or project.toml"    
     source = read_in_source_file(python_file_name)
     used_modules = get_imported_modules(source)
     core_modules = used_modules['core_modules']
-    external_modules = used_modules['imported_modules'] 
-    # result = { "filename" : python_file ,
-    #             "used_modules" : core_modules,
-    #             "external_modules": external_modules } 
-    #total_result.append(result)
+    external_modules = used_modules['imported_modules']     
     all_modules_discovered = {
         "core_modules": sorted(core_modules),
         "imported_modules": sorted(external_modules) }    

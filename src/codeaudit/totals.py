@@ -25,6 +25,8 @@ from codeaudit.complexitycheck import (
     count_static_warnings_in_file,
 )
 
+from codeaudit.checkmodules import get_imported_modules , get_all_modules
+
 
 def count_ast_objects(source):
     """
@@ -37,23 +39,27 @@ def count_ast_objects(source):
         tree = ast.parse(source)
 
     ast_nodes = 0
-    ast_functions = 0
-    ast_modules = 0
+    ast_functions = 0    
     ast_classes = 0
-
+    
     for node in ast.walk(tree):
         if hasattr(node, "lineno") and isinstance(node, (ast.stmt, ast.Expr)):
             ast_nodes += 1
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             ast_functions += 1
-        if isinstance(node, (ast.Import, ast.ImportFrom)):
-            ast_modules += 1
+        # if isinstance(node, (ast.Import, ast.ImportFrom)):
+        #     ast_modules += 1
         if isinstance(node, ast.ClassDef):
             ast_classes += 1
+    
+    used_modules = get_imported_modules(source)
+    number_core_modules = len(used_modules.get('core_modules',[])) 
+    number_external_modules = len(used_modules.get('imported_modules',[]))
 
     result = {
         "AST_Nodes": ast_nodes,
-        "Modules": ast_modules,
+        "Std-Modules": number_core_modules,
+        "External-Modules" : number_external_modules,
         "Functions": ast_functions,
         "Classes": ast_classes,
     }
@@ -111,8 +117,17 @@ def get_statistics(directory):
     total_result = []
     for python_file in files_to_check:
         result = overview_per_file(python_file)
-        total_result.append(result)
+        total_result.append(result)    
     return total_result
+
+def total_modules(directory):
+    """get the total number of modules (core and imported) for the overview"""
+    used_modules = get_all_modules(directory)
+    number_core_modules = len(used_modules.get('core_modules',[])) 
+    number_external_modules = len(used_modules.get('imported_modules',[]))
+    module_result =  {"Std-Modules": number_core_modules,
+               "External-Modules" : number_external_modules}
+    return module_result
 
 
 def overview_per_file(python_file):
@@ -143,8 +158,7 @@ def overview_count(df):
     """returns a dataframe with simple overview of all files"""
     columns_to_sum = [
         "Number_Of_Lines",
-        "AST_Nodes",
-        "Modules",
+        "AST_Nodes",        
         "Functions",
         "Classes",
         "Comment_Lines",
@@ -154,6 +168,14 @@ def overview_count(df):
     df_totals.insert(
         0, "Number_Of_Files", total_number_of_files
     )  # insert new column as first colum
+    number_cm = df.at[0, "Std-Modules"]
+    df_totals.insert(
+        3, "Core Modules", number_cm
+    )  
+    number_em = df.at[0, "External-Modules"]
+    df_totals.insert(
+        4, "External Modules", number_em
+    )  
     median_complexity = round(df["Complexity_Score"].mean(), 1)
     df_totals["Median_Complexity"] = median_complexity
     maximum_complexity = df["Complexity_Score"].max()

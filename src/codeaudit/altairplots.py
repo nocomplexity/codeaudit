@@ -51,7 +51,7 @@ def multi_bar_chart(df):
     metrics = [
         "Number_Of_Lines",
         "AST_Nodes",
-        "Modules",
+        "External-Modules",
         "Functions",
         "Comment_Lines",
         "Complexity_Score",
