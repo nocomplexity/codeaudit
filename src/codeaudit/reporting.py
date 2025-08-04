@@ -20,9 +20,9 @@ import pandas as pd
 import datetime
 
 from codeaudit.security_checks import perform_validations , ast_security_checks
-from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files
+from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file 
 from codeaudit.altairplots import multi_bar_chart
-from codeaudit.totals import read_in_source_file , get_statistics , overview_count , overview_per_file
+from codeaudit.totals import get_statistics , overview_count , overview_per_file
 from codeaudit.checkmodules import get_imported_modules , check_module_on_vuln
 from codeaudit.htmlhelpfunctions import dict_to_html , json_to_html , dict_list_to_html_table
 from codeaudit import __version__

@@ -7,6 +7,7 @@ import requests #has lots of OSV data
 
 import os
 import random
+import csv
 
 def donothing():
     print('no way!')

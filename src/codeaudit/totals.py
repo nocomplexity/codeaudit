@@ -126,7 +126,7 @@ def overview_per_file(python_file):
     lines = {"Number_Of_Lines": number_of_lines}
     complexity_score = calculate_complexity(source)
     complexity = {"Complexity_Score": complexity_score}
-    warnings = count_static_warnings_in_file(python_file)
+    warnings_count = count_static_warnings_in_file(python_file)
     result = (
         name_dict
         | file_location
@@ -134,7 +134,7 @@ def overview_per_file(python_file):
         | count_ast_objects(source)
         | count_comment_lines(source)
         | complexity
-        | warnings
+        | warnings_count
     )  # merge the dicts
     return result
 
