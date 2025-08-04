@@ -23,7 +23,7 @@ from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file 
 from codeaudit.altairplots import multi_bar_chart
 from codeaudit.totals import get_statistics , overview_count , overview_per_file
-from codeaudit.checkmodules import get_imported_modules , check_module_on_vuln
+from codeaudit.checkmodules import get_imported_modules , check_module_on_vuln , get_all_modules , get_imported_modules_by_file
 from codeaudit.htmlhelpfunctions import dict_to_html , json_to_html , dict_list_to_html_table
 from codeaudit import __version__
 
@@ -69,9 +69,16 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         html += '<p>Based on the total Lines of Code (LoC) : Security concern rate is <b>HIGH</b>'
     else:
         html += '<p>Based on the total Lines of Code (LoC) : Security concern rate is <b>LOW</b>'
-    html += '<br><br>'
-    html += f'<h2>Detailed overview per source file</h2>'
+    html += '<br>'
+    ## Module overview    
+    modules_discovered = get_all_modules(directory)
     html += '<details>' 
+    html += '<summary>Click to see all discovered modules.</summary>'         
+    html+=dict_to_html(modules_discovered)
+    html += '<p><i>The command "codeaudit modulescan" can be used to check if vulnerabilities are reported in an external module.</i></p>' 
+    html += '</details>'           
+    html += f'<h2>Detailed overview per source file</h2>'
+    html += '<details>'     
     html += '<summary>Click to see the report details.</summary>'         
     html += df.to_html(escape=True,index=False)        
     html += '</details>'           
@@ -150,6 +157,14 @@ def single_file_report(filename , scan_output):
     html += f'<summary>Click to see details for file {filename}</summary>'                 
     html += df_overview.to_html(escape=True,index=False)        
     html += '</details>'           
+    #imported modules
+    html += '<br>'
+    html += '<details>' 
+    html += '<summary>Click to see details for used modules in this file.</summary>' 
+    modules_found = get_imported_modules_by_file(filename)
+    html += dict_to_html(modules_found)
+    html += f'<p><i>Use the command:<br><b><code>codeaudit modulescan {filename}</code></b><br> to check if vulnerabilities are reported in an external module used by this file.</i></p>' 
+    html += '</details>'           
     return html 
 
 
@@ -214,8 +229,9 @@ def report_module_information(inputfile,reportname=DEFAULT_OUTPUT_FILE):
     html = '<h1>Codeaudit Report</h1>'
     html += f'<h2>Module information for file {inputfile}</h2>'    
     html += dict_to_html(used_modules)    
-    #Now vuln info per external module    
-    html += '<h2>Vulnerability information for detected modules</h2>'    
+    #Now vuln info per external module        
+    if external_modules:
+        html += '<h2>Vulnerability information for detected modules</h2>'    
     for i,module in enumerate(external_modules):  #sorted for nicer report
         printProgressBar(i + 1, l, prefix='Progress:', suffix='Complete', length=50)
         vuln_info = check_module_on_vuln(module)

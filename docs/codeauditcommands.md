@@ -20,9 +20,9 @@ Depending on the command, a directory or file name must be specified. The output
 
 Commands:
   overview             Reports Complexity and statistics per Python file from a directory.
-  modulescan           Reports module information per file.
-  filescan             Reports potential security issues for a single Python file.
   directoryscan        Reports potential security issues for all Python files found in a directory.
+  filescan             Reports potential security issues for a single Python file.
+  modulescan           Reports module information per file.
   checks               Generate an HTML report of all implemented codeaudit security checks.
   version              Prints the module version. Use [-v] [--v] [-version] or [--version].
 

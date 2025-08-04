@@ -18,6 +18,7 @@ import sys
 import json
 import urllib.request
 
+from codeaudit.filehelpfunctions import collect_python_source_files , read_in_source_file 
 
 def get_imported_modules(source_code):
     tree = ast.parse(source_code)
@@ -98,3 +99,38 @@ def check_module_on_vuln(module):
     result = query_osv(module)
     vulnerability_info = extract_vuln_info(result)
     return vulnerability_info
+
+
+def get_all_modules(directory_to_scan):
+    "Function to get all modules of a package or directory of Python files - never trust requirements.txt or project.toml"    
+    files_to_check = collect_python_source_files(directory_to_scan)
+    all_int_modules = set()
+    all_ext_modules = set()
+    for python_file in files_to_check:
+        source = read_in_source_file(python_file)
+        used_modules = get_imported_modules(source)
+        core_modules = used_modules['core_modules']
+        external_modules = used_modules['imported_modules']         
+        all_int_modules.update(core_modules)
+        all_ext_modules.update(external_modules)
+    all_modules_discovered = {
+        "core_modules": sorted(all_int_modules),
+        "imported_modules": sorted(all_ext_modules) }    
+    return all_modules_discovered
+
+
+def get_imported_modules_by_file(python_file_name):
+    "Function to get all modules of a package or directory of Python files - never trust requirements.txt or project.toml"
+    #total_result=[]        
+    source = read_in_source_file(python_file_name)
+    used_modules = get_imported_modules(source)
+    core_modules = used_modules['core_modules']
+    external_modules = used_modules['imported_modules'] 
+    # result = { "filename" : python_file ,
+    #             "used_modules" : core_modules,
+    #             "external_modules": external_modules } 
+    #total_result.append(result)
+    all_modules_discovered = {
+        "core_modules": sorted(core_modules),
+        "imported_modules": sorted(external_modules) }    
+    return all_modules_discovered

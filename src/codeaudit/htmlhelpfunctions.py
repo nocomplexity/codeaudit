@@ -15,7 +15,6 @@ HTML helper functions for codeaudit
 import json
 from html import escape
 
-
 def dict_to_html(data):
     """Creates simple HTML from a dict with values that are list:
     Example {'core_modules': ['os', 'hashlib', 'socket', 'logging.config', 'tarfile'],
@@ -25,9 +24,15 @@ def dict_to_html(data):
 
     if not isinstance(data, dict):
         html_output += "<p>None</p>\n"
-        return
+        return html_output
 
     for key, items in data.items():
+        # Check if items are missing, empty, or not iterable
+        if not items or not isinstance(items, (list, tuple)):
+            html_output += f"<h3>{key.capitalize()}</h3>\n - not found<ul>\n"
+            html_output += "</ul>\n"
+            continue
+
         html_output += f"<h3>{key.capitalize()}</h3>\n<ul>\n"
         try:
             for item in items:
@@ -35,6 +40,7 @@ def dict_to_html(data):
         except Exception:
             html_output += "  <li>None</li>\n"
         html_output += "</ul>\n"
+
     return html_output
 
 

@@ -8,9 +8,9 @@ parts:
   - file: userguide
     sections:
     - file: codeauditoverview
-    - file: modulescan
-    - file: filescan
     - file: directoryscan
+    - file: filescan
+    - file: modulescan
     - file: codeauditchecks
   - file: whysast
   

@@ -22,6 +22,18 @@ It is recommended to use `pip` for installation.
 `Hatch` is used for packaging. By default [`Hatch`](https://hatch.pypa.io/latest/config/build/#reproducible-builds) supports [reproducible builds](https://nocomplexity.com/documents/securityarchitecture/prevention/reproduciblebuilds.html#reproducible-builds).
 :::
 
+:::{admonition} A default workflow
+:class: tip
+
+If you want to inspect a package or directory of Python files a simple workflow is:
+
+1. Start with an overview: `codeaudit overview`
+2. Do a directory scan: `codeaudit directoryscan` OR
+3. OR Scan files of interest with: `codeaudit filescan` 
+4. Inspect the used modules of a file on reported vulnerabilties by: `codeaudit modulescan`
+
+:::
+
 ## CodeAudit commands
 
 Codeaudit has a few powerful CLI commands to satisfy your curiosity about security issues in Python files.
