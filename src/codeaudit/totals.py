@@ -155,7 +155,7 @@ def overview_per_file(python_file):
 
 
 def overview_count(df):
-    """returns a dataframe with simple overview of all files"""
+    """returns a dataframe with simple overview for all files"""
     columns_to_sum = [
         "Number_Of_Lines",
         "AST_Nodes",        
