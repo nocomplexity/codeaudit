@@ -1,4 +1,4 @@
-# Mitigating Potential security issues 
+# Mitigating security issues 
 
 Python Code Audit scans and checks for **potential security issues**. A potential security issue is a weakness that **can** lead to a security vulnerability with impact.
 
