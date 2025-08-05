@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
 # Overview of Codeaudit commands
-Codeaudit commands for: version: 0.8.0
+Codeaudit commands for: version: 0.9.2
 ```
 --------------------------------------------------
    _____          _                      _ _ _   

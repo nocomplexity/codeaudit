@@ -16,7 +16,7 @@ Helping is possible in multiple ways:
 * [Support this work](sponsors)
 * Share and promote the use of this solid simple tool
 * Send me a line that you use this tool within your company. 
-* [Contribute](contribute)
+* [Contribute](CONTRIBUTE)
 
 Guideline to contribute:
 * For questions, feature requests and Bug Reports please use on the [Github Issue Tracker](https://github.com/nocomplexity/codeaudit/issues).

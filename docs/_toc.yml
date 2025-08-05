@@ -13,6 +13,7 @@ parts:
     - file: modulescan
     - file: codeauditchecks
   - file: whysast
+  - file: issues
   
 
 - caption: Security Checks

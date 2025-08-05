@@ -1,13 +1,13 @@
 # Contribute
 
-Great that you see this page and want to contribute!
+Great that you want to contribute!
 
 :::{tip}
 All contributions are welcome!
 Think of corrections on the manual, code and more or better tests.
 :::
 
-The **Codeaudit** code repository is hosted at [Github](github.com/nocomplexity/codeaudit).
+The **Codeaudit** code repository is hosted at [Github](https://github.com/nocomplexity/codeaudit).
 
 Simple Guidelines:
 
