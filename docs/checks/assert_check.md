@@ -11,7 +11,11 @@ Using `assert` can be problematic from a security perspective!
 
 1. Assertions are primarily for debugging and development, **NOT** for production validation or error handling.
 
-* **They can be disabled:** When Python is run in optimized mode (with the `-O` or `-OO` flags, or by setting the `PYTHONOPTIMIZE` environment variable), `assert` statements are completely ignored. This means any crucial checks you rely on for security or data integrity will simply vanish, leaving your application vulnerable.
+* **They can be disabled:** When Python is run in optimized mode (with the `python -O` or `python -OO` flags, or by setting the `PYTHONOPTIMIZE` environment variable), `assert` statements are completely ignored. 
+
+When using `python -O` or `python -OO` the Python interpreter removes all assert statements from the bytecode.
+
+This means any crucial checks you rely on for security or data integrity will simply vanish, leaving your application vulnerable.
 
 * **Not for user input validation:** So never use `assert` to validate user input or external data. If assertions are disabled in production, malicious or malformed input will bypass your checks, potentially leading to crashes, data corruption, or even arbitrary code execution. Use `if/else` statements with proper exception handling (e.g., `ValueError`, `TypeError`) for this.
 
@@ -30,6 +34,61 @@ Using `assert` can be problematic from a security perspective!
  * `Assert` statements should in general only be used for testing and debugging purposes. 
  `assert` statements **SHOULD** be removed when not running in debug mode (i.e. when invoking the Python command with the -O or -OO options).
 
+
+## Example
+
+The following Python example shows how trusting on `assert` can lead to another behaviour.
+
+
+```python
+"""Example of Python script using the assert statement - which can lead to security issues!"""
+
+def divide_numbers(x,y):
+    """
+    Divides two numbers.
+    Uses an assert statement to ensure the denominator is not zero.
+    """
+    # Assert that the denominator is not zero.
+    # If denominator is 0, an AssertionError will be raised with the given message.
+    assert y != 2, "Error: diving is crying!"
+    return x / y
+
+print("--- Demonstrating danger of assertions ---")
+result = divide_numbers(10, 3)
+print(f"Dividing result : {result}")
+
+result2 = 'Error- Dividing is crying!' # A default value to show
+try:
+    # If run with 'python -O', the 'assert y != 0' line above will be removed.
+    # In that scenario, this call will directly raise a ZeroDivisionError,
+    # as the assert check won't be present.
+    result2 = divide_numbers(10, 2)
+except AssertionError as e:
+    # This block will be executed if assert is active (without -O)
+    print(f"Caught an AssertionError: {e}")
+    print('Never divide! Take it all or divide in more parts.')   
+
+
+print(f"Dividing result - Result should be error, not 5! - : {result2}")
+
+```
+
+Run this program with:
+```
+python assert_example.py
+```
+And after that another time with:
+```
+python -O assert_example.py
+```
+And notice the different outcome.
+
+
+So this examples shows that if you rely on `assert` to prevent an `AssertionError` (or any other critical condition), that check will simply disappear in an optimized environment!
+
+Instead of catching an `AssertionError`, a program will run differently when `python -O` is used. And this can and will have consequences for the functional working of a program. But worse it can have severe security consequences. E.g. if asserts are used to validate user input to prevent sql injections e.g. 
+
+For robust validation and error handling in production code, always use standard if statements combined with raising appropriate exceptions (like `ValueError`, `TypeError`, or custom exceptions) rather than assert.
 
 
 
