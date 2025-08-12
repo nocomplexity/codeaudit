@@ -1,4 +1,4 @@
-# Why Security testing on code
+# Why Security Testing 
 
 :::{note} 
 Static application security testing(SAST) for python source code is a MUST!
@@ -8,7 +8,7 @@ Static application security testing(SAST) for python source code is a MUST!
 :::
 
 
-Python is for one of the most used programming language to date. Especially in the AI/ML world and the cyber security world, most tools are based on Python programs. 
+Python is one of the most used programming language to date. Especially in the AI/ML world and the cyber security world, most tools are based on Python programs. 
 
 Large and small businesses use and trust Python to run their business. Python is from security perspective a **good** choice. However even when using Python the risk on security issues is never zero.
 
