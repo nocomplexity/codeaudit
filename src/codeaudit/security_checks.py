@@ -40,8 +40,7 @@ def ast_security_checks():
 
 def perform_validations(sourcefile):
     """For now a list defined here in this file"""
-    checks = ast_security_checks()
-    #df = pd.DataFrame(security_validations)
+    checks = ast_security_checks()    
     constructs = checks['construct'].to_list()
     
     source = read_in_source_file(sourcefile)

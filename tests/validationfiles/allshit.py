@@ -420,3 +420,10 @@ def run_with_trace2():
 import tempfile
 
 temp_filename = tempfile.mktemp()
+
+"""Checking on gzip.open"""
+import gzip as untrusteddanger
+
+content = b"Lots of content here"
+with untrusteddanger.open('/home/joe/file.txt.gz', 'wb') as f:
+    f.write(content)
