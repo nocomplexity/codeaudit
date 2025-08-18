@@ -166,7 +166,7 @@ def test_gzip_use():
     actual_data = result['result']
 
     # This is the expected dictionary
-    expected_data = {'gzip.open': [4]}
+    expected_data = {'gzip.open': [4], 'bz2.open': [11]}
     
 
     # Assert that the actual data matches the expected data

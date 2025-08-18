@@ -7,11 +7,13 @@ Validations are done on `zipfile` methods:
 * `.extractall`
 * `.open` and more.
 
-And `gzip` methods:
+And the methods:
 * `gzip.open`
+* `bz2.open`
 
-## Gzip potential danger
-When using `gzip.open` the potential security issue is related to resource consumption if the file is untrusted.
+## Potential danger when opening compressed files
+
+When using `gzip.open` or equivalent the potential security issue is related to resource consumption if the file is untrusted.
 
 This can lead to:
 * **Denial of Service via Resource Exhaustion**
@@ -26,3 +28,4 @@ A path traversal vulnerability could arise if the file in the `gzip` file is con
 
 * https://docs.python.org/3/library/zipfile.html#zipfile-resources-limitations
 * https://docs.python.org/3/library/gzip.html
+* https://docs.python.org/3/library/bz2.html#bz2.open

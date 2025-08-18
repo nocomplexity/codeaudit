@@ -55,6 +55,7 @@ Multiprocessing ,connection.recv,High,Connection.recv() uses pickle
 Multiprocessing ,multiprocessing.connection.Connection,High,Connection.recv() uses pickle
 Zipfile,zipfile.ZipFile,High,Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.
 Gzip,gzip.open,Medium,Potential resource consumption if the file is untrusted.
+bz2 use,bz2.open,Medium,Potential resource consumption if bz2 compressed file is untrusted.
 shutil,shutil.unpack_archive,Medium,Extracting files within a program should not be trusted by default.
 shutil,shutil.copy,Medium,Information can be transfered without permission.
 shutil,shutil.copy2,Medium,Information can be transfered without permission.
