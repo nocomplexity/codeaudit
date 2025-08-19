@@ -1,4 +1,4 @@
-# Check on zipfiles extraction
+# Zipfiles extraction
 
 When using the Python module `zipfile` there is a risk processing maliciously prepared `.zip files`. This can availability issues due to storage exhaustion. 
 
@@ -10,10 +10,14 @@ Validations are done on `zipfile` methods:
 And the methods:
 * `gzip.open`
 * `bz2.open`
+* `bz2.BZ2File` 
+* `lzma.open` 
+* `lzma.LZMAFile` 
 
 ## Potential danger when opening compressed files
 
 When using `gzip.open` or equivalent the potential security issue is related to resource consumption if the file is untrusted.
+This accounts also for using `bz2`, `lzma` or `tar` compressed files. All these great Python functions that can decompress files require defense in depth to be sure that only trusted files can be opened.
 
 This can lead to:
 * **Denial of Service via Resource Exhaustion**
@@ -23,6 +27,16 @@ Such `gzip` file could quickly consume all of the system's available RAM, causin
 
 * **Potential Path Traversal**
 A path traversal vulnerability could arise if the file in the `gzip` file is constructed from user input. For example, if the path came from a web request, a user could provide a path like ../../../../etc/passwd.gz to access sensitive files outside of the intended directory. This is a critical security consideration for any code that handles file paths based on external data that is decompressed with `gzip.open`.
+
+## Possible measures
+
+1. Make sure by design that these Python functions  will  **Only decompress files from trusted sources** 
+
+2. Set a limit for the  decompression size. This is not simple and always possible! The Python `lzma` library does not have a built-in parameter to do this directly. You would need to read the data in fixed-size chunks and check the total size as you go, raising an error if it exceeds a predefined limit.
+
+3. Check File Metadata: If possible, check the uncompressed size of the file from its header before starting the decompression. While not all formats contain this information, it can be a useful first check. **Note: This mitigation measurement should NEVER be used without other safeguards**
+
+4. Resource Monitoring: Monitor your application's memory,  CPU and resource usage during the decompression process and terminate it if it begins to consume an unusual amount of resources. Note that this measurement is not fail-safe!
 
 ## More information
 

@@ -5,7 +5,7 @@ from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
 from codeaudit.security_checks import perform_validations
 
-#constructs are tested in this test file based on SAST checks defined , not  running constructs directly for testing as in other test files.
+# constructs are tested in this test file based on SAST checks defined , not  running constructs directly for testing as in other test files.
 
 def test_shelve_usage():
     current_file_directory = Path(__file__).parent
@@ -159,15 +159,19 @@ def test_gzip_use():
     # validation1.py is in a subfolder:
     validation_file_path = current_file_directory / "validationfiles" / "gzip.py"
 
-            
     result = perform_validations(validation_file_path)
 
-    #actual_data = find_constructs(source, constructs) 
+    # actual_data = find_constructs(source, constructs)
     actual_data = result['result']
 
     # This is the expected dictionary
-    expected_data = {'gzip.open': [4], 'bz2.open': [11]}
-    
+    expected_data = {
+        "gzip.open": [4],
+        "bz2.open": [11],
+        "bz2.BZ2File": [18],
+        "lzma.open": [30, 36],
+        "lzma.LZMAFile": [46],
+    }
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
