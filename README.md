@@ -28,7 +28,7 @@ Python Codeaudit has the following features:
 
 * **Complexity & Statistics**: Reports security-relevant complexity using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count via Python's AST.
 
-* **Module Usage & External Vulnerabilities**: Detects used modules and reports vulnerabilities in external ones.
+* **Module Usage & External Vulnerabilities**: Detects used modules and reports known vulnerabilities for used external modules.
 
 * **Inline Issue Reporting**: Shows potential security issues with line numbers and code snippets.
 

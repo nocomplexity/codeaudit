@@ -13,11 +13,21 @@ And the methods:
 * `bz2.BZ2File` 
 * `lzma.open` 
 * `lzma.LZMAFile` 
+* `shutil.unpack_archive`
 
 ## Potential danger when opening compressed files
 
 When using `gzip.open` or equivalent the potential security issue is related to resource consumption if the file is untrusted.
-This accounts also for using `bz2`, `lzma` or `tar` compressed files. All these great Python functions that can decompress files require defense in depth to be sure that only trusted files can be opened.
+
+:::{caution} 
+Never extract archives from untrusted sources without prior inspection! 
+
+It is possible that files are created outside of the path specified in the extract_dir argument, e.g. members that have absolute filenames starting with “/” or filenames with two dots “..”.
+
+:::
+
+
+This accounts also for using `bz2`, `lzma` , `shutil.unpack_archive` or `tar` compressed files. All these great Python functions that can decompress files require defense in depth to be sure that only trusted files can be opened.
 
 This can lead to:
 * **Denial of Service via Resource Exhaustion**
@@ -43,3 +53,4 @@ A path traversal vulnerability could arise if the file in the `gzip` file is con
 * https://docs.python.org/3/library/zipfile.html#zipfile-resources-limitations
 * https://docs.python.org/3/library/gzip.html
 * https://docs.python.org/3/library/bz2.html#bz2.open
+* https://docs.python.org/3/library/shutil.html

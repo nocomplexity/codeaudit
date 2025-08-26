@@ -13,9 +13,10 @@ Other implemented checks on `shutil` module methods:
 * shutil.copy2
 * shutil.copytree
 * shutil.chown
+* shutil.rmtree
 
 Note:
-* `shutil.rmtree` can be dangerous. However this call is/will be depreciated within the `shutil` module. So codeaudit will not check on this construct.
+* `shutil.rmtree` can be dangerous. However this call is/will be depreciated within the `shutil` module. For now Python Code Audit will check on usage.
 
 
 ## More information

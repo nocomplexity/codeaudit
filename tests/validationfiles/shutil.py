@@ -8,6 +8,11 @@ shutil.copytree("project", "project_backup", symlinks=False, ignore=None, copy_f
 
 shutil.chown("logs/server.log", user="admin", group="admin", dir_fd=None, follow_symlinks=True)
 
+# This path should point to the directory you want to delete
+directory_to_delete = 'path/to/your/directory'
+
+# Use shutil.rmtree() to remove the directory and its contents
+shutil.rmtree(directory_to_delete)
 
 from shutil import copy as stealmydata 
 stealmydata("source_file.txt", "backup/source_file.txt", follow_symlinks=True)

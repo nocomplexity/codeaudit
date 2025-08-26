@@ -64,5 +64,6 @@ shutil,shutil.copy,Medium,Information can be transfered without permission.
 shutil,shutil.copy2,Medium,Information can be transfered without permission.
 shutil,shutil.copytree,Medium,Information can be transfered without permission.
 shutil,shutil.chown,Medium,Programs should not change access rights on files they do not own.
+shutil,shutil.rmtree,Medium,Risk on path traversal attack.
 HTTP servers: Check on usage.,http.server.BaseHTTPRequestHandler,High,Insecure for production use.
 HTTP servers: Check on usage.,http.server.HTTPServer,High,Insecure for production use.

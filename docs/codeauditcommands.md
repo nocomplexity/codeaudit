@@ -2,16 +2,13 @@
 # Overview of Codeaudit commands
 Codeaudit commands for: version: 0.10.0
 ```
---------------------------------------------------
-   _____          _                      _ _ _   
-  / ____|        | |                    | (_) |  
- | |     ___   __| | ___  __ _ _   _  __| |_| |_ 
- | |    / _ \ / _` |/ _ \/ _` | | | |/ _` | | __|
- | |___| (_) | (_| |  __/ (_| | |_| | (_| | | |_ 
-  \_____\___/ \__,_|\___|\__,_|\__,_|\__,_|_|\__|
---------------------------------------------------
+----------------------------------------------------
+ _                    __             _             
+|_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
+|   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
+----------------------------------------------------
 
-Codeaudit - Modern Python source code analyzer based on distrust.
+Python Code Audit - A modern Python security source code analyzer based on distrust.
 
 Commands to evaluate Python source code:
 Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 

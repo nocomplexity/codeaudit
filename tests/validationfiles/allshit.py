@@ -362,6 +362,12 @@ with ZipFile('spam.zip') as myzip:
 import shutil
 shutil.unpack_archive("example.zip", "extracted_files", format="zip", filter="data")
 
+# This path should point to the directory you want to delete
+directory_to_delete = 'path/to/your/directory'
+
+shutil.rmtree(directory_to_delete) #risk when path is user supplied or malformed dir!
+
+
 from shutil import copy as stealmydata 
 stealmydata("source_file.txt", "backup/source_file.txt", follow_symlinks=True)
 

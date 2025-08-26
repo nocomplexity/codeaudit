@@ -18,17 +18,14 @@ from codeaudit import __version__
 from codeaudit.reporting import overview_report ,report_module_information ,file_scan_report , directory_scan_report , report_implemented_tests
 
 codeaudit_ascii_art=r"""
---------------------------------------------------
-   _____          _                      _ _ _   
-  / ____|        | |                    | (_) |  
- | |     ___   __| | ___  __ _ _   _  __| |_| |_ 
- | |    / _ \ / _` |/ _ \/ _` | | | |/ _` | | __|
- | |___| (_) | (_| |  __/ (_| | |_| | (_| | | |_ 
-  \_____\___/ \__,_|\___|\__,_|\__,_|\__,_|_|\__|
---------------------------------------------------
+----------------------------------------------------
+ _                    __             _             
+|_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
+|   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
+----------------------------------------------------
 """
-     
 
+     
 def display_version():
     """Prints the module version. Use [-v] [--v] [-version] or [--version]."""
     print(f"version: {__version__}")
@@ -37,7 +34,7 @@ def display_version():
 def display_help():
     """Shows detailed help for using codeaudit tool."""    
     print(codeaudit_ascii_art)
-    print("Codeaudit - Modern Python source code analyzer based on distrust.\n")
+    print("Python Code Audit - A modern Python security source code analyzer based on distrust.\n")
     print("Commands to evaluate Python source code:")
     print('Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] \n')
     print('Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.\n')

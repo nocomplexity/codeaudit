@@ -4,6 +4,7 @@ Great that you want to contribute!
 
 :::{tip}
 All contributions are welcome!
+
 Think of corrections on the manual, code and more or better tests.
 :::
 
