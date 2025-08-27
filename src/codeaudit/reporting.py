@@ -116,7 +116,7 @@ def file_scan_report(file_to_scan , filename=DEFAULT_OUTPUT_FILE):
     scan_output = perform_validations(file_to_scan)    
     file_report_html = single_file_report(file_to_scan , scan_output)    
     name_of_file = get_filename_from_path(file_to_scan)
-    html = '<h1>Codeaudit report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
+    html = '<h1>Python Code Audit Report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
     html += f'<h2>Result of scan of file {name_of_file}</h2>'    
     html += '<p>' + f'Location of the file: {file_to_scan} </p>'  
     html += file_report_html    
@@ -195,7 +195,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
         exit(1) 
 
     collection_ok_files = [] # create a collection of files with no issues found    
-    html = '<h1>Codeaudit report</h1>'     
+    html = '<h1>Python Code Audit Report</h1>'     
     files_to_check = collect_python_source_files(directory_to_scan)
     html += '<h2>Directory scan report</h2>'     
     html += f'<p>Below the result of the Codeaudit scan of the directory:<b> {directory_to_scan}</b></p>' 
@@ -231,7 +231,7 @@ def report_module_information(inputfile,reportname=DEFAULT_OUTPUT_FILE):
     external_modules = used_modules['imported_modules']    
     l = len(external_modules)
     printProgressBar(0, l, prefix='Progress:', suffix='Complete', length=50)    
-    html = '<h1>Codeaudit Report</h1>'
+    html = '<h1>Python Code Audit Report</h1>'
     html += f'<h2>Module information for file {inputfile}</h2>'    
     html += dict_to_html(used_modules)    
     #Now vuln info per external module        
@@ -302,7 +302,7 @@ def create_htmlfile(html_input,outputfile):
         file_url = f'file://{directory_for_output}/{filename_only}'
     # Print the result
     print("\n=====================================================================")
-    print(f'Codeaudit report file created!\nPaste the line below directly into your browser bar:\n\t{file_url}\n')
+    print(f'Code Audit report file created!\nPaste the line below directly into your browser bar:\n\t{file_url}\n')
     print("=====================================================================\n")
 
 
