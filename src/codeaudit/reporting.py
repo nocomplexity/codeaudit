@@ -57,7 +57,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     df['Std-Modules'] = modules['Std-Modules']
     df['External-Modules'] = modules['External-Modules']
     overview_df = overview_count(df)
-    html = '<h1>' + f'Codeaudit overview report' + '</h1><br>'
+    html = '<h1>' + f'Python Code Audit overview report' + '</h1><br>'
     html += f'<p>Codeaudit overview scan of the directory:<b> {directory}</b></p>' 
     html += f'<h2>Summary</h2>'
     html += overview_df.to_html(escape=True,index=False)
@@ -168,7 +168,7 @@ def single_file_report(filename , scan_output):
     html += '<summary>Click to see details for used modules in this file.</summary>' 
     modules_found = get_imported_modules_by_file(filename)
     html += dict_to_html(modules_found)
-    html += f'<p><i>Use the command:<br><b><code>codeaudit modulescan {filename}</code></b><br> to check if vulnerabilities are reported in an external module used by this file.</i></p>' 
+    html += f'<p>To check for <b>reported vulnerabilities</b> in external modules used by this file, use the command:<br><div class="code-box">codeaudit modulescan {filename}</div><br></p>'     
     html += '</details>'           
     return html 
 
@@ -200,7 +200,11 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
     html += '<h2>Directory scan report</h2>'     
     html += f'<p>Below the result of the Codeaudit scan of the directory:<b> {directory_to_scan}</b></p>' 
     html += f'<p>Total Python files found: {len(files_to_check)}</p>'
-    for file_to_scan in files_to_check:
+    number_of_files = len(files_to_check)
+    print(f'Number of files that are checked for security issues:{number_of_files}')
+    printProgressBar(0, number_of_files, prefix='Progress:', suffix='Complete', length=50)    
+    for i,file_to_scan in enumerate(files_to_check):
+        printProgressBar(i + 1, number_of_files, prefix='Progress:', suffix='Complete', length=50)
         scan_output = perform_validations(file_to_scan)
         data = scan_output["result"]
         if data:
@@ -274,7 +278,7 @@ def create_htmlfile(html_input,outputfile):
     output += f'<style>\n{css_content}\n</style>'    
     output += '<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>' # needed for altair plots
     output += '<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>' # needed for altair plots
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>' # needed for altair plots
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>' # needed for altair plots   
     output += '</head><body>'
     output += '<div class="container">'
     output += html_input
@@ -368,7 +372,7 @@ def get_info_on_test(error):
 
 def report_implemented_tests(filename=DEFAULT_OUTPUT_FILE):
     """
-    Generate an HTML report of all implemented codeaudit security checks.
+    Creates an HTML report of all implemented security checks.
 
     This report provides a user-friendly overview of the static security checks 
     currently supported by codeaudit. It is intended to make it easier to review 
@@ -389,7 +393,7 @@ def report_implemented_tests(filename=DEFAULT_OUTPUT_FILE):
     df_checks = ast_security_checks()
     df_checks['construct'] = df_checks['construct'].apply(replace_second_dot) #Make the validation column smaller - this is the simplest way! without using styling options from Pandas!
     df_checks_sorted = df_checks.sort_values(by='construct')
-    html = '<h1>Codeaudit Implemented validations</h1>' #prepared to be embedded to display multiple reports, so <h2> used
+    html = '<h1>Python Code Audit Implemented validations</h1>' #prepared to be embedded to display multiple reports, so <h2> used
     number_of_test = len(df_checks)
     
     html += df_checks_sorted.to_html(escape=False,index=False)   

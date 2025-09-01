@@ -190,11 +190,15 @@ footer {
     font-family: Consolas, Monaco, 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
-    padding: 1em;
-    
+    padding: 1em;    
   }
-  
 
-/* nocxdataframe for table css */
-
-  
+  /* Styling for module check  info */
+  .code-box {
+    background: #2d2d2d;   /* black background */
+    color: white;        /* white text */
+    padding: 12px;       /* spacing inside the box */
+    border-radius: 6px;  /* rounded corners (optional) */
+    font-family: "Courier New", Courier, monospace; /* terminal-style font */    
+    width: fit-content;  /* box size fits the text */
+  }

@@ -27,7 +27,7 @@ codeaudit_ascii_art=r"""
 
      
 def display_version():
-    """Prints the module version. Use [-v] [--v] [-version] or [--version]."""
+    """Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version]."""
     print(f"version: {__version__}")
 
 
@@ -63,6 +63,7 @@ def main():
                 "filescan" : file_scan_report,
                 "directoryscan" : directory_scan_report,
                 "checks" : report_implemented_tests,
+                "version" : display_version,
                 "-help": display_help,
             }
         )
