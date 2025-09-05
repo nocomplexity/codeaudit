@@ -12,8 +12,10 @@ Check on eval usage,eval,High,This function can executes arbitrary code.
 Check on input statement,input,Low,Use of input requires strict sanitizing and validation.
 Exception Handling,pass,Low,Too broad exception handling risk when not used correctly.
 Exception Handling- Continue statement,continue,Low,Too broad exception handling risk when not used correctly.
-Built-in Functions: Check for exec usage.,exec,High,This built-in function can execute code you do not want and/or aware of. So check and validate if it is used correct.
+Built-in Functions: Check for exec usage.,exec,High,This built-in function can execute code you do not want. Check and refuse using dynamic contructs within exec you can not validate upfront.
 Built-in Functions: Check on compile usage.,compile,High,It is possible to crash the Python interpreter when using this function.
+Use of dynamic Imports,__import__,Medium,"Validate the what is imported and only allow of known, safe modules."
+Use of dynamic Imports,importlib.import_module,Medium,"Validate the what is imported and only allow of known, safe modules."
 Hash Check - md5,hashlib.md5,High,Use of insecure hashing algorithms detected.
 Hash Check -sha1,hashlib.sha1,High,Use of insecure hashing algorithms detected.
 Logging - configuration ,logging.config,Low,Potential security issues can arise with parsing objects and incorrect sanitizing.

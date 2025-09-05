@@ -8,6 +8,21 @@ The Python built-in functions:
 * `compile`
 Should always be reviewed within the full context. By default use of this function is a **red** alert from a security perspective.
 
+Python Code Audit checks also on Builtin that are 'hidden':
+
+* Confusable homoglyphs like: `ℯ𝓍ℯ𝒸("print(2 + 2)")` Statements are detected.
+
+* Obfuscating usage of builtins module calls of `eval`, `exec` and `compile` like:
+```python
+import builtins
+b = builtins
+b.exec("2+2")
+```
+Or
+```python
+code_obj = d.compile('x = 5*5\nprint(x)', '<string>', 'exec')
+result = d.exec(code_obj)  #Input should not be obfuscated. Code Audit will detect this!
+```
 
 ## Why check on `eval`
 

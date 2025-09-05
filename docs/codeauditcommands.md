@@ -20,8 +20,8 @@ Commands:
   directoryscan        Reports potential security issues for all Python files found in a directory.
   filescan             Reports potential security issues for a single Python file.
   modulescan           Reports module information per file.
-  checks               Generate an HTML report of all implemented codeaudit security checks.
-  version              Prints the module version. Use [-v] [--v] [-version] or [--version].
+  checks               Creates an HTML report of all implemented security checks.
+  version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
 Use the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!
 Check https://simplifysecurity.nocomplexity.com/ 
@@ -115,7 +115,7 @@ errors defaults to 'strict'.
 ## codeaudit checks
 ```text
 
-Generate an HTML report of all implemented codeaudit security checks.
+Creates an HTML report of all implemented security checks.
 
 This report provides a user-friendly overview of the static security checks 
 currently supported by codeaudit. It is intended to make it easier to review 
@@ -145,7 +145,7 @@ errors defaults to 'strict'.
 ```
 ## codeaudit version
 ```text
-Prints the module version. Use [-v] [--v] [-version] or [--version].str(object='') -> str
+Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 
 Create a new string object from the given object. If encoding or

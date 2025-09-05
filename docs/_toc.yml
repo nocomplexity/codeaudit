@@ -26,6 +26,7 @@ parts:
     - file: checks/chmod_check
     - file: checks/binding_check
     - file: checks/directorycreation_check
+    - file: checks/dynamicimport_check
     - file: checks/exception_check
     - file: checks/tarfile_extract_check
     - file: checks/hash_check

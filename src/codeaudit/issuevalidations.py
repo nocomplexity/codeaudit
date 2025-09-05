@@ -73,6 +73,14 @@ def find_constructs(source_code, constructs_to_detect):
                     elif node.func.attr in ('extractall', 'extract') and 'tarfile' in core_modules:   #note only in combination with tarfile import or alias - see step 1                                      
                         #construct = full_resolved
                         construct = 'tarfile.TarFile'
+                    elif node.func.attr in ('eval') and 'builtins' in core_modules:   #catch obfuscating eval construct with builtins module                        
+                        construct = 'eval'
+                    elif node.func.attr in ('exec') and 'builtins' in core_modules:   #catch obfuscating exec construct with builtins module                        
+                        construct = 'exec'
+                    elif node.func.attr in ('input') and 'builtins' in core_modules:   #catch obfuscating construct with builtins module                        
+                        construct = 'input'
+                    elif node.func.attr in ('compile') and 'builtins' in core_modules:   #catch obfuscating construct with builtins module                        
+                        construct = 'compile'
                 elif isinstance(func, ast.Name):
                     resolved = alias_map.get(func.id, func.id)                
                     if resolved in constructs_to_detect:
