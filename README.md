@@ -93,7 +93,7 @@ Check https://simplifysecurity.nocomplexity.com/
 
 ## Example
 
-By running the `codeaudit filescan` command, detailed security information is determined for a Python file based on more than **60 validations** implemented. 
+By running the `codeaudit filescan` command, detailed security information is determined for a Python file based on more than **70 validations** implemented. 
 
 The `codeaudit filescan` command shows all **potential** security issues that are detected in the source file in a HTML-report.
 
