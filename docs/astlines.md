@@ -1,9 +1,18 @@
-# AST Lines for code complexity
+# Why use AST for code complexity
 
 A simple way to count the number of lines of a file can be done with various unix commands. 
-Simple is to use the `wc` command. However counting lines is different from counting AST lines in a Python program.
+Simple is to use the `wc` command. 
 
-AST lines are needed to give a more precise indication of the complexity of a Python program.
+But counting code lines is different than counting AST lines in a Python program.
+
+:::{note} 
+AST lines give **good** indication for the complexity of a Python program.
+
+And complexity is the enemy of security! 
+
+So a low number for complexity has several advantages from a security perspective!
+:::
+
 
 
 To explain the difference between an **AST line** (as counted by the provided `count_ast_lines` function) and a **line counted by the Unix `wc` command**, let’s break it down:

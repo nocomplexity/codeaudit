@@ -49,11 +49,12 @@ parts:
 
 - caption: Architecture 
   chapters:     
-  # - file: astlines
+  #- file: astlines
   # - file: astlines2
   - file: complexitycheck
   - file: warnings
   - file: codeauditcommands
+  - file: changelog
   
   
   

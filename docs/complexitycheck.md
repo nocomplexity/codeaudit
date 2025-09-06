@@ -1,4 +1,4 @@
-# Codeaudit complexity Check
+# Complexity Check
 
 The Python `codeaudit` tool implements a Simple Cyclomatic complexity check.
 

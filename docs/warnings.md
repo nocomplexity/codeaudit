@@ -1,6 +1,6 @@
-# Handling warnings
+# Warnings
 
-Codeaudit captures warnings.
+Code Audit captures Python warnings.
 
 But:
 :::{caution} 

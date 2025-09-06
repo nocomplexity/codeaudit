@@ -34,7 +34,7 @@ Possible mitigations:
 * **ALWAYS** use the Python Code Audit `modulescan` option for all modules within a file.
 * Check and understand what will be imported and what security risks are involved. You **MUST** never trust that dynamic imports are safe. Most are not!
 * Check if your Python program has or needs an API to download dynamic imports. 
-* If you do not trust it: Call a security expert to help you! See the [sponsor](sponsor) page for companies that could help you!
+* If you do not trust it: Call a security expert to help you! See the [sponsor](../sponsors) page for companies that could help you!
 
 
 ## References

@@ -7,22 +7,19 @@
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10970/badge)](https://www.bestpractices.dev/projects/10970)
 [![PyPI Downloads](https://static.pepy.tech/badge/codeaudit)](https://pepy.tech/projects/codeaudit)
 
-Python Codeaudit - A modern Python source code analyzer based on distrust.
+Python Code Audit - A modern Python source code analyzer based on distrust.
 
-Codeaudit is a tool to find security issues in Python code. This static application security testing (SAST) tool has **great** features to simplify the necessary security tasks and make it fun and easy. 
+Python Code Audit is a tool to find **security issues** in Python code. This static application security testing (SAST) tool has **great** features to simplify the necessary security tasks and make it fun and easy. 
 
 This tool is created for:
-* Anyone who want or must check security risks with Python programs.
-* Anyone who loves to create functionality using Python. So not only professional programs , but also occasional Python programmers or programmers who are used to working with other languages.
-* Anyone who wants an easy way to get insight in possible security risks Python programs.
+* Users of Python programs who want to known the security risks of the used Python code. 
+* Anyone who loves to create Python programs and want to deliver Python code without vulnerabilities. So this tool is not only professional programs, but also occasional Python programmers. Creating secure software is very difficult. This program with the extensive documentation is your friendly security colleague!
+* Anyone who wants a simple way to get fast insight in possible security risks with Python packages or Python files.
 
-
-> [!WARNING]
-> Python Codeaudit is currently in *beta status*. Consider [contributing](CONTRIBUTING.md) to make Codeaudit the coolest open source Python SAST tool. Codeaudit is currently in a thorough testing phase. Use Python Codeaudit now and contribute to make it better!
 
 ## Features
 
-Python Codeaudit has the following features:
+Python Code Audit has the following features:
 
 * **Vulnerability Detection**: Identifies security vulnerabilities in Python files, essential for package security research.
 
@@ -37,7 +34,7 @@ Python Codeaudit has the following features:
 
 
 > [!IMPORTANT]
-> Python Codeaudit uses the Python's Abstract Syntax Tree (AST) to get robust and reliable result. Using the Python AST makes contextual Vulnerability Detection possible and false positive are minimized.
+> Python Code Audit uses the Python's Abstract Syntax Tree (AST) to get robust and reliable result. Using the Python AST makes contextual Vulnerability Detection possible and false positive are minimized.
 
 
 ## Installation
@@ -52,7 +49,7 @@ or use:
 pip install -U codeaudit
 ```
 
-If you have installed Codeaudit in the past and want to make sure you use the latest checks and features.
+If you have installed Python `codeaudit` in the past and want to make sure you use the latest new validations and features.
 
 ## Usage
 
@@ -65,16 +62,13 @@ codeaudit
 This will show all commands:
 
 ```text
---------------------------------------------------
-   _____          _                      _ _ _   
-  / ____|        | |                    | (_) |  
- | |     ___   __| | ___  __ _ _   _  __| |_| |_ 
- | |    / _ \ / _` |/ _ \/ _` | | | |/ _` | | __|
- | |___| (_) | (_| |  __/ (_| | |_| | (_| | | |_ 
-  \_____\___/ \__,_|\___|\__,_|\__,_|\__,_|_|\__|
---------------------------------------------------
+----------------------------------------------------
+ _                    __             _             
+|_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
+|   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
+----------------------------------------------------
 
-Codeaudit - Modern Python source code analyzer based on distrust.
+Python Code Audit - A modern Python security source code analyzer based on distrust.
 
 Commands to evaluate Python source code:
 Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 
@@ -83,14 +77,15 @@ Depending on the command, a directory or file name must be specified. The output
 
 Commands:
   overview             Reports Complexity and statistics per Python file from a directory.
-  modulescan           Reports module information per file.
-  filescan             Reports potential security issues for a single Python file.
   directoryscan        Reports potential security issues for all Python files found in a directory.
-  checks               Generate an HTML report of all implemented codeaudit security checks.
-  version              Prints the module version. Use [-v] [--v] [-version] or [--version].
+  filescan             Reports potential security issues for a single Python file.
+  modulescan           Reports module information per file.
+  checks               Creates an HTML report of all implemented security checks.
+  version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
-Use the [Codeaudit documentation](https://nocomplexity.com/documents/codeaudit/intro.html) to check the security of Python programs and make your Python programs more secure!
+Use the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!
 Check https://simplifysecurity.nocomplexity.com/ 
+
 ```
 
 ## Example

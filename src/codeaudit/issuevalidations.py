@@ -35,8 +35,7 @@ def find_constructs(source_code, constructs_to_detect):
     """
     with warnings.catch_warnings():  # Suppression of warnings
         warnings.simplefilter("ignore", category=SyntaxWarning)
-        tree = ast.parse(source_code)
-    
+        tree = ast.parse(source_code)    
         results = defaultdict(list)
         seen = set()  # (construct, lineno) pairs already counted
 
@@ -70,8 +69,7 @@ def find_constructs(source_code, constructs_to_detect):
                     full_resolved = resolved_prefix + full[len(prefix) :]                                
                     if full_resolved in constructs_to_detect:
                         construct = full_resolved                
-                    elif node.func.attr in ('extractall', 'extract') and 'tarfile' in core_modules:   #note only in combination with tarfile import or alias - see step 1                                      
-                        #construct = full_resolved
+                    elif node.func.attr in ('extractall', 'extract') and 'tarfile' in core_modules: #note only in combination with tarfile module or alias,see step1                                                              
                         construct = 'tarfile.TarFile'
                     elif node.func.attr in ('eval') and 'builtins' in core_modules:   #catch obfuscating eval construct with builtins module                        
                         construct = 'eval'
