@@ -2,16 +2,16 @@
 
 ![CodeauditLogo](images/codeauditlogo.png)
 
-Codeaudit is a Python Static Application Security Testing (SAST) tool to find **potential security issues** in Python source files.
+Python Code Audit is a Python Static Application Security Testing (SAST) tool to find **potential security issues** in Python source files.
 
-Codeaudit is designed to be:
+Python Code Audit is designed to be:
 * Simple to use.
 * Simple to extend for various use cases.
 * Powerful to determine *potential* security issues within Python code.
 
 ## Features
 
-:::{admonition} This Python Code Audit tool has the following features:
+:::{admonition} Python Code Audit has the following features:
 :class: tip
 
 

@@ -11,11 +11,14 @@ Python Code Audit - A modern Python source code analyzer based on distrust.
 
 Python Code Audit is a tool to find **security issues** in Python code. This static application security testing (SAST) tool has **great** features to simplify the necessary security tasks and make it fun and easy. 
 
-This tool is created for:
-* Users of Python programs who want to known the security risks of the used Python code. 
-* Anyone who loves to create Python programs and want to deliver Python code without vulnerabilities. So this tool is not only professional programs, but also occasional Python programmers. Creating secure software is very difficult. This program with the extensive documentation is your friendly security colleague!
-* Anyone who wants a simple way to get fast insight in possible security risks with Python packages or Python files.
+This tool is designed for anyone who uses or creates Python programs and wants to understand and mitigate potential security risks.
 
+This tool is created for:
+* Python Users who want to assess the security risks in the Python code they use.
+* Python Developers: Anyone, from professionals to hobbyists, who wants to deliver secure Python code.
+* Security-Conscious Users: People seeking a simple, fast way to gain insight into potential security vulnerabilities within Python packages or files.
+
+Creating secure software can be challenging. This tool, with its comprehensive [documentation](https://nocomplexity.com/documents/codeaudit/intro.html), acts as your helpful security colleague, making it easier to identify and address vulnerabilities.
 
 ## Features
 
