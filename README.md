@@ -48,7 +48,7 @@ pip install codeaudit
 
 or use:
 
-```bash
+```console
 pip install -U codeaudit
 ```
 
