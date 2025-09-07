@@ -30,6 +30,8 @@ We’ve got an audience of thousands of adopters that read and use our online Pl
 Please contact us by [using this page](https://nocomplexity.com/ads-and-sponsoring/) to discuss various options.
 
 ## Premium Sponsors
+For help with Python security issues, check if one of our sponsors can assist you.
+
 
 ::::{grid} 2
 :class-container: text-center

@@ -15,7 +15,6 @@ To report a security issue, please use the GitHub Security Advisory ["Report a V
 
 I will send a response indicating the next steps in handling your report. After the initial reply to your report, I will keep you informed of the progress towards a fix and full announcement, and may ask for additional information or guidance.
 
-For context on Electron's security notification process, please see the Notifications section of the Security WG's Membership and Notifications Governance document.
 
 ## Learning More About Security
 

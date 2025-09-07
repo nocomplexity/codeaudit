@@ -1,9 +1,9 @@
 # Features
 
-Codeaudit is a modern Python source code analyzer based on distrust.
+Python Code Audit is a modern Python source code analyzer based on distrust.
 
 
-:::{admonition} This Python Code Audit tool has the following features:
+:::{admonition} Python Code Audit tool has the following features:
 :class: tip
 
 
@@ -15,7 +15,7 @@ Codeaudit is a modern Python source code analyzer based on distrust.
 
 +++
 
-* **Module Usage & External Vulnerabilities**: Detects used modules and reports existing vulnerabilities in used modules.
+* **Module Usage & External Vulnerabilities**: Detects used modules and reports known vulnerabilities in used modules.
 
 
 +++
@@ -31,9 +31,9 @@ Codeaudit is a modern Python source code analyzer based on distrust.
 
 
 
-Codeaudit has the has the following capabilities:
+Python Code Audit has the has the following capabilities:
 
-*  Detect and reports complexity and statistics per Python file or from a directory. 
+*  Detect and reports complexity and statistics per Python file or from a directory. So you scan a complete Python package before running.
 
 Collected statistics are: 
     * Number_Of_Files
@@ -46,7 +46,7 @@ Collected statistics are:
 
 * All statistics are gathered per Python file. A summary is given for the inspected directory.
 
-*  Detect and reports which module are used within a Python file.
+*  Detect and reports which module are used within a Python file. 
 
 *  Reports valuable known security information on used modules.
 
