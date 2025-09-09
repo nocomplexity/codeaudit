@@ -218,7 +218,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
             collection_ok_files.append({'filename' : file_name_with_no_issue ,
                                         'directory': file_to_scan})
     html += '<h2>Files in directory with no security issues</h2>'
-    html += f'<p>Total Python files with no detected security issue: {len(collection_ok_files)}</p>'
+    html += f'<p>Total Python files <b>without</b> detected security issues: {len(collection_ok_files)}</p>'
     html += '<p>The Python files with no security issues <b>detected</b> by codeaudit are:<p>'        
     html += dict_list_to_html_table(collection_ok_files)     
     html += '<br>'

@@ -10,7 +10,7 @@ Python Code Audit is designed to be:
 * Powerful to determine *potential* security issues within Python code.
 
 :::{danger} 
-Using Python Code Audit you will give you direct insight in **potential security issues** in the Python programs you use.
+Using Python Code Audit you will give you insight in **potential security issues** in the Python programs you use.
 
 Make sure you want to know this!
 :::
@@ -49,6 +49,9 @@ There are not many good and maintained FOSS SAST tools for Python available. A w
 
 
 :::{note}
-This `codeaudit` tool is designed to be complete, fast and simple and easy to maintain library that can be extended for all needs.
+This `Python Code Audit` tool is built to be fast, lightweight, and easy to use.
+
+By default, the tool scans Python code against more than **70 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
+
 :::
 
