@@ -89,8 +89,11 @@ def get_filename_from_path(file_path):
     Returns:
         str: The file name.
     """
-    return os.path.basename(file_path)
+    #return os.path.basename(file_path) 
+    return Path(file_path).name
 
+
+    
 
 def is_ast_parseable(file_path):
     """
