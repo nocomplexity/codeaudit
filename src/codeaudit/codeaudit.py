@@ -15,7 +15,7 @@ CLI functions for codeaudit
 import fire  # for working CLI with this PoC-thing (The Google way)
 import sys
 from codeaudit import __version__
-from codeaudit.reporting import overview_report ,report_module_information ,file_scan_report , directory_scan_report , report_implemented_tests
+from codeaudit.reporting import overview_report ,report_module_information , scan_report , report_implemented_tests
 
 codeaudit_ascii_art=r"""
 ----------------------------------------------------
@@ -40,7 +40,7 @@ def display_help():
     print('Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.\n')
     print('Commands:')
     commands = ["overview", "filescan", "modulescan",  "checks","version"]  # commands on CLI
-    functions = [overview_report, file_scan_report, report_module_information, report_implemented_tests,display_version]  # Related functions relevant for help
+    functions = [overview_report, scan_report, report_module_information, report_implemented_tests,display_version]  # Related functions relevant for help
     for command, function in zip(commands, functions):
         docstring = function.__doc__.strip().split('\n')[0] or ""  
         summary = docstring.split("\n", 1)[0]
@@ -60,7 +60,7 @@ def main():
             {
                 "overview": overview_report,               
                 "modulescan": report_module_information,
-                "filescan" : file_scan_report,                
+                "filescan" : scan_report,                
                 "checks" : report_implemented_tests,
                 "version" : display_version,
                 "-help": display_help,

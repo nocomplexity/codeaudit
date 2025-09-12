@@ -98,7 +98,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     create_htmlfile(html,filename)
     
 
-def file_scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
+def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
     """Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
         
     This function performs security validations on the specified file or directory, 
