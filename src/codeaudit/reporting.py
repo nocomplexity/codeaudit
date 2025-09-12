@@ -15,6 +15,7 @@ Reporting functions for codeaudit
 
 import re
 import os
+from pathlib import Path
 
 import pandas as pd
 import datetime
@@ -97,13 +98,13 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     create_htmlfile(html,filename)
     
 
-def file_scan_report(file_to_scan , filename=DEFAULT_OUTPUT_FILE):
-    """Reports potential security issues for a single Python file.
-    
-    This function performs security validations on the specified file, 
+def file_scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
+    """Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+        
+    This function performs security validations on the specified file or directory, 
     formats the results into an HTML report, and writes the output to an HTML file. 
     
-    You can specify the name and directory for the generated HTML report.
+    You can specify the name of the outputfile and directory for the generated HTML report. Make sure you chose the extension `.html` since the output file is a static html file.
 
     Parameters:
         file_to_scan (str)      : The full path to the Python source file to be scanned.
@@ -113,16 +114,26 @@ def file_scan_report(file_to_scan , filename=DEFAULT_OUTPUT_FILE):
     Returns:
         None - A HTML report is written as output
     """
-    scan_output = perform_validations(file_to_scan)    
-    file_report_html = single_file_report(file_to_scan , scan_output)    
-    name_of_file = get_filename_from_path(file_to_scan)
-    html = '<h1>Python Code Audit Report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
-    html += f'<h2>Result of scan of file {name_of_file}</h2>'    
-    html += '<p>' + f'Location of the file: {file_to_scan} </p>'  
-    html += file_report_html    
-    html += '<br>'
-    html += DISCLAIMER_TEXT
-    create_htmlfile(html,filename)  
+      # Check if the input is a valid directory or a single valid Python file
+    file_path = Path(input_path)
+    if file_path.is_dir():
+        directory_scan_report(input_path , filename ) #create a package aka directory scan report
+    elif file_path.suffix == ".py" and file_path.is_file():        
+        #create a sast file check report
+        scan_output = perform_validations(input_path)
+        file_report_html = single_file_report(input_path , scan_output)    
+        name_of_file = get_filename_from_path(input_path)
+        html = '<h1>Python Code Audit Report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
+        html += f'<h2>Result of scan of file {name_of_file}</h2>'    
+        html += '<p>' + f'Location of the file: {input_path} </p>'  
+        html += file_report_html    
+        html += '<br>'
+        html += DISCLAIMER_TEXT
+        create_htmlfile(html,filename)
+    else:
+        #Its not a directory nor a valid Python file:
+        print(f"Error: {input_path} File is not a *.py file, does not exist or {input_path} is not a valid directory path.\n")
+   
 
 def single_file_report(filename , scan_output):
     """Function to DRY for a codescan when used for single for CLI or within a directory scan"""
@@ -197,8 +208,9 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
     collection_ok_files = [] # create a collection of files with no issues found    
     html = '<h1>Python Code Audit Report</h1>'     
     files_to_check = collect_python_source_files(directory_to_scan)
-    html += '<h2>Directory scan report</h2>'     
-    html += f'<p>Below the result of the Codeaudit scan of the directory:<b> {directory_to_scan}</b></p>' 
+    html += '<h2>Directory scan report</h2>'         
+    name_of_package = get_filename_from_path(directory_to_scan)
+    html += f'<p>Below the result of the Codeaudit scan of the package or directory:<b> {name_of_package}</b></p>' 
     html += f'<p>Total Python files found: {len(files_to_check)}</p>'
     number_of_files = len(files_to_check)
     print(f'Number of files that are checked for security issues:{number_of_files}')
