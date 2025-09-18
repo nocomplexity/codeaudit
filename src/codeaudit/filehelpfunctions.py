@@ -28,7 +28,7 @@ def read_in_source_file(file_path):
         )
         sys.exit(1)
 
-    if file_path.suffix != ".py":
+    if file_path.suffix.lower() != ".py":
         print("Error: The given file is not a Python (.py) file.")
         sys.exit(1)
 
@@ -115,3 +115,22 @@ def is_ast_parseable(file_path):
         return True
     except (SyntaxError, UnicodeDecodeError, ValueError) as e:
         return False
+
+
+def has_python_files(input_path):
+    """
+    Check whether a directory contains at least one Python file.
+
+    Args:
+        input_path (str | Path): Path to a directory.
+
+    Returns:
+        bool: True if the directory contains at least one Python file, False otherwise.
+    """
+    file_path = Path(input_path)
+
+    if not file_path.is_dir():
+        return False
+
+    files_to_check = collect_python_source_files(file_path)
+    return len(files_to_check) > 0

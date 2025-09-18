@@ -131,7 +131,7 @@ def total_modules(directory):
 
 
 def overview_per_file(python_file):
-    """gets the overview per file."""
+    """gets the relevant security statistics overview per file."""
     result = {}
     source = read_in_source_file(python_file)
     name_of_file = get_filename_from_path(python_file)

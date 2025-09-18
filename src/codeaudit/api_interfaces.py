@@ -43,31 +43,35 @@ def filescan(input_path):
     output = ca_version_info | {"generated_on" : timestamp_str}    
     # Check if the input is a valid directory or a single valid Python file
     if file_path.is_dir():
-        files_to_check = collect_python_source_files(input_path)
-        modules_discovered = get_all_modules(input_path) #all modules for the package aka directory
-        name_of_package = get_filename_from_path(input_path)
-        package_overview = get_package_overview(input_path)
-        output |= {"package_name" : name_of_package ,
-                   "statistics_overview" : package_overview ,
-                   "module_overview" : modules_discovered }        
-        for i,file in enumerate(files_to_check):            
-            file_information = overview_per_file(file)
-            module_information = get_modules(file) # modules per file            
-            scan_output = codeaudit_scan(file)
-            file_output[i] = file_information | module_information | scan_output
-        output |= { "file_security_info" : file_output}
-        return output
-    elif file_path.suffix == ".py" and file_path.is_file():        
+        files_to_check = collect_python_source_files(input_path)        
+        if len(files_to_check) > 1:
+            modules_discovered = get_all_modules(input_path) #all modules for the package aka directory
+            name_of_package = get_filename_from_path(input_path)
+            package_overview = get_overview(input_path)
+            output |= {"package_name" : name_of_package ,
+                    "statistics_overview" : package_overview ,
+                    "module_overview" : modules_discovered }        
+            for i,file in enumerate(files_to_check):            
+                file_information = overview_per_file(file)
+                module_information = get_modules(file) # modules per file            
+                scan_output = codeaudit_scan(file)
+                file_output[i] = file_information | module_information | scan_output
+            output |= { "file_security_info" : file_output}
+            return output
+        else:
+            output_msg = f'Directory path {input_path} contains no Python files.'
+            return {"Error" : output_msg}
+    elif file_path.suffix.lower() == ".py" and file_path.is_file():        
         #do a file check                        
         file_information = overview_per_file(input_path) 
         module_information = get_modules(input_path) # modules per file
         scan_output = codeaudit_scan(input_path)                
-        file_output[0] = file_information | module_information | scan_output #there is only 1 file , so index 0
+        file_output[0] = file_information | module_information | scan_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
         output |= { "file_security_info" : file_output}
         return output
     else:
         #Its not a directory nor a valid Python file:
-        return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path."}
+        return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."}
 
 def codeaudit_scan(filename):
     """Function to do a SAST scan on a single file"""
@@ -95,8 +99,8 @@ def get_modules(filename):
     modules_found = get_imported_modules_by_file(filename)
     return modules_found
 
-def get_package_overview(input_path):
-    """Gets the package overview statistics
+def get_overview(input_path):
+    """Retrieves the security relevant statistics of a Python package(directory) or of a single Python 
 
     Based on the input path, call the overview function and return the result in a dict
 
@@ -107,11 +111,25 @@ def get_package_overview(input_path):
     Returns:
         dict: Returns the overview statistics in DICT format
     """
-    statistics = get_statistics(input_path)
-    modules = total_modules(input_path)
-    df = pd.DataFrame(statistics) 
-    df['Std-Modules'] = modules['Std-Modules'] #Needed for the correct overall count
-    df['External-Modules'] = modules['External-Modules'] #Needed for the correct overall count
-    overview_df = overview_count(df) #create the overview Dataframe
-    dict_overview = overview_df.to_dict(orient="records")[0] #The overview Dataframe has only one row
-    return dict_overview
+    file_path = Path(input_path)
+    if file_path.is_dir():
+        files_to_check = collect_python_source_files(input_path)        
+        if len(files_to_check) > 1:
+            statistics = get_statistics(input_path)
+            modules = total_modules(input_path)
+            df = pd.DataFrame(statistics) 
+            df['Std-Modules'] = modules['Std-Modules'] #Needed for the correct overall count
+            df['External-Modules'] = modules['External-Modules'] #Needed for the correct overall count
+            overview_df = overview_count(df) #create the overview Dataframe
+            dict_overview = overview_df.to_dict(orient="records")[0] #The overview Dataframe has only one row
+            return dict_overview
+        else:
+            output_msg = f'Directory path {input_path} contains no Python files.'
+            return {"Error" : output_msg}
+    elif file_path.suffix.lower() == ".py" and file_path.is_file():
+        security_statistics = overview_per_file(input_path)
+        return security_statistics
+    else:
+        #Its not a directory nor a valid Python file:
+        return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path to a Python package."}
+

@@ -21,7 +21,7 @@ import pandas as pd
 import datetime
 
 from codeaudit.security_checks import perform_validations , ast_security_checks
-from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file 
+from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file , has_python_files
 from codeaudit.altairplots import multi_bar_chart
 from codeaudit.totals import get_statistics , overview_count , overview_per_file , total_modules
 from codeaudit.checkmodules import get_imported_modules , check_module_on_vuln , get_all_modules , get_imported_modules_by_file
@@ -51,6 +51,10 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     if not os.path.isdir(directory):
         print(f"ERROR: '{directory}' is not a directory (maybe you try to run it for a single file)")
         print(f"This function only works for directories which contains one or more Python source code files (*.py). ")
+        exit(1)
+    #Check if the directory has Python files
+    if not has_python_files(directory):
+        print(f'Error: Directory path {directory} contains no Python files.')
         exit(1)
     result = get_statistics(directory)
     modules = total_modules(directory)    
@@ -96,7 +100,8 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     html += '<h2>Visual Overview</h2>'    
     html += extract_altair_html(plot_html)    
     create_htmlfile(html,filename)
-    
+        
+        
 
 def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
     """Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
