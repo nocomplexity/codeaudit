@@ -16,13 +16,14 @@ Public API functions for Python Code Audit aka codeaudit on pypi.org
 from codeaudit import __version__
 from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files 
 from codeaudit.security_checks import perform_validations
-from codeaudit.totals import overview_per_file 
+from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file
 
 
 from pathlib import Path
 import json
 import datetime 
+import pandas as pd
 
 def version():
     """Returns the version of Python Code Audit"""
@@ -45,7 +46,9 @@ def filescan(input_path):
         files_to_check = collect_python_source_files(input_path)
         modules_discovered = get_all_modules(input_path) #all modules for the package aka directory
         name_of_package = get_filename_from_path(input_path)
+        package_overview = get_package_overview(input_path)
         output |= {"package_name" : name_of_package ,
+                   "statistics_overview" : package_overview ,
                    "module_overview" : modules_discovered }        
         for i,file in enumerate(files_to_check):            
             file_information = overview_per_file(file)
@@ -83,7 +86,7 @@ def save_to_json(sast_result, filename="sast_fileoutput.json"):
     Convert the SAST object to a JSON string
     """
     json_output = json.dumps(sast_result)
-    with open("sast_fileoutput.json", "w") as f:
+    with open(filename, "w") as f:
         f.write(json_output)
     return 
 
@@ -91,3 +94,24 @@ def get_modules(filename):
     """Gets modules of a Python file """
     modules_found = get_imported_modules_by_file(filename)
     return modules_found
+
+def get_package_overview(input_path):
+    """Gets the package overview statistics
+
+    Based on the input path, call the overview function and return the result in a dict
+
+    Args:
+        input_path: Directory path of the package to use
+        
+
+    Returns:
+        dict: Returns the overview statistics in DICT format
+    """
+    statistics = get_statistics(input_path)
+    modules = total_modules(input_path)
+    df = pd.DataFrame(statistics) 
+    df['Std-Modules'] = modules['Std-Modules'] #Needed for the correct overall count
+    df['External-Modules'] = modules['External-Modules'] #Needed for the correct overall count
+    overview_df = overview_count(df) #create the overview Dataframe
+    dict_overview = overview_df.to_dict(orient="records")[0] #The overview Dataframe has only one row
+    return dict_overview
