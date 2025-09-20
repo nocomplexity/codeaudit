@@ -15,7 +15,7 @@ Public API functions for Python Code Audit aka codeaudit on pypi.org
 
 from codeaudit import __version__
 from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files 
-from codeaudit.security_checks import perform_validations
+from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file
 
@@ -133,3 +133,18 @@ def get_overview(input_path):
         #Its not a directory nor a valid Python file:
         return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path to a Python package."}
 
+def get_default_validations():
+    """Retrieves the implemented default security validations
+    Args:
+        none
+
+    Returns:
+        dict: Overview of implemented security SAST validation on Standard Python modules
+    """
+    ca_version_info = version()
+    df = ast_security_checks()
+    result = df.to_dict(orient="records")
+    now = datetime.datetime.now()
+    timestamp_str = now.strftime("%Y-%m-%d %H:%M")
+    output = ca_version_info | {"generated_on" : timestamp_str} | {"validations" : result}
+    return output
