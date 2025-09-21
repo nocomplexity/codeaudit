@@ -245,7 +245,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
 
 
 def report_module_information(inputfile,reportname=DEFAULT_OUTPUT_FILE):
-    """Reports module information per file.""" 
+    """Reports module vulnerability information.""" 
     source = read_in_source_file(inputfile)
     used_modules = get_imported_modules(source)
     # Initial call to print 0% progress

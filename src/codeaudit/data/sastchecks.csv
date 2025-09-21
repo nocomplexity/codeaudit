@@ -48,8 +48,8 @@ Subprocesses - Popen,subprocess.Popen,Medium,Use of the subprocess module calls 
 Subprocesses - run,subprocess.run,Medium,Use of the subprocess module calls should be analyzed in-depth.
 Tarfile,tarfile.TarFile,High,Extracting files within a program should never be trusted by default. This issue is detected when the zipfile and/or tarfile module with an extraction method is used.
 Encodings,base64,Low,"Base encoding visually hides otherwise easily recognized information such as passwords, but does not provide any computational confidentiality."
-XML - client,xmlrpc.client,High,xmlrpc is vulnerable to the “decompression bomb” attack.
-XML - server,xmlrpc.server.SimpleXMLRPCServer,High,xmlrpc.server is vulnerable to the “decompression bomb” attack.
+XML - client,xmlrpc.client,High,xmlrpc.client call is vulnerable to the “decompression bomb” attack.
+XML - server,xmlrpc.server.SimpleXMLRPCServer,High,xmlrpc.server call is vulnerable to the “decompression bomb” attack.
 Random numbers generation module,random.random,Low,The pseudo-random generators of this module should not be used for security purposes.
 Random numbers generation module,random.seed,Low,The pseudo-random generators of this module should not be used for security purposes.
 Shelve module,shelve.open,High,Only loading a shelve from a trusted source is secure. So check if this is the case.
