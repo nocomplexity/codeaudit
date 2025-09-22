@@ -66,7 +66,14 @@ def get_standard_library_modules():
 
 
 def query_osv(package_name, ecosystem="PyPI"):
-    """MVP version to check imported module on vulnerabilities on osv db"""
+    """Query the OSV DB (Open Source Vulnerabilities) API for a given package.
+    Args:
+        package_name (str): The name of the package to check.
+        ecosystem (str, optional): The package ecosystem (default: "PyPI").
+
+    Returns:
+        dict: The parsed JSON response from the OSV API, or an error response.
+    """
     url = "https://api.osv.dev/v1/query"
     headers = {"Content-Type": "application/json"}
     data = {
@@ -81,23 +88,34 @@ def query_osv(package_name, ecosystem="PyPI"):
     with urllib.request.urlopen(request) as response:
         return json.loads(response.read().decode("utf-8"))
 
+def extract_vulnerability_info(data):
+    """
+    Extract vulnerability details from OSV response data.
 
-def extract_vuln_info(data):
+    Args:
+        data (dict): The JSON response from the OSV API.
+
+    Returns:
+        list: A list of vulnerability summaries containing ID, details, and aliases.
+    """
     results = []
     for vuln in data.get("vulns", []):
-        info = {
-            "id": vuln.get("id"),
-            "details": vuln.get("details"),
-            "aliases": vuln.get("aliases", []),
-        }
-        results.append(info)
+        results.append(
+            {
+                "id": vuln.get("id"),
+                "summary": vuln.get("summary", ""),
+                "details": vuln.get("details", ""),
+                "aliases": vuln.get("aliases", []),
+                "severity": vuln.get("severity", []),  # CVSS scores if available               
+            }
+        )
     return results
 
 
-def check_module_on_vuln(module):
+def check_module_vulnerability(module):
     """Retrieves vuln info for external modules using osv-db"""
     result = query_osv(module)
-    vulnerability_info = extract_vuln_info(result)
+    vulnerability_info = extract_vulnerability_info(result)
     return vulnerability_info
 
 

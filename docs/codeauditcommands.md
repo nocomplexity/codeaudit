@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
-# Overview of Codeaudit commands
-Codeaudit commands for: version: 1.0.0
+# Commands Overview
+Python Code Audit commands for: version: 1.1.0
 ```
 ----------------------------------------------------
  _                    __             _             
@@ -17,9 +17,8 @@ Depending on the command, a directory or file name must be specified. The output
 
 Commands:
   overview             Reports Complexity and statistics per Python file from a directory.
-  directoryscan        Reports potential security issues for all Python files found in a directory.
-  filescan             Reports potential security issues for a single Python file.
-  modulescan           Reports module information per file.
+  filescan             Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+  modulescan           Reports module vulnerability information.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
@@ -27,7 +26,7 @@ Use the Codeaudit documentation to check the security of Python programs and mak
 Check https://simplifysecurity.nocomplexity.com/ 
 
 ```
-## codeaudit overview
+## Code Audit overview
 ```text
 Reports Complexity and statistics per Python file from a directory.
 
@@ -45,9 +44,9 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## codeaudit modulescan
+## Code Audit modulescan
 ```text
-Reports module information per file.str(object='') -> str
+Reports module vulnerability information.str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 
 Create a new string object from the given object. If encoding or
@@ -58,14 +57,14 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## codeaudit filescan
+## Code Audit filescan
 ```text
-Reports potential security issues for a single Python file.
-
-This function performs security validations on the specified file, 
+Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+    
+This function performs security validations on the specified file or directory, 
 formats the results into an HTML report, and writes the output to an HTML file. 
 
-You can specify the name and directory for the generated HTML report.
+You can specify the name of the outputfile and directory for the generated HTML report. Make sure you chose the extension `.html` since the output file is a static html file.
 
 Parameters:
     file_to_scan (str)      : The full path to the Python source file to be scanned.
@@ -85,34 +84,7 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## codeaudit directoryscan
-```text
-Reports potential security issues for all Python files found in a directory.
-
-This function performs security validations on all files found in a specified directory.
-The result is written to a HTML report. 
-
-You can specify the name and directory for the generated HTML report.
-
-Parameters:
-    file_to_scan (str)      : The full path to the Python source file to be scanned.
-    filename (str, optional): The name of the HTML file to save the report to.
-                              Defaults to `DEFAULT_OUTPUT_FILE`.
-
-Returns:
-    None - A HTML report is written as output
-str(object='') -> str
-str(bytes_or_buffer[, encoding[, errors]]) -> str
-
-Create a new string object from the given object. If encoding or
-errors is specified, then the object must expose a data buffer
-that will be decoded using the given encoding and error handler.
-Otherwise, returns the result of object.__str__() (if defined)
-or repr(object).
-encoding defaults to 'utf-8'.
-errors defaults to 'strict'.
-```
-## codeaudit checks
+## Code Audit checks
 ```text
 
 Creates an HTML report of all implemented security checks.
@@ -143,7 +115,7 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## codeaudit version
+## Code Audit version
 ```text
 Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str

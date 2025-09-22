@@ -17,13 +17,14 @@ from codeaudit import __version__
 from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files 
 from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
-from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file
+from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
 
 
 from pathlib import Path
 import json
 import datetime 
 import pandas as pd
+import platform
 
 def version():
     """Returns the version of Python Code Audit"""
@@ -84,15 +85,29 @@ def codeaudit_scan(filename):
               "sast_result": sast_result}    
     return output
 
-
-def save_to_json(sast_result, filename="sast_fileoutput.json"):
-    """Saves CA dict to a json file
-    Convert the SAST object to a JSON string
+def save_to_json(sast_result, filename="codeaudit_output.json"):
     """
-    json_output = json.dumps(sast_result)
-    with open(filename, "w") as f:
-        f.write(json_output)
-    return 
+    Save a SAST result (dict or serializable object) to a JSON file.
+
+    Args:
+        sast_result (dict or list): The data to be saved as JSON.
+        filename (str, optional): The file path to save the JSON data.
+            Defaults to "codeaudit_output.json".
+
+    Returns:
+        Path: The absolute path of the saved file, or None if saving failed.
+    """
+    filepath = Path(filename).expanduser().resolve()
+
+    try:
+        filepath.parent.mkdir(parents=True, exist_ok=True)  # ensure directory exists
+        with filepath.open("w", encoding="utf-8") as f:
+            json.dump(sast_result, f, indent=2, ensure_ascii=False)
+        return
+    except (TypeError, ValueError) as e:
+        print(f"[Error] Failed to serialize data to JSON: {e}")
+    except OSError as e:
+        print(f"[Error] Failed to write file '{filepath}': {e}")
 
 def get_modules(filename):
     """Gets modules of a Python file """
@@ -140,11 +155,55 @@ def get_default_validations():
 
     Returns:
         dict: Overview of implemented security SAST validation on Standard Python modules
-    """
-    ca_version_info = version()
+    """    
     df = ast_security_checks()
-    result = df.to_dict(orient="records")
+    result = df.to_dict(orient="records")    
+    output = generation_info() | {"validations" : result}
+    return output
+
+def generation_info():
+    """Internal function to retrieve generation info for APIs output"""
+    ca_version_info = version()    
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    output = ca_version_info | {"generated_on" : timestamp_str} | {"validations" : result}
+    output = ca_version_info | {"generated_on" : timestamp_str}
+    return output
+
+def platform_info():
+    """Get platform info
+    Args:
+        none
+
+    Returns:
+        dict: Overview of implemented security SAST validation on Standard Python modules       
+    """
+    python_version = platform.python_version()
+    platform_implementation = platform.python_implementation()
+    output = { "python_version" : python_version ,
+              "python_implementation" : platform_implementation}
+    return output
+
+
+def get_psl_modules():
+    """Retrieves a list of  collection of Python modules that are part of a Python distribution aka standard installation
+    
+    Returns:
+        dict: Overview of PSL modules in the Python version used.
+    
+    """
+    psl_modules = get_standard_library_modules()
+    output = generation_info() | platform_info() | { "psl_modules" : psl_modules}
+    return output
+
+def get_module_vulnerability_info(module):
+    """Retrieves vulnerability information for external modules using the OSV Database
+    Args:
+        input: module name
+    
+    Returns:
+        dict: Result of OSV query 
+    """
+    vuln_info = check_module_vulnerability(module)
+    key_string = f'{module}_vulnerability_info'
+    output = generation_info() | { key_string : vuln_info}
     return output

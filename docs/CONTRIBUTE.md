@@ -23,7 +23,7 @@ This simple tool is designed to be simple to use and maintain.
 
 **Pull Requests are welcome!** 
 
-When you contribute to Codeaudit, your contributions are made under the same license as the file you are working on. 
+When you contribute to Python Code Audit, your contributions are made under the same license as the file you are working on. 
 
 
 We adopt the [Collective Code Construction Contract(C4)](https://rfc.zeromq.org/spec/42/) to streamline collaboration. C4 is meant to provide a reusable optimal collaboration model for open source software projects. 

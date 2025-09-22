@@ -73,7 +73,7 @@ This command provides:
 To scan every file in the repository, use:  
 
 ```bash
-codeaudit directoryscan <DIRECTORY> [OUTPUTFILE]
+codeaudit filescanscan <DIRECTORY> [OUTPUTFILE]
 ```
 
 - `DIRECTORY`: Path to the repository folder (e.g., `pydantic`).  
@@ -82,7 +82,7 @@ codeaudit directoryscan <DIRECTORY> [OUTPUTFILE]
 **Example:** Scan the cloned Pydantic package:  
 
 ```bash
-codeaudit directoryscan pydantic
+codeaudit filescan pydantic
 ```
 
 ---

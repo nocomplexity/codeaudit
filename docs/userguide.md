@@ -28,9 +28,16 @@ It is recommended to use `pip` for installation.
 If you want to inspect a package or directory of Python files a simple workflow is:
 
 1. Start with an overview: `codeaudit overview`
-2. Do a directory scan: `codeaudit directoryscan` OR
-3. OR Scan files of interest with: `codeaudit filescan` 
-4. Inspect the used modules of a file on reported vulnerabilties by: `codeaudit modulescan`
+
+This will give valuable security statistics.
+
+2. Do a file or directory scan: `codeaudit filescan` 
+
+This will give a detailed report for all file(s) with potential security issues listed by line number.
+
+3. Inspect the used modules of a file on reported vulnerabilities by: `codeaudit modulescan`
+
+This will give a detailed report on known vulnerabilities for a module.
 
 :::
 
