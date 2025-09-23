@@ -10,9 +10,10 @@ Python Code Audit is designed to be:
 * Powerful to determine *potential* security issues within Python code.
 
 :::{danger} 
-Using Python Code Audit you will give you insight in **potential security issues** in the Python programs you use.
+Python Code Audit gives you insight into potential security issues in your Python programs.
 
-Make sure you want to know this!
+Are you ready to discover what's lurking in your code?
+
 :::
 
 ## Features
