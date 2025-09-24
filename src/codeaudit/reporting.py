@@ -21,7 +21,7 @@ import pandas as pd
 import datetime
 
 from codeaudit.security_checks import perform_validations , ast_security_checks
-from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file , has_python_files
+from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , read_in_source_file , has_python_files , is_ast_parsable
 from codeaudit.altairplots import multi_bar_chart
 from codeaudit.totals import get_statistics , overview_count , overview_per_file , total_modules
 from codeaudit.checkmodules import get_imported_modules , check_module_vulnerability , get_all_modules , get_imported_modules_by_file
@@ -123,7 +123,7 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
     file_path = Path(input_path)
     if file_path.is_dir():
         directory_scan_report(input_path , filename ) #create a package aka directory scan report
-    elif file_path.suffix == ".py" and file_path.is_file():        
+    elif file_path.suffix == ".py" and file_path.is_file() and is_ast_parsable(input_path):        
         #create a sast file check report
         scan_output = perform_validations(input_path)
         file_report_html = single_file_report(input_path , scan_output)    
@@ -136,8 +136,9 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
         html += DISCLAIMER_TEXT
         create_htmlfile(html,filename)
     else:
-        #Its not a directory nor a valid Python file:
-        print(f"Error: {input_path} File is not a *.py file, does not exist or {input_path} is not a valid directory path.\n")
+        #File is NOT a valid Python file, can not be parsed or directory is invalid.
+        print(f"Error: '{input_path}' isn't a valid Python file or directory path.")
+        
    
 
 def single_file_report(filename , scan_output):

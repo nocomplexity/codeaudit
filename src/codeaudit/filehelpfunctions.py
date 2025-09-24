@@ -72,7 +72,7 @@ def collect_python_source_files(directory):
     #check if the file can be parsed using the AST
     final_file_list = []
     for python_file in python_files:
-        if is_ast_parseable(python_file):
+        if is_ast_parsable(python_file):
             final_file_list.append(python_file)
         else:
             print(f'Error: {python_file} will be skipped due to syntax error while parsing into AST.')
@@ -95,7 +95,7 @@ def get_filename_from_path(file_path):
 
     
 
-def is_ast_parseable(file_path):
+def is_ast_parsable(file_path):
     """
     Checks whether a Python file can be parsed using the AST module.
 

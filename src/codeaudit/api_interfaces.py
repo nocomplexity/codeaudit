@@ -14,7 +14,7 @@ Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
 
 from codeaudit import __version__
-from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files 
+from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , is_ast_parsable 
 from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
@@ -62,7 +62,7 @@ def filescan(input_path):
         else:
             output_msg = f'Directory path {input_path} contains no Python files.'
             return {"Error" : output_msg}
-    elif file_path.suffix.lower() == ".py" and file_path.is_file():        
+    elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):   #check on parseable single Python file   
         #do a file check                        
         file_information = overview_per_file(input_path) 
         module_information = get_modules(input_path) # modules per file
@@ -127,7 +127,7 @@ def get_overview(input_path):
         dict: Returns the overview statistics in DICT format
     """
     file_path = Path(input_path)
-    if file_path.is_dir():
+    if file_path.is_dir(): #only for valid parsable Python files
         files_to_check = collect_python_source_files(input_path)        
         if len(files_to_check) > 1:
             statistics = get_statistics(input_path)
@@ -141,7 +141,7 @@ def get_overview(input_path):
         else:
             output_msg = f'Directory path {input_path} contains no Python files.'
             return {"Error" : output_msg}
-    elif file_path.suffix.lower() == ".py" and file_path.is_file():
+    elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):
         security_statistics = overview_per_file(input_path)
         return security_statistics
     else:
