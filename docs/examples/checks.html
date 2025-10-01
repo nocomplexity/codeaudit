@@ -1,0 +1,637 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+/* Reset some default styles for consistency */
+/* GPLv3 - (c) Maikel Mardjan - simple works fine */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Base container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* Remove default margins/paddings */
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body base styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #ff0000; /* Set heading text color to red */
+}
+
+/* Headings */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Paragraphs and links */
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Lists */
+ul,
+ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border: 1px solid #d8d8dd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+/* Altair (Vega-Embed) tweaks */
+#vis.vega-embed {
+    width: 100%;
+    display: flex;
+}
+
+#vis.vega-embed details,
+#vis.vega-embed details summary {
+    position: relative;
+}
+
+/* Code blocks */
+pre {
+    font-size: 1.25em;        
+    border-radius: 5px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Base style for Python code blocks */
+.language-python {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+footer {
+    background-color: #FFFFFF;
+    color: red;
+    text-align: center;
+    padding: 10px;
+  }
+
+.json-display {
+    background-color: #2d2d2d;   /* dark gray background */
+    color: #f8f8f2;              /* light text */
+    white-space: pre-wrap;         /* Preserves indentation & wraps lines */
+    word-wrap: break-word;         /* Breaks long words */
+    overflow-wrap: break-word;     /* Modern equivalent */    
+    font-family: Consolas, Monaco, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1em;    
+  }
+
+  /* Styling for module check  info */
+  .code-box {
+    background: #2d2d2d;   /* black background */
+    color: white;        /* white text */
+    padding: 12px;       /* spacing inside the box */
+    border-radius: 6px;  /* rounded corners (optional) */
+    font-family: "Courier New", Courier, monospace; /* terminal-style font */    
+    width: fit-content;  /* box size fits the text */
+  }
+</style><script src="https://cdn.jsdelivr.net/npm/vega@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script></head><body><div class="container"><h1>Python Code Audit Implemented validations</h1><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>construct</th>
+      <th>severity</th>
+      <th>info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dynamic Imports</td>
+      <td>__import__</td>
+      <td>Medium</td>
+      <td>Importing modules dynamically can load untrusted code.</td>
+    </tr>
+    <tr>
+      <td>Assertions</td>
+      <td>assert</td>
+      <td>Low</td>
+      <td>Assertions are for debugging and development. Assertions can be disabled during runtime. Use in production can introduce vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Base64 Encoding</td>
+      <td>base64</td>
+      <td>Low</td>
+      <td>Base64 encoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
+    </tr>
+    <tr>
+      <td>BZ2 File Handling</td>
+      <td>bz2.BZ2File</td>
+      <td>Medium</td>
+      <td>Decompressing untrusted data can lead to resource exhaustion attacks.</td>
+    </tr>
+    <tr>
+      <td>BZ2 File Handling</td>
+      <td>bz2.open</td>
+      <td>Medium</td>
+      <td>Decompressing untrusted data can lead to resource exhaustion attacks.</td>
+    </tr>
+    <tr>
+      <td>Dangerous Built-in: compile</td>
+      <td>compile</td>
+      <td>High</td>
+      <td>This function can be used to execute arbitrary code or crash the Python interpreter.</td>
+    </tr>
+    <tr>
+      <td>Unsafe Deserialization: multiprocessing</td>
+      <td>connection.recv</td>
+      <td>High</td>
+      <td>Uses pickle, which can execute arbitrary code when receiving data.</td>
+    </tr>
+    <tr>
+      <td>Overly Broad Exception Handling</td>
+      <td>continue</td>
+      <td>Low</td>
+      <td>Skipping over exceptions can mask critical errors and security risks.</td>
+    </tr>
+    <tr>
+      <td>Dangerous Built-in: eval</td>
+      <td>eval</td>
+      <td>High</td>
+      <td>This function can execute arbitrary code. Never safe with untrusted input.</td>
+    </tr>
+    <tr>
+      <td>Dangerous Built-in: exec</td>
+      <td>exec</td>
+      <td>High</td>
+      <td>This function can execute arbitrary code and should be used only with validated constructs.</td>
+    </tr>
+    <tr>
+      <td>Gzip File Handling</td>
+      <td>gzip.open</td>
+      <td>Medium</td>
+      <td>Risk of decompression bombs or resource exhaustion with untrusted data.</td>
+    </tr>
+    <tr>
+      <td>Insecure Hashing Algorithm</td>
+      <td>hashlib.md5</td>
+      <td>High</td>
+      <td>MD5 is cryptographically broken and should not be used for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Insecure Hashing Algorithm</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>SHA-1 is cryptographically broken and should not be used for security purposes.</td>
+    </tr>
+    <tr>
+      <td>HTTP Server (Base Handler)</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>These modules are for development only and are not secure for production use.</td>
+    </tr>
+    <tr>
+      <td>HTTP Server</td>
+      <td>http.server<br>HTTPServer</td>
+      <td>High</td>
+      <td>These modules are for development only and are not secure for production use.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Imports</td>
+      <td>importlib.import_module</td>
+      <td>Medium</td>
+      <td>Importing modules dynamically can load untrusted code.</td>
+    </tr>
+    <tr>
+      <td>Input Function</td>
+      <td>input</td>
+      <td>Low</td>
+      <td>User input must be strictly sanitized and validated to prevent injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Logging Configuration</td>
+      <td>logging.config</td>
+      <td>Medium</td>
+      <td>Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.</td>
+    </tr>
+    <tr>
+      <td>LZMA File Handling</td>
+      <td>lzma.LZMAFile</td>
+      <td>Medium</td>
+      <td>Risk of decompression bombs or resource exhaustion with untrusted data.</td>
+    </tr>
+    <tr>
+      <td>LZMA File Handling</td>
+      <td>lzma.open</td>
+      <td>Medium</td>
+      <td>Risk of decompression bombs or resource exhaustion with untrusted data.</td>
+    </tr>
+    <tr>
+      <td>Marshal Usage</td>
+      <td>marshal.load</td>
+      <td>High</td>
+      <td>This module is not secure and should not be used to deserialize data from untrusted sources.</td>
+    </tr>
+    <tr>
+      <td>Marshal Usage</td>
+      <td>marshal.loads</td>
+      <td>High</td>
+      <td>This module is not secure and should not be used to deserialize data from untrusted sources.</td>
+    </tr>
+    <tr>
+      <td>Unsafe Deserialization: multiprocessing</td>
+      <td>multiprocessing.connection<br>Connection</td>
+      <td>High</td>
+      <td>Relies on pickle; dangerous with untrusted data.</td>
+    </tr>
+    <tr>
+      <td>OS Access</td>
+      <td>os.access</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS File Permissions</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Changing permissions carelessly can expose sensitive files.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execl</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execle</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execlp</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execlpe</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execv</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execve</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execvp</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execvpe</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Forking</td>
+      <td>os.fork</td>
+      <td>Low</td>
+      <td>On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.</td>
+    </tr>
+    <tr>
+      <td>OS Interfaces</td>
+      <td>os.forkpty</td>
+      <td>Low</td>
+      <td>Use of forkpty can be unsafe when used on MacOS.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.makedev</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.mkdir</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.mkfifo</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Directory Creation</td>
+      <td>os.mknod</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.popen</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS File Operations</td>
+      <td>os.read</td>
+      <td>Low</td>
+      <td>Reading from unvalidated file descriptors can lead to information disclosure.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.system</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS File Operations</td>
+      <td>os.write</td>
+      <td>Low</td>
+      <td>Reading from unvalidated file descriptors can lead to information disclosure.</td>
+    </tr>
+    <tr>
+      <td>OS File Operations</td>
+      <td>os.writev</td>
+      <td>Low</td>
+      <td>Reading from unvalidated file descriptors can lead to information disclosure.</td>
+    </tr>
+    <tr>
+      <td>Overly Broad Exception Handling</td>
+      <td>pass</td>
+      <td>Low</td>
+      <td>Using `pass` in an `except` block can silently ignore critical security exceptions.</td>
+    </tr>
+    <tr>
+      <td>Pickle Usage</td>
+      <td>pickle.load</td>
+      <td>High</td>
+      <td>Deserializing untrusted data with `pickle` can lead to arbitrary code execution.</td>
+    </tr>
+    <tr>
+      <td>Pickle Usage</td>
+      <td>pickle.loads</td>
+      <td>High</td>
+      <td>Deserializing untrusted data with `pickle` can lead to arbitrary code execution.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.seed</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Insecure Network Binding</td>
+      <td>s.bind</td>
+      <td>Medium</td>
+      <td>Binding to all interfaces can expose the service to a wider network attack surface.</td>
+    </tr>
+    <tr>
+      <td>Shelve Usage</td>
+      <td>shelve.open</td>
+      <td>High</td>
+      <td>The `shelve` module uses `pickle` internally, making it unsafe for untrusted data.</td>
+    </tr>
+    <tr>
+      <td>Shutil Operations</td>
+      <td>shutil.chown</td>
+      <td>Medium</td>
+      <td>Changing file ownership can introduce vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Shutil Copying</td>
+      <td>shutil.copy</td>
+      <td>Medium</td>
+      <td>Files may be copied without authorization if paths are not validated.</td>
+    </tr>
+    <tr>
+      <td>Shutil Copying</td>
+      <td>shutil.copy2</td>
+      <td>Medium</td>
+      <td>Files may be copied without authorization if paths are not validated.</td>
+    </tr>
+    <tr>
+      <td>Shutil Copying</td>
+      <td>shutil.copytree</td>
+      <td>Medium</td>
+      <td>Files may be copied without authorization if paths are not validated.</td>
+    </tr>
+    <tr>
+      <td>Shutil Removal</td>
+      <td>shutil.rmtree</td>
+      <td>Medium</td>
+      <td>Vulnerable to path traversal attacks if not used carefully.</td>
+    </tr>
+    <tr>
+      <td>Shutil Extraction</td>
+      <td>shutil.unpack_archive</td>
+      <td>Medium</td>
+      <td>Untrusted archives can contain malicious paths or payloads.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.Popen</td>
+      <td>Medium</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.call</td>
+      <td>High</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.check_call</td>
+      <td>High</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.run</td>
+      <td>Medium</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Sys Calls</td>
+      <td>sys.call_tracing</td>
+      <td>Medium</td>
+      <td>Provides low-level access to interpreter execution; dangerous if exposed.</td>
+    </tr>
+    <tr>
+      <td>Sys Calls</td>
+      <td>sys.setprofile</td>
+      <td>Medium</td>
+      <td>Provides low-level access to interpreter execution; dangerous if exposed.</td>
+    </tr>
+    <tr>
+      <td>Sys Calls</td>
+      <td>sys.settrace</td>
+      <td>Medium</td>
+      <td>Provides low-level access to interpreter execution; dangerous if exposed.</td>
+    </tr>
+    <tr>
+      <td>Tarfile Extraction</td>
+      <td>tarfile.TarFile</td>
+      <td>High</td>
+      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
+    </tr>
+    <tr>
+      <td>Tempfile</td>
+      <td>tempfile.mktemp</td>
+      <td>Low</td>
+      <td>This function is deprecated because of race conditions that can lead to security vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>XML-RPC Client</td>
+      <td>xmlrpc.client</td>
+      <td>High</td>
+      <td>Vulnerable to denial-of-service via decompression bombs.</td>
+    </tr>
+    <tr>
+      <td>XML-RPC Server</td>
+      <td>xmlrpc.server<br>SimpleXMLRPCServer</td>
+      <td>High</td>
+      <td>Vulnerable to denial-of-service via decompression bombs.</td>
+    </tr>
+    <tr>
+      <td>Zipfile Extraction</td>
+      <td>zipfile.ZipFile</td>
+      <td>High</td>
+      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
+    </tr>
+  </tbody>
+</table><br><p>Number of implemented security validations:<b>70</b></p><p>Version of codeaudit: <b>1.1.0</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-10-01 15:38, with <a href="https://github.com/nocomplexity/codeaudit">codeaudit</a> version 1.1.0 </small></p><p><small>Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues. <a href="https://github.com/nocomplexity/codeaudit">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">open simple cyber security solutions</a>. Join the community and <a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">contribute </a> to make this Python Security Code Audit tool better!</small></p></footer></div></body></html>

@@ -47,7 +47,7 @@ If you are a developer:
 If you are a user of a Python program or package:
 1. Ask the developer, company what mitigation measurements are taken to report issues. Some issues **SHOULD** always be solved in code, other issue depend on the context of how and where the Python program will be used.
 2. If you are dealing with open source software: **DO NOT REPORT THE FINDINGS IN PUBLIC!** Try to contact the maintainers using a private email or check if the project has published how to report possible security issues.
-3. Never trust, always verify: Check if and how code is adjusted. Or consult an expert to give you guidance to minimize security risks! See our [sponsor page](sponors) to find companies who might offer assistance.
+3. Never trust, always verify: Check if and how code is adjusted. Or consult an expert to give you guidance to minimize security risks! See our [sponsor page](sponsors) to find companies who might offer assistance.
 
 
 ## Dealing with false positives
