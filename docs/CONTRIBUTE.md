@@ -37,6 +37,16 @@ This project values respect and inclusiveness, and enforces a [Code of Conduct](
 This is an open community driven project. Contributors will be mentioned in the documentation.
 :::
 
+## Help with development
+
+:::{admonition} Start with Code Development
+:class: tip
+Making code contributions to **Python Code Audit** should be fun and simple!
+
+See the [section Development](makeitbetter) for to get a head start when making code contributions!
+
+:::
+
 (CoC-label)=
 ## Code of Conduct
 

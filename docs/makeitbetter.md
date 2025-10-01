@@ -1,8 +1,8 @@
-# Contribute to Python Code Audit
+# Development
 
 ## Overview
 
-Great that you’re here at this section and want to contribute!
+Great that you’re here at this section and want to contribute with code improvement!
 
 :::{admonition} Be sure to check out our Code of Conduct
 :class: note
@@ -79,7 +79,7 @@ Get in contact with the developers! The most simple way is to report the feature
 
 
 
-This codeaudit tool is designed by applying [Zero Complexity By Design principles](https://nocomplexity.com/documents/0complexity/abstract.html). So the goal is to keep the tool simple to use and the code simple to adjust or to extend.
+The **Python Code Audit** tool is designed using the [Zero Complexity By Design principles](https://nocomplexity.com/documents/0complexity/abstract.html). So the goal is to keep the tool simple to use and the **code** simple to adjust or to extend.
 
 `Python Code Audit` is developed as a local first solution. CICD integration (local or with a Cloud based solution) is easily possible with the APIs in various forms.
 
@@ -105,5 +105,5 @@ The Python Code Audit Security validations that are implemented are not invented
 
 ## Developing Plugins
 
-With `Python Code Audit` it is easily possible to develop your own plugin for e.g. `dango`, `tensorflow` or whatever complex Python library that does not enforce simple security guidelines for external API usage. 
+With `Python Code Audit` it is easily possible to develop your own plugin for e.g. `dango`, `tensorflow` or any complex Python library that does not enforce [security-by-design](https://nocomplexity.com/documents/securitybydesign/intro.html) guidelines for external API usage. 
 

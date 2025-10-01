@@ -1,5 +1,7 @@
 # Introduction
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10970/badge)](https://www.bestpractices.dev/projects/10970)
+
 ![CodeauditLogo](images/codeauditlogo.png)
 
 Python Code Audit is a Static Application Security Testing (SAST) tool to find **potential security issues** in Python source files.
