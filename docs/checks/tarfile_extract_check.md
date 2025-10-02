@@ -1,4 +1,4 @@
-# Using TarFile statement
+# TarFile Statement
 
 The Python `tarfile` module makes it possible to read and write tar archives.
 

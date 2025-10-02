@@ -13,7 +13,9 @@ Validate/sanitize all input thoroughly before using it in any part of your appli
 :::
 
 
-## Common security concerns with the use of `input()` in Python 
+## Security concerns 
+
+Common security concerns with the use of `input()` in Python are:
 
   * **Injection Attacks:** If you take user input and directly embed it into:
       * **SQL queries:** SQL Injection (e.g., a user enters `' OR 1=1; --` to bypass login).
@@ -28,7 +30,9 @@ Validate/sanitize all input thoroughly before using it in any part of your appli
   
   * **Revealing Sensitive Information:** If your error handling is too verbose and displays raw error messages that include sensitive system paths or internal details based on user input, attackers can use this information for further exploitation.
 
-## Some simple rules for handling User Input
+## Preventive measures
+
+Some simple rules for handling User Input:
 
 1.  **Always Validate Input:**
 
@@ -57,3 +61,8 @@ Never ever use `eval()` or `exec()` with user-provided strings.
 
 6.  **Secure Error Handling:** Don't display raw error messages to users. Log them for internal review and provide generic, user-friendly error messages instead.
 
+## More information
+
+* [CWE-77: Improper Neutralization of Special Elements used in a Command ('Command Injection')](https://cwe.mitre.org/data/definitions/77.html)
+* [CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')](https://cwe.mitre.org/data/definitions/79.html) 
+* [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)
