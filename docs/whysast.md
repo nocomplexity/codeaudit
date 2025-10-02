@@ -7,7 +7,7 @@ Python Static Application Security Testing (SAST) offers significant advantages 
 
 
 
-:::{admonition} Some Advantages of SAST
+:::{admonition} Advantages of Security Testing(SAST) on Python code
 :class: tip, dropdown
 
 
@@ -24,7 +24,7 @@ Python Static Application Security Testing (SAST) offers significant advantages 
 | Build Customer Trust ⭐  | Releasing applications with rigorously tested security leads to stronger reliability and greater confidence from users and stakeholders. |
 :::
 
-```{admonition} Risks Without SAST on Python code
+```{admonition} Risks of Skipping security testing(SAST) on Python code
 :class: danger, dropdown
 
 
