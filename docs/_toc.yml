@@ -18,6 +18,7 @@ parts:
 
 - caption: Security Checks
   chapters:
+  - file: implementedvalidations
   - file: checksinformation
     sections:
     - file: checks/assert_check

@@ -35,8 +35,8 @@ Sys Calls,sys.call_tracing,Medium,Provides low-level access to interpreter execu
 Sys Calls,sys.setprofile,Medium,Provides low-level access to interpreter execution; dangerous if exposed.
 Sys Calls,sys.settrace,Medium,Provides low-level access to interpreter execution; dangerous if exposed.
 OS Access,os.access,High,Direct OS function calls can have significant security implications and require careful review.
-OS File Operations,os.write,Low,Reading from unvalidated file descriptors can lead to information disclosure.
-OS File Operations,os.writev,Low,Reading from unvalidated file descriptors can lead to information disclosure.
+OS File Operations,os.write,Low,"Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service."
+OS File Operations,os.writev,Low,"Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service."
 OS Interfaces,os.forkpty,Low,Use of forkpty can be unsafe when used on MacOS.
 OS File Operations,os.read,Low,"Reading from unvalidated file descriptors can lead to information disclosure."
 Tempfile,tempfile.mktemp,Low,This function is deprecated because of race conditions that can lead to security vulnerabilities.

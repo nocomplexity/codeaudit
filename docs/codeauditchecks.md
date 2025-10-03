@@ -20,8 +20,3 @@ Update your local installation with:
 ```bash
 pip install -U codeaudit
 ```
-
-:::
-
-```{include} examples/checks.html
-```

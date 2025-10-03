@@ -1,6 +1,6 @@
-# Overview of checks
+# Information on checks
 
-Python `Codeaudit` has many implemented checks.
+**Python Code Audit** has many implemented security checks based on possible security threat when using Python Standard Library (PSL) calls.
 
 Checks are done to determine:
 * If and
@@ -17,7 +17,7 @@ To check if an imported function is used several cases of occurrence  will be de
 * from os import access	
 * from os import access as x
 
-So the following `clown` construct is detected, since `codeaudit` checks on use of the `system` method of the `os` module.
+So the following `clown` construct is detected, since **Python Code Audit** checks on use of the `system` method of the `os` module.
 ```python
 from os import system as clown
 clown('ls -la')
@@ -25,49 +25,8 @@ clown('ls -la')
 
 ## Validations overview
 
-* Check on assert
-* Check for chmod
-* Directory creation
-* OS System call - Fork a child process
-* Check on eval usage
-* Check on input statement
-* Exception Handling
-* Continue statement
-* Built-in Functions: Check for exec usage.
-* Built-in Functions: Check on compile usage.
-* Hash Check - md5
-* Hash Check - sha1
-* Logging - configuration
-* Pickle use
-* OS - direct calls
-* OS - execl
-* OS - execle
-* OS - execlp
-* OS - execlpe
-* OS - execv
-* OS - execve
-* OS - execvp
-* OS - execvpe
-* OS - popen
-* OS Access
-* OS Interfaces
-* Marshal
-* Subprocesses - call
-* Subprocesses - check_call
-* Subprocesses - Popen
-* Subprocesses - run
-* Tarfile use
-* Encodings use
-* XML - client use
-* XML - server use
-* Random numbers generation module
-* Shelve module use
-* Multiprocessing
-* Zipfile use
-* shutil se
-* HTTP servers: Check on usage.
 
-In the following subsections more detailed information validations:
+In the following subsections detailed information on implemented security validations:
 ```{tableofcontents}
 ```
 
