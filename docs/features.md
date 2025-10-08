@@ -27,34 +27,27 @@ Python Code Audit is a modern Python source code analyzer based on distrust.
 
 :::
 
-## More comprehensive outline:
+## In depth Capabilities outline
 
+The Python Code Audit tool offers the following features to enhance code analysis and security:
 
+- **Code Complexity and Statistics**: Analyzes individual Python files or entire directories to provide detailed metrics before execution. Collected statistics include:
+  - Number of files
+  - Total lines of code
+  - AST nodes
+  - Imported modules
+  - Defined functions
+  - Defined classes
+  - Comment lines
 
-Python Code Audit has the has the following capabilities:
+  Per-file statistics are provided, along with a summary for the entire directory.
 
-*  Detect and reports complexity and statistics per Python file or from a directory. So you scan a complete Python package before running.
+- **Module Usage Reporting**: Identifies and lists all modules used within each Python file.
 
-Collected statistics are: 
-    * Number_Of_Files
-    * Number_Of_Lines
-    * AST_Nodes
-    * Number of used modules 
-    * Functions
-    * Classes
-    * Comment_Lines
+- **Security Information on Modules**: Provides known security details for the modules used in your code.
 
-* All statistics are gathered per Python file. A summary is given for the inspected directory.
+- **Vulnerability Detection (Per File)**: Identifies potential security weaknesses within individual Python files, specifying the line number and code snippets that may pose risks.
 
-*  Detect and reports which module are used within a Python file. 
-
-*  Reports valuable known security information on used modules.
-
-*  Detecting and reporting **potential vulnerability issues** within a Python file.
-Per detected issue the line number is given, along with the lines that *could* cause a security issue.
-
-
-* Detecting and reporting potential vulnerabilities from all Python files collected in a directory.
-This is typically a must check when researching python packages on possible security issues.
+- **Directory-Wide(for packages) Vulnerability Scanning**: Detects and reports security weaknesses across all Python files in a package(directory), essential for assessing the security of Python packages.
 
 
