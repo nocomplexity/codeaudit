@@ -1,10 +1,12 @@
 # Command `codeaudit filescan`
 
-The Codeaudit filescan command creates a report with valuable security information for potential security issues in a Python file or Python package (directory with Python files).
+The **Python Code Audit** `filescan` command efficiently scans Python files or directories (packages) to identify and report potential security weaknesses.
+
+It produces a report detailing the potential security issues discovered.
+
 
 See section [validations](checksinformation) for all security checks implemented!
 
-The filescan module works on single files or on packages (directory with Python files).
 
 To use the `codescan filescan` feature type in the console:
 
@@ -12,13 +14,14 @@ To use the `codescan filescan` feature type in the console:
 codeaudit filescan <INPUTFILE>  [OUTPUTFILE]
 ```
 
-The `<INPUTFILE>` is mandatory. Codeaudit will create a detailed security scan report for the given Python file or directory.
+The `<INPUTFILE>` is mandatory. **Python Code Audit** will create a detailed security scan report. 
+
 
 If you do not specify [OUTPUTFILE], a HTML output file, a HTML report file is created in the current directory and will be named codeaudit-report.html.
 
-When running codeaudit filescan detailed information is determined for a Python file based on more than 60 validations implemented.
+When running `codeaudit filescan` detailed information is determined for a Python file or package based on more than 70 validations implemented.
 
-The filescan report shows all **potential** security issues that are detected in the source file(s).
+The `filescan` report lists all identified security weaknesses that could lead to a security vulnerability.
 
 Per line a the in construct that can cause a security risks is shown, along with the relevant code lines where the issue is detected.
 

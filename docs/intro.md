@@ -5,14 +5,24 @@
 
 ![CodeauditLogo](images/codeauditlogo.png)
 
-Python Code Audit is a Static Application Security Testing (SAST) tool to find **potential security issues** in Python source files.
-
-Python Code Audit is designed to be:
-* Simple to use.
-* Simple to extend for various use cases.
-* Powerful to determine *potential* security issues within Python code.
+Python Code Audit is a Static Application Security Testing (SAST) tool to find **security weaknesses** in Python source files.
 
 :::{danger} 
+A **security weakness** in Python code is an implementation flaw that could potentially become a **security vulnerability**.
+:::
+
+
+Python Code Audit offers a powerful yet straightforward security solution:
+
+* **Ease of Use**: Simple to operate for quick audits.
+
+* **Extensibility**: Easy to customize and adapt for diverse use cases.
+
+* **Impactful Analysis**: Powerful detection of security weaknesses that have the potential to become critical vulnerabilities.
+
+
+
+:::{warning} 
 Python Code Audit gives you insight into potential security issues in your Python programs.
 
 Are you ready to discover what's lurking in your code?
@@ -49,7 +59,12 @@ Are you ready to discover what's lurking in your code?
 
 ## Background
 
-There are not many good and maintained FOSS SAST tools for Python available. A well known Python SAST tool is `Bandit`. However `Bandit` is limited in identifying security issues and has constrains that makes the use not simple. `Bandit` lacks crucial Python code validations from a security perspective!
+The availability of good, maintained FOSS SAST tools for Python is limited. While Bandit is a known tool, its usefulness is significantly limited: it struggles to identify a broad range of security weaknesses and fails to perform many crucial Python security validations. Additionally, its Command Line Interface (CLI) can present a steep learning curve for non-technical users. 
+
+:::{hint} 
+[To keep up with current threats, you need a Python Application Security Testing tool that evolves to deliver deeper insights and higher accuracy.](https://nocomplexity.com/stop-using-bandit/)
+:::
+
 
 
 :::{note}
