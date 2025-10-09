@@ -1,11 +1,23 @@
 # Information on checks
 
-**Python Code Audit** has many implemented security checks based on possible security threat when using Python Standard Library (PSL) calls.
+**Python Code Audit** has many implemented security checks based on possible security threats when using Python Standard Library (PSL) calls.
 
 Checks are done to determine:
-* If and
-* Where
-Python source code uses functions or classes that can be in potential lead to security issues.
+* **If** and
+* **Where**
+
+Python source code uses functions or classes that are a security weakness.
+
+A security weakness is a flaw, design choice, or implementation issue that could potentially lead to a security problem — but isn’t necessarily exploitable by itself.
+
+:::{admonition} **Review**, **remediate**, and **validate** all identified security weaknesses in the code!
+:class: tip
+Ensure that all reported **security findings** are fully addressed. The code must be thoroughly reviewed and corrected to eliminate weaknesses and prevent potential exploitation as **vulnerabilities**.
+
+:::
+
+
+
 
 The majority of validations is done using advanced AST parsing of Python files. Parsed code is **not** compiled or executed. This to prevent security issues when using this tool!
 
