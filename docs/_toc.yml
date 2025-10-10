@@ -65,6 +65,8 @@ parts:
   - file: apidocs/api_intro
     sections:    
     - file: examples/ca_api_example_overview
+    - file: examples/ca_api_example_json
+    - file: examples/ca_api_example_basic
   - file: apidocs/modules
   
    
@@ -76,3 +78,4 @@ parts:
   - file: sponsors
   - file: license
   - file: about
+

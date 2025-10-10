@@ -58,7 +58,7 @@ def filescan(input_path):
             for i,file in enumerate(files_to_check):            
                 file_information = overview_per_file(file)
                 module_information = get_modules(file) # modules per file            
-                scan_output = codeaudit_scan(file)
+                scan_output = _codeaudit_scan(file)
                 file_output[i] = file_information | module_information | scan_output
             output |= { "file_security_info" : file_output}
             return output
@@ -69,7 +69,7 @@ def filescan(input_path):
         #do a file check                        
         file_information = overview_per_file(input_path) 
         module_information = get_modules(input_path) # modules per file
-        scan_output = codeaudit_scan(input_path)                
+        scan_output = _codeaudit_scan(input_path)                
         file_output[0] = file_information | module_information | scan_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
         output |= { "file_security_info" : file_output}
         return output
@@ -77,8 +77,10 @@ def filescan(input_path):
         #Its not a directory nor a valid Python file:
         return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."}
 
-def codeaudit_scan(filename):
-    """Function to do a SAST scan on a single file"""
+def _codeaudit_scan(filename):
+    """Internal helper function to do a SAST scan on a single file
+    To scan a file, or Python package using the API interface, use the `filescan` API call!
+    """
     #get the file name
     name_of_file = get_filename_from_path(filename)
     sast_data = perform_validations(filename)
@@ -211,14 +213,14 @@ def get_default_validations():
         none
 
     Returns:
-        dict: Overview of implemented security SAST validation on Standard Python modules
+        dict: Overview of implemented security SAST validation on Standard Python modules. Including vital help text.
     """    
     df = ast_security_checks()
     result = df.to_dict(orient="records")    
-    output = generation_info() | {"validations" : result}
+    output = _generation_info() | {"validations" : result}
     return output
 
-def generation_info():
+def _generation_info():
     """Internal function to retrieve generation info for APIs output"""
     ca_version_info = version()    
     now = datetime.datetime.now()
@@ -227,7 +229,7 @@ def generation_info():
     return output
 
 def platform_info():
-    """Get platform info
+    """Get Python platform information - Python version and Python runtime interpreter used.
     Args:
         none
 
@@ -249,7 +251,7 @@ def get_psl_modules():
     
     """
     psl_modules = get_standard_library_modules()
-    output = generation_info() | platform_info() | { "psl_modules" : psl_modules}
+    output = _generation_info() | platform_info() | { "psl_modules" : psl_modules}
     return output
 
 def get_module_vulnerability_info(module):
@@ -262,6 +264,6 @@ def get_module_vulnerability_info(module):
     """
     vuln_info = check_module_vulnerability(module)
     key_string = f'{module}_vulnerability_info'
-    output = generation_info() | { key_string : vuln_info}
+    output = _generation_info() | { key_string : vuln_info}
     return output
 
