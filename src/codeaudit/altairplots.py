@@ -64,3 +64,56 @@ def multi_bar_chart(df):
     # Stack the rows vertically
     multi_chart = alt.vconcat(*rows)
     return multi_chart
+
+
+
+def issue_plot(input_dict):
+    """
+    Create a radial (polar area) chart using Altair.
+    
+    Parameters
+    ----------
+    input_dict : dict
+        Dictionary where keys are 'construct' and values are 'count'.
+    
+    Returns
+    -------
+    alt.Chart
+        Altair chart object.
+    """
+    # Convert input dict to DataFrame
+    df = pd.DataFrame(list(input_dict.items()), columns=['construct', 'count'])
+
+    # Validation
+    if not {'construct', 'count'}.issubset(df.columns):
+        raise ValueError("DataFrame must have 'construct' and 'count' columns.")
+
+    # Add a combined label for legend
+    df["legend_label"] = df["construct"] + " (" + df["count"].astype(str) + ")"
+
+    # Compute fraction of total for angular width
+    total = df['count'].sum()
+    df['fraction'] = df['count'] / total
+
+    # Compute cumulative angle for start and end of each slice
+    df['theta0'] = df['fraction'].cumsum() - df['fraction']
+    df['theta1'] = df['fraction'].cumsum()
+
+    # Radial chart using mark_arc
+    chart = alt.Chart(df).mark_arc(innerRadius=20).encode(
+        theta=alt.Theta('theta1:Q', stack=None, title=None),
+        theta2='theta0:Q',  # define start angle
+        radius=alt.Radius('count:Q', scale=alt.Scale(type='sqrt')),  # radial extent
+        color=alt.Color(
+            'legend_label:N',
+            scale=alt.Scale(scheme='category20'),
+            legend=alt.Legend(title='Weaknesses (Count)')
+        ),
+        tooltip=['construct', 'count']
+    ).properties(
+        title='Overview of Security Weaknesses',
+        width=600,
+        height=600
+    )
+
+    return chart

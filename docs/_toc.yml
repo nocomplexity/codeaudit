@@ -60,9 +60,13 @@ parts:
   - file: changelog
   
   
-# - caption: API Documentation
-#   chapters:  
-#   - file: codeaudit
+- caption: API Documentation
+  chapters:  
+  - file: apidocs/api_intro
+    sections:    
+    - file: examples/ca_api_example_overview
+  - file: apidocs/modules
+  
    
 
 - caption: About

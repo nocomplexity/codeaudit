@@ -1,4 +1,4 @@
-## Security Validations 
+# Security Validations 
 
 This section outlines the default security validations implemented in **Python Code Audit**.
 

@@ -1,5 +1,5 @@
-codeaudit
-=========
+API Reference 
+==============
 
 .. toctree::
    :maxdepth: 4

@@ -25,6 +25,9 @@ import json
 import datetime 
 import pandas as pd
 import platform
+from collections import Counter
+
+import altair as alt
 
 def version():
     """Returns the version of Python Code Audit"""
@@ -108,6 +111,60 @@ def save_to_json(sast_result, filename="codeaudit_output.json"):
         print(f"[Error] Failed to serialize data to JSON: {e}")
     except OSError as e:
         print(f"[Error] Failed to write file '{filepath}': {e}")
+
+def read_input_file(filename):
+    """
+    Read a Python CodeAudit JSON file and return its contents as a Python dictionary.
+    
+    Args:
+        filename: Path to the JSON file.
+        
+    Returns:
+        dict: The contents of the JSON file.
+    
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        json.JSONDecodeError: If the file is not valid JSON.
+    """
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"File not found: {filename}") from e
+    except json.JSONDecodeError as e:
+        raise json.JSONDecodeError(f"Invalid JSON in file: {filename}", e.doc, e.pos)
+
+
+def get_construct_counts(input_file):
+    """
+    Analyze a scan result and count occurrences of code constructs (aka weaknesses).
+
+    This function uses `filescan` API call to retrieve security-related information
+    about the input file. This returns a dict. Then it counts how many times each code construct
+    appears across all scanned files.
+
+    Args:
+        input_file (str): Path to the file or directory(package) to scan.
+
+    Returns:
+        dict: A dictionary mapping each construct name (str) to the total
+              number of occurrences (int) across all scanned files.
+
+    Notes:
+        - The `filescan` function is expected to return a dictionary with
+          a 'file_security_info' key, containing per-file information.
+        - Each file's 'sast_result' should be a dictionary mapping
+          construct names to lists of occurrences.
+    """    
+    scan_result = filescan(input_file)
+    counter = Counter()
+    
+    for file_info in scan_result.get('file_security_info', {}).values():
+        sast_result = file_info.get('sast_result', {})
+        for construct, occurence in sast_result.items(): #occurence is times the construct appears in a single file
+            counter[construct] += len(occurence)
+    
+    return dict(counter)
 
 def get_modules(filename):
     """Gets modules of a Python file """
@@ -207,3 +264,4 @@ def get_module_vulnerability_info(module):
     key_string = f'{module}_vulnerability_info'
     output = generation_info() | { key_string : vuln_info}
     return output
+

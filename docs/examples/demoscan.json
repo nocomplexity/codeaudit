@@ -1,0 +1,205 @@
+{
+  "name": "Python_Code_Audit",
+  "version": "1.1.0",
+  "generated_on": "2025-10-10 17:09",
+  "file_security_info": {
+    "0": {
+      "FileName": "demofile.py",
+      "FilePath": "demofile.py",
+      "Number_Of_Lines": 480,
+      "AST_Nodes": 253,
+      "Std-Modules": 21,
+      "External-Modules": 2,
+      "Functions": 23,
+      "Classes": 3,
+      "Comment_Lines": 88,
+      "Complexity_Score": 41,
+      "warnings": 0,
+      "core_modules": [
+        "base64",
+        "bz2",
+        "gzip",
+        "hashlib",
+        "http.server",
+        "logging.config",
+        "lzma",
+        "multiprocessing",
+        "os",
+        "pickle",
+        "random",
+        "shelve",
+        "shutil",
+        "socket",
+        "sys",
+        "tarfile",
+        "tempfile",
+        "time",
+        "xmlrpc.client",
+        "xmlrpc.server",
+        "zipfile"
+      ],
+      "imported_modules": [
+        "linkaudit",
+        "pandas"
+      ],
+      "file_name": "demofile.py",
+      "sast_result": {
+        "assert": [
+          6,
+          42
+        ],
+        "base64": [
+          238,
+          239
+        ],
+        "bz2.BZ2File": [
+          447
+        ],
+        "bz2.open": [
+          440
+        ],
+        "compile": [
+          235
+        ],
+        "connection.recv": [
+          299
+        ],
+        "continue": [
+          52
+        ],
+        "eval": [
+          119
+        ],
+        "exec": [
+          28,
+          120
+        ],
+        "gzip.open": [
+          434
+        ],
+        "hashlib.md5": [
+          73
+        ],
+        "hashlib.sha1": [
+          74,
+          102
+        ],
+        "http.server.BaseHTTPRequestHandler": [
+          244,
+          263
+        ],
+        "http.server.HTTPServer": [
+          263
+        ],
+        "logging.config": [
+          163,
+          166
+        ],
+        "lzma.LZMAFile": [
+          476
+        ],
+        "lzma.open": [
+          460,
+          466
+        ],
+        "marshal.load": [
+          393
+        ],
+        "marshal.loads": [
+          387
+        ],
+        "os.access": [
+          116,
+          123
+        ],
+        "os.chmod": [
+          126
+        ],
+        "os.fork": [
+          223,
+          226,
+          232
+        ],
+        "os.forkpty": [
+          225
+        ],
+        "os.makedirs": [
+          351
+        ],
+        "os.popen": [
+          158
+        ],
+        "os.system": [
+          154
+        ],
+        "os.write": [
+          159
+        ],
+        "os.writev": [
+          160
+        ],
+        "pass": [
+          46,
+          141
+        ],
+        "pickle.load": [
+          316
+        ],
+        "pickle.loads": [
+          312,
+          320
+        ],
+        "random.random": [
+          335
+        ],
+        "random.seed": [
+          334
+        ],
+        "s.bind": [
+          32,
+          33
+        ],
+        "shelve.open": [
+          339
+        ],
+        "shutil.copy": [
+          372
+        ],
+        "shutil.rmtree": [
+          368
+        ],
+        "shutil.unpack_archive": [
+          363
+        ],
+        "sys.setprofile": [
+          416,
+          418
+        ],
+        "sys.settrace": [
+          422,
+          424
+        ],
+        "tarfile.TarFile": [
+          174,
+          178,
+          183,
+          185,
+          193,
+          354
+        ],
+        "tempfile.mktemp": [
+          428
+        ],
+        "xmlrpc.client": [
+          217
+        ],
+        "xmlrpc.server.SimpleXMLRPCServer": [
+          210
+        ],
+        "zipfile.ZipFile": [
+          352
+        ]
+      }
+    }
+  }
+}
