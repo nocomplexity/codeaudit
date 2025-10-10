@@ -39,7 +39,7 @@ Are you ready to discover what's lurking in your code?
 
 +++
 
-* **Complexity & Statistics**: Reports security-relevant complexity statistics using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count by using Python AST.
+* **Complexity & Statistics**: Reports security-relevant complexity statistics using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count by using Python (Abstract Syntax Tree) AST capabilities.
 
 +++
 

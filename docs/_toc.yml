@@ -12,6 +12,7 @@ parts:
     - file: modulescan
     - file: codeauditchecks
   - file: howtoscan
+  - file: whatissast
   - file: whysast
   - file: issues
   
