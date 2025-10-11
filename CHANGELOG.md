@@ -1,5 +1,20 @@
 # Change Log
 
+# Version 1.2: Changes and Updates
+
+* fix: Improved error handling — when performing a file scan on a single Python file that cannot be parsed, the CLI now correctly displays an error message.
+
+* fix: Updated API logic to properly handle parsing errors for single Python files.
+
+* fix: Corrected validation descriptions for `os.write` and `os.writev`. Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.
+
+* fix: Internal API functions now use a leading underscore (`_`) to clearly distinguish them from public APIs.
+
+* **new**: Added a function for weakness visualization. Refer to the examples for usage details.
+
+* **new**: Added API documentation and examples for usage details.
+
+
 ## Version 1.1:What's New
 
 We've released a new version with several key improvements focused on making your security workflow smoother and providing more detailed security information.
