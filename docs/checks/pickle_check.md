@@ -5,7 +5,7 @@ Codeaudit checks on the use of the `pickle` statement.
 :::{danger} 
 Unpickling will import any class or function that it finds in the pickle data. This is a severe security concern as it permits the unpickler to import and invoke arbitrary code. 
 
-**Never use `pickle.load()` or `pickle.loads()` on data received from an untrusted or unauthenticated source.**
+**Never use `pickle.load()` , `pickle.loads()` or `pickle.Unpickler` on data received from an untrusted or unauthenticated source.**
 
 :::
 

@@ -21,6 +21,7 @@ Insecure Hashing Algorithm,hashlib.sha1,High,SHA-1 is cryptographically broken a
 Logging Configuration,logging.config,Medium,Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.
 Pickle Usage,pickle.loads,High,Deserializing untrusted data with `pickle` can lead to arbitrary code execution.
 Pickle Usage,pickle.load,High,Deserializing untrusted data with `pickle` can lead to arbitrary code execution.
+Pickle Usage,pickle.Unpickler,High,Deserializing untrusted data with `pickle` can lead to arbitrary code execution.
 OS Execution,os.system,High,Direct OS function calls can have significant security implications and require careful review.
 OS Execution,os.execl,High,Direct OS function calls can have significant security implications and require careful review.
 OS Execution,os.execle,High,Direct OS function calls can have significant security implications and require careful review.
