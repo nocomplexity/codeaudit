@@ -6,7 +6,11 @@ Open accessible information should not available as easy as possible without bor
 
 So I choose to use a Creative Commons Attribution-ShareAlike License for documentation. This license allows you to freely use and share all the information as long as you follow the simple terms that come with this open access license. Using this license creates a brighter future for us all.
 
-For the **Codeaudit** tool all code is available under the GPL license. 
+For the **Python Code Audit** tool all code is available under the FOSS (Free and Open Source Software) GPLv3 license. 
+Transparency builds trust. Openness is key. 
+
+You should only use [open security solutions (products, methods, and documentation)](https://nocomplexity.com/documents/securitysolutions/intro.html) that are open and can be improved so that we all benefit. 
+
 
 ## Documentation license
 
@@ -55,7 +59,7 @@ material.
 ## Software License
 
    
-Codeaudit is a Python program to check for potential security issues in Python files.
+**Python Code Audit** is a Python program to check for security weaknesses in Python files.
 
 Copyright (C) 2025  BM-Support.org Foundation and Maikel Mardjan. 
 

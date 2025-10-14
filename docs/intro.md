@@ -1,7 +1,10 @@
 # Introduction
 
+[![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square)](https://github.com/nocomplexity/codeaudit)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10970/badge)](https://www.bestpractices.dev/projects/10970) 
 [![PyPI - Version](https://img.shields.io/pypi/v/codeaudit.svg)](https://pypi.org/project/codeaudit)
+[![Documentation](https://img.shields.io/badge/Python%20Code%20Audit%20Handbook-Available-blue)](https://nocomplexity.com/documents/codeaudit/intro.html)
+[![License](https://img.shields.io/badge/License-GPLv3-FFD700)](https://nocomplexity.com/documents/codeaudit/license.html)
 
 ![CodeauditLogo](images/codeauditlogo.png)
 

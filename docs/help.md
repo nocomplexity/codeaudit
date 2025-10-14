@@ -10,12 +10,41 @@ Everyone can help with improving this tool!
 :::
 
 
+## Promote Your Commitment to Python Code Audit
 
 
-Helping is possible in multiple ways:
 * [Support this work](sponsors)
-* Share and promote the use of this solid simple tool
+
+* If you use **Python Code Audit**, showcase your dedication to secure coding by adding a badge to your public repository.
+Displaying the badge signals that you take Python security seriously and have proactively audited your code for potential vulnerabilities.
+
+You can display your badge by embedding the following snippet in your Markdown file:
+
+```markdown
+[![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square)](https://github.com/nocomplexity/codeaudit)
+```
+Or by embedding this in your HTML page:
+
+```html
+<href="https://github.com/nocomplexity/codeaudit"><img alt="PythonCodeAudit Badge" src="https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square"></a>
+```
+
+:::{admonition} When using the Python Code Audit badge, inform your users!
+:class: tip, dropdown
+
+When you use **Python Code Audit**, you are in control.
+
+No AI agent should decide what is necessary — only you fully understand your design and its complete context.
+
+You should carefully evaluate all reported weaknesses. 
+
+Not every issue requires fixing; depending on your program and the environment in which it operates, **some detected weaknesses may not be relevant**.
+
+However, it is important to document your decisions and inform your users about the design choices you have made and the rationale behind them.
+:::
+
 * Send me a line that you use this tool within your company. 
+
 * [Contribute](CONTRIBUTE)
 
 Guideline to contribute:

@@ -2,9 +2,12 @@
 
 ![CodeauditLogo](https://github.com/nocomplexity/codeaudit/raw/main/docs/images/codeauditlogo.png)
 
+[![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square)](https://github.com/nocomplexity/codeaudit)
 [![PyPI - Version](https://img.shields.io/pypi/v/codeaudit.svg)](https://pypi.org/project/codeaudit)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/codeaudit.svg)](https://pypi.org/project/codeaudit)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10970/badge)](https://www.bestpractices.dev/projects/10970)
+[![Documentation](https://img.shields.io/badge/Python%20Code%20Audit%20Handbook-Available-blue)](https://nocomplexity.com/documents/codeaudit/intro.html)
+[![License](https://img.shields.io/badge/License-GPLv3-FFD700)](https://nocomplexity.com/documents/codeaudit/license.html)
 [![PyPI Downloads](https://static.pepy.tech/badge/codeaudit)](https://pepy.tech/projects/codeaudit)
 
 Python Code Audit - A modern Python source code analyzer based on distrust.
