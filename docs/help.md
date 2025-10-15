@@ -15,10 +15,10 @@ Everyone can help with improving this tool!
 
 * [Support this work](sponsors)
 
-* If you use **Python Code Audit**, showcase your dedication to secure coding by adding a badge to your public repository.
+* If you use **Python Code Audit**, showcase your dedication to secure coding by adding the badge ![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square) to your public repository.
 Displaying the badge signals that you take Python security seriously and have proactively audited your code for potential vulnerabilities.
 
-You can display your badge by embedding the following snippet in your Markdown file:
+You can display the badge, ![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square), by embedding the following snippet in your Markdown file:
 
 ```markdown
 [![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square)](https://github.com/nocomplexity/codeaudit)

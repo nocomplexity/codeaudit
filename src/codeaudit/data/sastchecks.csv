@@ -52,8 +52,15 @@ Base64 Encoding ,base64,Low,"Base64 encoding is not for security. It only visual
 XML-RPC Client,xmlrpc.client,High,Vulnerable to denial-of-service via decompression bombs.
 XML-RPC Server,xmlrpc.server.SimpleXMLRPCServer,High,Vulnerable to denial-of-service via decompression bombs.
 Cryptographically Unsafe Randomness,random.random,Low,The pseudo-random generators in this module are not suitable for security purposes. 
+Cryptographically Unsafe Randomness,random.Random,Low,The pseudo-random generators in this module are not suitable for security purposes. 
+Cryptographically Unsafe Randomness,random.randrange,Low,The pseudo-random generators in this module are not suitable for security purposes. 
+Cryptographically Unsafe Randomness,random.randint,Low,The pseudo-random generators in this module are not suitable for security purposes. 
+Cryptographically Unsafe Randomness,random.uniform,Low,The pseudo-random generators in this module are not suitable for security purposes. 
+Cryptographically Unsafe Randomness,random.triangular,Low,The pseudo-random generators in this module are not suitable for security purposes. 
 Cryptographically Unsafe Randomness,random.seed,Low,The pseudo-random generators in this module are not suitable for security purposes. 
+Cryptographically Unsafe Randomness,random.randbytes,Low,The pseudo-random generators in this module are not suitable for security purposes. 
 Shelve Usage,shelve.open,High,"The `shelve` module uses `pickle` internally, making it unsafe for untrusted data."
+Shelve Usage,shelve.DbfilenameShelf,High,"The `shelve` module uses `pickle` internally, making it unsafe for untrusted data."
 Unsafe Deserialization: multiprocessing,connection.recv,High,"Uses pickle, which can execute arbitrary code when receiving data. "
 Unsafe Deserialization: multiprocessing,multiprocessing.connection.Connection,High,Relies on pickle; dangerous with untrusted data. 
 Zipfile Extraction,zipfile.ZipFile,High,Vulnerable to path traversal attacks if used with untrusted archives.

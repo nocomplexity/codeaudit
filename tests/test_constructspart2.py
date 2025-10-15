@@ -12,20 +12,14 @@ def test_shelve_usage():
 
     # validation1.py is in a subfolder:
     validation_file_path = current_file_directory / "validationfiles" / "shelve.py"
-
-        
-    #We run now constructs based on definitions!
-    # constructs = {'random.random',
-    #               'random.seed'}
     
     result = perform_validations(validation_file_path)
 
-    #actual_data = find_constructs(source, constructs) 
+    # actual_data = find_constructs(source, constructs)
     actual_data = result['result']
 
     # This is the expected dictionary
-    expected_data = {'shelve.open': [3] ,
-                     }
+    expected_data = {"shelve.DbfilenameShelf": [7], "shelve.open": [3]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
