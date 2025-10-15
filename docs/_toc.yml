@@ -5,13 +5,13 @@ parts:
 - caption: Quick Start
   chapters:    
   - file: features
+  - file: howtoscan
   - file: userguide
     sections:
     - file: codeauditoverview    
     - file: filescan
     - file: modulescan
-    - file: codeauditchecks
-  - file: howtoscan
+    - file: codeauditchecks  
   - file: whatissast
   - file: whysast
   - file: issues
@@ -54,9 +54,10 @@ parts:
   #- file: astlines
   # - file: astlines2
   - file: makeitbetter
+  - file: project_philosophy
   - file: complexitycheck
   - file: warnings
-  - file: project_philosophy
+  - file: handling_errors
   - file: codeauditcommands  
   - file: changelog
   

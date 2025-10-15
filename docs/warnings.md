@@ -1,6 +1,6 @@
-# Warnings
+# Python Warnings
 
-Code Audit captures Python warnings.
+**Python Code Audit** captures Python warnings.
 
 But:
 :::{caution} 

@@ -16,8 +16,8 @@ Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE]
 Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.
 
 Commands:
-  overview             Reports Complexity and statistics per Python file from a directory.
-  filescan             Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+  overview             Reports complexity and statistics for Python files in a project directory.
+  filescan             Scans Python projects/files, reporting potential security weaknesses.
   modulescan           Reports module vulnerability information.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
@@ -28,7 +28,7 @@ Check https://simplifysecurity.nocomplexity.com/
 ```
 ## Code Audit overview
 ```text
-Reports Complexity and statistics per Python file from a directory.
+Reports complexity and statistics for Python files in a project directory.
 
 Parameters:
     directory (str): Path to the directory to scan.
@@ -59,7 +59,7 @@ errors defaults to 'strict'.
 ```
 ## Code Audit filescan
 ```text
-Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+Scans Python projects/files, reporting potential security weaknesses.
     
 This function performs security validations on the specified file or directory, 
 formats the results into an HTML report, and writes the output to an HTML file. 

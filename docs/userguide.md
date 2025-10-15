@@ -61,16 +61,13 @@ codeaudit
 This will show:
 
 ```text
---------------------------------------------------
-   _____          _                      _ _ _   
-  / ____|        | |                    | (_) |  
- | |     ___   __| | ___  __ _ _   _  __| |_| |_ 
- | |    / _ \ / _` |/ _ \/ _` | | | |/ _` | | __|
- | |___| (_) | (_| |  __/ (_| | |_| | (_| | | |_ 
-  \_____\___/ \__,_|\___|\__,_|\__,_|\__,_|_|\__|
---------------------------------------------------
+----------------------------------------------------
+ _                    __             _             
+|_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
+|   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
+----------------------------------------------------
 
-Codeaudit - Modern Python source code analyzer based on distrust.
+Python Code Audit - A modern Python security source code analyzer based on distrust.
 
 Commands to evaluate Python source code:
 Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 
@@ -78,12 +75,11 @@ Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE]
 Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.
 
 Commands:
-  overview             Reports Complexity and statistics per Python file from a directory.
-  modulescan           Reports module information per file.
-  filescan             Reports potential security issues for a single Python file.
-  directoryscan        Reports potential security issues for all Python files found in a directory.
-  checks               Generate an HTML report of all implemented codeaudit security checks.
-  version              Prints the module version. Use [-v] [--v] [-version] or [--version].
+  overview             Reports complexity and statistics for Python files in a project directory.
+  filescan             Scans Python projects/files, reporting potential security weaknesses.
+  modulescan           Reports module vulnerability information.
+  checks               Creates an HTML report of all implemented security checks.
+  version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
 Use the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!
 Check https://simplifysecurity.nocomplexity.com/ 

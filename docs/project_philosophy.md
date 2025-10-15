@@ -18,6 +18,8 @@ We believe that static security testing of Python code should be carried out mor
 
 
 Python Code Audit is built on strong design principles:
+* **Better be safe than sorry!** **Python Code Audit** takes a defensive security approach. 
+
 * **Local first**: No data leakage and no reliance on third-party services. Security should never be outsourced to a “black box” environment.
 
 

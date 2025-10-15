@@ -30,7 +30,7 @@ from codeaudit import __version__
 
 from importlib.resources import files
 
-DISCLAIMER_TEXT = "<p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p>"
+DISCLAIMER_TEXT = "<p><b>Disclaimer:</b><i>This SAST tool <b>Python Code Audit</b> provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist. <b>There is, and will never be, a single security tool that gives 100% automatic guarantees</b>. By reporting any issues you find, you contribute to a better tool for everyone.</i>"
 
 
 SIMPLE_CSS_FILE = files('codeaudit') / 'simple.css'
