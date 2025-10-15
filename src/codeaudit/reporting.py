@@ -38,7 +38,7 @@ SIMPLE_CSS_FILE = files('codeaudit') / 'simple.css'
 DEFAULT_OUTPUT_FILE = 'codeaudit-report.html'
 
 def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
-    """Reports Complexity and statistics per Python file from a directory.
+    """Reports complexity and statistics for Python files in a project directory.
     
     Parameters:
         directory (str): Path to the directory to scan.
@@ -104,7 +104,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         
 
 def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
-    """Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+    """Scans Python projects/files, reporting potential security weaknesses.
         
     This function performs security validations on the specified file or directory, 
     formats the results into an HTML report, and writes the output to an HTML file. 
@@ -119,7 +119,7 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
     Returns:
         None - A HTML report is written as output
     """
-      # Check if the input is a valid directory or a single valid Python file
+    # Check if the input is a valid directory or a single valid Python file
     file_path = Path(input_path)
     if file_path.is_dir():
         directory_scan_report(input_path , filename ) #create a package aka directory scan report
