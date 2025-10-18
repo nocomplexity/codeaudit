@@ -1,6 +1,27 @@
 # Change Log
 
-# Version 1.2: Changes and Updates
+
+
+
+## Version 1.3: Changes and Updates
+
+
+* **Documentation:** General improvements and clarifications.
+* **Environment:** Updated `project.toml` — now compatible with **Python 3.14**.
+
+  * ⚠️ *Note:* The **Altair** dependency for Python 3.14 requires an update; final wording will depend on the release status of the next Altair version. The current working version of Altair (`altair-5.6.0.dev0 with typing-extensions-4.15.0` ) was used to validate correct working of all functionality of **Python Code Audit** for Python 3.14.
+
+* **Validation Enhancements:**
+
+  * Added validation for use of the class `pickle.Unpickler`, which may process untrusted binary pickle data streams.
+  * Added validation for use of the class `shelve.DbfilenameShelf`.
+  * Extended validation to detect potentially unsafe calls to the `random` module.
+
+* **CLI:** Improved help text for the `cld` command.
+
+
+
+## Version 1.2: Changes and Updates
 
 * fix: Improved error handling — when performing a file scan on a single Python file that cannot be parsed, the CLI now correctly displays an error message.
 
