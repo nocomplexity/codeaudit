@@ -1,27 +1,50 @@
 # Complexity Check
 
-The Python `codeaudit` tool implements a Simple Cyclomatic complexity check.
+**Python Code Audit** implements a Simple Cyclomatic Complexity check, operating on the principle that secure systems are simple systems.
+
+
+Complexity directly impacts security. Simple systems are:
+
+* Maintainable: Easier to change and manage.
+
+* Reliable: Less prone to logic errors.
+
+* Testable: Easier to validate and test.
+
+**Python Code Audit** tool calculates the complexity per file and provides a module-level overview to help you track this metric.
+
+
+
+:::{tip} 
+**Embrace Simplicity**
+
+* Keep your architecture simple. 
+
+* Prefer straightforward designs over complex, highly specific ones. 
+
+This ensures your code is easy for others to read, manage, and change. Practice and use the [0complexity principles](https://nocomplexity.com/documents/0complexity/abstract.html)
+
+:::
+
 
 
 [Cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) is a software metric used to indicate the complexity of a program. It was developed by Thomas J. McCabe, Sr. in 1976. 
 
-Calculating the Cyclomatic complexity for Python sources is complex to do right. And seldom needed! Most implementations for calculating a very thorough Cyclomatic Complexity end up being opinionated sooner or later.
+Calculating the cyclomatic complexity for Python source code is difficult to do accurately. Most implementations aiming for a thorough complexity score eventually become somewhat subjective or opinionated.
 
 :::{note} 
 Codeaudit takes a pragmatic and simple approach to determine and calculate the complexity of a source file.
 
-**BUT:**
-The Complexity Score that Codeaudit presents gives a **good and solid** representation for the complexity of a Python source file.
+The Complexity Score that Python Code Audit** presents gives a **good and solid** representation for the complexity of a Python source file.
 :::
 
 
-But I known the complexity score is not an exact exhaustive cyclomatic complexity measurement.
 
 
-The complexity is determined per file, and not per function within a Python source file. I have worked long ago with companies that calculated [function points](https://en.wikipedia.org/wiki/Function_point) for software that needed to be created or adjusted. Truth is: Calculating exact metrics about complexity for software code projects is a lot of work, is seldom done correctly and are seldom used with nowadays devops or scrum development teams. 
+The complexity is determined per file, and not per function within a Python source file. I have worked with companies that calculated [function points](https://en.wikipedia.org/wiki/Function_point) for systems that needed to be created or adjusted. Truth is: Calculating exact metrics about complexity for software code projects is a lot of work, is seldom done correctly and are seldom used with nowadays devops or scrum development teams. 
 
 
-:::{tip} 
+:::{note} 
 The complexity score of source code gives presented gives a solid indication from a security perspective.
 :::
 
