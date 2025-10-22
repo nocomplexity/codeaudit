@@ -117,3 +117,29 @@ def issue_plot(input_dict):
     )
 
     return chart
+
+
+def issue_overview(df):
+    """
+    Create an Altair arc (donut) chart from a DataFrame 
+    with 'call' and 'count' columns, showing counts in the legend.
+    """
+    # Create a label combining call and count for the legend
+    df = df.copy()
+    df["label"] = df["call"] + " (" + df["count"].astype(str) + ")"
+
+    chart = (
+        alt.Chart(df)
+        .mark_arc(innerRadius=50, outerRadius=120)
+        .encode(
+            theta=alt.Theta("count:Q", title="Count"),
+            color=alt.Color("label:N", title="Calls (Count)"),
+            tooltip=["call", "count"]
+        )
+        .properties(
+            title="Overview of Security Weaknesses",
+            width=600,
+            height=600
+        )
+    )
+    return chart

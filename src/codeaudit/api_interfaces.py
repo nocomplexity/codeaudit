@@ -139,7 +139,7 @@ def read_input_file(filename):
 
 def get_construct_counts(input_file):
     """
-    Analyze a scan result and count occurrences of code constructs (aka weaknesses).
+    Analyze a Python file or package(directory) and count occurrences of code constructs (aka weaknesses).
 
     This function uses `filescan` API call to retrieve security-related information
     about the input file. This returns a dict. Then it counts how many times each code construct
