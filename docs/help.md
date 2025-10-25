@@ -1,6 +1,6 @@
 # Help
 
-This Open Source tool is created to [simplifying cyber security](https://nocomplexity.com/documents/simplifysecurity/intro.html).
+This **Python Code Audit** Open Source(F/OSS) tool is created to [simplifying cyber security](https://nocomplexity.com/documents/simplifysecurity/intro.html).
 
 :::{hint} 
 Everyone can help with improving this tool!
