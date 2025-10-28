@@ -47,7 +47,7 @@ parts:
     - file: checks/xml_check
     - file: checks/zipfile_check
     - file: checks/shutil_check
-
+  - file: securecoding
 
 - caption: Architecture 
   chapters:     
