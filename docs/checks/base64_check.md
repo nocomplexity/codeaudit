@@ -1,11 +1,19 @@
 # Base64 Statements
 
-Codeaudit checks on use of:
-*  Base64 Encoding / Decoding
+Python Code Audit checks for obfuscated text, particularly content encoded with `base64`:
 
-The `base64` module requires specific security considerations.
+*  `base64` Encoding / Decoding.
 
-It’s recommended to review the security considerations for any code deployed to production using `base64` encoding.
+
+## Rationale
+
+
+Obfuscation is a long-standing and straightforward technique often used to conceal malicious code within Python projects. This technique allows attackers to easily hide malware within Python programs.
+
+The presence of obfuscated content is atypical in well-structured, non-malicious Python code and is a significant indicator of potential security risks.
+
+
+It’s recommended to review any code deployed to production using `base64` encoding. **Python Code Audit** does this automatically.
 
 Security considerations section from RFC 4648 (section 12):
 
@@ -51,3 +59,4 @@ Security Considerations
 
 * https://docs.python.org/3/library/base64.html#base64-security
 * https://datatracker.ietf.org/doc/html/rfc4648.html#page-14 
+* [Base64 Malleability in Practice](https://eprint.iacr.org/2022/361.pdf)
