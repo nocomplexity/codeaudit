@@ -4,7 +4,9 @@ The rapid growth and increasing complexity of Python-based web applications and 
 
 To strengthen cyber security, we must make protection both **better and simpler** — simpler to use, simpler to maintain, and simpler to understand.
 
-Too often, complex security tools end up **reducing security** rather than improving it. The goal should be to **do the simple things well** — ensuring strong fundamentals rather than adding unnecessary complexity.
+Too often, complex security tools end up **reducing security** rather than improving it. The goal should be to **do the simple things well** — ensuring strong fundamentals rather than adding unnecessary complexity. 
+
+We believe that openly sharing ideas, specifications, and other intellectual property is key to maximizing security innovation and reducing vulnerabilities in Python software components.
 
 Security validation for Python code should be **fast, straightforward, and effective**.
 
