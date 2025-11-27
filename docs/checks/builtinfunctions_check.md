@@ -127,12 +127,69 @@ Using this construct can still crash the Python interpreter due to stack depth l
 
 * Avoid using `eval`,`exec` and `compile`: Find a secure way by design, so rethink your design again from a security perspective. There is always a better and safer solution.
 
+* Use a battle-tested safe expression evaluator.
+
+* Rethink the architecture to eliminate exec(), which introduces unnecessary risk.
+
+* For in-browser sandboxing, use Pyodide (e.g., via JupyterLite)(https://jupyterlite.readthedocs.io/en/latest/ ).
+
+* Call Functions or Methods by Name (String Input)
+If a function needs to be called based on a string name (e.g., from user input), store the functions in a dictionary and look them up by key. Avoid:
+```python
+func_name = input("Enter function to run: ")
+exec(f"{func_name}()")
+```
+
+Recommended Alternative (Dictionary of Functions):
+
+```python
+def greet():
+    print("Hello!")
+
+def quit_app():
+    import sys
+    sys.exit()
+
+available_functions = {
+    "greet": greet,
+    "quit": quit_app
+}
+
+func_name = input("Enter function to run (greet or quit): ")
+if func_name in available_functions:
+    available_functions[func_name]()
+else:
+    print("Unknown function")
+```
+
+* For evaluating simple, safe expressions, use ast.literal_eval() which safely evaluates basic Python literals without allowing full code execution.
+Avoid:
+```
+exec("import os; os.system('your_command')")
+```
+Recommended Alternative (`ast.literal_eval`):
+```python
+import ast
+user_input = "(2 + 3) * 5"
+try:
+    result = ast.literal_eval(user_input)
+    print(result)
+except (ValueError, SyntaxError):
+    print("Invalid input")
+```
+
+
 
 
 ## More information
 
+* [CWE-94: Improper Control of Generation of Code ('Code Injection')](https://cwe.mitre.org/data/definitions/94.html)
 * https://docs.python.org/3/library/functions.html#eval 
 
 * https://docs.python.org/3/library/functions.html#exec
 
 * https://docs.python.org/3/library/functions.html#compile
+
+* [CVE-2025-3248 Detail](https://nvd.nist.gov/vuln/detail/CVE-2025-3248)
+
+* [CVE-2025-3248 – Unauthenticated Remote Code Execution in Langflow via Insecure Python exec Usage](https://www.offsec.com/blog/cve-2025-3248/)
