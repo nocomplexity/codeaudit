@@ -89,6 +89,16 @@ When using External Modules:
 
 - Extraction of untrusted or unknown archive files using `zipfile`, `lzma`, or `tarfile` **SHOULD** be avoided to prevent path traversal attacks.
 
++++
+
+- Secrets **SHOULD NOT** be stored in Python code or files that will be uploaded in a code repository.
+
++++
+
+ - `*pyc` **SHOULD NOT** be checked in to source control. `pyc` files can contain secrets. Use a standard Python `.gitignore` file. Bad actors search for secrets in code, Python Bytecode (`.pyc` files ) and `.git` directories to find if a secret was ever uploaded in a source control system. 
+
+ +++
+
 
 :::{admonition} **Disclaimer**  
 :class: note
