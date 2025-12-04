@@ -95,7 +95,7 @@ When using External Modules:
 
 +++
 
- - `*pyc` **SHOULD NOT** be checked in to source control. `pyc` files can contain secrets. Use a standard Python `.gitignore` file. Bad actors search for secrets in code, Python Bytecode (`.pyc` files ) and `.git` directories to find if a secret was ever uploaded in a source control system. 
+ - `*pyc` files **SHOULD NOT** be checked in to source control. `pyc` files can contain secrets. Use a standard Python `.gitignore` file. Bad actors search for secrets in code, Python Bytecode (`.pyc` files ) and `.git` directories to find if a secret was ever uploaded in a source control system. 
 
  +++
 
