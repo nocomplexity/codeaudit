@@ -27,6 +27,9 @@ from codeaudit.totals import get_statistics , overview_count , overview_per_file
 from codeaudit.checkmodules import get_imported_modules , check_module_vulnerability , get_all_modules , get_imported_modules_by_file
 from codeaudit.htmlhelpfunctions import dict_to_html , json_to_html , dict_list_to_html_table
 from codeaudit import __version__
+from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
+
+from codeaudit.api_interfaces import filescan
 
 from importlib.resources import files
 
@@ -119,7 +122,8 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
     Returns:
         None - A HTML report is written as output
     """
-    # Check if the input is a valid directory or a single valid Python file
+    # Check if the input is a valid directory or a single valid Python file 
+    # In case no local file or directory is found, check if the givin input is pypi package name
     file_path = Path(input_path)
     if file_path.is_dir():
         directory_scan_report(input_path , filename ) #create a package aka directory scan report
@@ -135,9 +139,23 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
         html += '<br>'
         html += DISCLAIMER_TEXT
         create_htmlfile(html,filename)
+    elif get_pypi_download_info(input_path):
+        print(f"Package: {input_path} exist on PyPI.org!")
+        print(f"Now SAST scanning package from the remote location: https://pypi.org/pypi/{input_path}")
+        #MVP
+        url = get_pypi_download_info(input_path)['download_url']
+        src_dir, tmp_handle = get_package_source(url)
+        print("Extracted package in tmp dir:", src_dir)
+        package_version = get_pypi_download_info(input_path)['release']
+        print(f'Scanning package:{input_path} - version {package_version}')
+        scan_result = filescan(src_dir) #API call to scans the file or directory and returns a Python dict
+        print(scan_result)
+        # Cleaning up temp directory 
+        tmp_handle.cleanup()  # deletes everything from temp directory
+        print("temp directory removed!")
     else:
         #File is NOT a valid Python file, can not be parsed or directory is invalid.
-        print(f"Error: '{input_path}' isn't a valid Python file or directory path.")
+        print(f"Error: '{input_path}' isn't a valid Python file, directory path to a package or a package on PyPI.org.")
         
    
 
