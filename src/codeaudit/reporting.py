@@ -140,19 +140,17 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
         html += DISCLAIMER_TEXT
         create_htmlfile(html,filename)
     elif get_pypi_download_info(input_path):
+        package_name = input_path #The variable input_path is now equal to the package name
         print(f"Package: {input_path} exist on PyPI.org!")
         print(f"Now SAST scanning package from the remote location: https://pypi.org/pypi/{input_path}")
         #MVP
-        url = get_pypi_download_info(input_path)['download_url']
+        pypi_data = get_pypi_download_info(input_path)
+        url = pypi_data['download_url']
+        release = pypi_data['release']        
         src_dir, tmp_handle = get_package_source(url)
-        print("Extracted package in tmp dir:", src_dir)
-        package_version = get_pypi_download_info(input_path)['release']
-        print(f'Scanning package:{input_path} - version {package_version}')
-        scan_result = filescan(src_dir) #API call to scans the file or directory and returns a Python dict
-        print(scan_result)
+        directory_scan_report(src_dir , filename , package_name, release ) #create scan report for a package or directory
         # Cleaning up temp directory 
-        tmp_handle.cleanup()  # deletes everything from temp directory
-        print("temp directory removed!")
+        tmp_handle.cleanup()  # deletes everything from temp directory                
     else:
         #File is NOT a valid Python file, can not be parsed or directory is invalid.
         print(f"Error: '{input_path}' isn't a valid Python file, directory path to a package or a package on PyPI.org.")
@@ -208,7 +206,7 @@ def single_file_report(filename , scan_output):
     return html 
 
 
-def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
+def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , package_name=None , release=None):
     """Reports potential security issues for all Python files found in a directory.
     
     This function performs security validations on all files found in a specified directory.
@@ -217,7 +215,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
     You can specify the name and directory for the generated HTML report.
 
     Parameters:
-        file_to_scan (str)      : The full path to the Python source file to be scanned.
+        directory_to_scan (str)      : The full path to the Python source files to be scanned. Can be present in temp directory.
         filename (str, optional): The name of the HTML file to save the report to.
                                   Defaults to `DEFAULT_OUTPUT_FILE`.
 
@@ -234,7 +232,11 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE):
     files_to_check = collect_python_source_files(directory_to_scan)
     html += '<h2>Directory scan report</h2>'         
     name_of_package = get_filename_from_path(directory_to_scan)
-    html += f'<p>Below the result of the Codeaudit scan of the package or directory:<b> {name_of_package}</b></p>' 
+    if package_name is not None:
+        #Use real package name and retrieved release info
+        html += f'<p>Below the result of the Codeaudit scan of the package - Release :<b> {package_name} - {release} </b></p>'
+    else:
+        html += f'<p>Below the result of the Codeaudit scan of the directory:<b> {name_of_package}</b></p>' 
     html += f'<p>Total Python files found: {len(files_to_check)}</p>'
     number_of_files = len(files_to_check)
     print(f'Number of files that are checked for security issues:{number_of_files}')
