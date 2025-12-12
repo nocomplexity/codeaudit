@@ -56,15 +56,29 @@ def get_pypi_download_info(package_name):
         data = get_pypi_package_info(package_name)   
         releases_dict = data['releases']
         # Convert the key-value pairs (items) into a list and get the last one
-        last_item_pair = list(releases_dict.items())[-1]
-        sdist_download_url = last_item_pair[1][1]['url']
-        release_info = last_item_pair[0] 
+        last_item = list(releases_dict.items())[-1] #last_item is a Python tuple
+        sdist_download_url = find_download_url(last_item,'source') # We want the download URL of the source, so *.tar.gz file
+        release_info = last_item[0] 
         pypi_package_info= { "download_url" : sdist_download_url ,
                             "release" : release_info}
         return pypi_package_info
     else:
         #package does not exist
         return False
+
+def find_download_url(data, source):
+    """
+    Given the PyPI release tuple and a python_version string,
+    return the URL of the first matching item.
+    """    
+    items = data[1] # Access the list of items directly via index 1 , data is a tuple    
+
+    for item in items:
+        if item.get("python_version") == source:
+            return item.get("url")
+
+    return None  # if no match found`
+
 
 def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
     """Retrieves a package source and extract so SAST scanning can be applied
@@ -91,7 +105,7 @@ def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
             f.write(content)
 
         with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(path=temp_dir,filter='data')
+            tar.extractall(path=temp_dir,filter='data')  #Possible risks are mitigated as far as possible, see architecture notes.
 
         return temp_dir, tmpdir_obj  # return both so caller controls lifetime
 

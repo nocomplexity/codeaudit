@@ -107,7 +107,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         
 
 def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
-    """Scans Python projects/files, reporting potential security weaknesses.
+    """Scans Python code or packages on PyPI.org on security weaknesses.
         
     This function performs security validations on the specified file or directory, 
     formats the results into an HTML report, and writes the output to an HTML file. 
@@ -141,12 +141,13 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
         create_htmlfile(html,filename)
     elif get_pypi_download_info(input_path):
         package_name = input_path #The variable input_path is now equal to the package name
-        print(f"Package: {input_path} exist on PyPI.org!")
-        print(f"Now SAST scanning package from the remote location: https://pypi.org/pypi/{input_path}")
-        #MVP
-        pypi_data = get_pypi_download_info(input_path)
+        print(f"Package: {package_name} exist on PyPI.org!")
+        print(f"Now SAST scanning package from the remote location: https://pypi.org/pypi/{package_name}")        
+        pypi_data = get_pypi_download_info(package_name)
         url = pypi_data['download_url']
-        release = pypi_data['release']        
+        release = pypi_data['release']
+        print(url)
+        print(release)
         src_dir, tmp_handle = get_package_source(url)
         directory_scan_report(src_dir , filename , package_name, release ) #create scan report for a package or directory
         # Cleaning up temp directory 
@@ -185,14 +186,14 @@ def single_file_report(filename , scan_output):
     df = df.sort_values(by="line") # sort by line number    
     html = f'<p>Number of potential security issues found: {number_of_issues}</p>'
     html += '<details>' 
-    html += '<summary>Click to see the details for found security issues.</summary>'         
+    html += '<summary>Click to view identified security weaknesses.</summary>'         
     html += df.to_html(escape=False,index=False)        
     html += '</details>'
     file_overview = overview_per_file(filename)    
     df_overview = pd.DataFrame([file_overview])
     html += '<br>'
-    html += '<details>' 
-    html += f'<summary>Click to see details for file {filename}</summary>'                 
+    html += '<details>'     
+    html += f'<summary>Click to see file details.</summary>'                 
     html += df_overview.to_html(escape=True,index=False)        
     html += '</details>'           
     #imported modules
@@ -237,7 +238,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
         html += f'<p>Below the result of the Codeaudit scan of the package - Release :<b> {package_name} - {release} </b></p>'
     else:
         html += f'<p>Below the result of the Codeaudit scan of the directory:<b> {name_of_package}</b></p>' 
-    html += f'<p>Total Python files found: {len(files_to_check)}</p>'
+    html += f'<p>Total Python files found: <b>{len(files_to_check)}</b></p>'
     number_of_files = len(files_to_check)
     print(f'Number of files that are checked for security issues:{number_of_files}')
     printProgressBar(0, number_of_files, prefix='Progress:', suffix='Complete', length=50)    
@@ -249,7 +250,8 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
             file_report_html = single_file_report(file_to_scan , scan_output)             
             name_of_file = get_filename_from_path(file_to_scan)            
             html += f'<h3>Result for file {name_of_file}</h3>'    
-            html += '<p>' + f'Location of the file: {file_to_scan} </p>'          
+            if package_name is None:
+                html += '<p>' + f'Location of the file: {file_to_scan} </p>'          
             html += file_report_html            
         else:
             file_name_with_no_issue = get_filename_from_path(file_to_scan)
