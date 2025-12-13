@@ -17,7 +17,7 @@ Depending on the command, a directory or file name must be specified. The output
 
 Commands:
   overview             Reports complexity and statistics for Python files in a project directory.
-  filescan             Scans Python projects/files, reporting potential security weaknesses.
+  filescan             Scans Python code or packages on PyPI.org on security weaknesses.
   modulescan           Reports module vulnerability information.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
@@ -59,7 +59,7 @@ errors defaults to 'strict'.
 ```
 ## Code Audit filescan
 ```text
-Scans Python projects/files, reporting potential security weaknesses.
+Scans Python code or packages on PyPI.org on security weaknesses.
     
 This function performs security validations on the specified file or directory, 
 formats the results into an HTML report, and writes the output to an HTML file. 

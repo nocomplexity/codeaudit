@@ -1,6 +1,27 @@
 # Change Log
 
+## Version 1.4: Changes and Updates
 
+
+🚀 New Features and Enhancements
+Direct PyPI Package Scanning: You can now directly scan packages hosted on PyPI from the command line interface (CLI).
+
+* Usage: Use the existing codeaudit filescan command followed by the package name.
+
+Example: `codeaudit filescan [package_name]`
+
+Consult the [documentation](https://nocomplexity.com/documents/codeaudit/intro.html#) for full details.
+
+* HTML Report Text Improvement: The text content and clarity of the generated HTML reports have been enhanced for better readability.
+
+🛡️ Security Validation Updates
+New Weakness Detection (Python 3.14+): Added a new validation rule to detect potential weaknesses when using the newly added compression.zstd module (available in Python 3.14 and later).
+
+The scanner now specifically flags cases where compression.zstd is used for decompressing or opening a zstd compressed archive.
+
+🐛 Bug Fixes and Documentation
+* Documentation Correction: Corrected and improved the help text for the API call get_construct_counts().
+And many small improvements on the manual to assist you better with outlining risks on found weaknesses and possible mitigations. 
 
 
 ## Version 1.3: Changes and Updates

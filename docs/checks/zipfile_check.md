@@ -14,6 +14,8 @@ And the methods:
 * `lzma.open` 
 * `lzma.LZMAFile` 
 * `shutil.unpack_archive`
+* `compression.zstd.decompress`
+* `compression.zstd.open`
 
 ## Potential danger when opening compressed files
 
@@ -27,7 +29,7 @@ It is possible that files are created outside of the path specified in the extra
 :::
 
 
-This accounts also for using `bz2`, `lzma` , `shutil.unpack_archive` or `tar` compressed files. All these great Python functions that can decompress files require defense in depth to be sure that only trusted files can be opened.
+This accounts also for using `bz2`, `lzma` , `shutil.unpack_archive`,  `tar` or `zstd` compressed files. All these great Python functions that can decompress files require defense in depth to be sure that only trusted files can be opened.
 
 This can lead to:
 * **Denial of Service via Resource Exhaustion**
@@ -54,3 +56,6 @@ A path traversal vulnerability could arise if the file in the `gzip` file is con
 * https://docs.python.org/3/library/gzip.html
 * https://docs.python.org/3/library/bz2.html#bz2.open
 * https://docs.python.org/3/library/shutil.html
+* [PEP 784 on zstd](https://peps.python.org/pep-0784/)
+* [CWE-409: Improper Handling of Highly Compressed Data (Data Amplification)](https://cwe.mitre.org/data/definitions/409.html)
+* [urllib3 Streaming API improperly handles highly compressed data](https://www.cve.org/CVERecord?id=CVE-2025-66471)

@@ -24,9 +24,16 @@ Even if you already have it installed, it’s recommended to run the command aga
 
 
 
-## 2. Clone the Repository you want to scan
+## 2. Clone the Repository you want to scan or use the PyPI package name 
 
-To clone a repository:  
+### To scan a directory based on the PyPI package name:
+
+codeaudit filescanscan <package-name-of-package-on-PyPI> [OUTPUTFILE]
+
+
+### Or clone a repository:  
+
+For direct improvement and inspection of all code using your Python code editor, after examining the Code Audit weakness report:
 
 1. Go to the repository page (e.g., on GitHub).  
 2. Click the green **Code** button.  

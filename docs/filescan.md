@@ -17,6 +17,11 @@ codeaudit filescan <INPUTFILE>  [OUTPUTFILE]
 The `<INPUTFILE>` is mandatory. **Python Code Audit** will create a detailed security scan report. 
 
 
+**`<INPUTFILE>`** can be:
+* A single Python file;
+* A package on PyPI.org: Python Code Audit checks this package on security weakness, so cloning the sources local is not needed!
+* A local directory with Python files, e.g. a local package development environment or a cloned package.
+
 If you do not specify [OUTPUTFILE], a HTML output file, a HTML report file is created in the current directory and will be named codeaudit-report.html.
 
 When running `codeaudit filescan` detailed information is determined for a Python file or package based on more than 70 validations implemented.
