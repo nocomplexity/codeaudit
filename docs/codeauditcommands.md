@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
 # Commands Overview
-Python Code Audit commands for: version: 1.3.0
+Python Code Audit commands for: version: 1.4.0
 ```
 ----------------------------------------------------
  _                    __             _             
@@ -13,7 +13,7 @@ Python Code Audit - A modern Python security source code analyzer based on distr
 Commands to evaluate Python source code:
 Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 
 
-Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.
+Depending on the command, a directory, file name or package present on PyPI.org must be specified. The output is a static HTML file to be examined in a browser. Specifying the output file name is optional.
 
 Commands:
   overview             Reports complexity and statistics for Python files in a project directory.

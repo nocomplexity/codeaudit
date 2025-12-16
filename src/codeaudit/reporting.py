@@ -235,7 +235,8 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     name_of_package = get_filename_from_path(directory_to_scan)
     if package_name is not None:
         #Use real package name and retrieved release info
-        html += f'<p>Below the result of the Codeaudit scan of the package - Release :<b> {package_name} - {release} </b></p>'
+        html += f'<p>Below the result of the Codeaudit scan of (Package name - Release):</p>'
+        html += f'<p><b> {package_name} - {release} </b></p>'
     else:
         html += f'<p>Below the result of the Codeaudit scan of the directory:<b> {name_of_package}</b></p>' 
     html += f'<p>Total Python files found: <b>{len(files_to_check)}</b></p>'
@@ -262,6 +263,8 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     html += '<p>The Python files with no security issues <b>detected</b> by codeaudit are:<p>'        
     html += dict_list_to_html_table(collection_ok_files)     
     html += '<br>'
+    if package_name is not None:
+        html += f'<p><b>Note:</b><i>Since this check is done on a package on PyPI.org, the temporary local directories are deleted. To examine the package in detail, you should download the sources locally and run the command:<code>codeaudit filescan</code> again.</i></p>'
     html += '<p><b>Disclaimer:</b><i>Only Python source files are taken into account for this scan. Sometimes security issues are present in configuration files, like ini,yaml or json files!</i></p>'
     html += DISCLAIMER_TEXT
     create_htmlfile(html,filename)  

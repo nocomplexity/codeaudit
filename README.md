@@ -47,16 +47,11 @@ Python Code Audit has the following features:
 ## Installation
 
 ```console
-pip install codeaudit
-```
-
-or use:
-
-```console
 pip install -U codeaudit
 ```
 
-If you have installed Python `codeaudit` in the past and want to make sure you use the latest new validations and features.
+If you have installed **Python Code Audit** previously and want to ensure you are using the latest validations and features, simply run this command again. Python Code Audit is frequently updated with new checks.
+
 
 ## Usage
 
@@ -80,32 +75,31 @@ Python Code Audit - A modern Python security source code analyzer based on distr
 Commands to evaluate Python source code:
 Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 
 
-Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.
+Depending on the command, a directory, file name or package present on PyPI.org must be specified. The output is a static HTML file to be examined in a browser. Specifying the output file name is optional.
 
 Commands:
-  overview             Reports Complexity and statistics per Python file from a directory.
-  filescan             Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+  overview             Reports complexity and statistics for Python files in a project directory.
+  filescan             Scans Python code or packages on PyPI.org on security weaknesses.
   modulescan           Reports module vulnerability information.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
 Use the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!
 Check https://simplifysecurity.nocomplexity.com/ 
-
 ```
 
 ## Example
 
-By running the `codeaudit filescan` command, detailed security information is determined for a Python file based on more than **70 validations** implemented. 
+By running the `codeaudit filescan` command, detailed security information is determined for a Python file based on more than **80 validations** implemented. 
 
 The `codeaudit filescan` command shows all **potential** security issues that are detected in the source file in a HTML-report.
 
 Per line a the in construct that can cause a security risks is shown, along with the relevant code lines where the issue is detected.
 
-To scan a Python file on possible security issues, do:
+To scan a Python package on PyPI.org on possible security issues, do:
 
 ```bash
-codeaudit filescan ../codeaudit/tests/validationfiles/allshit.py 
+codeaudit filescan <package-name> [reportname.html]
 
 =====================================================================
 Codeaudit report file created!

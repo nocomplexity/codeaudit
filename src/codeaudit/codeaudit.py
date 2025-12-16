@@ -37,7 +37,7 @@ def display_help():
     print("Python Code Audit - A modern Python security source code analyzer based on distrust.\n")
     print("Commands to evaluate Python source code:")
     print('Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] \n')
-    print('Depending on the command, a directory or file name must be specified. The output is a static HTML file to be examined in a browser. Specifying a name for the output file is optional.\n')
+    print('Depending on the command, a directory, file name or package present on PyPI.org must be specified. The output is a static HTML file to be examined in a browser. Specifying the output file name is optional.\n')
     print('Commands:')
     commands = ["overview", "filescan", "modulescan",  "checks","version"]  # commands on CLI
     functions = [overview_report, scan_report, report_module_information, report_implemented_tests,display_version]  # Related functions relevant for help

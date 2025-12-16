@@ -79,9 +79,9 @@ Static application security testing (SAST) tools , like this [**Python Code Audi
 :::
 
  
-[**Python Code Audit**](https://nocomplexity.com/codeaudit/)  is specifically designed for Python codebases. It is tailored to Python’s syntax and unique constructs, enabling it to identify potential security issues effectively.
+[**Python Code Audit**](https://nocomplexity.com/codeaudit/) is designed for Python codebases. It is tailored to Python’s syntax and unique constructs, enabling it to identify potential security issues effectively.
 
-The **Python Code Audit** SAST tool is an advanced security solution that automates the review of Python source code to identify potential security vulnerabilities."
+**Python Code Audit** SAST tool is an advanced security solution that automates the review of Python source code to identify potential security vulnerabilities.
 
 At a function level, Python Code Audit makes use of a common technique to scan the Python source files by making use of **'Abstract Syntax Tree(AST)'** to do in-depth checks on possible vulnerable constructs. 
 
