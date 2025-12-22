@@ -146,12 +146,16 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
         pypi_data = get_pypi_download_info(package_name)
         url = pypi_data['download_url']
         release = pypi_data['release']
-        print(url)
-        print(release)
-        src_dir, tmp_handle = get_package_source(url)
-        directory_scan_report(src_dir , filename , package_name, release ) #create scan report for a package or directory
-        # Cleaning up temp directory 
-        tmp_handle.cleanup()  # deletes everything from temp directory                
+        if url is not None:
+            print(url)
+            print(release)
+            src_dir, tmp_handle = get_package_source(url)
+            directory_scan_report(src_dir , filename , package_name, release ) #create scan report for a package or directory
+            # Cleaning up temp directory 
+            tmp_handle.cleanup()  # deletes everything from temp directory
+        else:
+            print(f'Error:The source distribution (sdist) for package: {package_name} can not be found or does not exist on PyPi.org.\n')
+            print(f"Make a local git clone of the {package_name} using `git clone` and run `codeaudit filescan <directory-with-src-cloned-of-{package_name}>` to check for weaknesses.")
     else:
         #File is NOT a valid Python file, can not be parsed or directory is invalid.
         print(f"Error: '{input_path}' isn't a valid Python file, directory path to a package or a package on PyPI.org.")
