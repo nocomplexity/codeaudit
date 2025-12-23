@@ -1,5 +1,20 @@
 # Change Log
 
+## Version 1.4.1: Bug fixes
+
+🚀 New Features & Enhancements
+* Remote PyPI Auditing: The codeaudit overview command now supports packages hosted directly on PyPI.org.
+
+
+🛠 Bug Fixes
+* Improved sdist Resilience: Enhanced error handling for scenarios where a package exists on PyPI but a source distribution (sdist) is unavailable. 
+
+
+📝 Documentation & UI Updates
+* CLI Improvements: Refined terminal text and messaging for better clarity during operation.
+* Manual Update: The user manual has been updated to reflect new command capabilities and workflows.
+
+
 ## Version 1.4: Changes and Updates
 
 

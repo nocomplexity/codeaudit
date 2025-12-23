@@ -73,13 +73,13 @@ This will show all commands:
 Python Code Audit - A modern Python security source code analyzer based on distrust.
 
 Commands to evaluate Python source code:
-Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 
+Usage: codeaudit COMMAND <directory|package>  [report.html] 
 
-Depending on the command, a directory, file name or package present on PyPI.org must be specified. The output is a static HTML file to be examined in a browser. Specifying the output file name is optional.
+Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.
 
 Commands:
-  overview             Reports complexity and statistics for Python files in a project directory.
-  filescan             Scans Python code or packages on PyPI.org on security weaknesses.
+  overview             Reports complexity and security statistics of a Python project or package on PyPI.org.
+  filescan             Scans Python code or packages on PyPI.org for security weaknesses.
   modulescan           Reports module vulnerability information.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].

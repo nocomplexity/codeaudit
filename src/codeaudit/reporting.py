@@ -41,7 +41,7 @@ SIMPLE_CSS_FILE = files('codeaudit') / 'simple.css'
 DEFAULT_OUTPUT_FILE = 'codeaudit-report.html'
 
 def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
-    """Reports complexity and statistics for Python files in a project directory.
+    """Reports complexity and security statistics of a Python project or package on PyPI.org.
     
     Parameters:
         directory (str): Path to the directory to scan.
@@ -70,8 +70,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
             print(f'Creating Python Code Audit overview for package:\n{url}')            
             src_dir, tmp_handle = get_package_source(url)                    
             directory = src_dir
-            clean_up = True
-            # Note: You'll need to handle tmp_handle.cleanup() later in your script
+            clean_up = True            
     else:
         # Neither a local directory nor a valid PyPI package
         print(f"ERROR: '{directory}' is not a local directory or a valid PyPI package.")
@@ -130,7 +129,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         
 
 def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
-    """Scans Python code or packages on PyPI.org on security weaknesses.
+    """Scans Python code or packages on PyPI.org for security weaknesses.
         
     This function performs security validations on the specified file or directory, 
     formats the results into an HTML report, and writes the output to an HTML file. 

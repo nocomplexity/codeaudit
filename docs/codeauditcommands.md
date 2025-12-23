@@ -11,13 +11,13 @@ Python Code Audit commands for: version: 1.4.0
 Python Code Audit - A modern Python security source code analyzer based on distrust.
 
 Commands to evaluate Python source code:
-Usage: codeaudit COMMAND [PATH or FILE]  [OUTPUTFILE] 
+Usage: codeaudit COMMAND <directory|package>  [report.html] 
 
-Depending on the command, a directory, file name or package present on PyPI.org must be specified. The output is a static HTML file to be examined in a browser. Specifying the output file name is optional.
+Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.
 
 Commands:
-  overview             Reports complexity and statistics for Python files in a project directory.
-  filescan             Scans Python code or packages on PyPI.org on security weaknesses.
+  overview             Reports complexity and security statistics of a Python project or package on PyPI.org.
+  filescan             Scans Python code or packages on PyPI.org for security weaknesses.
   modulescan           Reports module vulnerability information.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
@@ -26,9 +26,9 @@ Use the Codeaudit documentation to check the security of Python programs and mak
 Check https://simplifysecurity.nocomplexity.com/ 
 
 ```
-## Code Audit overview
+## codeaudit overview
 ```text
-Reports complexity and statistics for Python files in a project directory.
+Reports complexity and security statistics of a Python project or package on PyPI.org.
 
 Parameters:
     directory (str): Path to the directory to scan.
@@ -44,7 +44,7 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## Code Audit modulescan
+## codeaudit modulescan
 ```text
 Reports module vulnerability information.str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
@@ -57,9 +57,9 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## Code Audit filescan
+## codeaudit filescan
 ```text
-Scans Python code or packages on PyPI.org on security weaknesses.
+Scans Python code or packages on PyPI.org for security weaknesses.
     
 This function performs security validations on the specified file or directory, 
 formats the results into an HTML report, and writes the output to an HTML file. 
@@ -84,7 +84,7 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## Code Audit checks
+## codeaudit checks
 ```text
 
 Creates an HTML report of all implemented security checks.
@@ -115,7 +115,7 @@ or repr(object).
 encoding defaults to 'utf-8'.
 errors defaults to 'strict'.
 ```
-## Code Audit version
+## codeaudit version
 ```text
 Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str

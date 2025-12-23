@@ -1,12 +1,23 @@
 
 # Command `codeaudit overview`
 
-The command:
 
+
+Use this command to generate a quick security relevant assessment of a Python project or package. It provides an overview of important security metrics for the project.
+
+Usage
+```Bash
+codeaudit overview <package-path|package-name> [report-name.html]
 ```
-codeaudit overview
-```
-is created to give a quick insights in possible security concerns.
+
+Arguments:
+* `<package-path|package-name>` (Required)
+Specify either a local directory containing Python files or the name of a Python package hosted on PyPI.org.
+
+* `[report-name.html]` (Optional)
+The filename for the generated security report. If omitted, the tool will use a default filename. If you provide a custom name, ensure it ends with the `.html` extension.
+
+
 
 For every Python file the following **security** relevant statistics are determined:
 
