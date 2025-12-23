@@ -46,19 +46,36 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     Parameters:
         directory (str): Path to the directory to scan.
         filename (str): Output filename for the HTML report.
-    """
-    if not os.path.exists(directory):
-        print(f"ERROR: Directory '{directory}' does not exist.")
-        print(f"This function only works for directories which contains one or more Python source code files (*.py). ")
-        exit(1)
-    if not os.path.isdir(directory):
-        print(f"ERROR: '{directory}' is not a directory (maybe you try to run it for a single file)")
-        print(f"This function only works for directories which contains one or more Python source code files (*.py). ")
-        exit(1)
-    #Check if the directory has Python files
-    if not has_python_files(directory):
-        print(f'Error: Directory path {directory} contains no Python files.')
-        exit(1)
+    """    
+    clean_up = False
+    if os.path.exists(directory):
+        # Check if the path is actually a directory
+        if not os.path.isdir(directory):
+            print(f"ERROR: '{directory}' is not a directory.")
+            print("This function only works for directories containing Python files (*.py).")
+            exit(1)      
+        # Check if the directory contains any .py files
+        if not has_python_files(directory):
+            print(f"ERROR: Directory '{directory}' contains no Python files.")
+            exit(1)
+    elif get_pypi_download_info(directory):
+        # If local path doesn't exist, try to treat it as a PyPI package
+        print(f"No local directory with name:{directory} found locally. Checking if package exist on PyPI...")  
+        package_name = directory #The variable input_path is now equal to the package name
+        print(f"Package: {package_name} exist on PyPI.org!")        
+        pypi_data = get_pypi_download_info(package_name)
+        url = pypi_data['download_url']
+        release = pypi_data['release']
+        if url is not None:
+            print(f'Creating Python Code Audit overview for package:\n{url}')            
+            src_dir, tmp_handle = get_package_source(url)                    
+            directory = src_dir
+            clean_up = True
+            # Note: You'll need to handle tmp_handle.cleanup() later in your script
+    else:
+        # Neither a local directory nor a valid PyPI package
+        print(f"ERROR: '{directory}' is not a local directory or a valid PyPI package.")
+        exit(1)    
     result = get_statistics(directory)
     modules = total_modules(directory)    
     df = pd.DataFrame(result)
@@ -66,7 +83,11 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     df['External-Modules'] = modules['External-Modules']
     overview_df = overview_count(df)
     html = '<h1>' + f'Python Code Audit overview report' + '</h1><br>'
-    html += f'<p>Codeaudit overview scan of the directory:<b> {directory}</b></p>' 
+    if clean_up:
+        html += f'<p>Codeaudit overview scan of package:<b> {package_name}</b></p>' 
+        html += f'<p>Version:<b>{release}</b></p>'
+    else:
+        html += f'<p>Codeaudit overview scan of the directory:<b> {directory}</b></p>' 
     html += f'<h2>Summary</h2>'
     html += overview_df.to_html(escape=True,index=False)
     html += '<br><br>'
@@ -83,6 +104,8 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     html += '<br>'
     ## Module overview    
     modules_discovered = get_all_modules(directory)
+    if clean_up:
+        tmp_handle.cleanup() #Clean up tmp directory if overview is created directly from PyPI package
     html += '<details>' 
     html += '<summary>Click to see all discovered modules.</summary>'         
     html+=dict_to_html(modules_discovered)
