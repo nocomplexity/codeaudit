@@ -154,7 +154,7 @@ def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
             # Cleaning up temp directory 
             tmp_handle.cleanup()  # deletes everything from temp directory
         else:
-            print(f'Error:The source distribution (sdist) for package: {package_name} can not be found or does not exist on PyPi.org.\n')
+            print(f'Error:A source distribution (sdist in .tar.gz format) for package: {package_name} can not be found or does not exist on PyPi.org.\n')
             print(f"Make a local git clone of the {package_name} using `git clone` and run `codeaudit filescan <directory-with-src-cloned-of-{package_name}>` to check for weaknesses.")
     else:
         #File is NOT a valid Python file, can not be parsed or directory is invalid.

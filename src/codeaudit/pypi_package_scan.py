@@ -51,39 +51,38 @@ def get_pypi_download_info(package_name):
     """Retrieves the sdist download URL
     Using the PyPI JSON API to get the sdist download URL (https://docs.pypi.org/api/json/)
     Note JSON API result is a nested dict with all release info published, so finding the correct sdist download URL needs logic.
-    """
-    if get_pypi_package_info(package_name) :
-        data = get_pypi_package_info(package_name)   
-        releases_dict = data['releases']
-        # Convert the key-value pairs (items) into a list and get the last one
-        last_item = list(releases_dict.items())[-1] #last_item is a Python tuple
-        sdist_download_url = find_download_url(last_item,'source') # We want the download URL of the source, so *.tar.gz file
-        release_info = last_item[0] 
-        pypi_package_info= { "download_url" : sdist_download_url ,
-                            "release" : release_info}
-        return pypi_package_info
-    else:
-        #package does not exist
+    """    
+    data = get_pypi_package_info(package_name)    
+    if not data:
+        return False
+    # Get the official "latest" version string from the API metadata
+    latest_version = data.get('info', {}).get('version')
+    if not latest_version:
         return False
 
-def find_download_url(data, source):
-    """
-    Given the PyPI release tuple and a python_version string,
-    return the URL of the first matching item.
-    """    
-    items = data[1] # Access the list of items directly via index 1 , data is a tuple    
+    # Access the files associated with that specific version
+    releases_list = data.get('releases', {}).get(latest_version, [])
+    
+    sdist_download_url = None
+    
+    # Explicitly look for the source distribution (sdist)
+    for file_info in releases_list:
+        if file_info.get('packagetype') == 'sdist':
+            url = file_info.get('url')
+            if url and url.endswith(".tar.gz"): #PEP527 I only extract .tar.gz files, older source formats not supported.
+                sdist_download_url = url
+                break # Found it, stop looking
 
-    for item in items:
-        if item.get("python_version") == source:
-            return item.get("url")
-
-    return None  # if no match found`
+    return {
+        "download_url": sdist_download_url,
+        "release": latest_version
+    }
 
 
 def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
     """Retrieves a package source and extract so SAST scanning can be applied
     Make sure to cleanup the temporary dir!! Using e.g. `tmp_handle.cleanup()`  # deletes everything
-    """
+    """    
     try:
         request = Request(url, headers=nocxheaders or {})
         with urlopen(request, timeout=nocxtimeout) as response:
