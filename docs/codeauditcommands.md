@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
 # Commands Overview
-Python Code Audit commands for: version: 1.4.0
+Python Code Audit commands for: version: 1.4.1
 ```
 ----------------------------------------------------
  _                    __             _             

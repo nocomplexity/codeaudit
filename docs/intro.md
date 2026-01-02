@@ -8,10 +8,10 @@
 
 ![CodeauditLogo](images/codeauditlogo.png)
 
-Python Code Audit is a Static Application Security Testing (SAST) tool to find **security weaknesses** in Python source files.
+Python Code Audit is a Static Application **Security** Testing (SAST) tool to find **security weaknesses** in Python source files.
 
 :::{danger} 
-A **security weakness** in Python code is an implementation flaw that could potentially become a **security vulnerability**.
+A **security weakness** in Python code is an implementation flaw that could potentially become a **security vulnerability**. [Validating](https://nocomplexity.com/scan-before-installing/) Python files or packages on security weaknesses is vital to minimize security risks.
 :::
 
 
