@@ -287,13 +287,39 @@ def get_overview(input_path):
         return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path to a Python package."}
 
 def get_default_validations():
-    """Retrieves the implemented default security validations
-    Args:
-        none
+    """Retrieve the default implemented security validations.
+
+    This function collects the built-in Static Application Security Testing (SAST)
+    validations applied to standard Python modules. It retrieves the validation
+    definitions, converts them into a serializable format, and enriches the result
+    with generation metadata.
+
+    The returned structure is intended to be consumed by reporting, API, or
+    documentation layers.
 
     Returns:
-        dict: Overview of implemented security SAST validation on Standard Python modules. Including vital help text.
-    """    
+        dict: A dictionary containing generation metadata and a list of security
+        validations. The dictionary has the following structure:
+
+        {
+            "<metadata_key>": <metadata_value>,
+            ...,
+            "validations": [
+                {
+                    "<field>": <value>,
+                    ...
+                },
+                ...
+            ]
+        }
+
+    
+    **Notes**:
+    
+        - Requires Python 3.9 or later due to use of the dictionary union operator (`|`).
+        - The `validations` list is derived from a pandas DataFrame using
+          `to_dict(orient="records")`.
+    """
     df = ast_security_checks()
     result = df.to_dict(orient="records")    
     output = _generation_info() | {"validations" : result}
