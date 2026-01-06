@@ -3,7 +3,7 @@
 ## Version 1.4.1: Bug fixes
 
 🚀 New Features & Enhancements
-* Remote PyPI Auditing: The codeaudit overview command now supports packages hosted directly on PyPI.org.
+* Remote PyPI Auditing: The `codeaudit overview <directory|package>` command now supports creating an overview from packages hosted on PyPI.org. Consequently, local cloning is no longer required!
 
 
 🛠 Bug Fixes

@@ -18,7 +18,7 @@ from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_
 from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
-
+from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 
 from pathlib import Path
 import json
@@ -35,10 +35,63 @@ def version():
     return {"name" : "Python_Code_Audit",
              "version" : ca_version}
 
-
 def filescan(input_path):
-    """Scans a Python file or directory and returns result as JSON"""    
-    output ={}
+    """
+    Scan a Python source file, a local directory, or a **PyPI package** from PyPI.org for
+    security weaknesses and return the results as a JSON-serializable
+    dictionary.
+
+    This API function works on:
+
+    - **Local directory**: Recursively scans all supported Python files in the
+      directory.
+    - **Single Python file**: Scans the file if it exists and can be parsed
+      into an AST.
+    - **PyPI package** on PyPI.org: Downloads the
+      source distribution from PyPI, scans it, and cleans up temporary files.
+
+    The returned output always includes Python Code Audit version information and a
+    generation timestamp. For consistency, single-file scans are normalized
+    to match the structure of directory/package scans.
+
+    **Note:**
+    The filescan command does NOT include all directories. This is done on purpose!
+    The following directories are skipped by default:
+
+    - `/docs`
+    - `/docker`
+    - `/dist`
+    - `/tests`
+    - all directories that start with . (dot) or _ (underscore) 
+     
+    But you can easily change this if needed!
+
+    Args:
+        input_path (str): One of the following:
+            - Path to a local directory containing Python code.
+            - Path to a single ``.py`` file.
+            - Name of a package available on PyPI.
+
+    Returns:
+        dict: A JSON-serializable dictionary containing scan results and
+        metadata. The structure varies slightly depending on the scan type,
+        but always includes:
+            - Version information from ``version()``.
+            - ``generated_on`` timestamp (``YYYY-MM-DD HH:MM``).
+            - Package or file-level security findings.
+
+        If the input cannot be interpreted as a valid directory, Python file,
+        or PyPI package, a dictionary with an ``"Error"`` key is returned.
+
+    Raises:
+        None explicitly. Any unexpected exceptions are allowed to propagate
+        unless handled by downstream callers.
+
+    Example:
+        >>> result = filescan("example_package")
+        >>> result["package_name"]
+        
+    """
     file_output = {}
     file_path = Path(input_path)
     ca_version_info = version()
@@ -46,35 +99,37 @@ def filescan(input_path):
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on" : timestamp_str}    
     # Check if the input is a valid directory or a single valid Python file
-    if file_path.is_dir():
-        files_to_check = collect_python_source_files(input_path)        
-        if len(files_to_check) > 1:
-            modules_discovered = get_all_modules(input_path) #all modules for the package aka directory
-            name_of_package = get_filename_from_path(input_path)
-            package_overview = get_overview(input_path)
-            output |= {"package_name" : name_of_package ,
-                    "statistics_overview" : package_overview ,
-                    "module_overview" : modules_discovered }        
-            for i,file in enumerate(files_to_check):            
-                file_information = overview_per_file(file)
-                module_information = get_modules(file) # modules per file            
-                scan_output = _codeaudit_scan(file)
-                file_output[i] = file_information | module_information | scan_output
-            output |= { "file_security_info" : file_output}
-            return output
-        else:
-            output_msg = f'Directory path {input_path} contains no Python files.'
-            return {"Error" : output_msg}
+    if file_path.is_dir(): #local directory scan
+        package_name = get_filename_from_path(input_path)
+        output |= {"package_name": package_name}
+        scan_output = _codeaudit_directory_scan(input_path)
+        output |= scan_output
+        return output            
     elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):   #check on parseable single Python file   
-        #do a file check                        
+        # do a file check
         file_information = overview_per_file(input_path) 
         module_information = get_modules(input_path) # modules per file
         scan_output = _codeaudit_scan(input_path)                
-        file_output[0] = file_information | module_information | scan_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
+        file_output["0"] = file_information | module_information | scan_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
         output |= { "file_security_info" : file_output}
         return output
+    elif (pypi_data := get_pypi_download_info(input_path)):    
+        package_name = input_path #The variable input_path is now equal to the package name        
+        url = pypi_data['download_url']
+        release = pypi_data['release']
+        if url is not None:
+            src_dir, tmp_handle = get_package_source(url)            
+            output |= {"package_name": package_name,
+                       "package_release": release}
+            try:
+                scan_output = _codeaudit_directory_scan(src_dir)
+                output |= scan_output
+            finally:
+                # Cleaning up temp directory
+                tmp_handle.cleanup()  # deletes everything from temp directory
+            return output
     else:
-        #Its not a directory nor a valid Python file:
+        # Its not a directory nor a valid Python file:
         return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."}
 
 def _codeaudit_scan(filename):
@@ -89,6 +144,30 @@ def _codeaudit_scan(filename):
     output = { "file_name" : name_of_file ,
               "sast_result": sast_result}    
     return output
+
+def _codeaudit_directory_scan(input_path):
+    """Performs a scan on a local directory
+    Function is also used with scanning directory PyPI.org packages, since in that case a tmp directory is used
+    """
+    output ={}
+    file_output = {}
+    files_to_check = collect_python_source_files(input_path)    
+    if len(files_to_check) > 1:
+        modules_discovered = get_all_modules(input_path) #all modules for the package aka directory        
+        package_overview = get_overview(input_path)
+        output |= {"statistics_overview" : package_overview ,
+                   "module_overview" : modules_discovered }        
+        for i,file in enumerate(files_to_check):
+            file_information = overview_per_file(file)
+            module_information = get_modules(file) # modules per file            
+            scan_output = _codeaudit_scan(file)
+            file_output[i] = file_information | module_information | scan_output
+        output |= { "file_security_info" : file_output}
+        return output
+    else:
+        output_msg = f'Directory path {input_path} contains no Python files.'
+        return {"Error" : output_msg}
+
 
 def save_to_json(sast_result, filename="codeaudit_output.json"):
     """
@@ -266,4 +345,3 @@ def get_module_vulnerability_info(module):
     key_string = f'{module}_vulnerability_info'
     output = _generation_info() | { key_string : vuln_info}
     return output
-
