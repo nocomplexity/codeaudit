@@ -45,7 +45,7 @@ def display_help():
         docstring = function.__doc__.strip().split('\n')[0] or ""  
         summary = docstring.split("\n", 1)[0]
         print(f"  {command:<20} {summary}")        
-    print("\nUse the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!\nCheck https://simplifysecurity.nocomplexity.com/ \n")
+    print("\nUse the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://simplifysecurity.nocomplexity.com/\n")
 
 def main():
     if "-?" in sys.argv:      # Normalize help flags BEFORE Fire sees them: fire module treats anything starting with - as a flag/value, not as a help alias.
