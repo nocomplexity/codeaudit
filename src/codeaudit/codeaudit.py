@@ -47,25 +47,28 @@ def display_help():
         print(f"  {command:<20} {summary}")        
     print("\nUse the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!\nCheck https://simplifysecurity.nocomplexity.com/ \n")
 
-
 def main():
+    if "-?" in sys.argv:      # Normalize help flags BEFORE Fire sees them: fire module treats anything starting with - as a flag/value, not as a help alias.
+        sys.argv[sys.argv.index("-?")] = "--help"
+    if "-help" in sys.argv:      # Normalize help flags BEFORE Fire sees them
+        sys.argv[sys.argv.index("-help")] = "--help"        
     if len(sys.argv) > 1 and sys.argv[1] in ("-v", "--v", "--version", "-version"):
         display_version()
-    elif len(sys.argv) > 1 and sys.argv[1] in ("-help", "-?", "--help", "-h"):
+    elif len(sys.argv) > 1 and sys.argv[1] in ("-help", "--help", "-h"):
         display_help()
     elif len(sys.argv) == 1:
         display_help()
     else:
         fire.Fire(
             {
-                "overview": overview_report,               
+                "overview": overview_report,
                 "modulescan": report_module_information,
-                "filescan" : scan_report,                
-                "checks" : report_implemented_tests,
-                "version" : display_version,
-                "-help": display_help,
+                "filescan": scan_report,
+                "checks": report_implemented_tests,
+                "version": display_version,
             }
         )
+
 
 
 if __name__ == "__main__":

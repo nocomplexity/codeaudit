@@ -41,12 +41,48 @@ SIMPLE_CSS_FILE = files('codeaudit') / 'simple.css'
 DEFAULT_OUTPUT_FILE = 'codeaudit-report.html'
 
 def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
-    """Reports complexity and security statistics of a Python project or package on PyPI.org.
+    """Generates an overview report of code complexity and security indicators.
+
+    This function analyzes a Python project to produce a high-level overview of
+    complexity and security-related metrics. The input may be either:
+
+    - A local directory containing Python source files
+    - The name of a package hosted on PyPI.org
+
+    For PyPI packages, the source distribution (sdist) is downloaded,
+    extracted to a temporary directory, scanned, and removed after the report
+    is generated.
+
+    The report includes summary statistics, security risk indicators based on
+    complexity and total lines of code, a list of discovered modules, per-file
+    metrics, and a visual overview. Results are written to a static HTML file.
     
-    Parameters:
-        directory (str): Path to the directory to scan.
-        filename (str): Output filename for the HTML report.
-    """    
+    Examples:
+        Generate an overview report for a local project directory::
+
+            codeaudit overview /projects/mycolleaguesproject
+
+        Generate an overview report for a PyPI package::
+
+            codeaudit overview linkaudit #A nice project on PyPI.org
+
+            codeaudit overview pydantic  #A complex project on PyPI.org from a security perspective?
+
+    Args:
+        directory (str): Path to a local directory containing Python source files
+            or the name of a package available on PyPI.org.
+        filename (str, optional): Name (and optional path) of the HTML file to
+            write the overview report to. The filename should use the ``.html``
+            extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+
+    Returns:
+        None. The function writes a static HTML overview report to disk.
+
+    Raises:
+        SystemExit: If the provided path is not a directory, contains no Python
+            files, or is neither a valid local directory nor a valid PyPI
+            package name.    
+    """
     clean_up = False
     if os.path.exists(directory):
         # Check if the path is actually a directory
@@ -128,21 +164,51 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         
         
 
-def scan_report(input_path , filename=DEFAULT_OUTPUT_FILE):
-    """Scans Python code or packages on PyPI.org for security weaknesses.
-        
-    This function performs security validations on the specified file or directory, 
-    formats the results into an HTML report, and writes the output to an HTML file. 
-    
-    You can specify the name of the outputfile and directory for the generated HTML report. Make sure you chose the extension `.html` since the output file is a static html file.
+def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
+    """Scans Python source code or PyPI packages for security weaknesses.
 
-    Parameters:
-        file_to_scan (str)      : The full path to the Python source file to be scanned.
-        filename (str, optional): The name of the HTML file to save the report to.
-                                  Defaults to `DEFAULT_OUTPUT_FILE`.
+    This function performs static application security testing (SAST) on a
+    given input, which can be:
+
+    - A local directory containing Python source code
+    - A single local Python file 
+    - A package name hosted on PyPI.org
+
+    Depending on the input type, the function analyzes the source code for
+    potential security issues, generates an HTML report summarizing the
+    findings, and writes the report to a static HTML file.
+
+    If a PyPI package name is provided, the function downloads the source
+    distribution (sdist), scans the extracted source code, and removes all
+    temporary files after the scan completes.
+
+    Example:
+        Scan a local directory and write the report to ``report.html``::
+
+            codeaudit filescan_/shitwork/custompythonmodule/ 
+
+        Scan a single Python file::
+
+            codeaudit filescan myexample.py
+
+        Scan a package hosted on PyPI::
+
+            codeaudit filescan linkaudit  #A nice project to check broken links in markdown files
+
+            codeaudit filescan requests
+
+    Args:
+        input_path (str): Path to a local Python file or directory, or the name
+            of a package available on PyPI.org.
+        filename (str, optional): Name (and optional path) of the HTML file to
+            write the scan report to. The filename should use the ``.html``
+            extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
 
     Returns:
-        None - A HTML report is written as output
+        None. The function writes a static HTML security report to disk.
+
+    Raises:
+        None explicitly. Errors and invalid inputs are reported to stdout.    
     """
     # Check if the input is a valid directory or a single valid Python file 
     # In case no local file or directory is found, check if the givin input is pypi package name
@@ -295,9 +361,38 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     html += DISCLAIMER_TEXT
     create_htmlfile(html,filename)  
 
+def report_module_information(inputfile, reportname=DEFAULT_OUTPUT_FILE):
+    """Generates a vulnerability report for imported Python modules.
 
-def report_module_information(inputfile,reportname=DEFAULT_OUTPUT_FILE):
-    """Reports module vulnerability information.""" 
+    This function analyzes a single Python source file to identify imported
+    modules and checks externally imported modules against the OSV vulnerability
+    database. The results are compiled into a static HTML report.
+
+    For each detected external module, the report indicates whether known
+    vulnerability information exists and, if available, includes detailed
+    vulnerability data.
+
+    Progress information is printed to stdout while processing modules.
+
+    Example:
+        Generate a module vulnerability report for a Python file::
+
+            codeaudit modulescan mypythonfile.py 
+
+    Args:
+        inputfile (str): Path to the Python source file to analyze.
+        reportname (str, optional): Name (and optional path) of the HTML file
+            to write the module vulnerability report to. The filename should
+            use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+
+    Returns:
+        None. The function writes a static HTML report to disk.
+
+    Raises:
+        None explicitly. File reading errors or invalid input are reported
+        via standard output.
+    
+    """
     source = read_in_source_file(inputfile)
     used_modules = get_imported_modules(source)
     # Initial call to print 0% progress
@@ -444,17 +539,22 @@ def report_implemented_tests(filename=DEFAULT_OUTPUT_FILE):
     Creates an HTML report of all implemented security checks.
 
     This report provides a user-friendly overview of the static security checks 
-    currently supported by codeaudit. It is intended to make it easier to review 
+    currently supported by Python Code Audit. It is intended to make it easier to review 
     the available validations without digging through the codebase.
 
     The generated HTML includes:
     - A table of all implemented checks
     - The number of validations
-    - The version of codeaudit used
+    - The version of Python Code Audit (codeaudit) used
     - A disclaimer about version-specific reporting
 
     The report is saved to the specified filename and is formatted to be 
     embeddable in larger multi-report documents.
+
+    Help me continue developing Python Code Audit as free and open-source software.
+    Join the community to contribute to the most complete, local first , Python Security Static scanner.
+    Help!!  Join the journey, check: https://github.com/nocomplexity/codeaudit#contributing 
+    
 
     Parameters:
         filename (str): The output HTML filename. Defaults to 'codeaudit_checks.html'.
