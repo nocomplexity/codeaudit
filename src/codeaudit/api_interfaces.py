@@ -360,7 +360,7 @@ def get_psl_modules():
     return output
 
 def get_module_vulnerability_info(module):
-     """
+    """
     Retrieves vulnerability information for an external module using the OSV Database.
 
     Args:
@@ -368,8 +368,7 @@ def get_module_vulnerability_info(module):
 
     Returns:
         dict: Generation metadata combined with OSV vulnerability results.
-    """
-    
+    """    
     vuln_info = check_module_vulnerability(module)
     key_string = f'{module}_vulnerability_info'
     output = _generation_info() | { key_string : vuln_info}
