@@ -2,24 +2,11 @@
 
 Great that you see this page and want to contribute!
 
-:::{tip}
-All contributions are welcome!
-Think of corrections on the manual, code and more or better tests.
+> [!TIP]
+>
+> All contributions are welcome!
+> Think of corrections on the manual, code and more or better tests.
 
-Not a coder? Not a problem! **Python Code Audit** is multifaceted, so I always can use help. 
-These are all activities we’d like to get help with :
-- Writing and improving the documentation 
-- Code maintenance and development
-- Community coordination
-- Advocating Python secure programming 
-- Developing educational content 
-- Fundraising 
-- Marketing
-- Project management
-- Translating content
-- Website design and development
-
-:::
 
 The **Python Code Audit** code repository is hosted at [Github](github.com/nocomplexity/codeaudit).
 
@@ -30,25 +17,25 @@ Simple Guidelines:
 
 This codeaudit tool is designed by applying [Zero Complexity By Design principles](https://nocomplexity.com/documents/0complexity/abstract.html). So the goal is to keep the tool simple to use and the code simple to adjust or to extend.
 
-:::{warning}
-This simple tool is designed to be simple to use and maintain. 
-:::
+
+> [!IMPORTANT]
+> This simple tool is designed to be simple to use and maintain. 
+
 
 **Pull Requests are welcome!** 
 
-When you contribute to Codeaudit, your contributions are made under the same license as the file you are working on. 
+When you contribute to **Python Code Audit**, your contributions are made under the same license as the file you are working on. 
 
 
 We adopt the [Collective Code Construction Contract(C4)](https://rfc.zeromq.org/spec/42/) to streamline collaboration. C4 is meant to provide a reusable optimal collaboration model for open source software projects. 
 
-:::{attention} 
-This project values respect and inclusiveness, and enforces a [Code of Conduct](CoC-label) in all interactions.
-:::
+> [!IMPORTANT]
+> This project values respect and inclusiveness, and enforces a [Code of Conduct](CoC-label) in all interactions.
 
 
-:::{note} 
-This is an open community driven project. Contributors will be mentioned in the documentation.
-:::
+> [!NOTE]
+> This is an open community driven project. Contributors will be mentioned in the documentation.
+
 
 (CoC-label)=
 ## Code of Conduct
