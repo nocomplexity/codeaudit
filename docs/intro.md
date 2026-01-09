@@ -10,6 +10,72 @@
 
 Python Code Audit is a Static Application **Security** Testing (SAST) tool to find **security weaknesses** in Python source files.
 
+::::{grid} 2
+:class-container: text-center
+:gutter: 3
+
+:::{grid-item-card}
+{octicon}`light-bulb;4em;caption-text` **Getting Started**
+^^^
+In the Getting Started section you can find installation instructions and a high-level overview of the main concepts.
++++
+```{button-ref} userguide
+:link-type: ref
+:color: danger
+Quick Start Guide
+```
+:::
+
+:::{grid-item-card}
+{octicon}`book;4em;caption-text` **User Guide**
+^^^
+Check out the User Guides for in-depth information on the key concepts of Python Code Audit.
++++
+```{button-ref} whatissast
+:link-type: ref
+:color: danger
+User Guide
+```
+:::
+
+::::
+%end grid
+
+::::{grid} 2
+:class-container: text-center
+:gutter: 3
+
+:::{grid-item-card}
+{octicon}`package-dependencies;4em;caption-text` **API Reference**
+^^^
+The API reference guide contains detailed information on all of methods to create your own dashboards or extra functionality for your specific needs.
+
++++
+```{button-ref} apidocs/modules
+:link-type: ref
+:color: danger
+API Reference
+```
+:::
+
+:::{grid-item-card}
+{octicon}`person-add;4em;caption-text` **Contributor's Guide**
+^^^
+Want to improve the documentation? Missing a security validation? Found a bug? Improve existing functionalities?
+The contributing guidelines will guide you!
+
++++
+```{button-ref} CONTRIBUTE
+:link-type: ref
+:color: danger
+Contribute and Join the team!
+```
+:::
+
+::::
+%end grid
+
+
 :::{danger} 
 A **security weakness** in Python code is an implementation flaw that could potentially become a **security vulnerability**. [Validating](https://nocomplexity.com/scan-before-installing/) Python files or packages on security weaknesses is vital to minimize security risks.
 :::
