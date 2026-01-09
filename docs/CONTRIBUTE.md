@@ -4,8 +4,22 @@ Great that you want to contribute!
 
 :::{tip}
 All contributions are welcome!
-
 Think of corrections on the manual, code and more or better tests.
+
++++
+
+Not a coder? Not a problem! **Python Code Audit** is multifaceted, so I always can use help. 
+These are all activities we’d like to get help with :
+- Writing and improving the documentation 
+- Code maintenance and development
+- Community coordination
+- Advocating Python secure programming 
+- Developing educational content 
+- Fundraising 
+- Marketing
+- Project management
+- Translating content
+- Website design and development
 :::
 
 The **Codeaudit** code repository is hosted at [Github](https://github.com/nocomplexity/codeaudit).
