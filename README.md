@@ -78,14 +78,13 @@ Usage: codeaudit COMMAND <directory|package>  [report.html]
 Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.
 
 Commands:
-  overview             Reports complexity and security statistics of a Python project or package on PyPI.org.
-  filescan             Scans Python code or packages on PyPI.org for security weaknesses.
-  modulescan           Reports module vulnerability information.
+  overview             Generates an overview report of code complexity and security indicators.
+  filescan             Scans Python source code or PyPI packages for security weaknesses.
+  modulescan           Generates a vulnerability report for imported Python modules.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
-Use the Codeaudit documentation to check the security of Python programs and make your Python programs more secure!
-Check https://simplifysecurity.nocomplexity.com/ 
+Use the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://simplifysecurity.nocomplexity.com/
 ```
 
 ## Example

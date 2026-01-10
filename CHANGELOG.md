@@ -1,5 +1,20 @@
 # Change Log
 
+## Version 1.4.2: API updates and fixes
+
+Added:
+* Remote Package Scanning: The codeaudit.api_interfaces.filescan(input_path) function now supports PyPI.org packages directly. Users can scan packages by name without needing to clone the repository locally first.
+
+Changed:
+* CLI Improvements: Refined the command-line interface (CLI) help text for better clarity and updated information.
+
+Fixed:
+* Help Command Shortcut: Fixed an issue where the -? flag did not correctly trigger the help text. Running codeaudit [command] -? now displays the expected documentation.
+
+Documentation:
+* Performed a manual updates to improve readability and technical accuracy.
+
+
 ## Version 1.4.1: Bug fixes
 
 🚀 New Features & Enhancements
