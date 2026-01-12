@@ -107,39 +107,31 @@ def load_secrets_list(filename=SECRETS_LIST):
     return secrets_patterns
 
 
-
 def match_secret(secrets, name, value):
     """
-    Check whether a name or value contains an exact word
-    matching any secret.
-    Returns the matching secret if found, otherwise None.
+    Check whether a name or value contains a secret.
+
+    Assumptions:
+    - `secrets` are already lowercased.
+
+    Matching rules (in priority order):
+    1. Whole-word match in name
+    2. Whole-word match in value
+
+    Returns:
+        The matching secret (lowercased) if found, otherwise None.
     """
     name_lower = str(name).lower()
     value_lower = str(value).lower()
 
-    for secret in secrets:
-        secret = secret.lower()
-        pattern = rf"\b{re.escape(secret)}\b"
+    # Shorter secrets first to preserve original behavior
+    for secret in sorted(secrets, key=len):
+        pattern = re.compile(rf"\b{re.escape(secret)}\b")
 
-        if re.search(pattern, name_lower) or re.search(pattern, value_lower):
+        if pattern.search(name_lower) or pattern.search(value_lower):
             return secret
 
     return None
-
-
-# def match_secret(secrets, name, value):
-#     """
-#     Check whether a name or value matches any word in the secrets list.
-#     Returns the matching secret if found, otherwise None.
-#     """
-#     name_lower = str(name).lower()
-#     value_lower = str(value).lower()
-
-#     for secret in secrets:
-#         if (secret in name_lower) or (secret in value_lower): #checking if a secret is inside the name/value. Matches longer strings, like my_long-API_key_namevalue['token'] to be found.
-#             return secret  # return the matching secret
-#     return None
-
 
 
 def collect_secret_values(source_code, secrets_file=SECRETS_LIST):
@@ -266,3 +258,12 @@ def has_privacy_findings(data):
 
     return False
 
+def count_privacy_check_results(data):
+    """
+    count number of secrets found for a dict created with secret_scan(filename)
+    
+    :param data: Description
+    """
+    return len(
+        data["file_privacy_check"]["0"]["privacy_check_result"]
+    )

@@ -257,15 +257,15 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
 def secrets_report(filename,spy_output):
     """Creates report for found secrets in html"""
     if has_privacy_findings(spy_output):
-        html = f'<br><p>Use of secrets within the code found.</p>'
+        html = f'<br><p>Use of <b>secrets</b> within the code found!</p>'
         html += '<details>'
-        html += '<summary>Click to view see of where secrets are used in the code.</summary>'
+        html += '<summary>Click here to see where these <b>secrets</b> are being used.</summary>'        
         pylint_df = pylint_reporting(spy_output)
         html += pylint_df.to_html(escape=False,index=False) 
         html += '</details>'
         html += '<br>'   
     else:
-        html = f'<br><p>NO Use of secrets within the code found.</p>'
+        html = f'<br><p>No Use of secrets within the code found.</p>'
     return html
         
 
@@ -289,11 +289,12 @@ def pylint_reporting(result):
                 # Add a row to the list
                 rows.append({
                     "lineno": entry["lineno"],
+                    "matched" : entry["matched"],
                     "code": code_html
                 })
 
     # Convert to pandas DataFrame
-    df = pd.DataFrame(rows, columns=["lineno", "code"])
+    df = pd.DataFrame(rows, columns=["lineno", "matched", "code"])
     return df
 
     
@@ -331,7 +332,7 @@ def single_file_report(filename , scan_output):
         html += '</details>'
         html += '<br>'
     else:
-        html += '<p>No security weaknesses detected.</p>'
+        html += '<p>No <b>security weaknesses</b> in code detected.</p>'
     file_overview = overview_per_file(filename)    
     df_overview = pd.DataFrame([file_overview])    
     html += '<details>'     
