@@ -18,6 +18,7 @@ import os
 from pathlib import Path
 
 import pandas as pd
+import html
 import datetime
 
 from codeaudit.security_checks import perform_validations , ast_security_checks
@@ -30,6 +31,7 @@ from codeaudit import __version__
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 
 from codeaudit.api_interfaces import filescan
+from codeaudit.privacy_lint import secret_scan , has_privacy_findings
 
 from importlib.resources import files
 
@@ -217,13 +219,16 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
         directory_scan_report(input_path , filename ) #create a package aka directory scan report
     elif file_path.suffix == ".py" and file_path.is_file() and is_ast_parsable(input_path):        
         #create a sast file check report
-        scan_output = perform_validations(input_path)
-        file_report_html = single_file_report(input_path , scan_output)    
+        scan_output = perform_validations(input_path) #scans for weaknesses in the file
+        spy_output = secret_scan(input_path) #scans for secrets in the file
+        file_report_html = single_file_report(input_path , scan_output)
+        secrets_report_html = secrets_report(input_path,spy_output)
         name_of_file = get_filename_from_path(input_path)
         html = '<h1>Python Code Audit Report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
         html += f'<h2>Result of scan of file {name_of_file}</h2>'    
         html += '<p>' + f'Location of the file: {input_path} </p>'  
         html += file_report_html    
+        html += secrets_report_html    
         html += '<br>'
         html += DISCLAIMER_TEXT
         create_htmlfile(html,filename)
@@ -249,7 +254,49 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
         print(f"Error: '{input_path}' isn't a valid Python file, directory path to a package or a package on PyPI.org.")
         
    
+def secrets_report(filename,spy_output):
+    """Creates report for found secrets in html"""
+    if has_privacy_findings(spy_output):
+        html = f'<br><p>Use of secrets within the code found.</p>'
+        html += '<details>'
+        html += '<summary>Click to view see of where secrets are used in the code.</summary>'
+        pylint_df = pylint_reporting(spy_output)
+        html += pylint_df.to_html(escape=False,index=False) 
+        html += '</details>'
+        html += '<br>'   
+    else:
+        html = f'<br><p>NO Use of secrets within the code found.</p>'
+    return html
+        
 
+
+def pylint_reporting(result):
+    """
+    Creates a pandas DataFrame of privacy findings with columns:
+    'lineno' and 'code'.
+    HTML-escaped and newlines converted to <br> for safe display.
+    """
+    rows = []
+
+    # Check that file_privacy_check exists and is not empty
+    if result.get("file_privacy_check"):
+        for item in result["file_privacy_check"].values():
+            for entry in item.get("privacy_check_result", []):
+                # Escape HTML special characters
+                escaped_code = html.escape(entry["code"])
+                # Convert newlines to <br> and wrap in <pre><code>
+                code_html = f'<pre><code class="language-python">{escaped_code.replace("\n", "<br>")}</code></pre>'
+                # Add a row to the list
+                rows.append({
+                    "lineno": entry["lineno"],
+                    "code": code_html
+                })
+
+    # Convert to pandas DataFrame
+    df = pd.DataFrame(rows, columns=["lineno", "code"])
+    return df
+
+    
 def single_file_report(filename , scan_output):
     """Function to DRY for a codescan when used for single for CLI or within a directory scan"""
     data = scan_output["result"]    
@@ -277,13 +324,16 @@ def single_file_report(filename , scan_output):
     df = df[["line", "validation", "severity", "info", "code"]] # reorder the columns before converting to html
     df = df.sort_values(by="line") # sort by line number    
     html = f'<p>Number of potential security issues found: {number_of_issues}</p>'
-    html += '<details>' 
-    html += '<summary>Click to view identified security weaknesses.</summary>'         
-    html += df.to_html(escape=False,index=False)        
-    html += '</details>'
+    if number_of_issues > 0:
+        html += '<details>'
+        html += '<summary>Click to view identified security weaknesses.</summary>'    
+        html += df.to_html(escape=False,index=False)        
+        html += '</details>'
+        html += '<br>'
+    else:
+        html += '<p>No security weaknesses detected.</p>'
     file_overview = overview_per_file(filename)    
-    df_overview = pd.DataFrame([file_overview])
-    html += '<br>'
+    df_overview = pd.DataFrame([file_overview])    
     html += '<details>'     
     html += f'<summary>Click to see file details.</summary>'                 
     html += df_overview.to_html(escape=True,index=False)        
@@ -338,18 +388,21 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     for i,file_to_scan in enumerate(files_to_check):
         printProgressBar(i + 1, number_of_files, prefix='Progress:', suffix='Complete', length=50)
         scan_output = perform_validations(file_to_scan)
+        spy_output = secret_scan(file_to_scan) #scans for secrets in the file 
         data = scan_output["result"]
-        if data:
+        if data or has_privacy_findings(spy_output):
             file_report_html = single_file_report(file_to_scan , scan_output)             
             name_of_file = get_filename_from_path(file_to_scan)            
             html += f'<h3>Result for file {name_of_file}</h3>'    
             if package_name is None:
                 html += '<p>' + f'Location of the file: {file_to_scan} </p>'          
-            html += file_report_html            
+            html += file_report_html 
+            secrets_report_html = secrets_report(file_to_scan,spy_output)
+            html += secrets_report_html                     
         else:
             file_name_with_no_issue = get_filename_from_path(file_to_scan)
             collection_ok_files.append({'filename' : file_name_with_no_issue ,
-                                        'directory': file_to_scan})
+                                        'directory': file_to_scan})        
     html += '<h2>Files in directory with no security issues</h2>'
     html += f'<p>Total Python files <b>without</b> detected security issues: {len(collection_ok_files)}</p>'
     html += '<p>The Python files with no security issues <b>detected</b> by codeaudit are:<p>'        

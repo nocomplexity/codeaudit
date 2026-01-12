@@ -222,6 +222,13 @@ import xmlrpc.server
 
 pid = os.fork()
 
+pid = os.fork() ; pid2 = os.fork() + pid #valid python, since semicolon is allowed 
+
+
+pid2 = os.fork() + pid
+
+pid3 = pid # os.fork() in comment is and should not give a false positive!
+
 pid_zero = os.forkpty() 
 pid = os.fork()
 
