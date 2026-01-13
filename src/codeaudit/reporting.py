@@ -144,13 +144,13 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     if clean_up:
         tmp_handle.cleanup() #Clean up tmp directory if overview is created directly from PyPI package
     html += '<details>' 
-    html += '<summary>Click to see all discovered modules.</summary>'         
+    html += '<summary>View all discovered modules.</summary>'         
     html+=dict_to_html(modules_discovered)
     html += '<p><i>The command "codeaudit modulescan" can be used to check if vulnerabilities are reported in an external module.</i></p>' 
     html += '</details>'           
     html += f'<h2>Detailed overview per source file</h2>'
     html += '<details>'     
-    html += '<summary>Click to see the report details.</summary>'
+    html += '<summary>View the report details.</summary>'
     df_plot = pd.DataFrame(result) # again make the df from the result variable         
     html += df_plot.to_html(escape=True,index=False)        
     html += '</details>'           
@@ -225,7 +225,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
         secrets_report_html = secrets_report(input_path,spy_output)
         name_of_file = get_filename_from_path(input_path)
         html = '<h1>Python Code Audit Report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
-        html += f'<h2>Result of scan of file {name_of_file}</h2>'    
+        html += f'<h2>Security scan: {name_of_file}</h2>'    
         html += '<p>' + f'Location of the file: {input_path} </p>'  
         html += file_report_html    
         html += secrets_report_html    
@@ -257,15 +257,15 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
 def secrets_report(filename,spy_output):
     """Creates report for found secrets in html"""
     if has_privacy_findings(spy_output):
-        html = f'<br><p>Use of <b>secrets</b> within the code found!</p>'
+        html = f'<br><p>&#9888;&#65039; <b>External Egress Risk</b>: Logic for connecting to remote services is present.</p>'
         html += '<details>'
-        html += '<summary>Click here to see where these <b>secrets</b> are being used.</summary>'        
+        html += '<summary>View detailed analysis to see where connection variables are utilised to connect to external service modules.</summary>'        
         pylint_df = pylint_reporting(spy_output)
         html += pylint_df.to_html(escape=False,index=False) 
         html += '</details>'
         html += '<br>'   
-    else:
-        html = f'<br><p>No Use of secrets within the code found.</p>'
+    else:        
+        html = f'<br><p>&#x2705; No Logic for connecting to remote services found. Risk of data exfiltration to external systems is <b>low</b>.</p>'
     return html
         
 
@@ -295,6 +295,8 @@ def pylint_reporting(result):
 
     # Convert to pandas DataFrame
     df = pd.DataFrame(rows, columns=["lineno", "matched", "code"])
+    df = df.rename(columns={"lineno": "line", "matched": "found"}) #rename to UI frienly names
+
     return df
 
     
@@ -323,26 +325,26 @@ def single_file_report(filename , scan_output):
     df['code'] = df['code'].str.replace(r'\n', '<br>', regex=True)  # to convert \n to \\n for display    
     df['validation'] = df['validation'].apply(replace_second_dot) #Make the validation column smaller - this is the simplest way! without using styling options from Pandas!
     df = df[["line", "validation", "severity", "info", "code"]] # reorder the columns before converting to html
-    df = df.sort_values(by="line") # sort by line number    
-    html = f'<p>Number of potential security issues found: {number_of_issues}</p>'
+    df = df.sort_values(by="line") # sort by line number 
     if number_of_issues > 0:
+        html = f'<p>&#9888;&#65039; {number_of_issues} potential security issues found!</p>'
         html += '<details>'
-        html += '<summary>Click to view identified security weaknesses.</summary>'    
+        html += '<summary>View detailed analysis of identified security weaknesses.</summary>'    
         html += df.to_html(escape=False,index=False)        
         html += '</details>'
         html += '<br>'
     else:
-        html += '<p>No <b>security weaknesses</b> in code detected.</p>'
+        html = '' # No weaknesses found, no message, since privacy breaches may be present.        
     file_overview = overview_per_file(filename)    
     df_overview = pd.DataFrame([file_overview])    
     html += '<details>'     
-    html += f'<summary>Click to see file details.</summary>'                 
+    html += f'<summary>View detailed analysis of security relevant file details.</summary>'                 
     html += df_overview.to_html(escape=True,index=False)        
     html += '</details>'           
     #imported modules
     html += '<br>'
     html += '<details>' 
-    html += '<summary>Click to see details for used modules in this file.</summary>' 
+    html += '<summary>View used modules in this file.</summary>' 
     modules_found = get_imported_modules_by_file(filename)
     html += dict_to_html(modules_found)
     html += f'<p>To check for <b>reported vulnerabilities</b> in external modules used by this file, use the command:<br><div class="code-box">codeaudit modulescan {filename}</div><br></p>'     
@@ -394,7 +396,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
         if data or has_privacy_findings(spy_output):
             file_report_html = single_file_report(file_to_scan , scan_output)             
             name_of_file = get_filename_from_path(file_to_scan)            
-            html += f'<h3>Result for file {name_of_file}</h3>'    
+            html += f'<h3>Security scan: {name_of_file}</h3>'    
             if package_name is None:
                 html += '<p>' + f'Location of the file: {file_to_scan} </p>'          
             html += file_report_html 
@@ -405,7 +407,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
             collection_ok_files.append({'filename' : file_name_with_no_issue ,
                                         'directory': file_to_scan})        
     html += '<h2>Files in directory with no security issues</h2>'
-    html += f'<p>Total Python files <b>without</b> detected security issues: {len(collection_ok_files)}</p>'
+    html += f'<p>&#x2705; Total Python files <b>without</b> detected security issues: {len(collection_ok_files)}</p>'
     html += '<p>The Python files with no security issues <b>detected</b> by codeaudit are:<p>'        
     html += dict_list_to_html_table(collection_ok_files)     
     html += '<br>'
@@ -416,7 +418,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     create_htmlfile(html,filename)  
 
 def report_module_information(inputfile, reportname=DEFAULT_OUTPUT_FILE):
-    """Generates a vulnerability report for imported Python modules.
+    """Generates a vulnerability report for Python modules.
 
     This function analyzes a single Python source file to identify imported
     modules and checks externally imported modules against the OSV vulnerability
