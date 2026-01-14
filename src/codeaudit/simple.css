@@ -24,7 +24,7 @@ p {
 
 /* Body base styles */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Inter, Roboto, Arial, Helvetica, sans-serif;
     background-color: #FFFFFF;
     color: #333;
     line-height: 1.6;
@@ -175,11 +175,53 @@ pre {
 }
 
 footer {
+    background-color: #f9f9f9; /* Very light grey background */
+    color: #555;               /* Softer text color for better readability */
+    text-align: center;
+    padding: 30px 10px;
+    margin-top: 50px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+
+.footer-meta {
+    margin-bottom: 15px;
+    color: #888;
+    font-size: 13px;
+}
+
+.footer-meta .version {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.footer-links {
+    margin-top: 10px;
+    line-height: 2;
+}
+
+.footer-links a {
+    color: #ff0000;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: #cc0000;
+    text-decoration: underline;
+}
+
+.heart {
+    color: #ff0000;
+}
+
+/* 
+footer {
     background-color: #FFFFFF;
     color: red;
     text-align: center;
     padding: 10px;
-  }
+  } */
 
 .json-display {
     background-color: #2d2d2d;   /* dark gray background */
