@@ -327,9 +327,9 @@ def single_file_report(filename , scan_output):
     df = df[["line", "validation", "severity", "info", "code"]] # reorder the columns before converting to html
     df = df.sort_values(by="line") # sort by line number 
     if number_of_issues > 0:
-        html = f'<p>&#9888;&#65039; {number_of_issues} potential security issues found!</p>'
+        html = f'<p>&#9888;&#65039; <b>{number_of_issues}</b> potential <b>security issues</b> found!</p>'
         html += '<details>'
-        html += '<summary>View detailed analysis of identified security weaknesses.</summary>'    
+        html += '<summary>View identified security weaknesses.</summary>'    
         html += df.to_html(escape=False,index=False)        
         html += '</details>'
         html += '<br>'
@@ -413,7 +413,7 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     html += '<br>'
     if package_name is not None:
         html += f'<p><b>Note:</b><i>Since this check is done on a package on PyPI.org, the temporary local directories are deleted. To examine the package in detail, you should download the sources locally and run the command:<code>codeaudit filescan</code> again.</i></p>'
-    html += '<p><b>Disclaimer:</b><i>Only Python source files are taken into account for this scan. Sometimes security issues are present in configuration files, like ini,yaml or json files!</i></p>'
+    html += '<p><b>Disclaimer:</b><i>This scan only evaluates Python files. Please note that security vulnerabilities may also exist in other files associated with the Python module.</i></p>'
     html += DISCLAIMER_TEXT
     create_htmlfile(html,filename)  
 
@@ -456,22 +456,37 @@ def report_module_information(inputfile, reportname=DEFAULT_OUTPUT_FILE):
     l = len(external_modules)
     printProgressBar(0, l, prefix='Progress:', suffix='Complete', length=50)    
     html = '<h1>Python Code Audit Report</h1>'
-    html += f'<h2>Module information for file {inputfile}</h2>'    
-    html += dict_to_html(used_modules)    
+    html += f'<h2>Module scan report</h2>' 
+    html += f'<p>Security information for module {inputfile}</p>'
+    if external_modules:
+        html += '<details>' 
+        html += '<summary>View module dependencies.</summary>' 
+        html += "<ul>\n" + "\n".join(f"  <li>{module}</li>" for module in external_modules) + "\n</ul>"
+        html += '</details>' 
+    else:
+        html += '<p>&#x2705; No external modules found!' 
     #Now vuln info per external module        
     if external_modules:
-        html += '<h2>Vulnerability information for detected modules</h2>'    
+        html += '<h3>Vulnerability information for detected modules</h3>'    
     for i,module in enumerate(external_modules):  #sorted for nicer report
         printProgressBar(i + 1, l, prefix='Progress:', suffix='Complete', length=50)
         vuln_info = check_module_vulnerability(module)
+        html += f'<h3>Vulnerability information for module <b>{module}</b></h3> '
         if not vuln_info:
-            html += f'<h3>Vulnerability information for module <b>{module}</b></h3> '
-            html += f'<li>No information found in OSV Database for module: <b>{module}</b>.</li> '
+            #html += f'<h3>Vulnerability information for module <b>{module}</b></h3> '
+            # here SAST scan for module?
+            html += f'<p>&#x2705; No known vulnerabilities found for module: <b>{module}</b>.</p>'
         else:
-            html += f'<h3>Vulnerability information for module: <b>{module}</b></h3> '
-            html += f'<li>Found vulnerability information in OSV Database for module: <b>{module}</b>:</li>'
+            #html += f'<h3>Vulnerability information for module: <b>{module}</b></h3> '            
+            html += f'<p>&#9888;&#65039; Found vulnerability information module: <b>{module}</b>:</p>'
+            html += '<details>' 
+            html += '<summary>View vulnerability information.</summary>' 
             html += json_to_html(vuln_info)    
-    create_htmlfile(html,reportname)  
+            html += '</details>'
+    html += '<br>' + DISCLAIMER_TEXT
+    create_htmlfile(html,reportname)
+    
+
 
 
 def collect_issue_lines(filename, line):    
@@ -493,7 +508,7 @@ def create_htmlfile(html_input,outputfile):
     # Start building the HTML
     output = '<!DOCTYPE html><html lang="en-US"><head>'
     output += '<meta charset="UTF-8"/>'
-    output += '<title>Standard Generated Output File</title>'
+    output += '<title>Python_Code_Audit_SecurityReport</title>'
     # Inline CSS inside <style> block
     output += f'<style>\n{css_content}\n</style>'    
     output += '<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>' # needed for altair plots
