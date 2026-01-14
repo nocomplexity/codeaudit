@@ -583,7 +583,7 @@ def create_htmlfile(html_input,outputfile):
         'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
         'target="_blank">documentation</a> for help on found issues.<br>'
         'Codeaudit is made with <span class="heart">&#10084;</span> by cyber security '
-        "professionals who advocate for open simple solutions.<br>"
+        'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" target="_blank">open simple security solutions</a>.<br>'
         '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">Join the community</a> and contribute to make this tool better!'
         "</div>"
     )
