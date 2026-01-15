@@ -17,7 +17,7 @@ retrieved_secret = client.get_secret("my-secret-name")
 
 token="token_234r34r"
 api_key="AIza.*"
-password=".*strange#pasword"
+JWT_SECRET=".*strange#pasword"
 
 import shitlib
 shitlib.init(
@@ -28,14 +28,14 @@ project='your-package-name'
 variable =1
 
 def my_function():
-    var1,var2=keys
+    var1,var2=APP_SECRET
     var3=token
 
 
-paid1 = os.getenv("key") #a possible API key
-paid1 = os.getenv("mykey") #a possible API key
+paid1 = os.getenv("apikey") #a possible API key
+paid1 = os.getenv("HUGGINGFACE_API_TOKEN") #a possible API key
 paid1 = get_secretz("KEY")    #a possible API key
-paid1 = config.get("API_KEY")    #a possible API key
+paid1 = config.get("DEEPSEEK_API_KEY")    #a possible API key
 
 author='Amazon Web Services' #auth in 'author' should not be found as secret 
 __author__ = 'Amazon Web Services' #auth in 'author' should not be found as secret 

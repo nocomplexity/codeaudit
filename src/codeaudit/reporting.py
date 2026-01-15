@@ -26,16 +26,20 @@ from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_
 from codeaudit.altairplots import multi_bar_chart
 from codeaudit.totals import get_statistics , overview_count , overview_per_file , total_modules
 from codeaudit.checkmodules import get_imported_modules , check_module_vulnerability , get_all_modules , get_imported_modules_by_file
-from codeaudit.htmlhelpfunctions import dict_to_html , json_to_html , dict_list_to_html_table
+from codeaudit.htmlhelpfunctions import json_to_html , dict_list_to_html_table
 from codeaudit import __version__
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
-
-from codeaudit.api_interfaces import filescan
 from codeaudit.privacy_lint import secret_scan , has_privacy_findings
 
 from importlib.resources import files
 
-DISCLAIMER_TEXT = "<p><b>Disclaimer:</b><i>This SAST tool <b>Python Code Audit</b> provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist. <b>There is, and will never be, a single security tool that gives 100% automatic guarantees</b>. By reporting any issues you find, you contribute to a better tool for everyone.</i>"
+
+PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
+DISCLAIMER_TEXT = (
+    "<p><b>Disclaimer:</b> <i>This SAST tool "
+    + PYTHON_CODE_AUDIT_TEXT
+    + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p>"
+)
 
 
 SIMPLE_CSS_FILE = files('codeaudit') / 'simple.css'
@@ -86,6 +90,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
             package name.    
     """
     clean_up = False
+    advice = None
     if os.path.exists(directory):
         # Check if the path is actually a directory
         if not os.path.isdir(directory):
@@ -104,6 +109,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         pypi_data = get_pypi_download_info(package_name)
         url = pypi_data['download_url']
         release = pypi_data['release']
+        advice = f'<p>&#128073; To perform a SAST scan on the source code, run:<pre><code class="language-python">codeaudit filescan {package_name}</code></pre></p>'
         if url is not None:
             print(f'Creating Python Code Audit overview for package:\n{url}')            
             src_dir, tmp_handle = get_package_source(url)                    
@@ -124,29 +130,28 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         output += f'<p>Codeaudit overview scan of package:<b> {package_name}</b></p>' 
         output += f'<p>Version:<b>{release}</b></p>'
     else:
-        output += f'<p>Codeaudit overview scan of the directory:<b> {directory}</b></p>' 
+        output += f'<p>Overview for the directory:<b> {directory}</b></p>' 
     output += f'<h2>Summary</h2>'
     output += overview_df.to_html(escape=True,index=False)
     output += '<br><br>'
     security_based_on_max_complexity = overview_df.loc[0,'Maximum_Complexity']
     if security_based_on_max_complexity > 40:        
-        output += '<p>Based on the maximum found complexity in a source file: Security concern rate is <b>HIGH</b>'
+        output += '<p>Based on the maximum found complexity in a source file: Security concern rate is <b>&#10060; HIGH</b>.'
     else:
-        output += '<p>Based on the maximum found complexity in a source file: Security concern rate is <b>LOW</b>'
+        output += '<p>Based on the maximum found complexity in a source file: Security concern rate is <b>&#x2705; LOW</b>.'
     security_based_on_loc = overview_df.loc[0,'Number_Of_Lines']
     if security_based_on_loc > 2000:
-        output += '<p>Based on the total Lines of Code (LoC) : Security concern rate is <b>HIGH</b>'
+        output += '<p>Based on the total Lines of Code (LoC) : Security concern rate is <b>&#10060; HIGH</b>.'
     else:
-        output += '<p>Based on the total Lines of Code (LoC) : Security concern rate is <b>LOW</b>'
+        output += '<p>Based on the total Lines of Code (LoC) : Security concern rate is <b>&#x2705; LOW</b>.'
     output += '<br>'
-    ## Module overview    
-    modules_discovered = get_all_modules(directory)
+    ## Module overview
+    modules_discovered = get_all_modules(directory)    
     if clean_up:
         tmp_handle.cleanup() #Clean up tmp directory if overview is created directly from PyPI package
     output += '<details>' 
-    output += '<summary>View all discovered modules.</summary>'         
-    output+=dict_to_html(modules_discovered)
-    output += '<p><i>The command "codeaudit modulescan" can be used to check if vulnerabilities are reported in an external module.</i></p>' 
+    output += '<summary>View all discovered modules.</summary>'
+    output += display_found_modules(modules_discovered)    
     output += '</details>'           
     output += f'<h2>Detailed overview per source file</h2>'
     output += '<details>'     
@@ -161,8 +166,42 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     plot_html = plot.to_html()    
     output += '<br><br>'
     output += '<h2>Visual Overview</h2>'    
-    output += extract_altair_html(plot_html)    
+    output += extract_altair_html(plot_html)
+    output += '<p><b>&#128172; Advice:</b></p>'
+    if advice is not None and advice != "":    
+        output += advice
+    else:
+        output += f'<p>&#128073; To perform a SAST scan on the source code, run:<pre><code class="language-python">codeaudit filescan {directory}</code></pre></p>'    
     create_htmlfile(output,filename)
+
+
+def display_found_modules(modules_discovered):
+    """Formats discovered Python modules into an HTML string.
+
+    Args:
+        modules_discovered (dict): Dictionary containing discovered modules with
+            keys 'core_modules' and 'imported_modules', each mapping to an
+            iterable of module names.
+
+    Returns:
+        str: HTML-formatted string listing standard library modules and
+        imported external packages.
+    """
+    core_modules = modules_discovered["core_modules"]
+    external_modules = modules_discovered["imported_modules"]
+    output = "<p><b>Used Python Standard libraries:</b></p>"
+    output += (
+        "<ul>\n"
+        + "\n".join(f"  <li>{module}</li>" for module in core_modules)
+        + "\n</ul>"
+    )
+    output += "<p><b>Imported libraries (packages):</b></p>"
+    output += (
+        "<ul>\n"
+        + "\n".join(f"  <li>{module}</li>" for module in external_modules)
+        + "\n</ul>"
+    )
+    return output
 
 
 def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
@@ -274,9 +313,9 @@ def secrets_report(spy_output):
         report section.
     """    
     if has_privacy_findings(spy_output):
-        output = f'<br><p>&#9888;&#65039; <b>External Egress Risk</b>: Logic for connecting to remote services is present.</p>'
+        output = '<br><p>&#9888;&#65039; <b>External Egress Risk</b>: Possible API keys or logic for connecting to remote services found.</p>'
         output += '<details>'
-        output += '<summary>View detailed analysis on external service connections.</summary>'        
+        output += '<summary>View detailed analysis for suspected locations where secrets are found or used in the code.</summary>'        
         pylint_df = pylint_reporting(spy_output)
         output += pylint_df.to_html(escape=False,index=False) 
         output += '</details>'
@@ -356,13 +395,12 @@ def single_file_report(filename , scan_output):
     output += '<details>'     
     output += f'<summary>View detailed analysis of security relevant file details.</summary>'                 
     output += df_overview.to_html(escape=True,index=False)        
-    output += '</details>'           
-    #imported modules
+    output += '</details>'
     output += '<br>'
     output += '<details>' 
     output += '<summary>View used modules in this file.</summary>' 
     modules_found = get_imported_modules_by_file(filename)
-    output += dict_to_html(modules_found)
+    output += display_found_modules(modules_found)    
     output += f'<p>To check for <b>reported vulnerabilities</b> in external modules used by this file, use the command:<br><div class="code-box">codeaudit modulescan {filename}</div><br></p>'     
     output += '</details>'           
     return output 
@@ -436,9 +474,9 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
 
 def report_module_information(inputfile, reportname=DEFAULT_OUTPUT_FILE):
     """
-    Generate a vulnerability report for Python modules and packages.
+    Generate a report on known vulnerabilities in Python modules and packages.
 
-    This function analyzes a single Python source file to identify imported
+    This function analyzes a single Python file to identify imported
     external modules and checks those modules against the OSV vulnerability
     database. The collected results are written to a static HTML report.
 
@@ -451,6 +489,8 @@ def report_module_information(inputfile, reportname=DEFAULT_OUTPUT_FILE):
 
     Example:
         Generate a module vulnerability report for a Python file::
+
+            codeaudit modulescan <pythonfile>|<package> [yourreportname.html]
 
             codeaudit modulescan mypythonfile.py
 
@@ -575,9 +615,13 @@ def create_htmlfile(html_input,outputfile):
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     code_audit_version = __version__    
-    output += '<footer>'
+    output += (
+        f"<p>This Python security report was created on: <b>{timestamp_str}</b> with "
+        + PYTHON_CODE_AUDIT_TEXT
+        + f" version <b>{code_audit_version}</b></p>"
+    )
     output += '<hr>'
-    output += f'<div class="footer-meta">This security report was created on: <strong>{timestamp_str}</strong> with codeaudit <span class="version">version {code_audit_version}</span></div>'
+    output += '<footer>'    
     output += (
         '<div class="footer-links">'
         'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '

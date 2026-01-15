@@ -175,25 +175,15 @@ pre {
 }
 
 footer {
-    background-color: #f9f9f9; /* Very light grey background */
+    background-color: #E6E6E6; /* nocx grey background */
     color: #555;               /* Softer text color for better readability */
     text-align: center;
     padding: 30px 10px;
-    margin-top: 50px;
+    margin-top: 10px;
     border-top: 1px solid #eee;
     font-size: 14px;
 }
 
-.footer-meta {
-    margin-bottom: 15px;
-    color: #888;
-    font-size: 13px;
-}
-
-.footer-meta .version {
-    color: #ff0000;
-    font-weight: bold;
-}
 
 .footer-links {
     margin-top: 10px;

@@ -18,7 +18,7 @@ Depending on the command, you must specify a local directory, a Python file, or 
 Commands:
   overview             Generates an overview report of code complexity and security indicators.
   filescan             Scans Python source code or PyPI packages for security weaknesses.
-  modulescan           Generates a vulnerability report for imported Python modules.
+  modulescan           Generate a vulnerability report for Python modules and packages.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
@@ -81,36 +81,39 @@ errors defaults to 'strict'.
 ```
 ## codeaudit modulescan
 ```text
-Generates a vulnerability report for imported Python modules.
+
+Generate a vulnerability report for Python modules and packages.
 
 This function analyzes a single Python source file to identify imported
-modules and checks externally imported modules against the OSV vulnerability
-database. The results are compiled into a static HTML report.
+external modules and checks those modules against the OSV vulnerability
+database. The collected results are written to a static HTML report.
 
-For each detected external module, the report indicates whether known
-vulnerability information exists and, if available, includes detailed
-vulnerability data.
+If the input refers to a valid PyPI package name instead of a local Python
+file, the function generates a vulnerability report directly for that
+package.
 
-Progress information is printed to stdout while processing modules.
+While processing modules, progress information is printed to standard
+output.
 
 Example:
     Generate a module vulnerability report for a Python file::
 
-        codeaudit modulescan mypythonfile.py 
+        codeaudit modulescan mypythonfile.py
 
 Args:
-    inputfile (str): Path to the Python source file to analyze.
-    reportname (str, optional): Name (and optional path) of the HTML file
-        to write the module vulnerability report to. The filename should
-        use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+    inputfile (str): Path to a Python source file (*.py) to analyze, or the
+        name of a package available on PyPI.
+    reportname (str, optional): Name (and optional path) of the HTML file to
+        write the vulnerability report to. The filename should use the
+        ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
 
 Returns:
-    None. The function writes a static HTML report to disk.
+    None: The function writes a static HTML report to disk.
 
 Raises:
-    None explicitly. File reading errors or invalid input are reported
-    via standard output.
-
+    SystemExit: If the input is not a valid Python file or a valid PyPI
+        package. File parsing and I/O errors are reported via standard
+        output before exiting.
 str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 
