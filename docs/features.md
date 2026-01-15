@@ -11,6 +11,10 @@ Python Code Audit is a modern Python source code analyzer based on distrust.
 
 +++
 
+* **External Egress Detection**: Identifies possible API keys or logic for connecting to remote services. 
+
++++
+
 * **Complexity & Statistics**: Reports security-relevant complexity statistics using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count by using Python AST.
 
 +++
@@ -27,7 +31,7 @@ Python Code Audit is a modern Python source code analyzer based on distrust.
 
 :::
 
-## In depth Capabilities outline
+## In Depth Capabilities Outline
 
 The Python Code Audit tool offers the following features to enhance code analysis and security:
 
@@ -47,6 +51,9 @@ The Python Code Audit tool offers the following features to enhance code analysi
 - **Security Information on Modules**: Provides known security details for the modules used in your code.
 
 - **Vulnerability Detection (Per File)**: Identifies potential security weaknesses within individual Python files, specifying the line number and code snippets that may pose risks.
+
+- **External Egress Detection**: Identifies embedded API keys and remote connection logic. By scanning for over 135 known key formats and common networking patterns, this check determines if a Python file or library can transmit data to external services.
+
 
 - **Directory-Wide(for packages) Vulnerability Scanning**: Detects and reports security weaknesses across all Python files in a package(directory), essential for assessing the security of Python packages.
 

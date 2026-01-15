@@ -2,23 +2,26 @@ format: jb-book
 root: intro
 
 parts:
-- caption: Quick Start
+- caption: Getting Started
   chapters:    
   - file: features
+  - file: installation
   - file: howtoscan
+  - file: whatissast
+  - file: whysast
+  
+  
+
+- caption: User Guide
+  chapters:
   - file: userguide
     sections:
     - file: codeauditoverview    
     - file: filescan
     - file: modulescan
     - file: codeauditchecks  
-  - file: whatissast
-  - file: whysast
   - file: issues
-  
-
-- caption: Security Checks
-  chapters:
+  - file: securecoding
   - file: implementedvalidations
   - file: checksinformation
     sections:
@@ -47,7 +50,7 @@ parts:
     - file: checks/xml_check
     - file: checks/zipfile_check
     - file: checks/shutil_check
-  - file: securecoding
+ 
 
 - caption: Architecture 
   chapters:     

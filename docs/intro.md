@@ -20,7 +20,7 @@
 ^^^
 In the Getting Started section you can find installation instructions and a high-level overview of the main concepts.
 +++
-```{button-ref} userguide
+```{button-ref} installation
 :link-type: ref
 :color: danger
 Quick Start Guide
@@ -32,7 +32,7 @@ Quick Start Guide
 ^^^
 Check out the User Guides for in-depth information on the key concepts of Python Code Audit.
 +++
-```{button-ref} whatissast
+```{button-ref} userguide
 :link-type: ref
 :color: danger
 User Guide

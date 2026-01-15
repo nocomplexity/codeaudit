@@ -18,7 +18,7 @@ Depending on the command, you must specify a local directory, a Python file, or 
 Commands:
   overview             Generates an overview report of code complexity and security indicators.
   filescan             Scans Python source code or PyPI packages for security weaknesses.
-  modulescan           Generate a vulnerability report for Python modules and packages.
+  modulescan           Generate a report on known vulnerabilities in Python modules and packages.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
@@ -82,9 +82,9 @@ errors defaults to 'strict'.
 ## codeaudit modulescan
 ```text
 
-Generate a vulnerability report for Python modules and packages.
+Generate a report on known vulnerabilities in Python modules and packages.
 
-This function analyzes a single Python source file to identify imported
+This function analyzes a single Python file to identify imported
 external modules and checks those modules against the OSV vulnerability
 database. The collected results are written to a static HTML report.
 
@@ -97,6 +97,8 @@ output.
 
 Example:
     Generate a module vulnerability report for a Python file::
+
+        codeaudit modulescan <pythonfile>|<package> [yourreportname.html]
 
         codeaudit modulescan mypythonfile.py
 

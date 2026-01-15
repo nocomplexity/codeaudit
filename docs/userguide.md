@@ -1,26 +1,28 @@
-# Get Started
+# Security Validation
 
-## Installation
+You can scan any Python file, local directory, or PyPI package using Python Code Audit.
 
-Codeaudit **SHOULD** be installed using `pip`:
-
-```bash
-pip install codeaudit
+## Usage
+1. Overview:
 ```
-
-or use:
-
-```bash
-pip install -U codeaudit
+codeaudit overview <directory|package> [report.html]
 ```
+ Generates an overview report detailing code complexity and security indicators.
 
-If you have installed and used Python Codeaudit in the past and want to make benefit  of new checks and features.
+2. SAST scan: 
+```
+codeaudit filescan <file|directory|package> [report.html]
+```
+Scans Python source code or PyPI packages for security weaknesses.
 
-:::{hint} 
-It is recommended to use `pip` for installation. 
+3. Check for known vulnerabilities in imported libraries:
+```
+codeaudit modulescan <file|package> [report.html]
+```
+Generates a report on known vulnerabilities within Python modules and packages.
 
-`Hatch` is used for packaging. By default [`Hatch`](https://hatch.pypa.io/latest/config/build/#reproducible-builds) supports [reproducible builds](https://nocomplexity.com/documents/securityarchitecture/prevention/reproduciblebuilds.html#reproducible-builds).
-:::
+You can choose a custom name for the generated HTML report. These reports are static files that can be viewed immediately in any web browser.
+
 
 :::{admonition} A default workflow
 :class: tip
@@ -31,15 +33,17 @@ If you want to inspect a package or directory of Python files a simple workflow 
 
 This will give valuable security statistics.
 
-2. Do a file or directory scan: `codeaudit filescan` 
+2. Run a security scan (SAST scan): `codeaudit filescan` 
 
-This will give a detailed report for all file(s) with potential security issues listed by line number.
+This will give a detailed report for all file(s) with **potential security issues** listed by line number. 
+Including if a file has an external Egress Risk. There will also be a check on Possible API keys or logic for connecting to remote services in the code.
 
 3. Inspect the used modules of a file on reported vulnerabilities by: `codeaudit modulescan`
 
 This will give a detailed report on known vulnerabilities for a module.
 
 :::
+
 
 ## CodeAudit commands
 

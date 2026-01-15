@@ -1,4 +1,4 @@
-# Information on checks
+# Detections & Mitigations
 
 **Python Code Audit** has many implemented security checks based on possible security threats when using Python Standard Library (PSL) calls.
 

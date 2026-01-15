@@ -78,6 +78,8 @@ Get in contact with the developers! The most simple way is to report the feature
 :::
 
 
+`Hatch` is used for packaging. By default [`Hatch`](https://hatch.pypa.io/latest/config/build/#reproducible-builds) supports [reproducible builds](https://nocomplexity.com/documents/securityarchitecture/prevention/reproduciblebuilds.html#reproducible-builds).
+
 
 The **Python Code Audit** tool is designed using the [Zero Complexity By Design principles](https://nocomplexity.com/documents/0complexity/abstract.html). So the goal is to keep the tool simple to use and the **code** simple to adjust or to extend.
 
