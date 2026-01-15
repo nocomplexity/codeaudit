@@ -15,11 +15,34 @@ from importlib.resources import files
 SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt") 
 
 def secret_scan(input_path):
-    """
-    Scan a Python file, local directory or PyPI package for possible privacy leakage.
-    Privacy leaks are mostly also security weaknesses!
-    
-    :param input_path: Description
+    """Scans Python file or a PyPI package for potential privacy leaks.
+
+    This function analyzes Python code for possible privacy-related issues
+    (which often overlap with security weaknesses). The input can be:
+    - A local directory containing a Python package
+    - A single Python file
+    - A PyPI package name (which will be downloaded and scanned)
+
+    Depending on the input type, the function performs an AST-based scan
+    and returns structured metadata along with scan results.
+
+    Args:
+        input_path (str): Path to a local directory, path to a Python
+            file, or the name of a PyPI package to scan.
+
+    Returns:
+        dict: A dictionary containing scan metadata and results. The
+        structure varies depending on the input:
+            - For a directory or PyPI package, results include package-level
+              privacy findings.
+            - For a single Python file, results include file-level privacy
+              findings.
+            - If the input is invalid, an error dictionary is returned with
+              an `"Error"` key.
+
+    Raises:
+        None: All errors are handled internally and reported in the
+        returned dictionary.
     """
     file_output = {}
     file_path = Path(input_path)
