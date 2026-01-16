@@ -1,5 +1,28 @@
 # Change Log
 
+## Version 1.5.0: 
+Added:
+
+* External Egress Risk Detection: New functionality to identify potential API keys or logic used for connecting to remote services. Reports now include the specific line and "keyword" associated with the identified risk.
+*Note: External Egress Risk Detection is still experimental and in beta status! [Help improve it!](CONTRIBUTE).*
+
+Changed:
+
+* CLI HTML Reporting: Refined the reporting output for single file scans. Users will now see a clear, dedicated line when no security weaknesses are found.
+
+* UI/UX Enhancements: Applied "Look & Feel" improvements across all HTML report templates for better readability and aesthetics.
+
+* General CLI Polish: Improved various text strings throughout the Command Line Interface for better clarity.
+
+Fixed:
+
+* Error Messaging: Improved the descriptiveness and clarity of CLI error messages to assist in troubleshooting.
+
+Documentation:
+
+* Report Naming Conventions: Improved the titles of HTML reports. This ensures that when a user saves a report as a PDF via a browser, the default filename is more descriptive and professional.
+
+
 ## Version 1.4.2: API updates and fixes
 
 Added:

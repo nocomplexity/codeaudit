@@ -113,6 +113,11 @@ Are you ready to discover what's lurking in your code?
 
 +++
 
+
+* **External Egress Detection**: Identifies embedded API keys and logic that enables communication with remote services, helping uncover hidden data exfiltration paths.
+
++++
+
 * **Module Usage & External Vulnerabilities**: Detects used modules and reports known vulnerabilities in used modules.
 
 

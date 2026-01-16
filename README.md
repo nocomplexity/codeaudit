@@ -36,6 +36,10 @@ Python Code Audit has the following features:
 
 * **Inline Issue Reporting**: Shows potential security issues with line numbers and code snippets.
 
+
+* **External Egress Detection**: Identifies embedded API keys and logic that enables communication with remote services, helping uncover hidden data exfiltration paths.
+
+
 * **HTML Reports**: All output is saved in simple, static HTML reports viewable in any browser.
 
 
@@ -72,6 +76,7 @@ This will show all commands:
 
 Python Code Audit - A modern Python security source code analyzer based on distrust.
 
+
 Commands to evaluate Python source code:
 Usage: codeaudit COMMAND <directory|package>  [report.html] 
 
@@ -80,7 +85,7 @@ Depending on the command, you must specify a local directory, a Python file, or 
 Commands:
   overview             Generates an overview report of code complexity and security indicators.
   filescan             Scans Python source code or PyPI packages for security weaknesses.
-  modulescan           Generates a vulnerability report for imported Python modules.
+  modulescan           Generate a report on known vulnerabilities in Python modules and packages.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 

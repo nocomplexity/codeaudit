@@ -11,13 +11,13 @@ See section [validations](checksinformation) for all security checks implemented
 To use the `codescan filescan` feature type in the console:
 
 ```
-codeaudit filescan <INPUTFILE>  [OUTPUTFILE]
+codeaudit filescan <pythonfile|package-name|directory>  [OUTPUTFILE]
 ```
 
-The `<INPUTFILE>` is mandatory. **Python Code Audit** will create a detailed security scan report. 
+**Python Code Audit** will create a detailed security scan report based on a single Python file, a local directory or a package on PyPI.org
 
 
-**`<INPUTFILE>`** can be:
+So the input for `codeaudit filescan`  can be:
 * A single Python file;
 * A package on PyPI.org: Python Code Audit checks this package on security weakness, so cloning the sources local is not needed!
 * A local directory with Python files, e.g. a local package development environment or a cloned package.

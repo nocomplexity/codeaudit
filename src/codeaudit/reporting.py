@@ -55,6 +55,9 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     - A local directory containing Python source files
     - The name of a package hosted on PyPI.org
 
+    So:
+    codeaudit overview <package-name|directory> [reportname.html]
+
     For PyPI packages, the source distribution (sdist) is downloaded,
     extracted to a temporary directory, scanned, and removed after the report
     is generated.
@@ -213,6 +216,8 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
     - A local directory containing Python source code
     - A single local Python file 
     - A package name hosted on PyPI.org
+
+    codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
 
     Depending on the input type, the function analyzes the source code for
     potential security issues, generates an HTML report summarizing the

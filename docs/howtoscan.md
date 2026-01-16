@@ -8,7 +8,7 @@ Follow these steps to perform a **static application security test (SAST)** on P
 
 
 
-## 1. Install Python Code Audit
+## Install Python Code Audit
 
 [Python Code Audit](https://pypi.org/project/codeaudit/) is an open-source, zero-configuration tool that validates whether your Python code introduces potential security vulnerabilities.  
 
@@ -24,40 +24,61 @@ Even if you already have it installed, it’s recommended to run the command aga
 
 
 
-## 2. Clone the Repository you want to scan or use the PyPI package name 
+## Chose a Python package that is available on PyPI.org
 
-### To scan a directory based on the PyPI package name:
+:::{admonition} Install Python programs only from Trusted Sources.
+:class: note
+This is crucial from a security perspective!
 
-codeaudit filescanscan <package-name-of-package-on-PyPI> [OUTPUTFILE]
+Use only official, managed repositories for installation such as:
+- PyPI.org
+- conda
+- conda-forge
+:::
 
 
-### Or clone a repository:  
+### Do the security sccan
 
-For direct improvement and inspection of all code using your Python code editor, after examining the Code Audit weakness report:
-
-1. Go to the repository page (e.g., on GitHub).  
-2. Click the green **Code** button.  
-3. Copy the HTTPS URL.  
-4. Run:  
-
+On the command line do:
 ```bash
-git clone <repository_url>
+codeaudit filescanscan <package-name|directory|file> [reportname.html]
 ```
 
-**Example:** Clone the [Pydantic library](https://github.com/pydantic/pydantic):  
+You can chose a custom report name. But make sure it ends with `.html` since a the report is a static html file.
 
+Example for a security check on a PyPI library for detecting broken links in markdown files:
 ```bash
-git clone https://github.com/pydantic/pydantic.git
+codeaudit filescan linkaudit
 ```
 
----
+This gives the output:
+```
+Package: linkaudit exist on PyPI.org!
+Now SAST scanning package from the remote location: https://pypi.org/pypi/linkaudit
+https://files.pythonhosted.org/packages/8a/5a/e9d4ae4b006ac7fb2faf0d3047ee759d8366b85290ddc0e595bbe290d6c5/linkaudit-0.9.7.tar.gz
+0.9.7
+Number of files that are checked for security issues:6
+Progress: |██████████████████████████████████████████████████| 100.0% Complete
 
-## 3. Generate an Overview Report
+=====================================================================
+Code Audit report file created!
+Paste the line below directly into your browser bar:
+	file:///home/securityproject/example/codeaudit-report.html
+
+=====================================================================
+
+```
+
+The report will look like:
+![The report will look like](images/filescan_screenshot_16012026.png)
+
+
+## Generate an Overview Report
 
 Navigate into the cloned repository, then run:  
 
 ```bash
-codeaudit overview
+codeaudit overview <package-name|directory> [reportname.html]
 ```
 
 This command provides:  
@@ -67,6 +88,30 @@ This command provides:
 - Complexity per file  
 - Overall complexity score  
 
+Example for a security check on a PyPI library for RSS parsing:
+```bash
+codeaudit overview ultrafastrss
+```
+
+This gives the output:
+```
+No local directory with name:ultrafastrss found locally. Checking if package exist on PyPI...
+Package: ultrafastrss exist on PyPI.org!
+Creating Python Code Audit overview for package:
+https://files.pythonhosted.org/packages/c7/45/4f10aaf692e0bc67e8f089a3514804491f3edbacbed2658b191adc3a109b/ultrafastrss-0.9.2.tar.gz
+
+=====================================================================
+Code Audit report file created!
+Paste the line below directly into your browser bar:
+	file:///home/securityproject/example/codeaudit-report.html
+
+=====================================================================
+
+```
+The report will look like:
+![overview report](images/overview_screenshot_16012026.png)
+
+
 :::{tip} 
 📖 More detailed explanations of these metrics can be found in the [Python Code Audit documentation](https://nocomplexity.com/documents/codeaudit/intro.html).  
 :::
@@ -75,28 +120,37 @@ This command provides:
 
 ---
 
-## 4. Run a Full Directory Scan
+## Check for known vulnerabilities in imported libraries
 
-To scan every file in the repository, use:  
+To check for known vulnerabilities in Python modules and packages you can do:
 
+```
+ codeaudit modulescan <pythonfile>|<package> [yourreportname.html]
+ ```
+To check for known vulnerabilities in a local Python file or a package on PyPI.org
+
+Example, to check for known vulnerabilities in imported libraries in the Flair NLP package:
 ```bash
-codeaudit filescanscan <DIRECTORY> [OUTPUTFILE]
+codeaudit modulescan flair
 ```
 
-- `DIRECTORY`: Path to the repository folder (e.g., `pydantic`).  
-- `OUTPUTFILE` *(optional)*: Name of the HTML report file. If omitted, a default report is created.  
 
-**Example:** Scan the cloned Pydantic package:  
+The report will look like:
+![overview report](images/modulescan_screenshot_16012026.png)
 
-```bash
-codeaudit filescan pydantic
-```
+:::{tip} 
+To analyze this package for potential security weaknesses, run:
 
----
+`codeaudit filescan <file|package-name>`
 
-## 5. Review the Security Report
+**Most real-world vulnerabilities and insecure coding practices are never formally disclosed or assigned a CVE**. As a result, source code analysis provides far greater security insight than relying solely on known vulnerability databases. Scanning the code itself helps uncover hidden risks, unsafe patterns, and trust violations that would otherwise remain undetected.
 
-The scan generates a static **HTML report** in the directory where you ran the command.  
+:::
+
+
+## Review the Security Report
+
+The **Python Code Audit** security scan generates a static **HTML report** in the directory where you ran the command.  
 
 Example output path:  
 
@@ -107,7 +161,7 @@ file:///home/usainbolt/testdir/codeaudit-report.html
 - On **Linux**, you can usually click the link directly in the terminal.  
 - On **Windows**, you may need to manually copy and paste the file path into your browser.  
 
----
+
 
 ✅ You now have a detailed static application security test (SAST) report highlighting potential security issues in your Python code. 
 
@@ -116,5 +170,4 @@ file:///home/usainbolt/testdir/codeaudit-report.html
 If you need assistance with solving or want short and clear advice on possible security risks for your context:
 
 Get expert security advice  from one of our [sponsors](sponsors)!
-
 :::

@@ -10,7 +10,7 @@ parts:
   - file: whatissast
   - file: whysast
   
-  
+
 
 - caption: User Guide
   chapters:
@@ -22,6 +22,9 @@ parts:
     - file: codeauditchecks  
   - file: issues
   - file: securecoding
+  - file: complexitycheck
+  - file: warnings
+  - file: handling_errors
   - file: implementedvalidations
   - file: checksinformation
     sections:
@@ -57,10 +60,7 @@ parts:
   #- file: astlines
   # - file: astlines2
   - file: makeitbetter
-  - file: project_philosophy
-  - file: complexitycheck
-  - file: warnings
-  - file: handling_errors
+  - file: project_philosophy  
   - file: codeauditcommands  
   - file: changelog
   

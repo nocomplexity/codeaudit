@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
 # Commands Overview
-Python Code Audit commands for: version: 1.4.2
+Python Code Audit commands for: version: 1.5.0
 ```
 ----------------------------------------------------
  _                    __             _             
@@ -34,6 +34,9 @@ complexity and security-related metrics. The input may be either:
 
 - A local directory containing Python source files
 - The name of a package hosted on PyPI.org
+
+So:
+codeaudit overview <package-name|directory> [reportname.html]
 
 For PyPI packages, the source distribution (sdist) is downloaded,
 extracted to a temporary directory, scanned, and removed after the report
@@ -137,6 +140,8 @@ given input, which can be:
 - A local directory containing Python source code
 - A single local Python file 
 - A package name hosted on PyPI.org
+
+codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
 
 Depending on the input type, the function analyzes the source code for
 potential security issues, generates an HTML report summarizing the
