@@ -148,11 +148,11 @@ def match_secret(secrets, name, value):
     value_lower = str(value).lower()
 
     # Shorter secrets first to preserve original behavior
-    for secret in sorted(secrets, key=len):
-        pattern = re.compile(rf"\b{re.escape(secret)}\b")
+    for secret_tag in sorted(secrets, key=len):
+        pattern = re.compile(rf"\b{re.escape(secret_tag)}\b")
 
         if pattern.search(name_lower) or pattern.search(value_lower):
-            return secret
+            return secret_tag
 
     return None
 
