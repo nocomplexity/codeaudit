@@ -55,8 +55,11 @@ The key words **“MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHAL
 +++
 
 - **File System Security:**  
-  Secure functions from the `os` and `pathlib` modules **MUST** be used for handling file system paths.  
-  Functions such as `os.path.realpath()` **SHOULD** be used to resolve symbolic links and **MAY** help prevent path traversal attacks.
+  Secure path-handling practices **MUST** be used when working with file system paths in Python. Simply using functions from the `os` or `pathlib` modules does not automatically make code safe.
+
+  Functions such as `pathlib.Path.resolve()` **SHOULD** be used to normalize paths and resolve symbolic links. However, these functions alone do NOT prevent path traversal attacks. They MUST be combined with explicit directory boundary checks or allow-listing to ensure that resolved paths remain within an intended, trusted directory.
+
+  
 
 +++
 
