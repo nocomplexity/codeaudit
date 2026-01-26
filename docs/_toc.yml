@@ -47,6 +47,7 @@ parts:
     - file: checks/httpserver_check
     - file: checks/multiprocessing_check
     - file: checks/pickle_check
+    - file: checks/path_check
     - file: checks/random_check
     - file: checks/shelve_check
     - file: checks/syscalls_check

@@ -78,7 +78,11 @@ def find_constructs(source_code, constructs_to_detect):
                     elif node.func.attr in ('input') and 'builtins' in core_modules:   #catch obfuscating construct with builtins module                        
                         construct = 'input'
                     elif node.func.attr in ('compile') and 'builtins' in core_modules:   #catch obfuscating construct with builtins module                        
-                        construct = 'compile'
+                        construct = 'compile'                 
+                    elif node.func.attr == 'open' and 'pathlib' in core_modules: #catch Path.open use
+                        construct = 'pathlib.Path.open'
+                    elif node.func.attr in ('open', 'read_text', 'read_bytes') and 'pathlib' in core_modules:
+                        construct = f"pathlib.Path.{node.func.attr}"
                 elif isinstance(func, ast.Name):
                     resolved = alias_map.get(func.id, func.id)                
                     if resolved in constructs_to_detect:

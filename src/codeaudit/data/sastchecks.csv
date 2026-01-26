@@ -69,6 +69,9 @@ Zstandard (zstd) decompression,compression.zstd.decompress,High,Vulnerable to pa
 Gzip File Handling,gzip.open,Medium,Risk of decompression bombs or resource exhaustion with untrusted data.
 BZ2 File Handling,bz2.open,Medium,Decompressing untrusted data can lead to resource exhaustion attacks. 
 BZ2 File Handling,bz2.BZ2File,Medium,Decompressing untrusted data can lead to resource exhaustion attacks. 
+Path Usage,Path.open,Low,File operation use can become a security liability with untrusted user input.
+Path Usage,Path.read_text,Low,File operation use can become a security liability with untrusted user input.
+Path Usage,Path.read_bytes,Low,File operation use can become a security liability with untrusted user input.
 LZMA File Handling,lzma.open,Medium,Risk of decompression bombs or resource exhaustion with untrusted data.
 LZMA File Handling,lzma.LZMAFile,Medium,Risk of decompression bombs or resource exhaustion with untrusted data.
 Shutil Extraction,shutil.unpack_archive,Medium,Untrusted archives can contain malicious paths or payloads.
