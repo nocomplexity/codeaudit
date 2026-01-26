@@ -23,11 +23,14 @@ Think of corrections on the manual, code and more, or better tests.
 * Questions, Feature Requests, Bug Reports should all be reported on the [Github Issue Tracker](https://github.com/nocomplexity/codeaudit/issues) .
 
 * [Black](https://black.readthedocs.io/en/stable/index.html) is used for code style. But for a simple fix, using `Black` is not required!
-
 :::
 
-Python Code Audit has separate modules with some intentional code duplicity. The architecture view for Python Code Audit is:
-![PCA_architecture](pca_overview.png)
+Python Code Audit has separate modules with some intentional code duplicity. 
+
+:::{tip}
+Consult the **Python Code Audit** [Architecture Overview](architecture) to learn more about the principles that drive our development process.
+
+:::
 
 ## Getting started
 To get started with Python Code Audit’s codebase, take the following steps:

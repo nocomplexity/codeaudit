@@ -14,7 +14,7 @@ You should only use [open security solutions (products, methods, and documentati
 
 ## Documentation license
 
-Copyright (c) 2025 BM-Support.org and Maikel Mardjan and all contributors.
+Copyright (c) 2025-2026 BM-Support.org and Maikel Mardjan and all contributors.
 
 This work is licensed under a Creative Commons Attribution-ShareAlike
 4.0 International License. Third-party product names may be the

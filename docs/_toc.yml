@@ -60,6 +60,7 @@ parts:
   #- file: astlines
   # - file: astlines2
   - file: makeitbetter
+  - file: architecture
   - file: project_philosophy  
   - file: codeauditcommands  
   - file: changelog
