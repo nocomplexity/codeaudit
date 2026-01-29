@@ -83,5 +83,4 @@ FLAGS
 
 NOTES
     You can also use flags syntax for POSITIONAL ARGUMENTS
-
 ```

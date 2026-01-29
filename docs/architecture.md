@@ -33,7 +33,7 @@ Python Code Audit is built using the following guiding principles:
 * **Simple to extend:** The program must be easy to adapt and build upon for future needs.  
 * **Simple to maintain:** We follow [0Complexity design principles](https://nocomplexity.com/documents/0complexity/abstract.html). E.g. simplicity enhances security. This means minimising dependencies and keeping both design and implementation straightforward and transparent.  
 * **Transparent:** All code is released under the FOSS (Free and Open Source Software) [GPLv3 licence](https://nocomplexity.com/documents/codeaudit/license.html). Transparency builds trust.  
-* **Limited scope:** No tool can do everything well, so we make strong, opinionated choices regarding the functionality we support.
+* **Clear scope:** No tool can do everything well, so we make strong, opinionated choices regarding the functionality we support.
 
 **Implications:**
 
@@ -43,6 +43,8 @@ To maintain this focus, the following are intentionally **out of scope**:
 * **No multi-language programming support:** Security validation of other languages (such as PHP, C/C++, or Go) is not provided. This requires different expertise; a SAST tool that claims to support many languages is often of limited use.  
 * **No linting:** We do not perform PEP8 or code quality checking. Linters are designed for these tasks, but they are generally very weak at identifying security weaknesses. You should never rely on linters for security validation.  
 * **No SBOM validation:** Software Composition Analysis (SCA), including SBOM generation and dependency vulnerability checks, is excluded. Validating SBOMs for Python packages can become complex very quickly. We focus on finding weaknesses in the code itself—a distinct aspect of security that offers advantages that SBOM validation cannot provide.
+* **No Web Validations:** This Python Code Audit SAST tool prioritises finding weaknesses in core logic and standard library usage. Modern Python frameworks should be secure by design; utilising their standard APIs effectively mitigates risks such as SQL injection. As security flaws frequently arise from bypassing these built-in protections, web applications should be verified using Dynamic Application Security Testing (DAST) and fuzzing to validate crucial business logic.
+
 
 We focus on delivering a simple, trustworthy security tool that performs its defined tasks exceptionally well—without compromise.
 

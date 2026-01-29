@@ -60,23 +60,52 @@ Example report of a [codeaudit filescan report](examples/filescan.html) that is 
 
 ```
 NAME
-    codeaudit filescan - Scans Python files or directories(packages) for vulnerabilities and reports potential issues.
+    codeaudit filescan - Scans Python source code or PyPI packages for security weaknesses.
 
 SYNOPSIS
     codeaudit filescan INPUT_PATH <flags>
 
 DESCRIPTION
-    This function performs security validations on the specified file or directory, 
-    formats the results into an HTML report, and writes the output to an HTML file. 
+    This function performs static application security testing (SAST) on a
+    given input, which can be:
 
-    You can specify the name of the outputfile and directory for the generated HTML report. Make sure you chose the extension `.html` since the output file is a static html file.
+    - A local directory containing Python source code
+    - A single local Python file 
+    - A package name hosted on PyPI.org
+
+    codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
+
+    Depending on the input type, the function analyzes the source code for
+    potential security issues, generates an HTML report summarizing the
+    findings, and writes the report to a static HTML file.
+
+    If a PyPI package name is provided, the function downloads the source
+    distribution (sdist), scans the extracted source code, and removes all
+    temporary files after the scan completes.
+
+    Example:
+        Scan a local directory and write the report to ``report.html``::
+
+            codeaudit filescan_/shitwork/custompythonmodule/ 
+
+        Scan a single Python file::
+
+            codeaudit filescan myexample.py
+
+        Scan a package hosted on PyPI::
+
+            codeaudit filescan linkaudit  #A nice project to check broken links in markdown files
+
+            codeaudit filescan requests
 
 POSITIONAL ARGUMENTS
     INPUT_PATH
+        Path to a local Python file or directory, or the name of a package available on PyPI.org.
 
 FLAGS
     -f, --filename=FILENAME
         Default: 'codeaudit-report.html'
-        The name of the HTML file to save the report to. Defaults to `DEFAULT_OUTPUT_FILE`.
-
+        Name (and optional path) of the HTML file to write the scan report to. The filename should use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+NOTES
+    You can also use flags syntax for POSITIONAL ARGUMENTS
 ```

@@ -69,21 +69,49 @@ Example of an overview plot:
 
 ```text
 NAME
-    codeaudit overview - Reports Complexity and statistics per Python file from a directory.
+    codeaudit overview - Generates an overview report of code complexity and security indicators.
 
 SYNOPSIS
     codeaudit overview DIRECTORY <flags>
 
 DESCRIPTION
-    Reports Complexity and statistics per Python file from a directory.
+    This function analyzes a Python project to produce a high-level overview of
+    complexity and security-related metrics. The input may be either:
+
+    - A local directory containing Python source files
+    - The name of a package hosted on PyPI.org
+
+    So:
+    codeaudit overview <package-name|directory> [reportname.html]
+
+    For PyPI packages, the source distribution (sdist) is downloaded,
+    extracted to a temporary directory, scanned, and removed after the report
+    is generated.
+
+    The report includes summary statistics, security risk indicators based on
+    complexity and total lines of code, a list of discovered modules, per-file
+    metrics, and a visual overview. Results are written to a static HTML file.
+
+    Examples:
+        Generate an overview report for a local project directory::
+
+            codeaudit overview /projects/mycolleaguesproject
+
+        Generate an overview report for a PyPI package::
+
+            codeaudit overview linkaudit #A nice project on PyPI.org
+
+            codeaudit overview pydantic  #A complex project on PyPI.org from a security perspective?
 
 POSITIONAL ARGUMENTS
     DIRECTORY
-        Path to the directory to scan.
+        Path to a local directory containing Python source files or the name of a package available on PyPI.org.
 
 FLAGS
     -f, --filename=FILENAME
         Default: 'codeaudit-report.html'
-        Output filename for the HTML report.
+        Name (and optional path) of the HTML file to write the overview report to. The filename should use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
 
+NOTES
+    You can also use flags syntax for POSITIONAL ARGUMENTS
 ```
