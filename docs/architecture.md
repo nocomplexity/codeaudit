@@ -22,6 +22,10 @@ If you are interested in learning more about architecture—and especially open 
 
 
 
+## High-Level Design
+
+![Architecture Overview](images/architecture_overview.png)
+
 
 ## Architecture Principles
 
@@ -64,9 +68,6 @@ The following design choices have been made for Python Code Audit:
   * **Implication:** Ensure that performance optimisations can be applied later to specific functional blocks if they are found to be causing bottlenecks for users.
 
 
-## Architecture Overview
-
-![Architecture Overview](images/architecture_overview.png)
 
 ## Use of AI 
 

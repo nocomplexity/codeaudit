@@ -58,9 +58,9 @@ parts:
 - caption: Architecture 
   chapters:     
   #- file: astlines
-  # - file: astlines2
-  - file: makeitbetter
+  # - file: astlines2  
   - file: architecture
+  - file: makeitbetter
   - file: project_philosophy  
   - file: codeauditcommands  
   - file: changelog
