@@ -133,28 +133,33 @@ errors defaults to 'strict'.
 ## codeaudit filescan
 ```text
 Scans Python source code or PyPI packages for security weaknesses.
-
 This function performs static application security testing (SAST) on a
-given input, which can be:
+specified input. The input can be one of the following:
 
-- A local directory containing Python source code
-- A single local Python file 
-- A package name hosted on PyPI.org
+* A local directory containing Python source code
+* A single local Python file
+* The name of a package hosted on PyPI
 
 codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
 
-Depending on the input type, the function analyzes the source code for
-potential security issues, generates an HTML report summarizing the
-findings, and writes the report to a static HTML file.
+Based on the input type, the function analyzes the source code for potential
+security issues, generates an HTML report summarizing the findings, and
+writes the report to disk.
 
 If a PyPI package name is provided, the function downloads the source
-distribution (sdist), scans the extracted source code, and removes all
-temporary files after the scan completes.
+distribution (sdist), extracts it to a temporary directory, scans the
+extracted source code, and cleans up all temporary files after the scan
+completes.
 
-Example:
+Examples:
+
     Scan a local directory and write the report to ``report.html``::
 
-        codeaudit filescan_/shitwork/custompythonmodule/ 
+        codeaudit filescan /path/to/custompythonmodule report.html
+
+    Scan a local directory::
+
+        codeaudit filescan /path/to/project
 
     Scan a single Python file::
 
@@ -162,22 +167,34 @@ Example:
 
     Scan a package hosted on PyPI::
 
-        codeaudit filescan linkaudit  #A nice project to check broken links in markdown files
-
+        codeaudit filescan linkaudit
+        
         codeaudit filescan requests
 
+
+    Specify an output report file::
+
+        codeaudit filescan /path/to/project report.html
+
+    Enable filtering of issues marked with ``#nosec``::
+
+        codeaudit filescan myexample.py --nosec
+
+    
 Args:
     input_path (str): Path to a local Python file or directory, or the name
-        of a package available on PyPI.org.
+        of a package available on PyPI.
     filename (str, optional): Name (and optional path) of the HTML file to
         write the scan report to. The filename should use the ``.html``
         extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+    nosec (bool, optional): Whether to filter out issues marked as reviewed
+        or ignored in the source code. Defaults to ``False``, no filtering.
 
 Returns:
-    None. The function writes a static HTML security report to disk.
+    None: The function writes a static HTML security report to disk.
 
 Raises:
-    None explicitly. Errors and invalid inputs are reported to stdout.    
+    None: Errors and invalid inputs are reported to stdout.    
 str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 

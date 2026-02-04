@@ -1,4 +1,4 @@
-# Solving security issues 
+# Solve security issues 
 
 Python Code Audit scans and checks for **potential security issues**. A potential security issue is a weakness that **can** lead to a security vulnerability with impact.
 
@@ -48,6 +48,70 @@ If you are a user of a Python program or package:
 1. Ask the developer, company what mitigation measurements are taken to report issues. Some issues **SHOULD** always be solved in code, other issue depend on the context of how and where the Python program will be used.
 2. If you are dealing with open source software: **DO NOT REPORT THE FINDINGS IN PUBLIC!** Try to contact the maintainers using a private email or check if the project has published how to report possible security issues.
 3. Never trust, always verify: Check if and how code is adjusted. Or consult an expert to give you guidance to minimize security risks! See our [sponsor page](sponsors) to find companies who might offer assistance.
+
+
+## Marking security False Positives and mitigations
+
+**Python Code Audit**  allows you to mark identified security weaknesses so they are excluded from future SAST (Static Application Security Testing) scans.
+
+### When to Use This Feature
+Only suppress a finding if one of the following conditions is met:
+
+- **Verified Mitigation**: You are certain the weakness is mitigated or carries no risk within the specific context of your application.
+
+:::{note} 
+Use caution when distributing software; it is difficult to predict every environment or context in which your code might eventually run.
+:::
+
+- **Pipeline Efficiency**: You have integrated Python Code Audit into your CI/CD pipeline and wish to focus exclusively on security regressions or vulnerabilities in new code changes.
+
+- **Confirmed False Positives**: The tool has flagged a pattern that you have manually verified as safe and non-exploitable.
+
+
+### How to Mark Weaknesses
+To exclude a specific line or statement from future audits, insert a comment directly following the code:
+
+- Inline Comments: Place a specific suppression tag (e.g., `# nosec` or `# sast-ignore`) at the end of the line causing the alert.
+
+**Python Code Audit** supports markers on multi-line statements as follows:
+
+```python
+db = shelve.DbfilenameShelf("mydata.db", 
+                            flag="c", 
+                            protocol=None, writeback=False) #nosec
+```
+This is one comment but divided over multiple lines, so `black` is heavily used for formatting code.
+
+**Python Code Audit** supports these markers for suppressing security weaknesses:
+- nosec- 
+- sast-ignore
+- ignore-sast
+- security-ignore
+- ignore-security
+- noqa
+- false-positive
+- falsepositive
+- risk-accepted
+- security-accepted
+- security-reviewed
+- security-exception
+- nosemgrep
+- NOSONAR
+
+:::{tip} 
+The option to suppress security weaknesses in the `filescan` report with the `--nosec` option is supported in the CLI (`codeaudit filescan`), as well as when using the APIs (see the [API reference](apidocs/modules)).
+:::
+
+
+
+### Example
+Enable filtering of issues marked with ``#nosec``:
+```bash
+codeaudit filescan myexample.py --nosec
+```
+If `myexample.py` contains a security weakness suppressed by a marker, the SAST report will no longer include that finding in its results.
+
+
 
 
 ## Dealing with false positives

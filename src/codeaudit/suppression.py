@@ -124,6 +124,8 @@ def match_suppression_keyword(comment_line):
         "ignore-sast",
         "security-ignore",
         "ignore-security",
+        "NOSONAR",
+        "noqa",
         # False positive / risk handling
         "false-positive",
         "falsepositive",

@@ -48,6 +48,7 @@ def test_get_all_comments_by_line(tmp_path):
         ("# sast-ignore", True),
         ("#sast-ignore", True),
         ("# ignore-sast", True),
+        ("# NOSONAR", True),
         ("# security-ignore", True),
         ("# ignore-security", True),
 

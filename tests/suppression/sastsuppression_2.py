@@ -32,3 +32,13 @@ import shelve
 db = shelve.DbfilenameShelf("mydata.db", 
                             flag="c", 
                             protocol=None, writeback=False) #nosec
+
+number2 = input("number to find a security issue?") #noqaa  noqanoqa
+
+
+number3 = input("number to find a security issue?") #noqa
+
+
+db = shelve.DbfilenameShelf("mydata.db",  #nosec
+                            flag="c", 
+                            protocol=None, writeback=False) 
