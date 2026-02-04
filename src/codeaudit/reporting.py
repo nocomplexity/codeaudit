@@ -30,6 +30,7 @@ from codeaudit.htmlhelpfunctions import json_to_html , dict_list_to_html_table
 from codeaudit import __version__
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 from codeaudit.privacy_lint import secret_scan , has_privacy_findings
+from codeaudit.suppression import filter_sast_results
 
 from importlib.resources import files
 
@@ -41,6 +42,7 @@ DISCLAIMER_TEXT = (
     + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p>"
 )
 
+NOSEC_WARNING = '<p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p>'
 
 SIMPLE_CSS_FILE = files('codeaudit') / 'simple.css'
 
@@ -207,30 +209,35 @@ def display_found_modules(modules_discovered):
     return output
 
 
-def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
+def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
     """Scans Python source code or PyPI packages for security weaknesses.
-
     This function performs static application security testing (SAST) on a
-    given input, which can be:
+    specified input. The input can be one of the following:
 
-    - A local directory containing Python source code
-    - A single local Python file 
-    - A package name hosted on PyPI.org
+    * A local directory containing Python source code
+    * A single local Python file
+    * The name of a package hosted on PyPI
 
     codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
 
-    Depending on the input type, the function analyzes the source code for
-    potential security issues, generates an HTML report summarizing the
-    findings, and writes the report to a static HTML file.
+    Based on the input type, the function analyzes the source code for potential
+    security issues, generates an HTML report summarizing the findings, and
+    writes the report to disk.
 
     If a PyPI package name is provided, the function downloads the source
-    distribution (sdist), scans the extracted source code, and removes all
-    temporary files after the scan completes.
+    distribution (sdist), extracts it to a temporary directory, scans the
+    extracted source code, and cleans up all temporary files after the scan
+    completes.
 
-    Example:
+    Examples:
+
         Scan a local directory and write the report to ``report.html``::
 
-            codeaudit filescan_/shitwork/custompythonmodule/ 
+            codeaudit filescan /path/to/custompythonmodule report.html
+
+        Scan a local directory::
+
+            codeaudit filescan /path/to/project
 
         Scan a single Python file::
 
@@ -238,31 +245,47 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
 
         Scan a package hosted on PyPI::
 
-            codeaudit filescan linkaudit  #A nice project to check broken links in markdown files
-
+            codeaudit filescan linkaudit
+            
             codeaudit filescan requests
 
+
+        Specify an output report file::
+
+            codeaudit filescan /path/to/project report.html
+
+        Enable filtering of issues marked with ``#nosec``::
+
+            codeaudit filescan myexample.py --nosec
+
+        
     Args:
         input_path (str): Path to a local Python file or directory, or the name
-            of a package available on PyPI.org.
+            of a package available on PyPI.
         filename (str, optional): Name (and optional path) of the HTML file to
             write the scan report to. The filename should use the ``.html``
             extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+        nosec (bool, optional): Whether to filter out issues marked as reviewed
+            or ignored in the source code. Defaults to ``False``, no filtering.
 
     Returns:
-        None. The function writes a static HTML security report to disk.
+        None: The function writes a static HTML security report to disk.
 
     Raises:
-        None explicitly. Errors and invalid inputs are reported to stdout.    
+        None: Errors and invalid inputs are reported to stdout.    
     """
     # Check if the input is a valid directory or a single valid Python file 
     # In case no local file or directory is found, check if the givin input is pypi package name
     file_path = Path(input_path)
     if file_path.is_dir():
-        directory_scan_report(input_path , filename ) #create a package aka directory scan report
+        directory_scan_report(input_path , nosec_flag=nosec, filename=filename) #create a package aka directory scan report
     elif file_path.suffix == ".py" and file_path.is_file() and is_ast_parsable(input_path):        
         #create a sast file check report
-        scan_output = perform_validations(input_path) #scans for weaknesses in the file
+        if not nosec:  #no filtering on reviewed items with markers in code            
+            scan_output = perform_validations(input_path) #scans for weaknesses in the file
+        else:            
+            unfiltered_scan_output = perform_validations(input_path) #scans for weaknesses in the file
+            scan_output = filter_sast_results(unfiltered_scan_output)
         spy_output = secret_scan(input_path) #scans for secrets in the file
         file_report_html = single_file_report(input_path , scan_output)
         secrets_report_html = secrets_report(spy_output)
@@ -270,6 +293,8 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
         html_output = '<h1>Python Code Audit Report</h1>' #prepared to be embedded to display multiple reports, so <h2> used
         html_output += f'<h2>Security scan: {name_of_file}</h2>'    
         html_output += '<p>' + f'Location of the file: {input_path} </p>'  
+        if nosec:
+            html_output += NOSEC_WARNING 
         html_output += file_report_html    
         html_output += secrets_report_html    
         html_output += '<br>'
@@ -285,8 +310,8 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE):
         if url is not None:
             print(url)
             print(release)
-            src_dir, tmp_handle = get_package_source(url)
-            directory_scan_report(src_dir , filename , package_name, release ) #create scan report for a package or directory
+            src_dir, tmp_handle = get_package_source(url)            
+            directory_scan_report(src_dir , nosec_flag=nosec, filename=filename, package_name=package_name , release=release  ) #create a package aka directory scan report
             # Cleaning up temp directory 
             tmp_handle.cleanup()  # deletes everything from temp directory
         else:
@@ -411,7 +436,7 @@ def single_file_report(filename , scan_output):
     return output 
 
 
-def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , package_name=None , release=None):
+def directory_scan_report(directory_to_scan ,  nosec_flag, filename=DEFAULT_OUTPUT_FILE , package_name=None , release=None ):
     """Reports potential security issues for all Python files found in a directory.
     
     This function performs security validations on all files found in a specified directory.
@@ -444,12 +469,18 @@ def directory_scan_report(directory_to_scan , filename=DEFAULT_OUTPUT_FILE , pac
     else:
         output += f'<p>Below the result of the Codeaudit scan of the directory:<b> {name_of_package}</b></p>' 
     output += f'<p>Total Python files found: <b>{len(files_to_check)}</b></p>'
+    if nosec_flag:
+        output += NOSEC_WARNING
     number_of_files = len(files_to_check)
     print(f'Number of files that are checked for security issues:{number_of_files}')
     printProgressBar(0, number_of_files, prefix='Progress:', suffix='Complete', length=50)    
     for i,file_to_scan in enumerate(files_to_check):
-        printProgressBar(i + 1, number_of_files, prefix='Progress:', suffix='Complete', length=50)
-        scan_output = perform_validations(file_to_scan)
+        printProgressBar(i + 1, number_of_files, prefix='Progress:', suffix='Complete', length=50)        
+        if not nosec_flag:  #no filtering on reviewed items with markers in code
+            scan_output = perform_validations(file_to_scan) #scans for weaknesses in the file
+        else:            
+            unfiltered_scan_output = perform_validations(file_to_scan) #scans for weaknesses in the file
+            scan_output = filter_sast_results(unfiltered_scan_output)
         spy_output = secret_scan(file_to_scan) #scans for secrets in the file 
         data = scan_output["result"]
         if data or has_privacy_findings(spy_output):

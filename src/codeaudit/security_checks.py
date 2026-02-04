@@ -49,9 +49,9 @@ def perform_validations(sourcefile):
 
     name_of_file = get_filename_from_path (sourcefile)
     
-    result = {'Name file' : name_of_file ,
+    result = {'file_name' : name_of_file ,
               'file_location': sourcefile ,
-              'Checks done:' : constructs ,
+              'checks_done:' : constructs ,
               'result': scan_result}
 
     return result

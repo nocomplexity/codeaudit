@@ -19,6 +19,7 @@ from codeaudit.security_checks import perform_validations , ast_security_checks
 from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
+from codeaudit.suppression import filter_sast_results
 
 from pathlib import Path
 import json
@@ -26,6 +27,7 @@ import datetime
 import pandas as pd
 import platform
 from collections import Counter
+
 
 import altair as alt
 
@@ -35,7 +37,7 @@ def version():
     return {"name" : "Python_Code_Audit",
              "version" : ca_version}
 
-def filescan(input_path):
+def filescan(input_path , nosec=False):
     """
     Scan a Python source file, a local directory, or a **PyPI package** from PyPI.org for
     security weaknesses and return the results as a JSON-serializable
@@ -102,14 +104,14 @@ def filescan(input_path):
     if file_path.is_dir(): #local directory scan
         package_name = get_filename_from_path(input_path)
         output |= {"package_name": package_name}
-        scan_output = _codeaudit_directory_scan(input_path)
+        scan_output = _codeaudit_directory_scan(input_path, nosec_flag=nosec )
         output |= scan_output
         return output            
     elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):   #check on parseable single Python file   
         # do a file check
         file_information = overview_per_file(input_path) 
         module_information = get_modules(input_path) # modules per file
-        scan_output = _codeaudit_scan(input_path)                
+        scan_output = _codeaudit_scan(input_path , nosec_flag=nosec)                
         file_output["0"] = file_information | module_information | scan_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
         output |= { "file_security_info" : file_output}
         return output
@@ -122,7 +124,7 @@ def filescan(input_path):
             output |= {"package_name": package_name,
                        "package_release": release}
             try:
-                scan_output = _codeaudit_directory_scan(src_dir)
+                scan_output = _codeaudit_directory_scan(src_dir , nosec_flag=nosec)
                 output |= scan_output
             finally:
                 # Cleaning up temp directory
@@ -132,20 +134,24 @@ def filescan(input_path):
         # Its not a directory nor a valid Python file:
         return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."}
 
-def _codeaudit_scan(filename):
+def _codeaudit_scan(filename , nosec_flag):
     """Internal helper function to do a SAST scan on a single file
     To scan a file, or Python package using the API interface, use the `filescan` API call!
     """
     #get the file name
-    name_of_file = get_filename_from_path(filename)
-    sast_data = perform_validations(filename)
+    name_of_file = get_filename_from_path(filename)    
+    if not nosec_flag:  #no filtering on reviewed items with markers in code
+        sast_data = perform_validations(filename)
+    else:
+        unfiltered_scan_output = perform_validations(filename) #scans for weaknesses in the file
+        sast_data = filter_sast_results(unfiltered_scan_output)
     sast_data_results = sast_data["result"]    
     sast_result = dict(sorted(sast_data_results.items()))
     output = { "file_name" : name_of_file ,
               "sast_result": sast_result}    
     return output
 
-def _codeaudit_directory_scan(input_path):
+def _codeaudit_directory_scan(input_path , nosec_flag):
     """Performs a scan on a local directory
     Function is also used with scanning directory PyPI.org packages, since in that case a tmp directory is used
     """
@@ -160,7 +166,7 @@ def _codeaudit_directory_scan(input_path):
         for i,file in enumerate(files_to_check):
             file_information = overview_per_file(file)
             module_information = get_modules(file) # modules per file            
-            scan_output = _codeaudit_scan(file)
+            scan_output = _codeaudit_scan(file , nosec_flag )
             file_output[i] = file_information | module_information | scan_output
         output |= { "file_security_info" : file_output}
         return output
@@ -216,36 +222,90 @@ def read_input_file(filename):
         raise json.JSONDecodeError(f"Invalid JSON in file: {filename}", e.doc, e.pos)
 
 
-def get_construct_counts(input_file):
-    """
-    Analyze a Python file or package(directory) and count occurrences of code constructs (aka weaknesses).
 
-    This function uses `filescan` API call to retrieve security-related information
-    about the input file. This returns a dict. Then it counts how many times each code construct
-    appears across all scanned files.
+
+
+def get_weakness_counts(input_file, nosec=False):
+    """
+    Analyze a Python file or package (directory) and count occurrences of code weaknesses.
+
+    This function uses the `filescan` API call to retrieve security-related information
+    and aggregates the total number of occurrences per weakness construct.
 
     Args:
-        input_file (str): Path to the file or directory(package) to scan.
+        input_file (str): Path to the file or directory (package) to scan.
+        nosec (bool): Whether to suppress findings marked with nosec comments.
 
     Returns:
         dict: A dictionary mapping each construct name (str) to the total
-              number of occurrences (int) across all scanned files.
+              number of occurrences (int).
 
-    Notes:
-        - The `filescan` function is expected to return a dictionary with
-          a 'file_security_info' key, containing per-file information.
-        - Each file's 'sast_result' should be a dictionary mapping
-          construct names to lists of occurrences.
-    """    
-    scan_result = filescan(input_file)
+    Raises:
+        ValueError: If the scan fails or returns an error result.
+        TypeError: If the scan result has an unexpected structure.
+    """
+    scan_result = filescan(input_file, nosec)
+
+    # Explicitly handle scan failure or unexpected return
+    if not isinstance(scan_result, dict):
+        raise ValueError("filescan() did not return a valid result dictionary")
+
+    if "Error" in scan_result:
+        raise ValueError(scan_result["Error"])
+
+    file_security_info = scan_result.get("file_security_info")
+    if not isinstance(file_security_info, dict):
+        # Valid scan, but no findings (e.g. empty or non-parsable input)
+        return {}
+
     counter = Counter()
-    
-    for file_info in scan_result.get('file_security_info', {}).values():
-        sast_result = file_info.get('sast_result', {})
-        for construct, occurence in sast_result.items(): #occurence is times the construct appears in a single file
-            counter[construct] += len(occurence)
-    
+
+    for file_info in file_security_info.values():
+        if not isinstance(file_info, dict):
+            continue
+
+        sast_result = file_info.get("sast_result", {})
+        if not isinstance(sast_result, dict):
+            continue
+
+        for construct, occurrences in sast_result.items():
+            if isinstance(occurrences, (list, tuple)):
+                counter[construct] += len(occurrences)
+
     return dict(counter)
+
+
+
+# def get_weakness_counts(input_file , nosec=False):
+#     """
+#     Analyze a Python file or package(directory) and count occurrences of code weaknesses.
+
+#     This function uses `filescan` API call to retrieve security-related information
+#     about the input file. This returns a dict. Then it counts how many times each code construct
+#     appears across all scanned files.
+
+#     Args:
+#         input_file (str): Path to the file or directory(package) to scan.
+
+#     Returns:
+#         dict: A dictionary mapping each construct name (str) to the total
+#               number of occurrences (int) across all scanned files.
+
+#     Notes:
+#         - The `filescan` function is expected to return a dictionary with
+#           a 'file_security_info' key, containing per-file information.
+#         - Each file's 'sast_result' should be a dictionary mapping
+#           construct names to lists of occurrences.
+#     """    
+#     scan_result = filescan(input_file, nosec)
+#     counter = Counter()
+    
+#     for file_info in scan_result.get('file_security_info', {}).values():
+#         sast_result = file_info.get('sast_result', {})
+#         for construct, occurrence in sast_result.items(): #occurrence is times the construct appears in a single file
+#             counter[construct] += len(occurrence)
+    
+#     return dict(counter)
 
 def get_modules(filename):
     """Gets modules of a Python file """
