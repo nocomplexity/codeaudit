@@ -145,7 +145,7 @@ The availability of good, maintained FOSS SAST tools for Python is limited. Whil
 :::{note}
 This `Python Code Audit` tool is built to be fast, lightweight, and easy to use.
 
-By default, the tool scans Python code against more than **80 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
+By default, the tool scans Python code against more than **83 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
 
 :::
 

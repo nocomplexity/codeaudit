@@ -81,3 +81,27 @@ def run_subprocess_commands_simplified():
 
 # To run the function:
 # run_subprocess_commands_simplified()
+
+def simulate_system_command(command):
+    print(f"Executing: {command}")
+    # getoutput executes the command in a shell and returns the combined stdout and stderr
+    output = subprocess.getoutput(command)
+    
+    if not output:
+        print("Command executed successfully (no output).")
+    else:
+        print(f"System Response:\n{output}")
+
+
+cmd = subprocess.getoutput('kill -9 10')
+
+
+# getstatusoutput returns (exit_code, output)
+status, output = subprocess.getstatusoutput(command)
+
+print(f"Command: {command}")
+print(f"Exit Status: {status}") # 0 usually means success, non-zero means failure
+print(f"Output: {output if output else '[No Output]'}")
+
+if status != 0:
+    print("\nResult: The command failed. This is expected in online sandboxes.")
