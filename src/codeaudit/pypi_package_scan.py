@@ -104,7 +104,7 @@ def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
             f.write(content)
 
         with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(path=temp_dir,filter='data')  #Possible risks are mitigated as far as possible, see architecture notes.
+            tar.extractall(path=temp_dir,filter='data')  # nosec Possible risks are mitigated as far as possible, see architecture notes.
 
         return temp_dir, tmpdir_obj  # return both so caller controls lifetime
 

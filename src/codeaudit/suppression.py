@@ -2,53 +2,140 @@ import ast
 import tokenize
 from collections import defaultdict
 import re
-
+import sys
 
 def get_all_comments_by_line(filename):
     """
-    Tokenize the file once and collect all real # comments grouped by starting line.
-    
+    Tokenize the file once and collect all real # comments
+    grouped by their starting line number.
     """
     comments_by_line = defaultdict(list)
 
     try:
         with tokenize.open(filename) as f:
-            tokens = tokenize.generate_tokens(f.readline)
-            for token in tokens:
+            for token in tokenize.generate_tokens(f.readline):
                 if token.type == tokenize.COMMENT:
-                    text = token.string.lstrip('# \t').rstrip()
+                    text = token.string.lstrip("# \t").rstrip()
                     if text:
                         comments_by_line[token.start[0]].append(text)
-    except Exception:
-        pass
 
-    return {line: "\n".join(texts) for line, texts in comments_by_line.items()}
+    except (OSError, UnicodeDecodeError, tokenize.TokenError) as exc:
+        # Fail loudly with context instead of silently ignoring
+        raise RuntimeError(
+            f"Failed to extract comments from {filename}"
+        ) from exc
+
+    return {
+        line: "\n".join(texts)
+        for line, texts in comments_by_line.items()
+    }
+
+
+
+
 
 
 def get_start_to_end_lines(filename):
     """
-    Parse AST once and build mapping: start_line → highest end_line found for nodes
-    starting on that line.
+    Parse the file once using AST and build a mapping:
+    start_line → highest end_lineno found for any node starting on that line.
+
+    Returns:
+        dict[int, int] — line numbers are 1-based
+        Returns empty dict if the file cannot be read or parsed.
     """
     end_lines = {}
 
     try:
         with open(filename, 'r', encoding='utf-8') as f:
             source = f.read()
-        tree = ast.parse(source)
 
-        for node in ast.walk(tree):
-            if not hasattr(node, 'lineno'):
-                continue
-            start = node.lineno
-            end = getattr(node, 'end_lineno', start)
-            # Take the maximum end line if multiple nodes start on same line
-            if start not in end_lines or end > end_lines[start]:
-                end_lines[start] = end
-    except Exception:
-        pass
+        try:
+            tree = ast.parse(source, filename=filename)
+
+            for node in ast.walk(tree):
+                # Most nodes have lineno, but some (like comprehension ifs) might not
+                if not hasattr(node, 'lineno'):
+                    continue
+
+                start = node.lineno
+                # end_lineno may be missing in very old Python versions → fallback to start
+                end = getattr(node, 'end_lineno', start)
+
+                # Keep the maximum span for nodes starting on the same line
+                if start not in end_lines or end > end_lines[start]:
+                    end_lines[start] = end
+
+        except SyntaxError as e:
+            print(
+                f"Syntax error in {filename} (line {e.lineno}): {e.msg}",
+                file=sys.stderr
+            )
+            return {}
+        except (ValueError, UnicodeDecodeError) as e:
+            print(
+                f"Cannot read {filename} properly: {type(e).__name__}: {e}",
+                file=sys.stderr
+            )
+            return {}
+        except MemoryError:
+            print(f"Out of memory while parsing {filename}", file=sys.stderr)
+            return {}
+        except Exception as e:
+            print(
+                f"Unexpected error parsing AST of {filename}: "
+                f"{type(e).__name__}: {e}",
+                file=sys.stderr
+            )
+            return {}
+
+    except FileNotFoundError:
+        print(f"File not found: {filename}", file=sys.stderr)
+        return {}
+    except PermissionError:
+        print(f"Permission denied: {filename}", file=sys.stderr)
+        return {}
+    except IsADirectoryError:
+        print(f"Is a directory, not a file: {filename}", file=sys.stderr)
+        return {}
+    except OSError as e:
+        print(f"OS error opening {filename}: {e}", file=sys.stderr)
+        return {}
+    except Exception as e:
+        print(
+            f"Critical error while accessing {filename}: "
+            f"{type(e).__name__}: {e}",
+            file=sys.stderr
+        )
+        return {}
 
     return end_lines
+
+
+# def get_start_to_end_lines(filename):
+#     """
+#     Parse AST once and build mapping: start_line → highest end_line found for nodes
+#     starting on that line.
+#     """
+#     end_lines = {}
+
+#     try:
+#         with open(filename, 'r', encoding='utf-8') as f:
+#             source = f.read()
+#         tree = ast.parse(source)
+
+#         for node in ast.walk(tree):
+#             if not hasattr(node, 'lineno'):
+#                 continue
+#             start = node.lineno
+#             end = getattr(node, 'end_lineno', start)
+#             # Take the maximum end line if multiple nodes start on same line
+#             if start not in end_lines or end > end_lines[start]:
+#                 end_lines[start] = end
+#     except Exception:
+#         pass
+
+#     return end_lines
 
 
 def is_suppressed(line, comments_by_line, start_to_end, match_func):

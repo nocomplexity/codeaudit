@@ -5,4 +5,4 @@ class Test(object):
     def foo(self):
         self.eval() #this line is not flagged!
 
-Test().eval()  #Only this line is flagged! , solvable by adding a marker.
+Test().eval()  #Only this line is flagged! , solvable by adding a marker. so nosec
