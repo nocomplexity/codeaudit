@@ -50,7 +50,7 @@ If you are a user of a Python program or package:
 3. Never trust, always verify: Check if and how code is adjusted. Or consult an expert to give you guidance to minimize security risks! See our [sponsor page](sponsors) to find companies who might offer assistance.
 
 
-## Marking security False Positives and mitigations
+## Marking False Positives and mitigations
 
 **Python Code Audit**  allows you to mark identified security weaknesses so they are excluded from future SAST (Static Application Security Testing) scans.
 
@@ -120,6 +120,7 @@ If `myexample.py` contains a security weakness suppressed by a marker, the SAST 
 :::{note} 
 Python Code Audit only reports **potential security issues**. 
 It is up to the user, developer, security tester or someone with the required **security** and **Python** knowledge to decide if action is needed.
+But you can use [markers](#marking-false-positives-and-mitigations) as comments in your code to suppress reporting reviewed security findings that you have mitigated or are no risks for your context.
 
 This Python Code Audit SAST tool, but this accounts for all SAST tools, analyze code in isolation. So without the runtime environment or how the any knowledge on how code interacts with other components and who the users are. 
 
