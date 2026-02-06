@@ -99,7 +99,8 @@ This is one comment but divided over multiple lines, so `black` is heavily used 
 - `NOSONAR`
 
 :::{tip} 
-The ability to suppress security weaknesses in the file scan report via the `--nosec` flag is supported in both the CLI (`codeaudit filescan`) , as well as when using the APIs (see the [API reference](apidocs/modules)).
+The ability to suppress security weaknesses in the `codeaudit filescan` report via the `--nosec` flag is supported in both the CLI (`codeaudit filescan`) , as well as when using the APIs (see the [API reference](apidocs/modules)).
+
 :::
 
 
