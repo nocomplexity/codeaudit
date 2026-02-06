@@ -83,23 +83,23 @@ db = shelve.DbfilenameShelf("mydata.db",
 This is one comment but divided over multiple lines, so `black` is heavily used for formatting code.
 
 **Python Code Audit** supports these markers for suppressing security weaknesses:
-- nosec- 
-- sast-ignore
-- ignore-sast
-- security-ignore
-- ignore-security
-- noqa
-- false-positive
-- falsepositive
-- risk-accepted
-- security-accepted
-- security-reviewed
-- security-exception
-- nosemgrep
-- NOSONAR
+- `nosec` 
+- `sast-ignore`
+- `ignore-sast`
+- `security-ignore`
+- `ignore-security`
+- `noqa`
+- `false-positive`
+- `falsepositive`
+- `risk-accepted`
+- `security-accepted`
+- `security-reviewed`
+- `security-exception`
+- `nosemgrep`
+- `NOSONAR`
 
 :::{tip} 
-The option to suppress security weaknesses in the `filescan` report with the `--nosec` option is supported in the CLI (`codeaudit filescan`), as well as when using the APIs (see the [API reference](apidocs/modules)).
+The ability to suppress security weaknesses in the file scan report via the `--nosec` flag is supported in both the CLI (`codeaudit filescan`) , as well as when using the APIs (see the [API reference](apidocs/modules)).
 :::
 
 

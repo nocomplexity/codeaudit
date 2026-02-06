@@ -1,5 +1,29 @@
 # Change Log
 
+## Version 1.6.0:
+
+**Added**:
+
+- Option to suppress security weaknesses in files that have a marker, like `#nosec`. Available for both CLI and API functions.
+
+- Extra check for use of subprocess methods: `subprocess.check_call`, `subprocess.check_output`, `subprocess.getoutput` and `subprocess.getstatusoutput`
+
+
+**Changed**:
+
+- Variable name updated to prevent false positives in secrets scan for egress risk.
+
+- Renamed API function get_construct_counts to get_weakness_counts to better reflect its purpose. This API function now also supports suppressing weaknesses that are marked.
+
+**Fixed**:
+
+- Gracefully catch errors when the directory for a custom output report does not exist. Python Code Audit will not create directories due to security constraints.
+
+**Documentation**:
+
+- Various text fixes and improvements in the manual.
+
+
 ## Version 1.5.0: 
 Added:
 

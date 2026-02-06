@@ -11,7 +11,7 @@ codeaudit checks
 
 This will generate a HTML report, including the version of Python Code Audit that is installed.
 
-Example output as HTML [click to see](examples/checks.html), or see below as embedded HTML:
+All implemented static security validations can be found [here](examples/codeauditchecks.html).
 
 :::{attention} 
 Always use the latest version to have the latest security validations!

@@ -140,7 +140,7 @@ specified input. The input can be one of the following:
 * A single local Python file
 * The name of a package hosted on PyPI
 
-codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
+codeaudit filescan <pythonfile|package-name|directory> [reportname.html] [--nosec]
 
 Based on the input type, the function analyzes the source code for potential
 security issues, generates an HTML report summarizing the findings, and
@@ -151,7 +151,7 @@ distribution (sdist), extracts it to a temporary directory, scans the
 extracted source code, and cleans up all temporary files after the scan
 completes.
 
-Examples:
+ Examples:
 
     Scan a local directory and write the report to ``report.html``::
 
@@ -168,7 +168,7 @@ Examples:
     Scan a package hosted on PyPI::
 
         codeaudit filescan linkaudit
-        
+
         codeaudit filescan requests
 
 
@@ -176,12 +176,31 @@ Examples:
 
         codeaudit filescan /path/to/project report.html
 
-    Enable filtering of issues marked with ``#nosec``::
+    Enable filtering of issues marked with ``#nosec`` or another marker on potential code weaknesses that mitigated or known  ::
 
         codeaudit filescan myexample.py --nosec
 
-    
+POSITIONAL ARGUMENTS
+INPUT_PATH
+    Path to a local Python file or directory, or the name of a package available on PyPI.
+
+
+FLAGS
+-f, --filename=FILENAME
+    Default: 'codeaudit-report.html'
+-n, --nosec=NOSEC
+    Default: False
+
+            
 Args:
+
+-f, --filename=FILENAME
+    Default: 'codeaudit-report.html'
+    Name (and optional path) of the HTML file to write the scan report to. The filename should use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+-n, --nosec=NOSEC
+    Default: False
+    Whether to filter out issues marked as reviewed or ignored in the source code. Defaults to ``False``, no filtering.
+
     input_path (str): Path to a local Python file or directory, or the name
         of a package available on PyPI.
     filename (str, optional): Name (and optional path) of the HTML file to

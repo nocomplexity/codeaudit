@@ -16,6 +16,7 @@ Reporting functions for codeaudit
 import re
 import os
 from pathlib import Path
+import sys
 
 import pandas as pd
 import html
@@ -33,6 +34,9 @@ from codeaudit.privacy_lint import secret_scan , has_privacy_findings
 from codeaudit.suppression import filter_sast_results
 
 from importlib.resources import files
+
+
+
 
 
 PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
@@ -218,7 +222,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
     * A single local Python file
     * The name of a package hosted on PyPI
 
-    codeaudit filescan <pythonfile|package-name|directory> [reportname.html]
+    codeaudit filescan <pythonfile|package-name|directory> [reportname.html] [--nosec]
 
     Based on the input type, the function analyzes the source code for potential
     security issues, generates an HTML report summarizing the findings, and
@@ -229,7 +233,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
     extracted source code, and cleans up all temporary files after the scan
     completes.
 
-    Examples:
+     Examples:
 
         Scan a local directory and write the report to ``report.html``::
 
@@ -246,7 +250,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         Scan a package hosted on PyPI::
 
             codeaudit filescan linkaudit
-            
+
             codeaudit filescan requests
 
 
@@ -254,12 +258,31 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
 
             codeaudit filescan /path/to/project report.html
 
-        Enable filtering of issues marked with ``#nosec``::
+        Enable filtering of issues marked with ``#nosec`` or another marker on potential code weaknesses that mitigated or known  ::
 
             codeaudit filescan myexample.py --nosec
+    
+    POSITIONAL ARGUMENTS
+    INPUT_PATH
+        Path to a local Python file or directory, or the name of a package available on PyPI.
 
-        
+    
+    FLAGS
+    -f, --filename=FILENAME
+        Default: 'codeaudit-report.html'
+    -n, --nosec=NOSEC
+        Default: False
+
+                
     Args:
+
+    -f, --filename=FILENAME
+        Default: 'codeaudit-report.html'
+        Name (and optional path) of the HTML file to write the scan report to. The filename should use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+    -n, --nosec=NOSEC
+        Default: False
+        Whether to filter out issues marked as reviewed or ignored in the source code. Defaults to ``False``, no filtering.
+
         input_path (str): Path to a local Python file or directory, or the name
             of a package available on PyPI.
         filename (str, optional): Name (and optional path) of the HTML file to
@@ -630,62 +653,130 @@ def collect_issue_lines(filename, line):
     return code_lines
 
 
-def create_htmlfile(html_input,outputfile):
-    """ Creates a clean html file based on html input given """ 
-    # Read CSS from the file - So it is included in the reporting HTML file
+def create_htmlfile(html_input, outputfile):
+    """Creates a clean html file based on html input given"""
 
-    with open(SIMPLE_CSS_FILE, 'r') as css_file:
-        css_content = css_file.read()
+    output_path = Path(outputfile).expanduser().resolve()
+
+    # Validate output directory (CLI-friendly)
+    if not output_path.parent.is_dir():
+        print(
+            f"Error: output directory does not exist:\n  {output_path.parent}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    # Read CSS so it is included in the reporting HTML file
+    css_content = Path(SIMPLE_CSS_FILE).read_text(encoding="utf-8")
+
     # Start building the HTML
     output = '<!DOCTYPE html><html lang="en-US"><head>'
     output += '<meta charset="UTF-8"/>'
     output += '<title>Python_Code_Audit_SecurityReport</title>'
-    # Inline CSS inside <style> block
-    output += f'<style>\n{css_content}\n</style>'    
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>' # needed for altair plots
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>' # needed for altair plots
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>' # needed for altair plots   
+    output += f'<style>\n{css_content}\n</style>'
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>'
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>'
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>'
     output += '</head><body>'
     output += '<div class="container">'
     output += html_input
+
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    code_audit_version = __version__    
+    code_audit_version = __version__
+
     output += (
         f"<p>This Python security report was created on: <b>{timestamp_str}</b> with "
         + PYTHON_CODE_AUDIT_TEXT
         + f" version <b>{code_audit_version}</b></p>"
     )
+
     output += '<hr>'
-    output += '<footer>'    
+    output += '<footer>'
     output += (
         '<div class="footer-links">'
         'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
         'target="_blank">documentation</a> for help on found issues.<br>'
         'Codeaudit is made with <span class="heart">&#10084;</span> by cyber security '
-        'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" target="_blank">open simple security solutions</a>.<br>'
-        '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">Join the community</a> and contribute to make this tool better!'
-        "</div>"
+        'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" '
+        'target="_blank">open simple security solutions</a>.<br>'
+        '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" '
+        'target="_blank">Join the community</a> and contribute to make this tool better!'
+        '</div>'
     )
-    output += "</footer>"
-    output += '</div>' #base container
+    output += '</footer>'
+    output += '</div>'
     output += '</body></html>'
-    # Now create the HTML output file
-    with open(outputfile, 'w') as f:
-        f.write(output)    
-    current_directory = os.getcwd()
-    # Get the directory of the output file (if any)
-    directory_for_output = os.path.dirname(os.path.abspath(outputfile))    
-    filename_only = os.path.basename(outputfile)
-    # Determine the effective directory to use in the file URL
-    if not directory_for_output or directory_for_output == current_directory:
-        file_url = f'file://{current_directory}/{filename_only}'
-    else:
-        file_url = f'file://{directory_for_output}/{filename_only}'
-    # Print the result
+
+    # Write the HTML file
+    output_path.write_text(output, encoding="utf-8")
+
     print("\n=====================================================================")
-    print(f'Code Audit report file created!\nPaste the line below directly into your browser bar:\n\t{file_url}\n')
+    print(
+        "Code Audit report file created!\n"
+        "Paste the line below directly into your browser bar:\n"
+        f"\t{output_path.as_uri()}\n"
+    )
     print("=====================================================================\n")
+
+
+
+# def create_htmlfile(html_input,outputfile):
+#     """ Creates a clean html file based on html input given """ 
+#     # Read CSS from the file - So it is included in the reporting HTML file
+
+#     with open(SIMPLE_CSS_FILE, 'r') as css_file:
+#         css_content = css_file.read()
+#     # Start building the HTML
+#     output = '<!DOCTYPE html><html lang="en-US"><head>'
+#     output += '<meta charset="UTF-8"/>'
+#     output += '<title>Python_Code_Audit_SecurityReport</title>'
+#     # Inline CSS inside <style> block
+#     output += f'<style>\n{css_content}\n</style>'    
+#     output += '<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>' # needed for altair plots
+#     output += '<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>' # needed for altair plots
+#     output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>' # needed for altair plots   
+#     output += '</head><body>'
+#     output += '<div class="container">'
+#     output += html_input
+#     now = datetime.datetime.now()
+#     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
+#     code_audit_version = __version__    
+#     output += (
+#         f"<p>This Python security report was created on: <b>{timestamp_str}</b> with "
+#         + PYTHON_CODE_AUDIT_TEXT
+#         + f" version <b>{code_audit_version}</b></p>"
+#     )
+#     output += '<hr>'
+#     output += '<footer>'    
+#     output += (
+#         '<div class="footer-links">'
+#         'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
+#         'target="_blank">documentation</a> for help on found issues.<br>'
+#         'Codeaudit is made with <span class="heart">&#10084;</span> by cyber security '
+#         'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" target="_blank">open simple security solutions</a>.<br>'
+#         '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">Join the community</a> and contribute to make this tool better!'
+#         "</div>"
+#     )
+#     output += "</footer>"
+#     output += '</div>' #base container
+#     output += '</body></html>'
+#     # Now create the HTML output file
+#     with open(outputfile, 'w') as f:
+#         f.write(output)    
+#     current_directory = os.getcwd()
+#     # Get the directory of the output file (if any)
+#     directory_for_output = os.path.dirname(os.path.abspath(outputfile))    
+#     filename_only = os.path.basename(outputfile)
+#     # Determine the effective directory to use in the file URL
+#     if not directory_for_output or directory_for_output == current_directory:
+#         file_url = f'file://{current_directory}/{filename_only}'
+#     else:
+#         file_url = f'file://{directory_for_output}/{filename_only}'
+#     # Print the result
+#     print("\n=====================================================================")
+#     print(f'Code Audit report file created!\nPaste the line below directly into your browser bar:\n\t{file_url}\n')
+#     print("=====================================================================\n")
 
 
 def extract_altair_html(plot_html):

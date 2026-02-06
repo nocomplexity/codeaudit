@@ -53,11 +53,11 @@ Or align [your brand with us](sponsors) — associate with an amazing open commu
 If the program uses modules from external modules that are **not** part of The Python Standard Library (PSL):
 * Run Python Code Audit against this package and
 * Run `codeaudit modulescan` to check if *known* vulnerabilities are reported for this module.
-
-:::
- 
-
 :::
 
-```{include} examples/checks.html
+
+## Implemented validations
+
+```{include} examples/codeauditchecks.html
 ```
+ 

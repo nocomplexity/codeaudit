@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Standard Generated Output File</title><style>
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"/><title>Python_Code_Audit_SecurityReport</title><style>
 /* Reset some default styles for consistency */
 /* GPLv3 - (c) Maikel Mardjan - simple works fine */
 
@@ -25,7 +25,7 @@ p {
 
 /* Body base styles */
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Inter, Roboto, Arial, Helvetica, sans-serif;
     background-color: #FFFFFF;
     color: #333;
     line-height: 1.6;
@@ -176,11 +176,37 @@ pre {
 }
 
 footer {
-    background-color: #FFFFFF;
-    color: red;
+    background-color: #E6E6E6; /* nocx grey background */
+    color: #555;               /* Softer text color for better readability */
     text-align: center;
-    padding: 10px;
-  }
+    padding: 30px 10px;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+
+
+.footer-links {
+    margin-top: 10px;
+    line-height: 2;
+}
+
+.footer-links a {
+    color: #ff0000;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: #cc0000;
+    text-decoration: underline;
+}
+
+.heart {
+    color: #ff0000;
+}
+
+
 
 .json-display {
     background-color: #2d2d2d;   /* dark gray background */
@@ -248,6 +274,18 @@ footer {
       <td>compile</td>
       <td>High</td>
       <td>This function can be used to execute arbitrary code or crash the Python interpreter.</td>
+    </tr>
+    <tr>
+      <td>Zstandard (zstd) decompression</td>
+      <td>compression.zstd<br>decompress</td>
+      <td>High</td>
+      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
+    </tr>
+    <tr>
+      <td>Zstandard (zstd) decompression</td>
+      <td>compression.zstd<br>open</td>
+      <td>High</td>
+      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
     </tr>
     <tr>
       <td>Unsafe Deserialization: multiprocessing</td>
@@ -491,6 +529,12 @@ footer {
     </tr>
     <tr>
       <td>Pickle Usage</td>
+      <td>pickle.Unpickler</td>
+      <td>High</td>
+      <td>Deserializing untrusted data with `pickle` can lead to arbitrary code execution.</td>
+    </tr>
+    <tr>
+      <td>Pickle Usage</td>
       <td>pickle.load</td>
       <td>High</td>
       <td>Deserializing untrusted data with `pickle` can lead to arbitrary code execution.</td>
@@ -503,7 +547,31 @@ footer {
     </tr>
     <tr>
       <td>Cryptographically Unsafe Randomness</td>
+      <td>random.Random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.randbytes</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.randint</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
       <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.randrange</td>
       <td>Low</td>
       <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
     </tr>
@@ -514,10 +582,28 @@ footer {
       <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
     </tr>
     <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.triangular</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.uniform</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
       <td>Insecure Network Binding</td>
       <td>s.bind</td>
       <td>Medium</td>
       <td>Binding to all interfaces can expose the service to a wider network attack surface.</td>
+    </tr>
+    <tr>
+      <td>Shelve Usage</td>
+      <td>shelve.DbfilenameShelf</td>
+      <td>High</td>
+      <td>The `shelve` module uses `pickle` internally, making it unsafe for untrusted data.</td>
     </tr>
     <tr>
       <td>Shelve Usage</td>
@@ -581,6 +667,24 @@ footer {
     </tr>
     <tr>
       <td>Subprocess Usage</td>
+      <td>subprocess.check_output</td>
+      <td>Medium</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.getoutput</td>
+      <td>Medium</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.getstatusoutput</td>
+      <td>Medium</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
       <td>subprocess.run</td>
       <td>Medium</td>
       <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
@@ -634,4 +738,4 @@ footer {
       <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
     </tr>
   </tbody>
-</table><br><p>Number of implemented security validations:<b>70</b></p><p>Version of codeaudit: <b>1.1.0</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b><i>This SAST tool 'codeaudit' provides a powerful automatic security analysis for Python source code. However it's not a substitute for human review in combination with business knowledge. <b>Undetected vulnerabilities may still exist</b>. There is and will never be a single security tool that gives 100% automatic guarantees. By reporting any issues you find, you contribute to a better tool for everyone.</i></p><footer><hr><p><small>This security report is created on: 2025-10-03 15:31, with <a href="https://github.com/nocomplexity/codeaudit">codeaudit</a> version 1.1.0 </small></p><p><small>Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues. <a href="https://github.com/nocomplexity/codeaudit">Codeaudit</a> is made with &#10084; by cyber security professionals who advocate for <a href="https://simplifysecurity.nocomplexity.com" target="_blank">open simple cyber security solutions</a>. Join the community and <a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">contribute </a> to make this Python Security Code Audit tool better!</small></p></footer></div></body></html>
+</table><br><p>Number of implemented security validations:<b>83</b></p><p>Version of codeaudit: <b>1.5.0</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b> <i>This SAST tool <a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a> provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p><p>This Python security report was created on: <b>2026-02-06 15:52</b> with <a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a> version <b>1.5.0</b></p><hr><footer><div class="footer-links">Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues.<br>Codeaudit is made with <span class="heart">&#10084;</span> by cyber security professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" target="_blank">open simple security solutions</a>.<br><a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">Join the community</a> and contribute to make this tool better!</div></footer></div></body></html>
