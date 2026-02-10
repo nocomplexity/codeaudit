@@ -199,29 +199,41 @@ def save_to_json(sast_result, filename="codeaudit_output.json"):
     except OSError as e:
         print(f"[Error] Failed to write file '{filepath}': {e}")
 
-def read_input_file(filename):
+
+
+def read_input_file(filename, safe_directory="data_folder"):
     """
-    Read a Python CodeAudit JSON file and return its contents as a Python dictionary.
-    
+    Securely read a Python CodeAudit JSON file and return its contents as a dictionary.
+
     Args:
-        filename: Path to the JSON file.
-        
+        filename: Path to the JSON file (str or Path).
+        safe_directory: Base directory considered "safe" for reading files.
+
     Returns:
         dict: The contents of the JSON file.
-    
+
     Raises:
         FileNotFoundError: If the file does not exist.
+        PermissionError: If the file is outside the allowed safe directory.
         json.JSONDecodeError: If the file is not valid JSON.
     """
+    # Convert to Path object
+    file_path = Path(filename).expanduser().resolve()
+    base_dir = Path(safe_directory).expanduser().resolve()
+
+    # Security check: ensure the file is within the safe directory
+    if not file_path.is_relative_to(base_dir):
+        raise PermissionError(f"Access denied: {file_path} is outside the safe directory")
+
+    # Ensure the file exists and is a file
+    if not file_path.is_file():
+        raise FileNotFoundError(f"File not found or not a regular file: {file_path}")
+
     try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError as e:
-        raise FileNotFoundError(f"File not found: {filename}") from e
+        # Read JSON content safely
+        return json.loads(file_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as e:
-        raise json.JSONDecodeError(f"Invalid JSON in file: {filename}", e.doc, e.pos)
-
-
+        raise json.JSONDecodeError(f"Invalid JSON in file: {file_path}", e.doc, e.pos)
 
 
 

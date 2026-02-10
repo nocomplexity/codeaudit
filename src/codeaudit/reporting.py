@@ -38,7 +38,6 @@ from importlib.resources import files
 
 
 
-
 PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
 DISCLAIMER_TEXT = (
     "<p><b>Disclaimer:</b> <i>This SAST tool "
@@ -162,7 +161,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     output += '<summary>View all discovered modules.</summary>'
     output += display_found_modules(modules_discovered)    
     output += '</details>'           
-    output += f'<h2>Detailed overview per source file</h2>'
+    output += '<h2>Detailed overview per source file</h2>'
     output += '<details>'     
     output += '<summary>View the report details.</summary>'
     df_plot = pd.DataFrame(result) # again make the df from the result variable         
