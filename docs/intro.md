@@ -93,9 +93,9 @@ A **security weakness** in Python code is an implementation flaw that could pote
 
 
 :::{warning} 
-Python Code Audit gives you insight into potential security issues in your Python programs.
+**Python Code Audit** gives you insight into potential security issues in your Python programs.
 
-Are you ready to discover what's lurking in your code?
+*Are you ready to discover what's lurking in your Python code?*
 
 :::
 
