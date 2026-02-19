@@ -37,7 +37,7 @@ Use only official, managed repositories for installation such as:
 :::
 
 
-### Do the security sccan
+### Do the security scan
 
 On the command line do:
 ```bash
