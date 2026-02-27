@@ -9,6 +9,8 @@ parts:
   - file: howtoscan
   - file: whatissast
   - file: whysast
+  - url: https://securitytesting.nocomplexity.com/ 
+    title: Mastering Security Testing for Python
   
   
 
