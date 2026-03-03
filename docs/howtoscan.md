@@ -24,7 +24,10 @@ Even if you already have it installed, it’s recommended to run the command aga
 
 
 
-## Chose a Python package that is available on PyPI.org
+## Install a Python package
+
+Choose a Python package that is available on PyPI.org. Alternatively, if you are a developer, you can scan your own package or file.
+
 
 :::{admonition} Install Python programs only from Trusted Sources.
 :class: note
