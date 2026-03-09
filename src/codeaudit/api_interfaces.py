@@ -20,6 +20,7 @@ from codeaudit.totals import overview_per_file , get_statistics , overview_count
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 from codeaudit.suppression import filter_sast_results
+from codeaudit.privacy_lint import secret_scan
 
 from pathlib import Path
 import json
@@ -445,3 +446,10 @@ def get_module_vulnerability_info(module):
     key_string = f'{module}_vulnerability_info'
     output = _generation_info() | { key_string : vuln_info}
     return output
+
+
+def egress_check(inputpath):
+    """API wrapper for secret_scan() in privacy_lint.py module"""
+    output = secret_scan(inputpath)
+    return output
+

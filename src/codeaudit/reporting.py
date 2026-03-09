@@ -367,7 +367,7 @@ def secrets_report(spy_output):
     if has_privacy_findings(spy_output):
         output = '<br><p>&#9888;&#65039; <b>External Egress Risk</b>: Possible API keys or logic for connecting to remote services found.</p>'
         output += '<details>'
-        output += '<summary>View detailed analysis for suspected locations where secrets are found or used in the code.</summary>'        
+        output += '<summary>View detailed analyse on possible data egress points and external service usage.</summary>'        
         pylint_df = pylint_reporting(spy_output)
         output += pylint_df.to_html(escape=False,index=False) 
         output += '</details>'

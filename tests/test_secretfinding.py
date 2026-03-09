@@ -11,7 +11,7 @@ def test_secretfinding():
     real_secrets_found = secret_scan(validation_file_path)
     
     actual_number_found = count_privacy_check_results(real_secrets_found)
-    expected_number = 22  #secrets are exact match with words in the secretslist!
+    expected_number = 21  #secrets are exact match with words in the secretslist!
 
 
     # This is the expected dictionary

@@ -1,4 +1,5 @@
-from codeaudit.api_interfaces import version
+# from codeaudit.api_interfaces import version
+from codeaudit import __version__
 from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , is_ast_parsable , read_in_source_file
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 
@@ -13,6 +14,7 @@ from importlib.resources import files
 
 
 SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt") 
+
 
 def secret_scan(input_path):
     """Scans Python file or a PyPI package for potential privacy leaks.
@@ -46,7 +48,7 @@ def secret_scan(input_path):
     """
     file_output = {}
     file_path = Path(input_path)
-    ca_version_info = version()
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on" : timestamp_str}    
@@ -58,7 +60,7 @@ def secret_scan(input_path):
         output |= spycheck_output
         return output            
     elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):   #check on parseable single Python file   
-        # do a file spy check        
+        # do a file spy check
         name_of_file = get_filename_from_path(input_path)
         name_dict = {"FileName": name_of_file}
         spycheck_output = spy_check(input_path)                
@@ -157,116 +159,6 @@ def match_secret(secrets, name, value):
     return None
 
 
-def collect_secret_values(source_code, secrets_file=SECRETS_LIST):
-    secrets = load_secrets_list(secrets_file)
-    results = []
-    source_lines = source_code.splitlines()
-
-    # -------------------------
-    # Helpers
-    # -------------------------
-    def get_constant(node):
-        return getattr(node, "value", None)
-
-    def is_os_environ(node):
-        return (
-            getattr(getattr(node, "value", None), "attr", None) == "environ"
-            and getattr(getattr(getattr(node, "value", None), "value", None), "id", None) == "os"
-        )
-
-    def get_target_repr(node):
-        if hasattr(node, "id"):
-            return node.id
-        if hasattr(node, "attr") or hasattr(node, "slice"):
-            return ast.unparse(node)
-        return None
-
-    def classify_value(node):
-        if node is None:
-            return None
-
-        if isinstance(node, ast.Constant):
-            return node.value
-
-        if hasattr(node, "slice"):
-            if is_os_environ(node):
-                return get_constant(node.slice)
-            return ast.unparse(node)
-
-        if hasattr(node, "func") and getattr(node, "args", None):
-            first_arg = node.args[0]
-            if isinstance(first_arg, ast.Constant):
-                return first_arg.value
-
-        if hasattr(node, "id") or hasattr(node, "attr"):
-            return ast.unparse(node)
-
-        return ast.unparse(node)
-    
-    def get_original_line(node):
-        lineno = getattr(node, "lineno", None)
-        if lineno is None:
-            return None
-        lines = []
-        # line before
-        if lineno > 1:
-            lines.append(source_lines[lineno - 2].rstrip())
-
-        # current line
-        if 1 <= lineno <= len(source_lines):
-            lines.append(source_lines[lineno - 1].rstrip())
-
-        # line after
-        if lineno < len(source_lines):
-            lines.append(source_lines[lineno].rstrip())
-
-        return "\n".join(lines)
-
-   
-    def add_value(name, value_node, node):
-            value = classify_value(value_node)
-            matched = match_secret(secrets, name, value)
-            if matched is not None: #when no match is found, no results will be added to the result dict.
-                results.append(
-                    {
-                        "lineno": getattr(node, "lineno", None),
-                        "code": get_original_line(node),
-                       # "name": name,
-                       # "value": value,
-                        "matched": matched,
-                    }
-                )
-
-
-    # -------------------------
-    # Walk all AST nodes
-    # -------------------------
-    tree = ast.parse(source_code)
-    for node in ast.walk(tree):
-
-        # Assignments
-        for target in getattr(node, "targets", []):
-            name = get_target_repr(target)
-            if name:
-                add_value(name, getattr(node, "value", None), node)
-                
-
-        # Annotated assignments
-        if isinstance(node, ast.AnnAssign):
-            name = get_target_repr(node.target)
-            if name:
-                add_value(name, getattr(node, "value", None), node)
-                
-
-        # Function calls (keyword arguments only)
-        if isinstance(node, ast.Call):
-            for kw in node.keywords:
-                if kw.arg:
-                    add_value(kw.arg, kw.value, kw)
-                    
-
-    return sorted(results, key=lambda item: item["lineno"])
-
 def has_privacy_findings(data):
     """
     Returns True if at least one file has a non-empty
@@ -290,3 +182,147 @@ def count_privacy_check_results(data):
     return len(
         data["file_privacy_check"]["0"]["privacy_check_result"]
     )
+
+
+def collect_secret_values(source_code, secrets_file=SECRETS_LIST):
+    """Scan Python source code for potential secret values indicating telemetry or data exfiltration.
+    Duplicate line results are filtered out.
+    """
+    secrets = load_secrets_list(secrets_file)
+    results = []
+    seen_keys = set()
+    seen_lines = set()  # Track line contents to filter duplicates
+    source_lines = source_code.splitlines()
+
+    # -------------------------
+    # Parse AST and detect aliases
+    # -------------------------
+    tree = ast.parse(source_code)
+    aliases = {}
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for n in node.names:
+                if n.asname:
+                    aliases[n.asname] = n.name
+        elif isinstance(node, ast.ImportFrom):
+            module = node.module or ""
+            for n in node.names:
+                full = f"{module}.{n.name}" if module else n.name
+                if n.asname:
+                    aliases[n.asname] = full
+
+    # -------------------------
+    # Helpers
+    # -------------------------
+    def get_constant(node):
+        return getattr(node, "value", None)
+
+    def is_os_environ(node):
+        return (
+            getattr(getattr(node, "value", None), "attr", None) == "environ"
+            and getattr(getattr(getattr(node, "value", None), "value", None), "id", None) == "os"
+        )
+
+    def get_target_repr(node):
+        if hasattr(node, "id"):
+            return node.id
+        if hasattr(node, "attr") or hasattr(node, "slice"):
+            return ast.unparse(node)
+        return None
+
+    def classify_value(node):
+        if node is None:
+            return None
+        if isinstance(node, ast.Constant):
+            return node.value
+        if hasattr(node, "slice"):
+            if is_os_environ(node):
+                return get_constant(node.slice)
+            return ast.unparse(node)
+        if hasattr(node, "func") and getattr(node, "args", None):
+            first_arg = node.args[0]
+            if isinstance(first_arg, ast.Constant):
+                return first_arg.value
+        if hasattr(node, "id") or hasattr(node, "attr"):
+            return ast.unparse(node)
+        return ast.unparse(node)
+
+    def get_original_line(node):
+        lineno = getattr(node, "lineno", None)
+        if lineno is None:
+            return None
+        lines = []
+        if lineno > 1:
+            lines.append(source_lines[lineno - 2].rstrip())
+        if 1 <= lineno <= len(source_lines):
+            lines.append(source_lines[lineno - 1].rstrip())
+        if lineno < len(source_lines):
+            lines.append(source_lines[lineno].rstrip())
+        return "\n".join(lines)
+
+    def get_call_name(node):
+        func = getattr(node, "func", None)
+        if isinstance(func, ast.Attribute):
+            base = ast.unparse(func.value)
+            base = aliases.get(base, base)
+            return f"{base}.{func.attr}"
+        if isinstance(func, ast.Name):
+            return aliases.get(func.id, func.id)
+        return None
+
+    def add_value(name, value_node, node, call=None):
+        value = classify_value(value_node)
+        matched = match_secret(secrets, name, value)
+        if matched is None:
+            return
+
+        lineno = getattr(node, "lineno", None)
+        line_content = get_original_line(node)
+
+        key = (lineno, matched, call)
+
+        # Skip duplicate keys or duplicate line content
+        if key in seen_keys or line_content in seen_lines:
+            return
+
+        seen_keys.add(key)
+        seen_lines.add(line_content)
+
+        results.append(
+            {
+                "lineno": lineno,
+                "code": line_content,
+                "matched": matched,
+                "call": call,
+            }
+        )
+
+    # -------------------------
+    # Walk AST
+    # -------------------------
+    for node in ast.walk(tree):
+        # Assignments
+        for target in getattr(node, "targets", []):
+            name = get_target_repr(target)
+            if name:
+                add_value(name, getattr(node, "value", None), node)
+
+        # Annotated assignments
+        if isinstance(node, ast.AnnAssign):
+            name = get_target_repr(node.target)
+            if name:
+                add_value(name, getattr(node, "value", None), node)
+
+        # Function calls
+        if isinstance(node, ast.Call):
+            call_name = get_call_name(node)
+            # Keyword arguments
+            for kw in node.keywords:
+                if kw.arg:
+                    add_value(kw.arg, kw.value, kw, call_name)
+            # Positional arguments
+            for arg in node.args:
+                add_value(None, arg, node, call_name)
+
+    return sorted(results, key=lambda item: item["lineno"])
