@@ -1,14 +1,14 @@
 import pytest
 from pathlib import Path
 
-from codeaudit.privacy_lint import secret_scan , count_privacy_check_results
+from codeaudit.privacy_lint import data_egress_scan , count_privacy_check_results
 
 def test_secretfinding():
     current_file_directory = Path(__file__).parent
 
     # apivalidations.py is in a subfolder:
     validation_file_path = current_file_directory / "validationfiles" / "apivalidations.py"
-    real_secrets_found = secret_scan(validation_file_path)
+    real_secrets_found = data_egress_scan(validation_file_path)
     
     actual_number_found = count_privacy_check_results(real_secrets_found)
     expected_number = 21  #secrets are exact match with words in the secretslist!

@@ -16,7 +16,7 @@ from importlib.resources import files
 SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt") 
 
 
-def secret_scan(input_path):
+def data_egress_scan(input_path):
     """Scans Python file or a PyPI package for potential privacy leaks.
 
     This function analyzes Python code for possible privacy-related issues
@@ -175,7 +175,7 @@ def has_privacy_findings(data):
 
 def count_privacy_check_results(data):
     """
-    count number of secrets found for a dict created with secret_scan(filename)
+    count number of secrets found for a dict created with data_egress_scan(filename)
     
     :param data: Description
     """

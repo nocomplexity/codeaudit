@@ -30,7 +30,7 @@ from codeaudit.checkmodules import get_imported_modules , check_module_vulnerabi
 from codeaudit.htmlhelpfunctions import json_to_html , dict_list_to_html_table
 from codeaudit import __version__
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
-from codeaudit.privacy_lint import secret_scan , has_privacy_findings
+from codeaudit.privacy_lint import data_egress_scan , has_privacy_findings
 from codeaudit.suppression import filter_sast_results
 
 from importlib.resources import files
@@ -308,7 +308,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         else:            
             unfiltered_scan_output = perform_validations(input_path) #scans for weaknesses in the file
             scan_output = filter_sast_results(unfiltered_scan_output)
-        spy_output = secret_scan(input_path) #scans for secrets in the file
+        spy_output = data_egress_scan(input_path) #scans for secrets in the file
         file_report_html = single_file_report(input_path , scan_output)
         secrets_report_html = secrets_report(spy_output)
         name_of_file = get_filename_from_path(input_path)
@@ -503,7 +503,7 @@ def directory_scan_report(directory_to_scan ,  nosec_flag, filename=DEFAULT_OUTP
         else:            
             unfiltered_scan_output = perform_validations(file_to_scan) #scans for weaknesses in the file
             scan_output = filter_sast_results(unfiltered_scan_output)
-        spy_output = secret_scan(file_to_scan) #scans for secrets in the file 
+        spy_output = data_egress_scan(file_to_scan) #scans for secrets in the file 
         data = scan_output["result"]
         if data or has_privacy_findings(spy_output):
             file_report_html = single_file_report(file_to_scan , scan_output)             

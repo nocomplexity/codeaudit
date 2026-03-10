@@ -23,6 +23,7 @@ parts:
     - file: filescan
     - file: modulescan
     - file: codeauditchecks  
+  - file: data_exfiltration_detection
   - file: issues
   - file: securecoding
   - file: complexitycheck

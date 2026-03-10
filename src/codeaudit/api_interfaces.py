@@ -20,7 +20,7 @@ from codeaudit.totals import overview_per_file , get_statistics , overview_count
 from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 from codeaudit.suppression import filter_sast_results
-from codeaudit.privacy_lint import secret_scan
+from codeaudit.privacy_lint import data_egress_scan
 
 from pathlib import Path
 import json
@@ -201,7 +201,6 @@ def save_to_json(sast_result, filename="codeaudit_output.json"):
         print(f"[Error] Failed to write file '{filepath}': {e}")
 
 
-
 def read_input_file(filename, safe_directory="data_folder"):
     """
     Securely read a Python CodeAudit JSON file and return its contents as a dictionary.
@@ -235,7 +234,6 @@ def read_input_file(filename, safe_directory="data_folder"):
         return json.loads(file_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as e:
         raise json.JSONDecodeError(f"Invalid JSON in file: {file_path}", e.doc, e.pos)
-
 
 
 def get_weakness_counts(input_file, nosec=False):
@@ -288,7 +286,6 @@ def get_weakness_counts(input_file, nosec=False):
     return dict(counter)
 
 
-
 # def get_weakness_counts(input_file , nosec=False):
 #     """
 #     Analyze a Python file or package(directory) and count occurrences of code weaknesses.
@@ -309,15 +306,15 @@ def get_weakness_counts(input_file, nosec=False):
 #           a 'file_security_info' key, containing per-file information.
 #         - Each file's 'sast_result' should be a dictionary mapping
 #           construct names to lists of occurrences.
-#     """    
+#     """
 #     scan_result = filescan(input_file, nosec)
 #     counter = Counter()
-    
+
 #     for file_info in scan_result.get('file_security_info', {}).values():
 #         sast_result = file_info.get('sast_result', {})
 #         for construct, occurrence in sast_result.items(): #occurrence is times the construct appears in a single file
 #             counter[construct] += len(occurrence)
-    
+
 #     return dict(counter)
 
 def get_modules(filename):
@@ -447,9 +444,74 @@ def get_module_vulnerability_info(module):
     output = _generation_info() | { key_string : vuln_info}
     return output
 
+def egress_check(input_path):
+    """Scan Python code for potential data egress or privacy leaks.
 
-def egress_check(inputpath):
-    """API wrapper for secret_scan() in privacy_lint.py module"""
-    output = secret_scan(inputpath)
+    This function performs a static analysis of Python source code to
+    detect patterns that may indicate privacy or data-egress risks.
+    The analysis is based on an Abstract Syntax Tree (AST) inspection
+    of the provided source.
+
+    The input can refer to:
+      - A local directory containing a Python package
+      - A single Python file
+      - A PyPI package name (the package will be downloaded and scanned)
+
+    Depending on the input type, the function performs a file-level or
+    package-level scan and returns structured metadata together with
+    the detected findings.
+
+    Args:
+        input_path (str): Location of the Python code to analyze. This can be:
+            - Path to a local Python package directory.
+            - Path to a single `.py` file.
+            - Name of a package published on PyPI.
+
+    Returns:
+        dict: Dictionary containing scan metadata and analysis results.
+        The dictionary always includes basic metadata such as the tool
+        name, version, and generation timestamp. Additional fields
+        depend on the input type:
+
+        **Directory or PyPI package input**
+            - ``package_name``: Name of the scanned package.
+            - ``package_release`` (PyPI only): Package version.
+            - Package-level privacy findings.
+
+        **Single file input**
+            - ``file_name``: Name of the scanned file.
+            - ``file_privacy_check``: Results of the file-level analysis.
+
+        **Invalid input**
+            - ``{"Error": "<message>"}``
+
+    Raises:
+        None: All errors are handled internally and reported in the
+        returned dictionary instead of raising exceptions.
+
+
+    **Notes:**
+
+    - The scan uses static AST analysis and does **not execute code**.
+    - PyPI packages are downloaded to a temporary directory before scanning.
+    - Temporary directories are automatically removed after the scan.
+    - Only syntactically valid Python files that can be parsed into an AST
+      are analyzed.
+
+    Examples for API use:
+
+    1. Scan a local Python file:
+
+        >>> data_egress_scan("script.py")
+
+    2. Scan a local package directory:
+
+        >>> data_egress_scan("./my_package")
+
+    3. Scan a package from PyPI:
+
+        >>> data_egress_scan("requests")
+      
+    """
+    output = data_egress_scan(input_path)
     return output
-

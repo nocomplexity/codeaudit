@@ -1,9 +1,10 @@
 # Command `codeaudit filescan`
 
-The **Python Code Audit** `filescan` command efficiently scans Python files or directories (packages) to identify and report potential security weaknesses.
+The **Python Code Audit** `filescan` command efficiently scans Python files or directories (packages) to:
+1. Identify and report potential security weaknesses and
+2. [Detect Data Exfiltration](data_exfiltration_detection)
 
-It produces a report detailing the potential security issues discovered.
-
+The tool generates a report detailing discovered security issues and flagging any External Egress Risks identified within the Python code.
 
 See section [validations](checksinformation) for all security checks implemented!
 
