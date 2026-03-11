@@ -104,8 +104,20 @@ If a potential risk is detected, the report will display:
 
 The report also highlights the exact lines of code that triggered the detection.
 
+:::{tip} 
+**Always review discovered modules carefully.**
+
+In the report, under the section:
+
+`> View used modules in this file.`
+
+the report lists all modules detected per file. Understanding each module is critical—some are strong indicators of possible data exchange with external systems. Review them to assess potential security or privacy risks.
+:::
+
 If no external egress risks are identified, the report will display:
 > *&#x2705; No logic for connecting to remote services found. Risk of data exfiltration to external systems is low.*
+
+
 
 :::{important} 
 No tool can provide 100% guarantees. This applies to Python Code Audit as well as to any other security analysis tool.

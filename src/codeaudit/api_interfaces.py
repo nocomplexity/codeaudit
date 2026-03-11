@@ -515,3 +515,34 @@ def egress_check(input_path):
     """
     output = data_egress_scan(input_path)
     return output
+
+def get_construct_counts(input_file):
+    """
+    Analyze a Python file or package(directory) and count occurrences of code constructs (aka weaknesses).
+
+    This function uses `filescan` API call to retrieve security-related information
+    about the input file. This returns a dict. Then it counts how many times each code construct
+    appears across all scanned files.
+
+    Args:
+        input_file (str): Path to the file or directory(package) to scan.
+
+    Returns:
+        dict: A dictionary mapping each construct name (str) to the total
+              number of occurrences (int) across all scanned files.
+
+    Notes:
+        - The `filescan` function is expected to return a dictionary with
+          a 'file_security_info' key, containing per-file information.
+        - Each file's 'sast_result' should be a dictionary mapping
+          construct names to lists of occurrences.
+    """    
+    scan_result = filescan(input_file)
+    counter = Counter()
+    
+    for file_info in scan_result.get('file_security_info', {}).values():
+        sast_result = file_info.get('sast_result', {})
+        for construct, occurence in sast_result.items(): #occurence is times the construct appears in a single file
+            counter[construct] += len(occurence)
+    
+    return dict(counter)

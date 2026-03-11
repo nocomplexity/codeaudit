@@ -1,0 +1,135 @@
+# Marking False Positives
+
+
+**Python Code Audit**  allows you to mark identified security weaknesses so they are excluded from future SAST (Static Application Security Testing) scans.
+
+## When to Use This Feature
+Only suppress a finding if one of the following conditions is met:
+
+- **Verified Mitigation**: You are certain the weakness is mitigated or carries no risk within the specific context of your application.
+
+:::{note} 
+Use caution when distributing software; it is difficult to predict every environment or context in which your code might eventually run.
+:::
+
+- **Pipeline Efficiency**: You have integrated Python Code Audit into your CI/CD pipeline and wish to focus exclusively on security regressions or vulnerabilities in new code changes.
+
+- **Confirmed False Positives**: The tool has flagged a pattern that you have manually verified as safe and non-exploitable.
+
+
+## How to Mark Weaknesses
+To exclude a specific line or statement from future audits, insert a comment directly following the code:
+
+- Inline Comments: Place a specific suppression tag (e.g., `# nosec` or `# sast-ignore`) at the end of the line causing the alert.
+
+**Python Code Audit** supports markers on multi-line statements as follows:
+
+```python
+db = shelve.DbfilenameShelf("mydata.db", 
+                            flag="c", 
+                            protocol=None, writeback=False) #nosec
+```
+This is one comment but divided over multiple lines, so `black` is heavily used for formatting code.
+
+**Python Code Audit** supports these markers for suppressing security weaknesses:
+- `nosec` 
+- `sast-ignore`
+- `ignore-sast`
+- `security-ignore`
+- `ignore-security`
+- `noqa`
+- `false-positive`
+- `falsepositive`
+- `risk-accepted`
+- `security-accepted`
+- `security-reviewed`
+- `security-exception`
+- `nosemgrep`
+- `NOSONAR`
+
+:::{tip} 
+The ability to suppress security weaknesses in the `codeaudit filescan` report via the `--nosec` flag is supported in both the CLI (`codeaudit filescan`) , as well as when using the APIs (see the [API reference](apidocs/modules)).
+
+:::
+
+
+
+## Example
+Enable filtering of issues marked with ``#nosec``:
+```bash
+codeaudit filescan myexample.py --nosec
+```
+If `myexample.py` contains a security weakness suppressed by a marker, the SAST report will no longer include that finding in its results.
+
+
+
+
+## Dealing with false positives
+
+
+:::{note} 
+Python Code Audit only reports **potential security issues**. 
+It is up to the user, developer, security tester or someone with the required **security** and **Python** knowledge to decide if action is needed.
+But you can use [markers](#marking-false-positives-and-mitigations) as comments in your code to suppress reporting reviewed security findings that you have mitigated or are no risks for your context.
+
+This Python Code Audit SAST tool, but this accounts for all SAST tools, analyze code in isolation. So without the runtime environment or how the any knowledge on how code interacts with other components and who the users are. 
+
+For good security you always need to construct a [threat model](https://nocomplexity.com/documents/securityarchitecture/architecture/threadmodels.html#threat-models) in able to evaluate if potential issues should be resolved.
+
+Despite the rise of AI, no single tool can judge the **context** where a program is used, how it is used and by whom. So if you are in doubt if action on a reported issues is needed, you **SHOULD** contact a security specialist who has deep technical knowledge of cyber security also solid knowledge on developing secure Python programs. In our [section sponsors](sponsors) you find agencies or consultants that can provide the needed assistance. Do not hesitate to get professional help, cyber security is a complex area!
+:::
+
+:::{warning} 
+DO **NOT** rely on SAST scanners that are powered by AI-agents / LLM systems to solve your cyber security problems!
+
+Most are just far from good enough. 
+
+In the best case scenario, you'll only be disappointed. But the risk of a false sense of security is enormous.
+:::
+
+
+
+
+:::{note} 
+The static nature of the Python Code Audit SAST scan is that it can’t identify vulnerabilities, but only reports **potential security issues**
+:::
+
+Python Code Audit is designed to minimize so called 'false positives`. 
+
+
+A false positive arises when a static analysis tool falsely claims that a construct in the code is insecure. Python Code Audit has no false positives, it will only reports on **potential security issues**.
+
+Python Code Audit is created for:
+* Security researchers
+* Users and
+* Developers
+Every user group has its own requirements and needs. And will review the found issues from a different perspective and context. 
+
+
+Python Code Audit will **not** detect and report imported modules that are commented out. E.g. in the following file:
+
+```python
+"""Sample file for module check"""
+
+import linkaudit #has no data in OSV DB
+import pandas #has some minor data in OSV
+import requests #has lots of OSV data
+#import numpy #has lots of OSV data! (a lot!!) 
+
+import os
+import random
+import csv
+
+def donothing():
+    print('no way!')
+    os.chmod('ooooooooooooono.txt',0x777) #this will give an alert on codeaudit filescan!
+```
+
+The `numpy` module is not reported on a module check and is not counted in the statistics that Python Code Audit created. This because this module is commented out. Modules that are imported, but not yet used are reported. This because it is likely that the modules will be used in a next iteration of the Python file. And checking as fast as possible on possible security issues for modules that *could* be used makes sense.
+
+
+
+:::{note} 
+Python Code Audit architecture, design , implementation overcome the shortcoming of many 'legacy' SAST tools who are good at reporting false positives, but lack good validation for correct secure Python use.
+
+:::
