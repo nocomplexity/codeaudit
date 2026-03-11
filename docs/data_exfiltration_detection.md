@@ -2,17 +2,22 @@
 
 Python Code Audit includes functionality to detect External Egress Risk. This capability is essential when verifying security before using Python programs or when evaluating existing Python code.
 
-This section explains why detecting potential data exfiltration caused by Python programs is important and how this functionality can be used within **Python Code Audit**.
+This section explains why detecting potential data exfiltration in Python programs is important and how this functionality can be used within **Python Code Audit**.
 
-:::{danger} 
-Detecting Data Exfiltration in Python Code that Uses Telemetry, Remote Analytics, and SaaS Integrations
-
-An essential step in **mitigating security risks**.
+:::{admonition} Detecting Data Exfiltration
+:class: danger
+Identifying data exfiltration in Python code—specifically within telemetry, remote analytics, and SaaS integrations—is a **critical step in mitigating security risks**.
 :::
 
 
-## Why Python Data Exfiltration Detection Matters
-In Static Application Security Testing (SAST), identifying interactions with remote services is a fundamental requirement. A robust security audit must prioritize data exfiltration—the unauthorized or undocumented transfer of information—as a primary risk factor.
+## Why Python Data Exfiltration Detection matters
+
+In the modern digital economy, data is an organization’s most valuable asset. When sensitive information falls into unauthorized hands, the consequences  are often irreversible.
+
+Within Static Application Security Testing (SAST), identifying interactions with remote services is more than a best practice; it is a necessity. 
+
+Detecting and validating potential data exfiltration paths in Python applications is essential to maintaining a secure, resilient, and trustworthy software ecosystem.
+
 
 ### Understanding Data Egress
 
@@ -57,26 +62,23 @@ Security Mandate: From a **Zero Trust** standpoint, organisations must verify if
 
 Telemetry represents a deliberate hole in your network perimeter. When Python applications implement advanced tracking without granular consent, they transition from a "utility" to a significant security liability.
 
-1. Sensitive Data Leakage
+**Sensitive Data Leakage**: Telemetry and other forms of external service (SaaS) interaction often captures more than just "events." Without rigorous sanitization, these streams can include:
 
-Telemetry often captures more than just "events." Without rigorous sanitization, these streams can include:
 - **PII (Personally Identifiable Information):** Usernames, IP addresses, and location data.
 - **Secrets in Logs:** Authentication tokens or database strings caught in stack traces.
 - **Business Logic:** Proprietary metadata revealing internal infrastructure.
 
 
-2. Expanded Attack Surface
-Every external API endpoint is a potential point of failure.
+**Expanded Attack Surface:** Every external API endpoint is a potential point of failure.
 
 -  **Unauthenticated Endpoints:** Many telemetry "sinks" lack robust auth, making them easy targets for interception.
 -  **Library Vulnerabilities:** The telemetry module itself may contain vulnerabilities (e.g., RCE or path traversal) that grant attackers a foothold.
 
-3. The "When, Not If" Data Breach
-
-Data sent to a third party is only as secure as their defenses.
+**The "When, Not If" Data Breach:** Data sent to a third party is only as secure as their defenses.
 
 - Loss of Custody: Once data leaves your perimeter, you lose the ability to protect it.
 - **Transparency Gaps:** You are dependent on the provider to detect and report breaches—a process that often takes months.
+
 
 ## How to Check for Data Exfiltration
 
@@ -86,9 +88,9 @@ Data sent to a third party is only as secure as their defenses.
 
 - the [API](apidocs/modules).
 
-Using the CLI
-
+Using the Python Code Audit CLI interface:
 The egress detection function can be activated with the following command:
+
 ```bash
 codeaudit filescan <pythonfile|package-name|directory> [OUTPUTFILE]
 ```
@@ -139,18 +141,3 @@ The following categories represent common classes of external service integratio
 
 :::
 
-## Implementation
-
-**AST Parsing and Key Detection**
-
-Python Code Audit parses Python files into an AST to locate specific constructs used for remote service authentication, such as API keys—tokens required by SaaS providers, telemetry providers, AI providers to ingest metrics or events. By scanning for these configurations, Python Code Audit flags the presence of external service integrations.
-
-All tokens utilised by Python Code Audit for egress detection are those commonly found in cloud environments, remote databases, telemetry services, and SDK integrations, as well as JWT (JSON Web Tokens) used within Python applications.
-
-
-Advantages:	
-* No Execution: Safely audits code without running potentially malicious logic.	Internal Egress: Cannot detect telemetry sent to internal servers that don't require keys.
-
-* Simple Maintenance: No need to manage massive lists of modules or regex patterns.
-
-This approach offers a high-speed, low-maintenance method to map out the external "phone-home" footprint of any Python application.

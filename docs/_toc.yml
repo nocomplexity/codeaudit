@@ -24,6 +24,8 @@ parts:
     - file: modulescan
     - file: codeauditchecks  
   - file: data_exfiltration_detection
+    sections:
+    - file: data_egress_implementation
   - file: issues
   - file: securecoding
   - file: complexitycheck
