@@ -54,7 +54,7 @@ Detecting data exfiltration is always a trade-off. Following the Python Code Aud
 
 ## Detection Strategy
 
-Python Code Audit focuses primarily on secrets used in function calls, which often indicate communication with external services.
+Python Code Audit focuses primarily on secrets used in function calls, which **indicate** communication with external services.
 
 Most telemetry platforms, SaaS services, and cloud APIs require API keys or tokens for authentication. Detecting these patterns is therefore an effective way to identify potential telemetry or data-exfiltration behaviour.
 
@@ -71,15 +71,15 @@ Dedicated tools exist for this purpose, such as TruffleHog or Gitleaks. But Chec
 
 Advantages of our approach:
 
-- No execution required – Code is analysed safely without running it.
+- **Fast analysis** – Quickly identifies potential external service integrations.
+
+- **No code execution required** – Python code is analysed **safely** without running it.
 
 - No need to maintain large lists of network libraries or telemetry SDKs.
 
-- Simpler detection logic – Avoids complex taint analysis and large regex rule sets.
+- **Simpler and more maintainable detection logic** – Avoids complex taint analysis and large regex rule sets.
 
-- **Fast analysis** – Quickly identifies potential external service integrations.
 
-- Reduced SAST complexity – Avoids maintaining an unbounded list of “sink” functions.
 
 The Python Code Audit design offers a **high-speed**, practical framework for detecting 'phone-home' behaviours and data exfiltration paths.
 

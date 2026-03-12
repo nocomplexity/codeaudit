@@ -1,6 +1,6 @@
 # Data Exfiltration Detection
 
-Python Code Audit includes functionality to detect External Egress Risk. This capability is essential when verifying security before using Python programs or when evaluating existing Python code.
+Python Code Audit has advanced functionality to detect External Egress Risk. This capability is essential when verifying security before using Python programs or when evaluating existing Python code.
 
 This section explains why detecting potential data exfiltration in Python programs is important and how this functionality can be used within **Python Code Audit**.
 
@@ -19,7 +19,7 @@ Within Static Application Security Testing (SAST), identifying interactions with
 Detecting and validating potential data exfiltration paths in Python applications is essential to maintaining a secure, resilient, and trustworthy software ecosystem.
 
 
-### Understanding Data Egress
+### What is Data Egress?
 
 Data egress occurs when information travels from your secure internal perimeter to an external destination. In a Python context, this includes the public internet, third-party cloud environments, partner networks, or SaaS integrations.
 
@@ -51,7 +51,7 @@ Telemetry and various Python analytics and remote monitoring modules often colle
 :::
 
 ### The "Shift-Left" Advantage
-Detecting exfiltration at the network level is reactive and expensive. It often fails when traffic is encrypted or blended with legitimate SaaS calls. Moving detection to the code level (Shift-Left) is more cost-effective and provides:
+Detecting exfiltration at the network level is reactive and expensive. It often fails when traffic is encrypted or blended with legitimate SaaS calls. Moving detection to the code level ([Shift-Left](https://nocomplexity.com/shift-left/)) is more cost-effective and provides:
 
 1. Supply Chain Integrity: Auditing third-party libraries before integration. If a library contains undocumented "phone home" logic, it can be blocked early.
 2. Defense in Depth: Perimeter tools (Firewalls, DLP, CASBs) are essential but not infallible. Source code detection adds a vital internal layer of defense.
@@ -60,7 +60,7 @@ Security Mandate: From a **Zero Trust** standpoint, organisations must verify if
 
 ## Assessing the Security Risks
 
-Telemetry represents a deliberate hole in your network perimeter. When Python applications implement advanced tracking without granular consent, they transition from a "utility" to a significant security liability.
+Telemetry represents a **deliberate hole** in your network perimeter. When Python applications implement advanced tracking without granular consent, they transition from a "utility" to a significant security liability.
 
 **Sensitive Data Leakage**: Telemetry and other forms of external service (SaaS) interaction often captures more than just "events." Without rigorous sanitization, these streams can include:
 
@@ -111,7 +111,7 @@ In the report, under the section:
 
 `> View used modules in this file.`
 
-the report lists all modules detected per file. Understanding each module is critical—some are strong indicators of possible data exchange with external systems. Review them to assess potential security or privacy risks.
+the HTML report lists all modules detected per file. Understanding each module is critical—some are strong indicators of possible data exchange with external systems. Review them to assess potential security or privacy risks.
 :::
 
 If no external egress risks are identified, the report will display:
@@ -141,7 +141,9 @@ Understanding the Difference:
 :::{admonition} High-risk integrations are a key focus for Python Code Audit egress detection!
 :class: danger, dropdown
 
-The following categories represent common classes of external service integrations that may introduce data egress or external communication risks in Python applications.
+The following categories represent common classes of external service integrations that may introduce data egress or external communication risks in Python applications. 
+Python Code Audit’s data egress capability is designed to detect these flows.
+
 
 | Category | Risk Type | Typical Detection Indicators | Examples |
 |----------|-----------|-----------------------------|----------|

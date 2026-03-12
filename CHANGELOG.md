@@ -1,5 +1,28 @@
 # Change Log
 
+## Version 1.6.1:
+
+**Added**
+Data Exfiltration Logic: Introduced improved and refactored logic for data egress (data exfiltration) risk detection.
+
+False Positive Prevention: Updated the secretlist to prevent false positives associated with common class definitions and NLP modules.
+
+**Changed**
+API Robustness: Performed minor code refactoring to ensure error handling is more robust when interacting with APIs.
+
+Maintenance Refactor: Renamed several functions to ensure the codebase remains simple, intuitive, and easy to maintain.
+
+Project Branding: Updated the PyPI.org description to more accurately reflect the tool’s core purpose and capabilities.
+
+**Fixed**
+Logic Refinement: Refined the data egress detection scripts to improve accuracy and performance.
+
+**Documentation**
+Report Clarity: Improved the HTML filescan report text to clarify that external egress detection is distinct from identifying secrets within Python code.
+
+General Maintenance: Applied various fixes and improvements to the project documentation for better readability.
+
+
 ## Version 1.6.0:
 
 **Added**:
