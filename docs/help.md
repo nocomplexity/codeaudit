@@ -9,11 +9,13 @@ Everyone can help with improving this tool!
 
 :::
 
-
+(share-label)=
 ## Promote Your Commitment to Python Code Audit
 
 
-* [Support this work](sponsors)
+* [Become a Sponsor](sponsors)
+
+* [Make a donation](donate-label)
 
 * If you use **Python Code Audit**, showcase your dedication to secure coding by adding the badge ![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square) to your public repository.
 Displaying the badge signals that you take Python security seriously and have proactively audited your code for potential vulnerabilities.
@@ -53,13 +55,20 @@ Guideline to contribute:
 
 ## Support this work
 
-This publication is open-access. So it's free to read, use and reuse as input for other publications.
-I believe knowledge should be free and available for everyone on planet earth. 
+This Python security tool is fully [open-source](license). We believe in **transparency**, not security by obscurity, and there is absolutely **no vendor lock-in**.
 
+
+
+(donate-label)=
 :::{admonition} Donate
 :class: tip
+Python Code Audit – Modern Python security analysis rooted in distrust. Our mission is to make cybersecurity simpler and more robust. Join us in building a better open-source solution—your support makes it possible.
 
-If you think this PlayBook is worth a few Euros, you can [buy ](https://nocomplexity.gumroad.com/) and receive the PDF version. This will help me to keep this guide maintained. If you are not able to make a small donation, it's fine. Just enjoy this PlayBook and [Share](share-subsection) the word about it.
+```{button-link} https://buy.stripe.com/5kQ6oH3dm4RO1ujaOUgbm02
+:color: danger
+Make A Donation
+```
+If you are unable to make a small donation, that’s fine. Just enjoy this tool and [spread the word](share-label)!
 :::
 
 
@@ -70,26 +79,3 @@ Become a sponsor for this project! Check [this page](sponsors) to increase your 
 **Note: We only display ethical ads as static images. So no ad networks or tracking technologies are used.**
 :::
 
-
-
-(share-subsection)=
-## Share this Guide on Python Source Code security
-
-This guide on is created and published on the Internet to be shared as much as possible!
-
-So Sharing is greatly appreciated!
-
-:::{tip}
-To share this publication , just share the URL: 
-
-[https://nocomplexity.com/documents/codeaudit](https://nocomplexity.com/documents/codeaudit)
-
-Or use copy-paste:
-```
-https://nocomplexity.com/documents/codeaudit
-```
-:::
-
-
-This  Guide is last updated on:
-{sub-ref}`today`.

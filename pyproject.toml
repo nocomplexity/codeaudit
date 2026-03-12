@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "codeaudit"
 dynamic = ["version"] # This tells Hatch that version is dynamically determined
-description = 'Simplified static security checks for Python '
+description = 'A modern Python security source code analyzer (SAST) based on distrust.'
 readme = "README.md"
 dependencies = ["fire>=0.7.0","pandas>=2.3","altair>=5.5"]
 requires-python = ">=3.8"
