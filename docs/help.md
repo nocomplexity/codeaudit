@@ -42,7 +42,7 @@ You should carefully evaluate all reported weaknesses.
 
 Not every issue requires fixing; depending on your program and the environment in which it operates, **some detected weaknesses may not be relevant**.
 
-However, it is important to document your decisions and inform your users about the design choices you have made and the rationale behind them.
+However, it is important to document your decisions and inform your users about the design choices you have made and the rationale behind them. Minimal [place markers in your code](markingissues). But also document your architecture and design decisions regarding security.
 :::
 
 * Send me a line that you use this tool within your company. 

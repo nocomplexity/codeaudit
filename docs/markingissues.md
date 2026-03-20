@@ -1,7 +1,9 @@
 # Marking False Positives
 
 
-**Python Code Audit**  allows you to mark identified security weaknesses so they are excluded from future SAST (Static Application Security Testing) scans.
+:::{hint} 
+**Python Code Audit** enables you to flag identified security weaknesses for exclusion from future Static Application Security Testing (SAST) scans.
+:::
 
 ## When to Use This Feature
 Only suppress a finding if one of the following conditions is met:

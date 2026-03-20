@@ -11,7 +11,7 @@ No single technique can detect telemetry or data exfiltration with 100% accuracy
 
 ## Detection Approaches
 
-Common techniques for detecting potential data exfiltration include in Python code are:
+Common techniques for detecting potential data exfiltration in Python code are:
 
 * Entropy analysis – Detects high-entropy strings that may represent API keys or tokens.
 
