@@ -77,9 +77,11 @@ Contribute and Join the team!
 %end grid
 
 
-:::{danger} 
-A **security weakness** in Python code is an implementation flaw that could potentially become a **security vulnerability**. [Validating](https://nocomplexity.com/scan-before-installing/) Python files or packages on security weaknesses is vital to minimize security risks.
+:::{admonition} Python programs are not immune to cybersecurity threats.
+:class: danger
+Validating Python code for **security weaknesses** is essential, whether you are writing your own programs or relying on third-party applications.
 :::
+
 
 
 **Python Code Audit** offers a powerful yet straightforward security solution:
@@ -90,14 +92,9 @@ A **security weakness** in Python code is an implementation flaw that could pote
 
 * **Impactful Analysis**: Powerful detection of security weaknesses that have the potential to become critical vulnerabilities.
 
+Enjoying **Python Code Audit**? Support us with a [GitHub star](https://github.com/nocomplexity/codeaudit)! It’s a simple way to help others find us and contributes to a more secure Python ecosystem. ⭐️
 
 
-:::{warning} 
-**Python Code Audit** gives you insight into potential security issues in your Python programs.
-
-*Are you ready to discover what's lurking in your Python code?*
-
-:::
 
 ## Features
 
@@ -135,10 +132,8 @@ A **security weakness** in Python code is an implementation flaw that could pote
 ## Background
 
 The availability of good, maintained FOSS SAST tools for Python is limited. While Bandit is a known tool, its usefulness is significantly limited: it struggles to identify a broad range of security weaknesses and fails to perform many crucial Python security validations. Additionally, its Command Line Interface (CLI) can present a steep learning curve for non-technical users. 
+To keep up with current threats, you need a Python Application Security Testing tool that evolves to deliver deeper insights and [high accuracy](https://nocomplexity.com/stop-using-bandit/).
 
-:::{hint} 
-[To keep up with current threats, you need a Python Application Security Testing tool that evolves to deliver deeper insights and higher accuracy.](https://nocomplexity.com/stop-using-bandit/)
-:::
 
 
 

@@ -1,8 +1,19 @@
 # Sponsors 
 
-We offer sponsor options for:
+
+:::{admonition} Sponsor this project with a donation
+:class: tip
+Python Code Audit – Modern Python security analysis rooted in distrust. 
+
+```{button-link} https://buy.stripe.com/5kQ6oH3dm4RO1ujaOUgbm02
+:color: danger
+Make A Donation
+```
+:::
+
+Beyond making a one-off donation, there are opportunities to become a sponsor for this project. Our sponsorship options include:
 * Your logo and some text about your company in this manual.
-* Your advertisement for a cyber security vacancy in our frequently published [Open Security News Overview](https://nocomplexity.com/open-security-news/).
+* Your advertisement for a cybersecurity vacancy in our frequently published [Open Security News Overview](https://nocomplexity.com/open-security-news/).
 * Your logo in one or more [NO|Complexity Playbooks](about). 
 
 
