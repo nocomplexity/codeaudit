@@ -175,13 +175,17 @@ def has_privacy_findings(data):
 
 def count_privacy_check_results(data):
     """
-    count number of secrets found for a dict created with data_egress_scan(filename)
-    
-    :param data: Description
+    Count total number of findings across all files,
+    only where privacy_check_result is non-empty.
     """
-    return len(
-        data["file_privacy_check"]["0"]["privacy_check_result"]
+    file_checks = data.get("file_privacy_check", {})
+
+    return sum(
+        len(entry.get("privacy_check_result", []))
+        for entry in file_checks.values()
+        if isinstance(entry, dict) and entry.get("privacy_check_result")
     )
+
 
 
 def collect_secret_values(source_code, secrets_file=SECRETS_LIST):
