@@ -434,7 +434,8 @@ def single_file_report(filename , scan_output):
     df = df[["line", "validation", "severity", "info", "code"]] # reorder the columns before converting to html
     df = df.sort_values(by="line") # sort by line number 
     if number_of_issues > 0:
-        output = f'<p>&#9888;&#65039; <b>{number_of_issues}</b> potential <b>security issues</b> found!</p>'
+        #output = f'<p>&#9888;&#65039; <b>{number_of_issues}</b> potential <b>security issues</b> found!</p>'
+        output = f'<p>&#9888;&#65039; <b>{number_of_issues}</b> potential <b>security issue{"s" if number_of_issues != 1 else ""}</b> found!</p>'
         output += '<details>'
         output += '<summary>View identified security weaknesses.</summary>'    
         output += df.to_html(escape=False,index=False)        
