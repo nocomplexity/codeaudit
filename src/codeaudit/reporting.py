@@ -32,6 +32,7 @@ from codeaudit import __version__
 from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 from codeaudit.privacy_lint import data_egress_scan , has_privacy_findings
 from codeaudit.suppression import filter_sast_results
+from codeaudit.api_helpers import _collect_issue_lines 
 
 from importlib.resources import files
 
@@ -427,7 +428,7 @@ def single_file_report(filename , scan_output):
     filename_location = scan_output["file_location"]
     for idx, row in df.iterrows():
         line_num = row['line']
-        df.at[idx, 'code'] = collect_issue_lines(filename_location, line_num)        
+        df.at[idx, 'code'] = _collect_issue_lines(filename_location, line_num)        
 
     df['code'] = df['code'].str.replace(r'\n', '<br>', regex=True)  # to convert \n to \\n for display    
     df['validation'] = df['validation'].apply(replace_second_dot) #Make the validation column smaller - this is the simplest way! without using styling options from Pandas!
@@ -641,16 +642,6 @@ def module_vulnerability_check(module):
         output += json_to_html(vuln_info)
         output += "</details>"
     return output
-
-
-def collect_issue_lines(filename, line):    
-    with open(filename, "r") as f:
-        lines = f.readlines()        
-    result = [ lines[i - 1] for i in (line -1, line, line + 1)   if i - 1 < len(lines)]
-    if result and result[-1] == '\n':        
-        result.pop()
-    code_lines = '<pre><code class="language-python">' + ''.join(result) + '</code></pre>'
-    return code_lines
 
 
 def create_htmlfile(html_input, outputfile):
