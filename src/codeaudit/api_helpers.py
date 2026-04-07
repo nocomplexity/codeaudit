@@ -7,7 +7,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Function to create nice APIs. So API helper functions.
 """
@@ -16,12 +16,16 @@ import pandas as pd
 import html
 
 from codeaudit.security_checks import ast_security_checks
-from codeaudit.filehelpfunctions import get_filename_from_path, collect_python_source_files
-from codeaudit.security_checks import perform_validations 
+from codeaudit.filehelpfunctions import (
+    get_filename_from_path,
+    collect_python_source_files,
+)
+from codeaudit.security_checks import perform_validations
 from codeaudit.suppression import filter_sast_results
 from codeaudit.checkmodules import get_all_modules
-from codeaudit.api_interfaces import  get_modules, get_overview 
+from codeaudit.api_interfaces import get_modules, get_overview
 from codeaudit.totals import overview_per_file
+
 
 def _collect_issue_lines(filename, line, context=1):
     """
@@ -52,13 +56,17 @@ def _collect_issue_lines(filename, line, context=1):
     end = min(line + context, len(lines))
 
     snippet_lines = lines[start:end]
-    
-    snippet_lines = [l.rstrip('\n') for l in snippet_lines if l.strip() != ""]
+
+    snippet_lines = [l.rstrip("\n") for l in snippet_lines if l.strip() != ""]
 
     # Escape HTML to prevent injection
     escaped_lines = [html.escape(l) for l in snippet_lines]
 
-    code_lines = "<pre><code class='language-python'>" + "\n".join(escaped_lines) + "</code></pre>"
+    code_lines = (
+        "<pre><code class='language-python'>"
+        + "\n".join(escaped_lines)
+        + "</code></pre>"
+    )
 
     return code_lines
 
@@ -94,20 +102,14 @@ def _get_test_info(error):
         found_rows = df[df["construct"] == error]
         if not found_rows.empty:
             row = found_rows.iloc[0]
-            return (
-                str(row.get("severity", "unknown")),
-                str(row.get("info", ""))
-            )
+            return (str(row.get("severity", "unknown")), str(row.get("info", "")))
 
         # Controlled fallback (avoid overly broad matching)
         if "extractall" in error:
             fallback_rows = df[df["construct"] == "tarfile.TarFile"]
             if not fallback_rows.empty:
                 row = fallback_rows.iloc[0]
-                return (
-                    str(row.get("severity", "unknown")),
-                    str(row.get("info", ""))
-                )
+                return (str(row.get("severity", "unknown")), str(row.get("info", "")))
 
     except Exception:
         return DEFAULT
@@ -181,7 +183,7 @@ def _build_weakness_details(sastresult, filename_location):
                 "validation": error_str,
                 "severity": severity,
                 "info": info_text,
-                "code": code_snippet
+                "code": code_snippet,
             }
 
             # Handle multiple issues on same line
@@ -216,20 +218,19 @@ def _codeaudit_scan_wasm(filename, nosec_flag):
 
         # Defensive extraction
         sast_data_results = sast_data.get("result", {})
-        details = _build_weakness_details(sast_data_results , filename)                
-        return {"file_name": name_of_file, 
-                "sast_result": details}
+        details = _build_weakness_details(sast_data_results, filename)
+        return {"file_name": name_of_file, "sast_result": details}
     except Exception as e:
         # WASM-safe: never crash entire scan because of one file
         return {"file_name": name_of_file, "sast_result": {}, "error": str(e)}
 
 
-def _codeaudit_directory_scan_wasm(input_path, nosec_flag ):
+def _codeaudit_directory_scan_wasm(input_path, nosec_flag):
     """
     Performs a scan on a directory (WASM/Pyodide safe).
     Works for extracted PyPI packages.
     """
-    
+
     output = {}
     file_output = {}
 
@@ -239,10 +240,8 @@ def _codeaudit_directory_scan_wasm(input_path, nosec_flag ):
         return {"Error": f"Failed to collect Python files: {str(e)}"}
 
     if not files_to_check:
-        return {
-            "Error": f"Directory path {input_path} contains no Python files."
-        }
-    # Package-level metadata (safe-guarded)    
+        return {"Error": f"Directory path {input_path} contains no Python files."}
+    # Package-level metadata (safe-guarded)
     try:
         modules_discovered = get_all_modules(input_path)
     except Exception:
@@ -255,9 +254,9 @@ def _codeaudit_directory_scan_wasm(input_path, nosec_flag ):
 
     output |= {
         "statistics_overview": package_overview,
-        "module_overview": modules_discovered
-    }   
-    # File scanning     
+        "module_overview": modules_discovered,
+    }
+    # File scanning
     for i, file in enumerate(files_to_check):
         try:
             file_information = overview_per_file(file)
@@ -270,19 +269,15 @@ def _codeaudit_directory_scan_wasm(input_path, nosec_flag ):
             module_information = {}
 
         scan_output = _codeaudit_scan_wasm(file, nosec_flag)
-        
+
         # Ensure merge never crashes
         try:
-            file_output[i] = (
-                file_information
-                | module_information
-                | scan_output
-            )
+            file_output[i] = file_information | module_information | scan_output
         except Exception:
             # fallback (extreme edge case)
             file_output[i] = {
                 "file_name": get_filename_from_path(file),
-                "error": "Failed to merge scan results"
+                "error": "Failed to merge scan results",
             }
 
     output |= {"file_security_info": file_output}
