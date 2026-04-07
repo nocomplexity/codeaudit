@@ -17,7 +17,7 @@ def test_correct_exception_use():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"pass": [19], "continue": [11]}
+    expected_data = {"pass": [20], "continue": [12]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data

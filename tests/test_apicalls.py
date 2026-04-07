@@ -51,7 +51,7 @@ def test_get_overview_validfile():
     # This is the expected dictionary - note for testing output!
     expected_data = {
         "FileName": "obfuscating.py",
-        "Number_Of_Lines": 54,
+        "Number_Of_Lines": 68,
         "AST_Nodes": 32,
         "Std-Modules": 2,
         "External-Modules": 0,

@@ -35,7 +35,7 @@ def test_os_mkdir():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.mkdir": [26]}
+    expected_data = {"os.mkdir": [25]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -53,7 +53,7 @@ def test_os_mkfifo():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.mkfifo": [48]}
+    expected_data = {"os.mkfifo": [47]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -71,7 +71,7 @@ def test_os_mknod():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.mknod": [65]}
+    expected_data = {"os.mknod": [64]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -89,7 +89,7 @@ def test_os_makedirs():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.makedirs": [13, 82]}
+    expected_data = {"os.makedirs": [13, 80]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -107,7 +107,7 @@ def test_os_makedev():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.makedev": [94]}
+    expected_data = {"os.makedev": [92]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -124,9 +124,9 @@ def test_sys_calls():
 
     # This is the expected dictionary
     expected_data = {
-        "sys.call_tracing": [12],
-        "sys.setprofile": [29, 31],
-        "sys.settrace": [35, 37],
+        "sys.call_tracing": [15],
+        "sys.setprofile": [34, 36],
+        "sys.settrace": [41, 43],
     }
 
     # Assert that the actual data matches the expected data
