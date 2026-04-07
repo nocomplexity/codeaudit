@@ -120,7 +120,6 @@ def count_static_warnings_in_file(file_path, max_file_size=10_000_000):
         return -1
 
 
-
 # def count_static_warnings_in_file(file_path):
 #     """
 #     Parses a Python source file using AST and counts the number of warnings raised (e.g., SyntaxWarning).

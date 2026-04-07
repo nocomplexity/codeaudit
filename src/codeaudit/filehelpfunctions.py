@@ -7,7 +7,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Helper functions for files
 """
@@ -17,6 +17,7 @@ import sys
 from pathlib import Path
 import ast
 import warnings
+
 
 def read_in_source_file(file_path):
     # Ensure file_path is a Path object
@@ -52,16 +53,15 @@ def collect_python_source_files(directory):
     Returns:
         list: A list of absolute paths to valid Python source files.
     """
-    EXCLUDE_DIRS = {"docs", "docker", "dist", "tests"}    
+    EXCLUDE_DIRS = {"docs", "docker", "dist", "tests"}
     python_files = []
 
     for root, dirs, files in os.walk(directory):
         # Filter out unwanted directories
         dirs[:] = [
-            d for d in dirs
-            if not (
-                d.startswith(".") or d.startswith("_") or d in EXCLUDE_DIRS
-            )
+            d
+            for d in dirs
+            if not (d.startswith(".") or d.startswith("_") or d in EXCLUDE_DIRS)
         ]
 
         for file in files:
@@ -69,13 +69,15 @@ def collect_python_source_files(directory):
                 full_path = os.path.join(root, file)
                 if os.path.isfile(full_path):
                     python_files.append(os.path.abspath(full_path))
-    #check if the file can be parsed using the AST
+    # check if the file can be parsed using the AST
     final_file_list = []
     for python_file in python_files:
         if is_ast_parsable(python_file):
             final_file_list.append(python_file)
         else:
-            print(f'Error: {python_file} will be skipped due to syntax error while parsing into AST.')
+            print(
+                f"Error: {python_file} will be skipped due to syntax error while parsing into AST."
+            )
     return final_file_list
 
 
@@ -89,11 +91,9 @@ def get_filename_from_path(file_path):
     Returns:
         str: The file name.
     """
-    #return os.path.basename(file_path) 
+    # return os.path.basename(file_path)
     return Path(file_path).name
 
-
-    
 
 def is_ast_parsable(file_path):
     """
@@ -108,7 +108,7 @@ def is_ast_parsable(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             source = f.read()
-         
+
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=SyntaxWarning)
             ast.parse(source, filename=file_path)
