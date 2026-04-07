@@ -16,6 +16,12 @@ import pandas as pd
 import html
 
 from codeaudit.security_checks import ast_security_checks
+from codeaudit.filehelpfunctions import get_filename_from_path, collect_python_source_files
+from codeaudit.security_checks import perform_validations 
+from codeaudit.suppression import filter_sast_results
+from codeaudit.checkmodules import get_all_modules
+from codeaudit.api_interfaces import  get_modules, get_overview 
+from codeaudit.totals import overview_per_file
 
 def _collect_issue_lines(filename, line, context=1):
     """
@@ -194,25 +200,91 @@ def _build_weakness_details(sastresult, filename_location):
     return result
 
 
-# def _build_weakness_details(sastresult, filename_location):
-#     """Convert the list of (error, lines) into a flat dict keyed by line number."""
-#     if not sastresult or not isinstance(sastresult, dict):
-#         return {}
+def _codeaudit_scan_wasm(filename, nosec_flag):
+    """Internal helper function to do a SAST scan on a single file (WASM-safe)
+    filename is full filename, including path
+    """
+    name_of_file = get_filename_from_path(filename)
+
+    try:
+        # Run SAST scan
+        if not nosec_flag:
+            sast_data = perform_validations(filename)
+        else:
+            unfiltered_scan_output = perform_validations(filename)
+            sast_data = filter_sast_results(unfiltered_scan_output)
+
+        # Defensive extraction
+        sast_data_results = sast_data.get("result", {})
+        details = _build_weakness_details(sast_data_results , filename)                
+        return {"file_name": name_of_file, 
+                "sast_result": details}
+    except Exception as e:
+        # WASM-safe: never crash entire scan because of one file
+        return {"file_name": name_of_file, "sast_result": {}, "error": str(e)}
+
+
+def _codeaudit_directory_scan_wasm(input_path, nosec_flag ):
+    """
+    Performs a scan on a directory (WASM/Pyodide safe).
+    Works for extracted PyPI packages.
+    """
     
-#     result = {}
-#     for error_str, line_numbers in sastresult.items():            
-#         # Get severity and info once per error type (more efficient)
-#         severity, info_text = get_test_info(error_str)
+    output = {}
+    file_output = {}
+
+    try:
+        files_to_check = collect_python_source_files(input_path)
+    except Exception as e:
+        return {"Error": f"Failed to collect Python files: {str(e)}"}
+
+    if not files_to_check:
+        return {
+            "Error": f"Directory path {input_path} contains no Python files."
+        }
+    # Package-level metadata (safe-guarded)    
+    try:
+        modules_discovered = get_all_modules(input_path)
+    except Exception:
+        modules_discovered = {}
+
+    try:
+        package_overview = get_overview(input_path)
+    except Exception:
+        package_overview = {}
+
+    output |= {
+        "statistics_overview": package_overview,
+        "module_overview": modules_discovered
+    }   
+    # File scanning     
+    for i, file in enumerate(files_to_check):
+        try:
+            file_information = overview_per_file(file)
+        except Exception:
+            file_information = {}
+
+        try:
+            module_information = get_modules(file)
+        except Exception:
+            module_information = {}
+
+        scan_output = _codeaudit_scan_wasm(file, nosec_flag)
         
-#         for line_num in line_numbers:
-#             code_snippet = collect_issue_lines(filename_location, line_num)
-            
-#             result[line_num] = {
-#                 "line": line_num,
-#                 "validation": error_str,
-#                 "severity": severity,
-#                 "info": info_text,
-#                 "code": code_snippet
-#             }
-    
-#     return result
+        # Ensure merge never crashes
+        try:
+            file_output[i] = (
+                file_information
+                | module_information
+                | scan_output
+            )
+        except Exception:
+            # fallback (extreme edge case)
+            file_output[i] = {
+                "file_name": get_filename_from_path(file),
+                "error": "Failed to merge scan results"
+            }
+
+    output |= {"file_security_info": file_output}
+
+    return output
