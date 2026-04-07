@@ -1,14 +1,12 @@
 import sys
 
-
-myfriend =
+myfriend = 
 class CodeExecutor:
     """
     A class that uses the __call__ dunder method to execute
     a string of Python code. This is for educational purposes ONLY
     and is NOT recommended for real-world applications due to security risks.
     """
-
     def __call__(self, code_string):
         """
         The __call__ dunder method is invoked when the instance of the class
@@ -20,7 +18,6 @@ class CodeExecutor:
             print("Execution completed successfully.")
         except Exception as e:
             print(f"An error occurred during execution: {e}", file=sys.stderr)
-
 
 # --- Demonstrating the usage ---
 

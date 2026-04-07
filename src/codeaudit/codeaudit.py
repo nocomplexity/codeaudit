@@ -7,23 +7,17 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
 
 
 CLI functions for codeaudit
 """
-
 import fire  # for working CLI with this PoC-thing (The Google way)
 import sys
 from codeaudit import __version__
-from codeaudit.reporting import (
-    overview_report,
-    report_module_information,
-    scan_report,
-    report_implemented_tests,
-)
+from codeaudit.reporting import overview_report ,report_module_information , scan_report , report_implemented_tests
 
-codeaudit_ascii_art = r"""
+codeaudit_ascii_art=r"""
 ----------------------------------------------------
  _                    __             _             
 |_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
@@ -31,54 +25,33 @@ codeaudit_ascii_art = r"""
 ----------------------------------------------------
 """
 
-
+     
 def display_version():
     """Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version]."""
     print(f"version: {__version__}")
 
 
 def display_help():
-    """Shows detailed help for using codeaudit tool."""
+    """Shows detailed help for using codeaudit tool."""    
     print(codeaudit_ascii_art)
-    print(
-        "Python Code Audit - A modern Python security source code analyzer based on distrust.\n"
-    )
+    print("Python Code Audit - A modern Python security source code analyzer based on distrust.\n")
     print("Commands to evaluate Python source code:")
-    print("Usage: codeaudit COMMAND <directory|package>  [report.html] \n")
-    print(
-        "Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.\n"
-    )
-    print("Commands:")
-    commands = [
-        "overview",
-        "filescan",
-        "modulescan",
-        "checks",
-        "version",
-    ]  # commands on CLI
-    functions = [
-        overview_report,
-        scan_report,
-        report_module_information,
-        report_implemented_tests,
-        display_version,
-    ]  # Related functions relevant for help
+    print('Usage: codeaudit COMMAND <directory|package>  [report.html] \n')
+    print('Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.\n')
+    print('Commands:')
+    commands = ["overview", "filescan", "modulescan",  "checks","version"]  # commands on CLI
+    functions = [overview_report, scan_report, report_module_information, report_implemented_tests,display_version]  # Related functions relevant for help
     for command, function in zip(commands, functions):
-        docstring = function.__doc__.strip().split("\n")[0] or ""
+        docstring = function.__doc__.strip().split('\n')[0] or ""  
         summary = docstring.split("\n", 1)[0]
-        print(f"  {command:<20} {summary}")
-    print(
-        "\nUse the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://simplifysecurity.nocomplexity.com/\n"
-    )
-
+        print(f"  {command:<20} {summary}")        
+    print("\nUse the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://simplifysecurity.nocomplexity.com/\n")
 
 def main():
-    if (
-        "-?" in sys.argv
-    ):  # Normalize help flags BEFORE Fire sees them: fire module treats anything starting with - as a flag/value, not as a help alias.
+    if "-?" in sys.argv:      # Normalize help flags BEFORE Fire sees them: fire module treats anything starting with - as a flag/value, not as a help alias.
         sys.argv[sys.argv.index("-?")] = "--help"
-    if "-help" in sys.argv:  # Normalize help flags BEFORE Fire sees them
-        sys.argv[sys.argv.index("-help")] = "--help"
+    if "-help" in sys.argv:      # Normalize help flags BEFORE Fire sees them
+        sys.argv[sys.argv.index("-help")] = "--help"        
     if len(sys.argv) > 1 and sys.argv[1] in ("-v", "--v", "--version", "-version"):
         display_version()
     elif len(sys.argv) > 1 and sys.argv[1] in ("-help", "--help", "-h"):
@@ -97,5 +70,10 @@ def main():
         )
 
 
+
 if __name__ == "__main__":
     main()
+
+                                            
+                                                 
+
