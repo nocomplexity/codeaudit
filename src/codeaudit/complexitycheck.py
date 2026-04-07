@@ -120,28 +120,3 @@ def count_static_warnings_in_file(file_path, max_file_size=10_000_000):
         return -1
 
 
-# def count_static_warnings_in_file(file_path):
-#     """
-#     Parses a Python source file using AST and counts the number of warnings raised (e.g., SyntaxWarning).
-
-#     Args:
-#         file_path (str): Path to the Python source file.
-
-#     Returns:
-#         int: Number of static warnings detected during parsing.
-#              Returns -1 if the file cannot be read or parsed.
-#     """
-#     try:
-#         with open(file_path, "r", encoding="utf-8") as f:
-#             source = f.read()
-
-#         with warnings.catch_warnings(record=True) as caught_warnings:
-#             warnings.simplefilter("always")  # Capture all warnings
-#             ast.parse(source, filename=file_path)
-
-#         result = {"warnings": len(caught_warnings)}
-
-#         return result
-
-#     except (SyntaxError, UnicodeDecodeError, ValueError):
-#         return -1
