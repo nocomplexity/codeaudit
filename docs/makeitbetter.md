@@ -108,7 +108,30 @@ Every test is self-validating using assertions and fails with an error if the ou
 The Python Code Audit Security validations that are implemented are not invented in isolation. Some reference tests also executed with other SAST scanners.
 
 
+## Building the documentation
+
+To ensure the contribution process is straightforward, the source documentation material is written in Markdown ([MyST](https://mystmd.org/)) and the manual itself is built using the excellent Jupyter Book(**version 1!**) toolchain. Jupyter Book (version 1) uses Sphinx as its core engine to transform notebooks and Markdown into structured websites.
+
+A significant advantage of this setup is that edit suggestions or issues can be made on a per-page basis, without requiring developer knowledge of Git or version control.
+
+To create the documentation, install Jupyter Book **version 1**:
+```
+pip install "jupyter-book<2"
+```
+
+Switch to the ../codeaudit/docs/ directory and run:
+```bash
+jb build .
+```
+
+You can now view the documentation locally and, if required, host it within your own secure perimeter—for example, when adding sensitive instructions for your security team. Hosting the documentation is easy: as these are static HTML files, no dedicated web server is required.
+
+Note: As parts of the documentation are notebooks, it is recommended to install JupyterLab:
+```
+pip install -U jupyterlab
+```
+
 ## Developing Plugins
 
-With `Python Code Audit` it is easily possible to develop your own plugin for e.g. `dango`, `tensorflow` or any complex Python library that does not enforce [security-by-design](https://nocomplexity.com/documents/securitybydesign/intro.html) guidelines for external API usage. 
+With `Python Code Audit` it is easily possible to develop your own plugin for e.g. `dango`, `tensorflow` or any complex Python library that does not enforce [security-by-design](https://nocomplexity.com/documents/securitybydesign/intro.html) guidelines for external API usage. Check the [APIs](apidocs/modules).
 
