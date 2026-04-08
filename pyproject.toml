@@ -55,4 +55,4 @@ extra-dependencies = [
 check = "mypy --install-types --non-interactive {args:src/codeaudit tests}"
 
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.14", "3.13", "3.12", "3.11"
+python = ["3.14", "3.13", "3.12", "3.11"]
