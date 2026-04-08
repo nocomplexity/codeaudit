@@ -26,4 +26,4 @@ jobs:
             - name: Test with tox
               run: |
                   export py_ver=$( echo "${{ matrix.python-version }}" | sed 's/\.//')
-                  tox -e py${{ matrix.python-version }}
+                  tox -e py${py_ver}
