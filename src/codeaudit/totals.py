@@ -15,17 +15,16 @@ Simple checker reporting #source code, #comments in Python files
 import ast
 import warnings
 
-from codeaudit.filehelpfunctions import (
-    read_in_source_file,
-    get_filename_from_path,
-    collect_python_source_files,
-)
+from codeaudit.checkmodules import get_all_modules, get_imported_modules
 from codeaudit.complexitycheck import (
     calculate_complexity,
     count_static_warnings_in_file,
 )
-
-from codeaudit.checkmodules import get_imported_modules, get_all_modules
+from codeaudit.filehelpfunctions import (
+    collect_python_source_files,
+    get_filename_from_path,
+    read_in_source_file,
+)
 
 
 def count_ast_objects(source):

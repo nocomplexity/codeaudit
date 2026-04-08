@@ -12,11 +12,11 @@ You should have received a copy of the GNU General Public License along with thi
 Helper functions for files
 """
 
+import ast
 import os
 import sys
-from pathlib import Path
-import ast
 import warnings
+from pathlib import Path
 
 
 def read_in_source_file(file_path):

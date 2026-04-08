@@ -14,8 +14,8 @@ Checking imported Python modules functions for codeaudit
 """
 
 import ast
-import sys
 import json
+import sys
 import urllib.request
 
 from codeaudit.filehelpfunctions import collect_python_source_files, read_in_source_file

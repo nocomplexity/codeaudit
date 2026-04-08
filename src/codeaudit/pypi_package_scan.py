@@ -9,16 +9,17 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+
+Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
 
 import gzip
-import zlib
-import tarfile
 import json
+import tarfile
 import tempfile
-
+import zlib
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
 
 from codeaudit import __version__
 

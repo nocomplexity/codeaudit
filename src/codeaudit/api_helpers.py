@@ -12,18 +12,18 @@ You should have received a copy of the GNU General Public License along with thi
 Function to create nice APIs. So API helper functions.
 """
 
-import pandas as pd
 import html
 
-from codeaudit.security_checks import ast_security_checks
-from codeaudit.filehelpfunctions import (
-    get_filename_from_path,
-    collect_python_source_files,
-)
-from codeaudit.security_checks import perform_validations
-from codeaudit.suppression import filter_sast_results
-from codeaudit.checkmodules import get_all_modules
+import pandas as pd
+
 from codeaudit.api_interfaces import get_modules, get_overview
+from codeaudit.checkmodules import get_all_modules
+from codeaudit.filehelpfunctions import (
+    collect_python_source_files,
+    get_filename_from_path,
+)
+from codeaudit.security_checks import ast_security_checks, perform_validations
+from codeaudit.suppression import filter_sast_results
 from codeaudit.totals import overview_per_file
 
 

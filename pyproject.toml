@@ -59,4 +59,4 @@ python = ["3.14", "3.13", "3.12", "3.11"]
 
 [tool.black]
 target-version = ["py311", "py312", "py313"]
-extend-exclude ='(python2_file_willnotwork|dunderexec_with_parsing_error).py'
+extend-exclude ='(python2_file_willnotwork|dunderexec_with_parsing_error).py|validationfiles|suppression|spytestdir'

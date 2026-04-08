@@ -12,25 +12,21 @@ You should have received a copy of the GNU General Public License along with thi
 EGRESS DETECTION LOGIC - see docs
 """
 
+import ast
+import datetime
+import re
+from importlib.resources import files
+from pathlib import Path
+
 # from codeaudit.api_interfaces import version
 from codeaudit import __version__
 from codeaudit.filehelpfunctions import (
-    get_filename_from_path,
     collect_python_source_files,
+    get_filename_from_path,
     is_ast_parsable,
     read_in_source_file,
 )
-from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
-
-
-import ast
-from pathlib import Path
-import datetime
-import re
-
-
-from importlib.resources import files
-
+from codeaudit.pypi_package_scan import get_package_source, get_pypi_download_info
 
 SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt")
 

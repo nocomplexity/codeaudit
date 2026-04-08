@@ -13,38 +13,37 @@ You should have received a copy of the GNU General Public License along with thi
 Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
 
+import datetime
+import json
+import platform
+from collections import Counter
+from pathlib import Path
+
+import altair as alt
+import pandas as pd
+
 from codeaudit import __version__
-from codeaudit.filehelpfunctions import (
-    get_filename_from_path,
-    collect_python_source_files,
-    is_ast_parsable,
-)
-from codeaudit.security_checks import perform_validations, ast_security_checks
-from codeaudit.totals import (
-    overview_per_file,
-    get_statistics,
-    overview_count,
-    total_modules,
-)
 from codeaudit.checkmodules import (
+    check_module_vulnerability,
     get_all_modules,
     get_imported_modules_by_file,
     get_standard_library_modules,
-    check_module_vulnerability,
 )
-from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
-from codeaudit.suppression import filter_sast_results
+from codeaudit.filehelpfunctions import (
+    collect_python_source_files,
+    get_filename_from_path,
+    is_ast_parsable,
+)
 from codeaudit.privacy_lint import data_egress_scan
-
-from pathlib import Path
-import json
-import datetime
-import pandas as pd
-import platform
-from collections import Counter
-
-
-import altair as alt
+from codeaudit.pypi_package_scan import get_package_source, get_pypi_download_info
+from codeaudit.security_checks import ast_security_checks, perform_validations
+from codeaudit.suppression import filter_sast_results
+from codeaudit.totals import (
+    get_statistics,
+    overview_count,
+    overview_per_file,
+    total_modules,
+)
 
 
 def version():

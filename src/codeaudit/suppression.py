@@ -14,10 +14,10 @@ Suppression logic - see documentation
 """
 
 import ast
-import tokenize
-from collections import defaultdict
 import re
 import sys
+import tokenize
+from collections import defaultdict
 
 
 def get_all_comments_by_line(filename):

@@ -15,6 +15,7 @@ Issue validation functions for codeaudit
 import ast
 import warnings
 from collections import defaultdict
+
 from codeaudit.checkmodules import get_imported_modules
 
 
