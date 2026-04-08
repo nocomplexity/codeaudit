@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025-present Maikel Mardjan(https://nocomplexity.com/) and all contributors!
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 import pytest
 from pathlib import Path
 
@@ -27,8 +30,8 @@ def test_os_calls():
     actual_data = find_constructs(source, constructs)
     expected_data = {
         "os.chmod": [15],
-        "os.forkpty": [27],
-        "os.fork": [28, 34],
+        "os.forkpty": [25],
+        "os.fork": [26, 32],
     }
 
     # This is the expected dictionary

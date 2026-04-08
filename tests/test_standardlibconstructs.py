@@ -18,7 +18,7 @@ def test_xml_usage():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"xmlrpc.client": [15], "xmlrpc.server.SimpleXMLRPCServer": [8, 28]}
+    expected_data = {"xmlrpc.client": [14], "xmlrpc.server.SimpleXMLRPCServer": [7, 26]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -36,7 +36,7 @@ def test_os_interfaces():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.access": [6, 12], "os.write": [24]}
+    expected_data = {"os.access": [5, 12], "os.write": [22]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -55,7 +55,7 @@ def test_base64encoding():
 
     # This is the expected dictionary
     expected_data = {
-        "base64": [3, 4],
+        "base64": [2, 3],
     }
 
     # Assert that the actual data matches the expected data
@@ -75,8 +75,8 @@ def test_httpserver_usage():
 
     # This is the expected dictionary
     expected_data = {
-        "http.server.BaseHTTPRequestHandler": [5, 26],
-        "http.server.HTTPServer": [26],
+        "http.server.BaseHTTPRequestHandler": [4, 23],
+        "http.server.HTTPServer": [23],
     }
 
     # Assert that the actual data matches the expected data
@@ -94,9 +94,9 @@ def test_pickle_usage():
     # This is the expected dictionary
 
     expected_data = {
-        "pickle.loads": [3, 13],
-        "pickle.Unpickler": [17],
-        "pickle.load": [8],
+        "pickle.loads": [3, 12],
+        "pickle.Unpickler": [16],
+        "pickle.load": [7],
     }
 
     # # Assert that the actual data matches the expected data

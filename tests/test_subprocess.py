@@ -21,12 +21,12 @@ def test_subprocess_methods():
 
     # This is the expected dictionary
     expected_data = {
-        "subprocess.getoutput": [96, 104],
-        "subprocess.getstatusoutput": [108],
-        "subprocess.run": [21],
-        "subprocess.Popen": [46, 67],
-        "subprocess.check_call": [85],
-        "subprocess.call": [86],
+        "subprocess.getoutput": [88, 96],
+        "subprocess.getstatusoutput": [100],
+        "subprocess.run": [20],
+        "subprocess.Popen": [44, 63],
+        "subprocess.check_call": [79],
+        "subprocess.call": [80],
     }
 
     # Assert that the actual data matches the expected data

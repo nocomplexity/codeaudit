@@ -38,8 +38,8 @@ def test_eval():
     # This is the expected dictionary
     expected_data = {
         "exec": [5],
-        "eval": [8, 11, 12, 13, 22, 25, 28, 30, 32],
-        "__import__": [32],
+        "eval": [8, 11, 12, 13, 21, 23, 26, 28, 30],
+        "__import__": [30],
     }
 
     # Assert that the actual data matches the expected data
@@ -78,7 +78,7 @@ def test_eval2():
     actual_data = result["result"]
 
     # This is the expected dictionary
-    expected_data = {"eval": [10]}
+    expected_data = {"eval": [8]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
