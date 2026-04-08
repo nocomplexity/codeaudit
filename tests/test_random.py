@@ -19,12 +19,12 @@ def test_random_usage():
 
     # This is the expected dictionary
     expected_data = {
-        "random.Random": [20],
-        "random.randrange": [23],
-        "random.randint": [25],
-        "random.uniform": [27],
-        "random.triangular": [29],
-        "random.randbytes": [32],
+        "random.Random": [19],
+        "random.randrange": [22],
+        "random.randint": [24],
+        "random.uniform": [26],
+        "random.triangular": [28],
+        "random.randbytes": [31],
         "random.random": [14],
         "random.seed": [15],
     }
