@@ -8,7 +8,7 @@ dynamic = ["version"] # This tells Hatch that version is dynamically determined
 description = 'A modern Python security source code analyzer (SAST) based on distrust.'
 readme = "README.md"
 dependencies = ["fire>=0.7.0","pandas>=2.3","altair>=5.5"]
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 keywords = ["SAST", "Python SAST", "SAST API", "Complexity Checker"]
 authors = [
@@ -17,17 +17,19 @@ authors = [
 classifiers = [
   "Environment :: Console",
   "Intended Audience :: Developers",
-  "Intended Audience :: Science/Research",  
+  "Intended Audience :: Science/Research",
   "Topic :: Security",
   "Topic :: Software Development :: Quality Assurance",
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13", 
-  "Programming Language :: Python :: 3.14", 
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov", "tox", "pylint", "black"]
 
 [project.urls]
 Documentation = "https://github.com/nocomplexity/codeaudit#readme"
@@ -53,24 +55,8 @@ extra-dependencies = [
 check = "mypy --install-types --non-interactive {args:src/codeaudit tests}"
 
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.14","3.13","3.12", "3.11"]
+python = ["3.14", "3.13", "3.12", "3.11"]
 
-
-[tool.coverage.run]
-source_pkgs = ["codeaudit", "tests"]
-branch = true
-parallel = true
-omit = [
-  "src/codeaudit/__about__.py",
-]
-
-[tool.coverage.paths]
-codeaudit = ["src/codeaudit", "*/codeaudit/src/codeaudit"]
-tests = ["tests", "*/codeaudit/tests"]
-
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
+[tool.black]
+target-version = ["py311", "py312", "py313"]
+extend-exclude ='(python2_file_willnotwork|dunderexec_with_parsing_error).py'
