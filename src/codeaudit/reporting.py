@@ -52,6 +52,7 @@ from codeaudit.api_helpers import _collect_issue_lines
 
 from importlib.resources import files
 
+
 PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
 DISCLAIMER_TEXT = (
     "<p><b>Disclaimer:</b> <i>This SAST tool "

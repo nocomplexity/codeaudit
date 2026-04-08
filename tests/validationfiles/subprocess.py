@@ -3,7 +3,6 @@
 import subprocess
 import os
 
-
 def run_subprocess_commands_simplified():
     """
     Demonstrates the basic use of subprocess.Popen and subprocess.run to execute shell commands,
@@ -18,7 +17,7 @@ def run_subprocess_commands_simplified():
     # 'capture_output=True' captures stdout and stderr.
     # 'text=True' decodes stdout/stderr as text (UTF-8 by default).
     # 'check=True' raises a CalledProcessError if the command returns a non-zero exit code (kept for demonstration, but no try-except).
-    result_ls = subprocess.run(["ls", "-l"], capture_output=True, text=True, check=True)
+    result_ls = subprocess.run(['ls', '-l'], capture_output=True, text=True, check=True)
     print("\nCommand: ls -l")
     print("Return Code:", result_ls.returncode)
     print("STDOUT:\n", result_ls.stdout)
@@ -32,10 +31,9 @@ def run_subprocess_commands_simplified():
     # if 'non_existent_command' truly doesn't exist.
     # If you uncomment this, be aware it will likely stop execution here with an error.
 
+
     print("\n--- Using subprocess.Popen ---")
-    print(
-        "subprocess.Popen is a lower-level function for more advanced process management."
-    )
+    print("subprocess.Popen is a lower-level function for more advanced process management.")
     print("It allows for non-blocking execution, piping, and more granular control.")
 
     # Example 3: Running a command asynchronously with Popen
@@ -43,13 +41,11 @@ def run_subprocess_commands_simplified():
     # We can then interact with the process (e.g., wait, communicate).
     print("\nCommand: echo 'Hello from Popen' && sleep 1 && echo 'Popen finished'")
     # shell=True is used here because '&&' is a shell-specific operator.
-    process = subprocess.Popen(
-        "echo 'Hello from Popen' && sleep 1 && echo 'Popen finished'",
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+    process = subprocess.Popen("echo 'Hello from Popen' && sleep 1 && echo 'Popen finished'",
+                               shell=True,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               text=True)
 
     print(f"Popen process started with PID: {process.pid}")
     print("Waiting for Popen process to complete...")
@@ -64,13 +60,11 @@ def run_subprocess_commands_simplified():
 
     # Example 4: Popen with input (piping data to stdin)
     print("\nCommand: grep 'line' (piping input)")
-    process_grep = subprocess.Popen(
-        ["grep", "line"],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+    process_grep = subprocess.Popen(['grep', 'line'],
+                                    stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE,
+                                    text=True)
 
     # Send input to the process's stdin
     input_data = "This is the first line.\nAnd this is the second line.\nNo match here."
@@ -81,34 +75,32 @@ def run_subprocess_commands_simplified():
     print("STDOUT:\n", stdout_grep)
     print("STDERR:\n", stderr_grep)
 
-    # Old things
-    subprocess.check_call(["ls", "-l"])
-    return_code = subprocess.call(["ls", "-l"])
-
+    #Old things
+    subprocess.check_call(['ls', '-l'])
+    return_code = subprocess.call(['ls', '-l'])
 
 # To run the function:
 # run_subprocess_commands_simplified()
-
 
 def simulate_system_command(command):
     print(f"Executing: {command}")
     # getoutput executes the command in a shell and returns the combined stdout and stderr
     output = subprocess.getoutput(command)
-
+    
     if not output:
         print("Command executed successfully (no output).")
     else:
         print(f"System Response:\n{output}")
 
 
-cmd = subprocess.getoutput("kill -9 10")
+cmd = subprocess.getoutput('kill -9 10')
 
 
 # getstatusoutput returns (exit_code, output)
 status, output = subprocess.getstatusoutput(command)
 
 print(f"Command: {command}")
-print(f"Exit Status: {status}")  # 0 usually means success, non-zero means failure
+print(f"Exit Status: {status}") # 0 usually means success, non-zero means failure
 print(f"Output: {output if output else '[No Output]'}")
 
 if status != 0:

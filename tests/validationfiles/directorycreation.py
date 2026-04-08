@@ -13,6 +13,7 @@ def create_directory(path):
         print(f"Error creating directory {path}: {e}")
 
 
+
 def create_single_directory(path):
     """
     Create a single directory at the specified path.
@@ -66,6 +67,7 @@ def create_file(path):
         print(f"Permission denied: {path}")
     except Exception as e:
         print(f"Error creating file {path}: {e}")
+
 
 
 def create_directories(path):

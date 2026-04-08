@@ -1,4 +1,4 @@
 print("almost clean file- no security issues here!")
-exec("ls")
+exec('ls')
 
-connection_string = get_token("openAI_key")
+connection_string = get_token('openAI_key')
