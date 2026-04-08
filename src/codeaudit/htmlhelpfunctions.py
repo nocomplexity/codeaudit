@@ -15,6 +15,7 @@ HTML helper functions for codeaudit
 import json
 from html import escape
 
+
 def dict_to_html(data):
     """Creates simple HTML from a dict with values that are list:
     Example {'core_modules': ['os', 'hashlib', 'socket', 'logging.config', 'tarfile'],

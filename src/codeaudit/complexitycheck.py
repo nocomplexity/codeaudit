@@ -118,4 +118,3 @@ def count_static_warnings_in_file(file_path, max_file_size=10_000_000):
 
     except (SyntaxError, UnicodeDecodeError, ValueError):
         return -1
-

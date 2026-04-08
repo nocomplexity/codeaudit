@@ -7,16 +7,18 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Suppression logic - see documentation
 
 """
+
 import ast
 import tokenize
 from collections import defaultdict
 import re
 import sys
+
 
 def get_all_comments_by_line(filename):
     """
@@ -35,18 +37,9 @@ def get_all_comments_by_line(filename):
 
     except (OSError, UnicodeDecodeError, tokenize.TokenError) as exc:
         # Fail loudly with context instead of silently ignoring
-        raise RuntimeError(
-            f"Failed to extract comments from {filename}"
-        ) from exc
+        raise RuntimeError(f"Failed to extract comments from {filename}") from exc
 
-    return {
-        line: "\n".join(texts)
-        for line, texts in comments_by_line.items()
-    }
-
-
-
-
+    return {line: "\n".join(texts) for line, texts in comments_by_line.items()}
 
 
 def get_start_to_end_lines(filename):
@@ -61,7 +54,7 @@ def get_start_to_end_lines(filename):
     end_lines = {}
 
     try:
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, "r", encoding="utf-8") as f:
             source = f.read()
 
         try:
@@ -69,12 +62,12 @@ def get_start_to_end_lines(filename):
 
             for node in ast.walk(tree):
                 # Most nodes have lineno, but some (like comprehension ifs) might not
-                if not hasattr(node, 'lineno'):
+                if not hasattr(node, "lineno"):
                     continue
 
                 start = node.lineno
                 # end_lineno may be missing in very old Python versions → fallback to start
-                end = getattr(node, 'end_lineno', start)
+                end = getattr(node, "end_lineno", start)
 
                 # Keep the maximum span for nodes starting on the same line
                 if start not in end_lines or end > end_lines[start]:
@@ -83,13 +76,13 @@ def get_start_to_end_lines(filename):
         except SyntaxError as e:
             print(
                 f"Syntax error in {filename} (line {e.lineno}): {e.msg}",
-                file=sys.stderr
+                file=sys.stderr,
             )
             return {}
         except (ValueError, UnicodeDecodeError) as e:
             print(
                 f"Cannot read {filename} properly: {type(e).__name__}: {e}",
-                file=sys.stderr
+                file=sys.stderr,
             )
             return {}
         except MemoryError:
@@ -99,7 +92,7 @@ def get_start_to_end_lines(filename):
             print(
                 f"Unexpected error parsing AST of {filename}: "
                 f"{type(e).__name__}: {e}",
-                file=sys.stderr
+                file=sys.stderr,
             )
             return {}
 
@@ -117,9 +110,8 @@ def get_start_to_end_lines(filename):
         return {}
     except Exception as e:
         print(
-            f"Critical error while accessing {filename}: "
-            f"{type(e).__name__}: {e}",
-            file=sys.stderr
+            f"Critical error while accessing {filename}: " f"{type(e).__name__}: {e}",
+            file=sys.stderr,
         )
         return {}
 
@@ -194,7 +186,9 @@ def filter_sast_results(sast_dict):
     # Decide which lines to KEEP
     keep_lines = set()
     for line in sorted(all_issue_lines):
-        if not is_suppressed(line, comments_by_line, start_to_end, match_suppression_keyword):
+        if not is_suppressed(
+            line, comments_by_line, start_to_end, match_suppression_keyword
+        ):
             keep_lines.add(line)
 
     # Build new result dictionary
@@ -239,9 +233,6 @@ def match_suppression_keyword(comment_line):
     if not comment_line:
         return False
 
-    normalized = " ".join(
-        word.lstrip("#").lower()
-        for word in comment_line.split()
-    )
+    normalized = " ".join(word.lstrip("#").lower() for word in comment_line.split())
     tokens = re.split(r"[^\w\-]+", normalized)
     return any(marker.lower() in tokens for marker in MARKER_LIST)

@@ -7,7 +7,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 Issue validation functions for codeaudit
 """
@@ -16,6 +16,7 @@ import ast
 import warnings
 from collections import defaultdict
 from codeaudit.checkmodules import get_imported_modules
+
 
 def get_full_attr_name(node):
     """Recursively builds full dotted name from Attribute/Name nodes."""
@@ -35,13 +36,15 @@ def find_constructs(source_code, constructs_to_detect):
     """
     with warnings.catch_warnings():  # Suppression of warnings
         warnings.simplefilter("ignore", category=SyntaxWarning)
-        tree = ast.parse(source_code)    
+        tree = ast.parse(source_code)
         results = defaultdict(list)
         seen = set()  # (construct, lineno) pairs already counted
 
         # step 0: Create a module list - needed for some checks
         imported_modules = get_imported_modules(source_code)
-        core_modules = imported_modules['core_modules'] #Only interested in core modules that are imported
+        core_modules = imported_modules[
+            "core_modules"
+        ]  # Only interested in core modules that are imported
 
         # Step 1: Build alias map
         alias_map = {}
@@ -66,24 +69,35 @@ def find_constructs(source_code, constructs_to_detect):
                     full = get_full_attr_name(func)
                     prefix = full.split(".")[0]
                     resolved_prefix = alias_map.get(prefix, prefix)
-                    full_resolved = resolved_prefix + full[len(prefix) :]                                
+                    full_resolved = resolved_prefix + full[len(prefix) :]
                     if full_resolved in constructs_to_detect:
-                        construct = full_resolved                
-                    elif node.func.attr in ('extractall', 'extract') and 'tarfile' in core_modules: #note only in combination with tarfile module or alias,see step1                                                              
-                        construct = 'tarfile.TarFile'
-                    elif node.func.attr in ('eval') and 'builtins' in core_modules:   #catch obfuscating eval construct with builtins module                        
-                        construct = 'eval'
-                    elif node.func.attr in ('exec') and 'builtins' in core_modules:   #catch obfuscating exec construct with builtins module                        
-                        construct = 'exec'
-                    elif node.func.attr in ('input') and 'builtins' in core_modules:   #catch obfuscating construct with builtins module                        
-                        construct = 'input'
-                    elif node.func.attr in ('compile') and 'builtins' in core_modules:   #catch obfuscating construct with builtins module                        
-                        construct = 'compile'                                     
+                        construct = full_resolved
+                    elif (
+                        node.func.attr in ("extractall", "extract")
+                        and "tarfile" in core_modules
+                    ):  # note only in combination with tarfile module or alias,see step1
+                        construct = "tarfile.TarFile"
+                    elif (
+                        node.func.attr in ("eval") and "builtins" in core_modules
+                    ):  # catch obfuscating eval construct with builtins module
+                        construct = "eval"
+                    elif (
+                        node.func.attr in ("exec") and "builtins" in core_modules
+                    ):  # catch obfuscating exec construct with builtins module
+                        construct = "exec"
+                    elif (
+                        node.func.attr in ("input") and "builtins" in core_modules
+                    ):  # catch obfuscating construct with builtins module
+                        construct = "input"
+                    elif (
+                        node.func.attr in ("compile") and "builtins" in core_modules
+                    ):  # catch obfuscating construct with builtins module
+                        construct = "compile"
                 elif isinstance(func, ast.Name):
-                    resolved = alias_map.get(func.id, func.id)                
+                    resolved = alias_map.get(func.id, func.id)
                     if resolved in constructs_to_detect:
                         construct = resolved
-            
+
             # Attribute usage: path.exists
             elif isinstance(node, ast.Attribute):
                 full = get_full_attr_name(node)
@@ -109,8 +123,8 @@ def find_constructs(source_code, constructs_to_detect):
                 if "pass" in constructs_to_detect:
                     for stmt in node.body:
                         if isinstance(stmt, ast.Pass):
-                            construct = "pass"                      
-            # ast.ExceptHandler — detect use of bare `continue` inside body
+                            construct = "pass"
+                # ast.ExceptHandler — detect use of bare `continue` inside body
                 if "continue" in constructs_to_detect:
                     for stmt in node.body:
                         if isinstance(stmt, ast.Continue):
@@ -125,5 +139,3 @@ def find_constructs(source_code, constructs_to_detect):
     data = dict(results)
     sorted_results = {k: sorted(v) for k, v in data.items()}
     return dict(sorted_results)
-
-

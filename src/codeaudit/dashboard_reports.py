@@ -7,12 +7,11 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to build custom reports.
 """
 
-#import panel as pn
 
 SAST_REPORT_CSS = """
 <style>
@@ -81,6 +80,7 @@ details summary {
 </style>
 """
 
+
 def _require_panel():
     """Import the optional Panel dependency.
 
@@ -93,6 +93,7 @@ def _require_panel():
     """
     try:
         import panel as pn
+
         return pn
     except ImportError:
         raise ImportError(
@@ -103,13 +104,13 @@ def _require_panel():
 
 def create_statistics_overview(scanresult):
     """
-    Returns a Statistics Overview with Panel 
+    Returns a Statistics Overview with Panel
     layout with HTML panes (4 per row).
     """
-    pn = _require_panel() #Panel module is needed for this function
+    pn = _require_panel()  # Panel module is needed for this function
     if not scanresult or not isinstance(scanresult, dict):
         return pn.pane.HTML("⚠️ No scan result")
-    
+
     statistics = scanresult.get("statistics_overview", {})
     if not statistics:
         return pn.pane.HTML("⚠️ No statistics found")
@@ -138,8 +139,8 @@ def create_statistics_overview(scanresult):
         "color": "black",
         "border": "none",
         "border-left": "4px solid #4CAF50",
-        "border-radius": "10px",        
-        "margin-bottom": "12px",   # Nice spacing below header
+        "border-radius": "10px",
+        "margin-bottom": "12px",  # Nice spacing below header
     }
 
     # Create statistic panes
@@ -157,7 +158,7 @@ def create_statistics_overview(scanresult):
     # Arrange panes: 4 per row
     rows = []
     for i in range(0, len(panes), 4):
-        row = pn.Row(*panes[i:i+4], sizing_mode="stretch_width")
+        row = pn.Row(*panes[i : i + 4], sizing_mode="stretch_width")
         rows.append(row)
 
     # Styled Header (full width, matching row width)
@@ -170,7 +171,7 @@ def create_statistics_overview(scanresult):
     header = pn.pane.HTML(header_html, styles=header_style)
 
     # Final layout: Header + statistic rows
-    return pn.Column(header, *rows, sizing_mode="stretch_width" )
+    return pn.Column(header, *rows, sizing_mode="stretch_width")
 
 
 def report_sast_results(scanresult):
@@ -178,7 +179,7 @@ def report_sast_results(scanresult):
     Generates a complete HTML report of all SAST findings from the scan result.
     Each file's findings are shown in a collapsible <details> element.
     """
-    pn = _require_panel() #Panel module is needed for this function
+    pn = _require_panel()  # Panel module is needed for this function
 
     # --- Input validation ---
     if not scanresult or not isinstance(scanresult, dict):
@@ -201,28 +202,31 @@ def report_sast_results(scanresult):
 
     total_number_of_files = scanresult["statistics_overview"]["Number_Of_Files"]
     # --- HTML REPORT ---
-    html = SAST_REPORT_CSS + f'''
+    html = (
+        SAST_REPORT_CSS
+        + f"""
     <div class="sast-report">
         <h2>Detailed Code Security Report</h2>
         <p><strong>Package:</strong> {scanresult.get("package_name", "N/A")}</p>
         <p><strong>version:</strong> {scanresult.get("package_release", "N/A")}</p>
         <p><strong>Total files with findings:</strong> {len(files_with_findings)} of {total_number_of_files} files in total</p>
-    '''
+    """
+    )
 
     for file_info in files_with_findings:
         filename = file_info.get("FileName", "Unknown File")
         sast_result = file_info.get("sast_result", {})
         num_issues = len(sast_result)
 
-        html += f'''
+        html += f"""
         <p>⚠️ <b>{num_issues}</b> potential security issue{"s" if num_issues > 1 else ""} 
         found in <b>{filename}</b></p>
-        '''
+        """
 
-        html += '<details>'
-        html += '<summary>View identified security weaknesses</summary>'
+        html += "<details>"
+        html += "<summary>View identified security weaknesses</summary>"
 
-        html += '''
+        html += """
         <table>
             <thead>
                 <tr>
@@ -234,11 +238,10 @@ def report_sast_results(scanresult):
                 </tr>
             </thead>
             <tbody>
-        '''
+        """
 
         sorted_findings = sorted(
-            sast_result.values(),
-            key=lambda x: int(x.get("line", 0))
+            sast_result.values(), key=lambda x: int(x.get("line", 0))
         )
 
         for finding in sorted_findings:
@@ -248,7 +251,7 @@ def report_sast_results(scanresult):
             info = finding.get("info", "—")
             code = finding.get("code", "")
 
-            html += f'''
+            html += f"""
                 <tr>
                     <td><strong>{line}</strong></td>
                     <td><code>{validation}</code></td>
@@ -256,12 +259,12 @@ def report_sast_results(scanresult):
                     <td>{info}</td>
                     <td>{code}</td>
                 </tr>
-            '''
+            """
 
-        html += '</tbody></table>'
-        html += '</details><br>'
+        html += "</tbody></table>"
+        html += "</details><br>"
 
-    html += '</div>'
+    html += "</div>"
     RESULT_HTML_PANE = {
         "background": "#FFFFE0",
         "padding": "16px",
@@ -272,42 +275,43 @@ def report_sast_results(scanresult):
         "border-left": "4px solid #E69F00",
         "border-radius": "10px",
     }
-    sast_result = pn.pane.HTML(html,styles=RESULT_HTML_PANE )
+    sast_result = pn.pane.HTML(html, styles=RESULT_HTML_PANE)
     return sast_result
+
 
 def report_used_modules(scanresult):
     """reports used modules for a package"""
-    pn = _require_panel() #Panel module is needed for this function
+    pn = _require_panel()  # Panel module is needed for this function
     # --- Input validation ---
     card1 = ""
     if not scanresult or not isinstance(scanresult, dict):
         return '<br><h2">⚠️ No scan result provided</h2>'
-    modules_discovered = scanresult['module_overview']
+    modules_discovered = scanresult["module_overview"]
     core_modules = modules_discovered["core_modules"]
     external_modules = modules_discovered["imported_modules"]
-    card1 += '<details>'
-    card1 += '<summary><b>Used Python Standard libraries</b></summary>'
+    card1 += "<details>"
+    card1 += "<summary><b>Used Python Standard libraries</b></summary>"
 
     card1 += (
         "<ul>\n"
         + "\n".join(f"  <li>{module}</li>" for module in core_modules)
         + "\n</ul>"
     )
-    card1 += '</details>'
+    card1 += "</details>"
 
-    card2 = '<details>'
+    card2 = "<details>"
     card2 += "<summary><b>Imported libraries (modules)</b></summary>"
     card2 += (
         "<ul>\n"
         + "\n".join(f"  <li>{module}</li>" for module in external_modules)
         + "\n</ul>"
     )
-    card2 += '</details>'
+    card2 += "</details>"
     # Style for statistic cards
     custom_style = {
         "background": "linear-gradient(135deg, #FFF3CC, #FFF9E6)",
         "padding": "16px",
-        "margin-bottom": "24px",  
+        "margin-bottom": "24px",
         "min-width": "180px",
         "font-size": "16px",
         "color": "black",
@@ -317,7 +321,7 @@ def report_used_modules(scanresult):
     }
     cardoutput_1 = pn.pane.HTML(card1, styles=custom_style)
     cardoutput_2 = pn.pane.HTML(card2, styles=custom_style)
-    cards = pn.Row(cardoutput_1,cardoutput_2)
+    cards = pn.Row(cardoutput_1, cardoutput_2)
     return cards
 
 
@@ -325,19 +329,19 @@ def get_info_text():
     """returns the info text styled
     for the sidebar
     """
-    pn = _require_panel() #Panel module is needed for this function
+    pn = _require_panel()  # Panel module is needed for this function
     custom_style = {
-    "background": "linear-gradient(135deg, #F0FDF4, #ECFDF5)",  # soft green tint
-    "padding": "18px",
-    "min-width": "200px",
-    "font-size": "15px",
-    "color": "#1F2937",  # slightly richer dark text
-    "border": "1px solid #D1FAE5",  # subtle green border
-    "border-left": "4px solid #10B981",  # emerald accent
-    "border-radius": "12px",
-    "box-shadow": "0 2px 6px rgba(0, 0, 0, 0.05)",  # soft depth
-}
-    
+        "background": "linear-gradient(135deg, #F0FDF4, #ECFDF5)",  # soft green tint
+        "padding": "18px",
+        "min-width": "200px",
+        "font-size": "15px",
+        "color": "#1F2937",  # slightly richer dark text
+        "border": "1px solid #D1FAE5",  # subtle green border
+        "border-left": "4px solid #10B981",  # emerald accent
+        "border-radius": "12px",
+        "box-shadow": "0 2px 6px rgba(0, 0, 0, 0.05)",  # soft depth
+    }
+
     infotext = pn.pane.HTML(
         """
         <p><b>Python Code Audit</b> is a Static Application Security Testing (SAST) tool used to find security weaknesses in Python code.</p>
@@ -396,17 +400,18 @@ def get_info_text():
     )
     return infotext
 
+
 def get_disclaimer_text():
     """defines the sidebar disclaimer text"""
-    pn = _require_panel() #Panel module is needed for this function
+    pn = _require_panel()  # Panel module is needed for this function
     disclaimer = (
-    "<br><b>Disclaimer:</b>This scan only evaluates Python files. "
-    "Security weaknesses can also exist in other files used by a Python package.<br><br>"
-    "This SAST tool <a href=\"https://github.com/nocomplexity/codeaudit\" target=\"_blank\">"
-    "Python Code Audit</a> provides a powerful, automatic security analysis for Python source code. "
-    "However, it's not a substitute for human review in combination with business knowledge. "
-    "Undetected vulnerabilities may still exist."
+        "<br><b>Disclaimer:</b>This scan only evaluates Python files. "
+        "Security weaknesses can also exist in other files used by a Python package.<br><br>"
+        'This SAST tool <a href="https://github.com/nocomplexity/codeaudit" target="_blank">'
+        "Python Code Audit</a> provides a powerful, automatic security analysis for Python source code. "
+        "However, it's not a substitute for human review in combination with business knowledge. "
+        "Undetected vulnerabilities may still exist."
     )
-    
+
     disclaimer_text = pn.pane.HTML(disclaimer)
     return disclaimer_text

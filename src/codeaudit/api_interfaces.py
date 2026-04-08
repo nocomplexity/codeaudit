@@ -7,24 +7,38 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
 Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
 
 from codeaudit import __version__
-from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , is_ast_parsable 
-from codeaudit.security_checks import perform_validations , ast_security_checks
-from codeaudit.totals import overview_per_file , get_statistics , overview_count , total_modules
-from codeaudit.checkmodules import get_all_modules , get_imported_modules_by_file , get_standard_library_modules , check_module_vulnerability
-from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
+from codeaudit.filehelpfunctions import (
+    get_filename_from_path,
+    collect_python_source_files,
+    is_ast_parsable,
+)
+from codeaudit.security_checks import perform_validations, ast_security_checks
+from codeaudit.totals import (
+    overview_per_file,
+    get_statistics,
+    overview_count,
+    total_modules,
+)
+from codeaudit.checkmodules import (
+    get_all_modules,
+    get_imported_modules_by_file,
+    get_standard_library_modules,
+    check_module_vulnerability,
+)
+from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
 from codeaudit.suppression import filter_sast_results
 from codeaudit.privacy_lint import data_egress_scan
 
 from pathlib import Path
 import json
-import datetime 
+import datetime
 import pandas as pd
 import platform
 from collections import Counter
@@ -32,13 +46,14 @@ from collections import Counter
 
 import altair as alt
 
+
 def version():
     """Returns the version of Python Code Audit"""
     ca_version = __version__
-    return {"name" : "Python_Code_Audit",
-             "version" : ca_version}
+    return {"name": "Python_Code_Audit", "version": ca_version}
 
-def filescan(input_path , nosec=False):
+
+def filescan(input_path, nosec=False):
     """
     Scan a Python source file, a local directory, or a **PyPI package** from PyPI.org for
     security weaknesses and return the results as a JSON-serializable
@@ -65,8 +80,8 @@ def filescan(input_path , nosec=False):
     - `/docker`
     - `/dist`
     - `/tests`
-    - all directories that start with . (dot) or _ (underscore) 
-     
+    - all directories that start with . (dot) or _ (underscore)
+
     But you can easily change this if needed!
 
     Args:
@@ -93,39 +108,46 @@ def filescan(input_path , nosec=False):
     Example:
         >>> result = filescan("example_package")
         >>> result["package_name"]
-        
+
     """
     file_output = {}
     file_path = Path(input_path)
     ca_version_info = version()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    output = ca_version_info | {"generated_on" : timestamp_str}    
+    output = ca_version_info | {"generated_on": timestamp_str}
     # Check if the input is a valid directory or a single valid Python file
-    if file_path.is_dir(): #local directory scan
+    if file_path.is_dir():  # local directory scan
         package_name = get_filename_from_path(input_path)
         output |= {"package_name": package_name}
-        scan_output = _codeaudit_directory_scan(input_path, nosec_flag=nosec )
+        scan_output = _codeaudit_directory_scan(input_path, nosec_flag=nosec)
         output |= scan_output
-        return output            
-    elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):   #check on parseable single Python file   
-        # do a file check
-        file_information = overview_per_file(input_path) 
-        module_information = get_modules(input_path) # modules per file
-        scan_output = _codeaudit_scan(input_path , nosec_flag=nosec)                
-        file_output["0"] = file_information | module_information | scan_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
-        output |= { "file_security_info" : file_output}
         return output
-    elif (pypi_data := get_pypi_download_info(input_path)):    
-        package_name = input_path #The variable input_path is now equal to the package name        
-        url = pypi_data['download_url']
-        release = pypi_data['release']
+    elif (
+        file_path.suffix.lower() == ".py"
+        and file_path.is_file()
+        and is_ast_parsable(input_path)
+    ):  # check on parseable single Python file
+        # do a file check
+        file_information = overview_per_file(input_path)
+        module_information = get_modules(input_path)  # modules per file
+        scan_output = _codeaudit_scan(input_path, nosec_flag=nosec)
+        file_output["0"] = (
+            file_information | module_information | scan_output
+        )  # there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
+        output |= {"file_security_info": file_output}
+        return output
+    elif pypi_data := get_pypi_download_info(input_path):
+        package_name = (
+            input_path  # The variable input_path is now equal to the package name
+        )
+        url = pypi_data["download_url"]
+        release = pypi_data["release"]
         if url is not None:
-            src_dir, tmp_handle = get_package_source(url)            
-            output |= {"package_name": package_name,
-                       "package_release": release}
+            src_dir, tmp_handle = get_package_source(url)
+            output |= {"package_name": package_name, "package_release": release}
             try:
-                scan_output = _codeaudit_directory_scan(src_dir , nosec_flag=nosec)
+                scan_output = _codeaudit_directory_scan(src_dir, nosec_flag=nosec)
                 output |= scan_output
             finally:
                 # Cleaning up temp directory
@@ -133,47 +155,56 @@ def filescan(input_path , nosec=False):
             return output
     else:
         # Its not a directory nor a valid Python file:
-        return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."}
+        return {
+            "Error": "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."
+        }
 
-def _codeaudit_scan(filename , nosec_flag):
+
+def _codeaudit_scan(filename, nosec_flag):
     """Internal helper function to do a SAST scan on a single file
     To scan a file, or Python package using the API interface, use the `filescan` API call!
     """
-    #get the file name
-    name_of_file = get_filename_from_path(filename)    
-    if not nosec_flag:  #no filtering on reviewed items with markers in code
+    # get the file name
+    name_of_file = get_filename_from_path(filename)
+    if not nosec_flag:  # no filtering on reviewed items with markers in code
         sast_data = perform_validations(filename)
     else:
-        unfiltered_scan_output = perform_validations(filename) #scans for weaknesses in the file
+        unfiltered_scan_output = perform_validations(
+            filename
+        )  # scans for weaknesses in the file
         sast_data = filter_sast_results(unfiltered_scan_output)
-    sast_data_results = sast_data["result"]    
+    sast_data_results = sast_data["result"]
     sast_result = dict(sorted(sast_data_results.items()))
-    output = { "file_name" : name_of_file ,
-              "sast_result": sast_result}    
+    output = {"file_name": name_of_file, "sast_result": sast_result}
     return output
 
-def _codeaudit_directory_scan(input_path , nosec_flag):
+
+def _codeaudit_directory_scan(input_path, nosec_flag):
     """Performs a scan on a local directory
     Function is also used with scanning directory PyPI.org packages, since in that case a tmp directory is used
     """
-    output ={}
+    output = {}
     file_output = {}
-    files_to_check = collect_python_source_files(input_path)    
+    files_to_check = collect_python_source_files(input_path)
     if len(files_to_check) > 1:
-        modules_discovered = get_all_modules(input_path) #all modules for the package aka directory        
+        modules_discovered = get_all_modules(
+            input_path
+        )  # all modules for the package aka directory
         package_overview = get_overview(input_path)
-        output |= {"statistics_overview" : package_overview ,
-                   "module_overview" : modules_discovered }        
-        for i,file in enumerate(files_to_check):
+        output |= {
+            "statistics_overview": package_overview,
+            "module_overview": modules_discovered,
+        }
+        for i, file in enumerate(files_to_check):
             file_information = overview_per_file(file)
-            module_information = get_modules(file) # modules per file            
-            scan_output = _codeaudit_scan(file , nosec_flag )
+            module_information = get_modules(file)  # modules per file
+            scan_output = _codeaudit_scan(file, nosec_flag)
             file_output[i] = file_information | module_information | scan_output
-        output |= { "file_security_info" : file_output}
+        output |= {"file_security_info": file_output}
         return output
     else:
-        output_msg = f'Directory path {input_path} contains no Python files.'
-        return {"Error" : output_msg}
+        output_msg = f"Directory path {input_path} contains no Python files."
+        return {"Error": output_msg}
 
 
 def save_to_json(sast_result, filename="codeaudit_output.json"):
@@ -223,7 +254,9 @@ def read_input_file(filename, safe_directory="data_folder"):
 
     # Security check: ensure the file is within the safe directory
     if not file_path.is_relative_to(base_dir):
-        raise PermissionError(f"Access denied: {file_path} is outside the safe directory")
+        raise PermissionError(
+            f"Access denied: {file_path} is outside the safe directory"
+        )
 
     # Ensure the file exists and is a file
     if not file_path.is_file():
@@ -317,44 +350,59 @@ def get_weakness_counts(input_file, nosec=False):
 
 #     return dict(counter)
 
+
 def get_modules(filename):
-    """Gets modules of a Python file """
+    """Gets modules of a Python file"""
     modules_found = get_imported_modules_by_file(filename)
     return modules_found
 
+
 def get_overview(input_path):
-    """Retrieves the security relevant statistics of a Python package(directory) or of a single Python 
+    """Retrieves the security relevant statistics of a Python package(directory) or of a single Python
 
     Based on the input path, call the overview function and return the result in a dict
 
     Args:
         input_path: Directory path of the package to use
-        
+
 
     Returns:
         dict: Returns the overview statistics in DICT format
     """
     file_path = Path(input_path)
-    if file_path.is_dir(): #only for valid parsable Python files
-        files_to_check = collect_python_source_files(input_path)        
+    if file_path.is_dir():  # only for valid parsable Python files
+        files_to_check = collect_python_source_files(input_path)
         if len(files_to_check) > 1:
             statistics = get_statistics(input_path)
             modules = total_modules(input_path)
-            df = pd.DataFrame(statistics) 
-            df['Std-Modules'] = modules['Std-Modules'] #Needed for the correct overall count
-            df['External-Modules'] = modules['External-Modules'] #Needed for the correct overall count
-            overview_df = overview_count(df) #create the overview Dataframe
-            dict_overview = overview_df.to_dict(orient="records")[0] #The overview Dataframe has only one row
+            df = pd.DataFrame(statistics)
+            df["Std-Modules"] = modules[
+                "Std-Modules"
+            ]  # Needed for the correct overall count
+            df["External-Modules"] = modules[
+                "External-Modules"
+            ]  # Needed for the correct overall count
+            overview_df = overview_count(df)  # create the overview Dataframe
+            dict_overview = overview_df.to_dict(orient="records")[
+                0
+            ]  # The overview Dataframe has only one row
             return dict_overview
         else:
-            output_msg = f'Directory path {input_path} contains no Python files.'
-            return {"Error" : output_msg}
-    elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):
+            output_msg = f"Directory path {input_path} contains no Python files."
+            return {"Error": output_msg}
+    elif (
+        file_path.suffix.lower() == ".py"
+        and file_path.is_file()
+        and is_ast_parsable(input_path)
+    ):
         security_statistics = overview_per_file(input_path)
         return security_statistics
     else:
-        #Its not a directory nor a valid Python file:
-        return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path to a Python package."}
+        # Its not a directory nor a valid Python file:
+        return {
+            "Error": "File is not a *.py file, does not exist or is not a valid directory path to a Python package."
+        }
+
 
 def get_default_validations():
     """Retrieve the default implemented security validations.
@@ -383,25 +431,27 @@ def get_default_validations():
             ]
         }
 
-    
+
     **Notes**:
-    
+
         - Requires Python 3.9 or later due to use of the dictionary union operator (`|`).
         - The `validations` list is derived from a pandas DataFrame using
           `to_dict(orient="records")`.
     """
     df = ast_security_checks()
-    result = df.to_dict(orient="records")    
-    output = _generation_info() | {"validations" : result}
+    result = df.to_dict(orient="records")
+    output = _generation_info() | {"validations": result}
     return output
+
 
 def _generation_info():
     """Internal function to retrieve generation info for APIs output"""
-    ca_version_info = version()    
+    ca_version_info = version()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    output = ca_version_info | {"generated_on" : timestamp_str}
+    output = ca_version_info | {"generated_on": timestamp_str}
     return output
+
 
 def platform_info():
     """Get Python platform information - Python version and Python runtime interpreter used.
@@ -409,25 +459,28 @@ def platform_info():
         none
 
     Returns:
-        dict: Overview of implemented security SAST validation on Standard Python modules       
+        dict: Overview of implemented security SAST validation on Standard Python modules
     """
     python_version = platform.python_version()
     platform_implementation = platform.python_implementation()
-    output = { "python_version" : python_version ,
-              "python_implementation" : platform_implementation}
+    output = {
+        "python_version": python_version,
+        "python_implementation": platform_implementation,
+    }
     return output
 
 
 def get_psl_modules():
     """Retrieves a list of  collection of Python modules that are part of a Python distribution aka standard installation
-    
+
     Returns:
         dict: Overview of PSL modules in the Python version used.
-    
+
     """
     psl_modules = get_standard_library_modules()
-    output = _generation_info() | platform_info() | { "psl_modules" : psl_modules}
+    output = _generation_info() | platform_info() | {"psl_modules": psl_modules}
     return output
+
 
 def get_module_vulnerability_info(module):
     """
@@ -438,11 +491,12 @@ def get_module_vulnerability_info(module):
 
     Returns:
         dict: Generation metadata combined with OSV vulnerability results.
-    """    
+    """
     vuln_info = check_module_vulnerability(module)
-    key_string = f'{module}_vulnerability_info'
-    output = _generation_info() | { key_string : vuln_info}
+    key_string = f"{module}_vulnerability_info"
+    output = _generation_info() | {key_string: vuln_info}
     return output
+
 
 def egress_check(input_path):
     """Scan Python code for potential data egress or privacy leaks.
@@ -511,10 +565,11 @@ def egress_check(input_path):
     3. Scan a package from PyPI:
 
         >>> data_egress_scan("requests")
-      
+
     """
     output = data_egress_scan(input_path)
     return output
+
 
 def get_construct_counts(input_file):
     """
@@ -536,13 +591,18 @@ def get_construct_counts(input_file):
           a 'file_security_info' key, containing per-file information.
         - Each file's 'sast_result' should be a dictionary mapping
           construct names to lists of occurrences.
-    """    
+    """
     scan_result = filescan(input_file)
     counter = Counter()
-    
-    for file_info in scan_result.get('file_security_info', {}).values():
-        sast_result = file_info.get('sast_result', {})
-        for construct, occurence in sast_result.items(): #occurence is times the construct appears in a single file
+
+    for file_info in scan_result.get("file_security_info", {}).values():
+        sast_result = file_info.get("sast_result", {})
+        for (
+            construct,
+            occurence,
+        ) in (
+            sast_result.items()
+        ):  # occurence is times the construct appears in a single file
             counter[construct] += len(occurence)
-    
+
     return dict(counter)
