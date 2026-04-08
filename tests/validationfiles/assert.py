@@ -1,9 +1,9 @@
+
 def divide(a, b):
     # Assert that the divisor 'b' is not zero.
     # If 'b' is 0, an AssertionError will be raised with the given message.
     assert b != 0, "Cannot divide by zero!"
     return a / b
-
 
 # --- Example Usage ---
 
