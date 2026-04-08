@@ -56,3 +56,7 @@ check = "mypy --install-types --non-interactive {args:src/codeaudit tests}"
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.14", "3.13", "3.12", "3.11"]
+
+[tool.black]
+target-version = ["py311", "py312", "py313"]
+extend-exclude ='(python2_file_willnotwork|dunderexec_with_parsing_error).py'
