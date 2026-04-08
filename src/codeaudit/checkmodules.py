@@ -18,8 +18,7 @@ import sys
 import json
 import urllib.request
 
-from codeaudit.filehelpfunctions import collect_python_source_files, read_in_source_file
-
+from codeaudit.filehelpfunctions import collect_python_source_files , read_in_source_file 
 
 def get_imported_modules(source_code):
     tree = ast.parse(source_code)
@@ -89,7 +88,6 @@ def query_osv(package_name, ecosystem="PyPI"):
     with urllib.request.urlopen(request) as response:
         return json.loads(response.read().decode("utf-8"))
 
-
 def extract_vulnerability_info(data):
     """
     Extract vulnerability details from OSV response data.
@@ -108,7 +106,7 @@ def extract_vulnerability_info(data):
                 "summary": vuln.get("summary", ""),
                 "details": vuln.get("details", ""),
                 "aliases": vuln.get("aliases", []),
-                "severity": vuln.get("severity", []),  # CVSS scores if available
+                "severity": vuln.get("severity", []),  # CVSS scores if available               
             }
         )
     return results
@@ -122,32 +120,30 @@ def check_module_vulnerability(module):
 
 
 def get_all_modules(directory_to_scan):
-    "Function to get all modules of a package or directory of Python files - never trust requirements.txt or project.toml"
+    "Function to get all modules of a package or directory of Python files - never trust requirements.txt or project.toml"    
     files_to_check = collect_python_source_files(directory_to_scan)
     all_int_modules = set()
     all_ext_modules = set()
     for python_file in files_to_check:
         source = read_in_source_file(python_file)
         used_modules = get_imported_modules(source)
-        core_modules = used_modules["core_modules"]
-        external_modules = used_modules["imported_modules"]
+        core_modules = used_modules['core_modules']
+        external_modules = used_modules['imported_modules']         
         all_int_modules.update(core_modules)
         all_ext_modules.update(external_modules)
     all_modules_discovered = {
         "core_modules": sorted(all_int_modules),
-        "imported_modules": sorted(all_ext_modules),
-    }
+        "imported_modules": sorted(all_ext_modules) }    
     return all_modules_discovered
 
 
 def get_imported_modules_by_file(python_file_name):
-    "Function to get all modules of a single Python file - never trust requirements.txt or project.toml"
+    "Function to get all modules of a single Python file - never trust requirements.txt or project.toml"    
     source = read_in_source_file(python_file_name)
     used_modules = get_imported_modules(source)
-    core_modules = used_modules["core_modules"]
-    external_modules = used_modules["imported_modules"]
+    core_modules = used_modules['core_modules']
+    external_modules = used_modules['imported_modules']     
     all_modules_discovered = {
         "core_modules": sorted(core_modules),
-        "imported_modules": sorted(external_modules),
-    }
+        "imported_modules": sorted(external_modules) }    
     return all_modules_discovered

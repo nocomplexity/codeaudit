@@ -17,7 +17,7 @@ def test_subprocess_methods():
     result = perform_validations(validation_file_path)
 
     # actual_data = find_constructs(source, constructs)
-    actual_data = result["result"]
+    actual_data = result['result']
 
     # This is the expected dictionary
     expected_data = {

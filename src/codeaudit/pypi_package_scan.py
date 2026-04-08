@@ -7,11 +7,12 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
 
 
 Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
+
 
 import gzip
 import zlib
@@ -28,8 +29,8 @@ NOCX_HEADERS = {
     "user-agent": f"Python Code Audit /{__version__} (https://github.com/nocomplexity/codeaudit)",
     "Accept": "text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8",
     "Accept-Encoding": "gzip, deflate,br",
-    "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
+    "Connection": "keep-alive",  
+    "Upgrade-Insecure-Requests": "1",  
 }
 
 
@@ -40,50 +41,48 @@ def get_pypi_package_info(package_name):
     try:
         with urlopen(url) as response:
             return json.load(response)
-    except (
-        HTTPError
-    ):  # When urlopen receives a 4xx (client error) or 5xx (server error) status code, it does not return the response object; instead, it immediately raises an exception called urllib.error.HTTPError. If a package is not found a 40x is send with json response {"message": "Not Found"}, I keep handling errors simple
-        return False  # No package with this name found on pypi.org!
+    except HTTPError:        #When urlopen receives a 4xx (client error) or 5xx (server error) status code, it does not return the response object; instead, it immediately raises an exception called urllib.error.HTTPError. If a package is not found a 40x is send with json response {"message": "Not Found"}, I keep handling errors simple
+        return False # No package with this name found on pypi.org!
     except URLError as e:
         print(f"Network error: {e}")
     return None
-
 
 def get_pypi_download_info(package_name):
     """Retrieves the sdist download URL
     Using the PyPI JSON API to get the sdist download URL (https://docs.pypi.org/api/json/)
     Note JSON API result is a nested dict with all release info published, so finding the correct sdist download URL needs logic.
-    """
-    data = get_pypi_package_info(package_name)
+    """    
+    data = get_pypi_package_info(package_name)    
     if not data:
         return False
     # Get the official "latest" version string from the API metadata
-    latest_version = data.get("info", {}).get("version")
+    latest_version = data.get('info', {}).get('version')
     if not latest_version:
         return False
 
     # Access the files associated with that specific version
-    releases_list = data.get("releases", {}).get(latest_version, [])
-
+    releases_list = data.get('releases', {}).get(latest_version, [])
+    
     sdist_download_url = None
-
+    
     # Explicitly look for the source distribution (sdist)
     for file_info in releases_list:
-        if file_info.get("packagetype") == "sdist":
-            url = file_info.get("url")
-            if url and url.endswith(
-                ".tar.gz"
-            ):  # PEP527 I only extract .tar.gz files, older source formats not supported.
+        if file_info.get('packagetype') == 'sdist':
+            url = file_info.get('url')
+            if url and url.endswith(".tar.gz"): #PEP527 I only extract .tar.gz files, older source formats not supported.
                 sdist_download_url = url
-                break  # Found it, stop looking
+                break # Found it, stop looking
 
-    return {"download_url": sdist_download_url, "release": latest_version}
+    return {
+        "download_url": sdist_download_url,
+        "release": latest_version
+    }
 
 
 def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
     """Retrieves a package source and extract so SAST scanning can be applied
     Make sure to cleanup the temporary dir!! Using e.g. `tmp_handle.cleanup()`  # deletes everything
-    """
+    """    
     try:
         request = Request(url, headers=nocxheaders or {})
         with urlopen(request, timeout=nocxtimeout) as response:
@@ -105,9 +104,7 @@ def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
             f.write(content)
 
         with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(
-                path=temp_dir, filter="data"
-            )  # nosec Possible risks are mitigated as far as possible, see architecture notes.
+            tar.extractall(path=temp_dir,filter='data')  # nosec Possible risks are mitigated as far as possible, see architecture notes.
 
         return temp_dir, tmpdir_obj  # return both so caller controls lifetime
 

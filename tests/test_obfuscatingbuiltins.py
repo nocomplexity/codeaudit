@@ -7,7 +7,6 @@ from codeaudit.security_checks import perform_validations
 
 # constructs are tested in this test file based on SAST checks defined , not  running constructs directly for testing as in other test files.
 
-
 def test_obfucatedbuiltins_usage():
     current_file_directory = Path(__file__).parent
 
@@ -17,7 +16,7 @@ def test_obfucatedbuiltins_usage():
     result = perform_validations(validation_file_path)
 
     # actual_data = find_constructs(source, constructs)
-    actual_data = result["result"]
+    actual_data = result['result']
 
     # This is the expected dictionary
     expected_data = {

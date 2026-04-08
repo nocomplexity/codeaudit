@@ -7,7 +7,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>. 
 
 
 Public API functions for Python Code Audit aka codeaudit on pypi.org
@@ -18,26 +18,19 @@ These API functions are on purpose opinionated for one goal: Keep things simple!
 So all results are returned as Pandas Dataframe. This makes things easier for further processing!
 
 """
-
 import pandas as pd
 from collections import Counter
-
 
 def total_weaknesses(input_file):
     """Returns the total weaknesses found"""
     scan_result = input_file
     counter = Counter()
-
-    for file_info in scan_result.get("file_security_info", {}).values():
-        sast_result = file_info.get("sast_result", {})
-        for (
-            construct,
-            occurence,
-        ) in (
-            sast_result.items()
-        ):  # occurence is times the construct appears in a single file
+    
+    for file_info in scan_result.get('file_security_info', {}).values():
+        sast_result = file_info.get('sast_result', {})
+        for construct, occurence in sast_result.items(): #occurence is times the construct appears in a single file
             counter[construct] += len(occurence)
-
+    
     result = dict(counter)
-    df = pd.DataFrame(list(result.items()), columns=["call", "count"])
+    df = pd.DataFrame(list(result.items()), columns=['call', 'count'])
     return df

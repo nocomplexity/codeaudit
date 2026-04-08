@@ -13,24 +13,20 @@ EGRESS DETECTION LOGIC - see docs
 """
 # from codeaudit.api_interfaces import version
 from codeaudit import __version__
-from codeaudit.filehelpfunctions import (
-    get_filename_from_path,
-    collect_python_source_files,
-    is_ast_parsable,
-    read_in_source_file,
-)
-from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
+from codeaudit.filehelpfunctions import get_filename_from_path , collect_python_source_files , is_ast_parsable , read_in_source_file
+from codeaudit.pypi_package_scan import get_pypi_download_info , get_package_source
 
 
 import ast
 from pathlib import Path
-import datetime
+import datetime 
 import re
 
 
 from importlib.resources import files
 
-SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt")
+
+SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt") 
 
 
 def data_egress_scan(input_path):
@@ -68,39 +64,33 @@ def data_egress_scan(input_path):
     ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    output = ca_version_info | {"generated_on": timestamp_str}
+    output = ca_version_info | {"generated_on" : timestamp_str}    
     # Check if the input is a valid directory or a single valid Python file
-    if file_path.is_dir():  # local directory scan
+    if file_path.is_dir(): #local directory scan
         package_name = get_filename_from_path(input_path)
         output |= {"package_name": package_name}
-        spycheck_output = _codeaudit_directory_spyscan(input_path)
+        spycheck_output = _codeaudit_directory_spyscan(input_path)        
         output |= spycheck_output
-        return output
-    elif (
-        file_path.suffix.lower() == ".py"
-        and file_path.is_file()
-        and is_ast_parsable(input_path)
-    ):  # check on parseable single Python file
+        return output            
+    elif file_path.suffix.lower() == ".py" and file_path.is_file() and is_ast_parsable(input_path):   #check on parseable single Python file   
         # do a file spy check
         name_of_file = get_filename_from_path(input_path)
         name_dict = {"FileName": name_of_file}
-        spycheck_output = spy_check(input_path)
-        file_output["0"] = (
-            spycheck_output  # there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
-        )
-        output |= {"file_name": name_dict, "file_privacy_check": file_output}
+        spycheck_output = spy_check(input_path)                
+        file_output["0"] = spycheck_output #there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
+        output |= { "file_name": name_dict,
+                   "file_privacy_check" : file_output}        
         return output
-    elif pypi_data := get_pypi_download_info(input_path):
-        package_name = (
-            input_path  # The variable input_path is now equal to the package name
-        )
-        url = pypi_data["download_url"]
-        release = pypi_data["release"]
+    elif (pypi_data := get_pypi_download_info(input_path)):    
+        package_name = input_path #The variable input_path is now equal to the package name        
+        url = pypi_data['download_url']
+        release = pypi_data['release']
         if url is not None:
-            src_dir, tmp_handle = get_package_source(url)
-            output |= {"package_name": package_name, "package_release": release}
-            try:
-                spycheck_output = _codeaudit_directory_spyscan(src_dir)
+            src_dir, tmp_handle = get_package_source(url)            
+            output |= {"package_name": package_name,
+                       "package_release": release}
+            try:                
+                spycheck_output = _codeaudit_directory_spyscan(src_dir)  
                 output |= spycheck_output
             finally:
                 # Cleaning up temp directory
@@ -108,17 +98,16 @@ def data_egress_scan(input_path):
             return output
     else:
         # Its not a directory nor a valid Python file:
-        return {
-            "Error": "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."
-        }
+        return {"Error" : "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."}
 
 
 def spy_check(file):
     """runs the AST function to get spy info"""
     code = read_in_source_file(file)
     spy_output = collect_secret_values(code)
-    name_of_file = get_filename_from_path(file)
-    output = {"file_name": name_of_file, "privacy_check_result": spy_output}
+    name_of_file = get_filename_from_path(file)    
+    output = { "file_name": name_of_file,
+                "privacy_check_result" : spy_output}  
     return output
 
 
@@ -126,17 +115,17 @@ def _codeaudit_directory_spyscan(input_path):
     """Performs a spyscan on a local directory
     Function is also used with scanning directory PyPI.org packages, since in that case a tmp directory is used
     """
-    output = {}
+    output ={}
     file_output = {}
-    files_to_check = collect_python_source_files(input_path)
-    if len(files_to_check) > 1:
-        for i, file in enumerate(files_to_check):
+    files_to_check = collect_python_source_files(input_path)    
+    if len(files_to_check) > 1:                        
+        for i,file in enumerate(files_to_check):                                                
             file_output[i] = spy_check(file)
-        output |= {"file_privacy_check": file_output}
+        output |= { "file_privacy_check" : file_output}
         return output
     else:
-        output_msg = f"Directory path {input_path} contains no Python files."
-        return {"Error": output_msg}
+        output_msg = f'Directory path {input_path} contains no Python files.'
+        return {"Error" : output_msg}
 
 
 def load_secrets_list(filename=SECRETS_LIST):
@@ -151,7 +140,7 @@ def load_secrets_list(filename=SECRETS_LIST):
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
-            secrets_patterns.append(line.lower())  # lower all patterns
+            secrets_patterns.append(line.lower()) #lower all patterns
 
     return secrets_patterns
 
@@ -197,7 +186,6 @@ def has_privacy_findings(data):
 
     return False
 
-
 def count_privacy_check_results(data):
     """
     Count total number of findings across all files,
@@ -210,6 +198,7 @@ def count_privacy_check_results(data):
         for entry in file_checks.values()
         if isinstance(entry, dict) and entry.get("privacy_check_result")
     )
+
 
 
 def collect_secret_values(source_code, secrets_file=SECRETS_LIST):
@@ -249,10 +238,7 @@ def collect_secret_values(source_code, secrets_file=SECRETS_LIST):
     def is_os_environ(node):
         return (
             getattr(getattr(node, "value", None), "attr", None) == "environ"
-            and getattr(
-                getattr(getattr(node, "value", None), "value", None), "id", None
-            )
-            == "os"
+            and getattr(getattr(getattr(node, "value", None), "value", None), "id", None) == "os"
         )
 
     def get_target_repr(node):
