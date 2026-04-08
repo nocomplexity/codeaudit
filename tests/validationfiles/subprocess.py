@@ -1,7 +1,7 @@
 """File to check on subprocess usage, which can have severe security risks"""
 
-import os
 import subprocess
+import os
 
 
 def run_subprocess_commands_simplified():

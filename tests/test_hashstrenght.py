@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
@@ -18,7 +17,7 @@ def test_hash_strenght():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"hashlib.md5": [19], "hashlib.sha1": [20, 48]}
+    expected_data = {"hashlib.md5": [20], "hashlib.sha1": [21, 49]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data

@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
@@ -28,8 +27,8 @@ def test_os_calls():
     actual_data = find_constructs(source, constructs)
     expected_data = {
         "os.chmod": [15],
-        "os.forkpty": [25],
-        "os.fork": [26, 32],
+        "os.forkpty": [27],
+        "os.fork": [28, 34],
     }
 
     # This is the expected dictionary

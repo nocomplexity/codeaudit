@@ -1,8 +1,7 @@
+import pytest
 from pathlib import Path
 
-import pytest
-
-from codeaudit.privacy_lint import count_privacy_check_results, data_egress_scan
+from codeaudit.privacy_lint import data_egress_scan, count_privacy_check_results
 
 
 def test_secretfinding():

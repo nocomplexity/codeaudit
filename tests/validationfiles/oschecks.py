@@ -1,5 +1,5 @@
-import os
 from os import access as check_access
+import os
 
 
 def nogood():

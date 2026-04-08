@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
@@ -18,7 +17,7 @@ def test_os_makedirs():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.makedirs": [10, 79]}
+    expected_data = {"os.makedirs": [10, 77]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -36,7 +35,7 @@ def test_os_mkdir():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.mkdir": [23]}
+    expected_data = {"os.mkdir": [22]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -54,7 +53,7 @@ def test_os_mkfifo():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.mkfifo": [45]}
+    expected_data = {"os.mkfifo": [44]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -72,7 +71,7 @@ def test_os_mknod():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"os.mknod": [62]}
+    expected_data = {"os.mknod": [61]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data

@@ -1,9 +1,9 @@
+import pytest
 from pathlib import Path
 
-import pytest
-
 from codeaudit.filehelpfunctions import read_in_source_file
-from codeaudit.totals import count_ast_objects, overview_per_file, read_in_source_file
+
+from codeaudit.totals import read_in_source_file, overview_per_file, count_ast_objects
 
 
 def test_overview_per_file_check():

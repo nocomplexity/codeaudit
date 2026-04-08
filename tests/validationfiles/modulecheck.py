@@ -1,14 +1,14 @@
 """Sample file for module check"""
 
-import csv
-import os
-import random
-
 import linkaudit  # has no data in OSV DB
 import pandas  # has some minor data in OSV
 import requests  # has lots of OSV data
 
 # import numpy #has lots of OSV data! (a lot!!)
+
+import os
+import random
+import csv
 
 
 def donothing():

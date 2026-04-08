@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
@@ -40,7 +39,7 @@ def test_zipfile_extraction():
 
     # This is the expected dictionary
     expected_data = {
-        "zipfile.ZipFile": [8, 13, 17, 23],
+        "zipfile.ZipFile": [9, 14, 18, 25],
     }
 
     # Assert that the actual data matches the expected data
@@ -86,7 +85,7 @@ def test_input_statement():
     actual_data = result["result"]
 
     # This is the expected dictionary
-    expected_data = {"input": [6]}
+    expected_data = {"input": [7]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -104,7 +103,7 @@ def test_marshal_usage():
     actual_data = result["result"]
 
     # This is the expected dictionary
-    expected_data = {"marshal.loads": [30], "marshal.load": [36]}
+    expected_data = {"marshal.loads": [31], "marshal.load": [37]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
@@ -124,7 +123,7 @@ def test_tar_methods_use():
     actual_data = result["result"]
 
     # This is the expected dictionary
-    expected_data = {"tarfile.TarFile": [6, 10, 17, 22, 24]}
+    expected_data = {"tarfile.TarFile": [7, 12, 21, 27, 29]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data

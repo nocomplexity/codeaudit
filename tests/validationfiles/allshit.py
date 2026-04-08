@@ -114,8 +114,8 @@ def calculate_hash(input_string):
     return hex_digest
 
 
-import os
 from os import access as check_access
+import os
 
 
 def nogood():
@@ -217,10 +217,10 @@ class MyAcess:
 own_access = MyAcess()
 own_access.access("wortel")
 
-from xmlrpc.server import SimpleXMLRPCServer
-
-import linkaudit
 import pandas as pd
+import linkaudit
+
+from xmlrpc.server import SimpleXMLRPCServer
 
 
 def is_even(n):
@@ -342,7 +342,7 @@ def receiver_process(connection):
     print("Receiver process: Connection closed.")
 
 
-from multiprocessing import Pipe, Process
+from multiprocessing import Process, Pipe
 
 
 def f(conn):
@@ -388,8 +388,8 @@ import shelve
 with shelve.open("spam") as db:
     db["eggs"] = "eggs"
 
-import os
 import zipfile
+import os
 
 
 def insecure_extract(zip_path, extract_to_dir):

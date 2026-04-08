@@ -1,23 +1,23 @@
 # coding: utf-8
 
 
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import scipy as sp
+import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import (
-    ElasticNet,
-    Lasso,
-    LinearRegression,
-    RANSACRegressor,
-    Ridge,
-)
-from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import RANSACRegressor
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+import scipy as sp
+from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import ElasticNet
+from sklearn.preprocessing import PolynomialFeatures
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
 
 # *Python Machine Learning 2nd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2017
 #

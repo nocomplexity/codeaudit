@@ -1,5 +1,4 @@
 import os
-
 import requests
 
 password = os.environ["PASSWORD"]

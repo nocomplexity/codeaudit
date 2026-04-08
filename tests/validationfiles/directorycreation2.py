@@ -1,7 +1,7 @@
-import os
 from os import makedirs as smurf
 from os import mkdir as frog
 from os import mkfifo as spider
+import os
 
 
 def create_directory(path):

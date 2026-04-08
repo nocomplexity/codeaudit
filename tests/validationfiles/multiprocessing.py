@@ -24,7 +24,7 @@ def receiver_process(connection):
     print("Receiver process: Connection closed.")
 
 
-from multiprocessing import Pipe, Process
+from multiprocessing import Process, Pipe
 
 
 def f(conn):

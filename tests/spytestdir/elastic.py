@@ -2,7 +2,6 @@
 # From a security point of view: Data exfiltration to an external provider with too many risks.
 
 import os
-
 from elasticsearch import Elasticsearch
 
 

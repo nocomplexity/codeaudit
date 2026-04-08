@@ -17,7 +17,8 @@ with xmlrpc.client.ServerProxy("http://localhost:8000/") as proxy:
     print("100 is even: %s" % str(proxy.is_even(100)))
 
 
-from xmlrpc.server import SimpleXMLRPCRequestHandler, SimpleXMLRPCServer
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.server import SimpleXMLRPCRequestHandler
 
 
 class RequestHandler(SimpleXMLRPCRequestHandler):

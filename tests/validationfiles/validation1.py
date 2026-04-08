@@ -3,8 +3,8 @@ result should be
 lines:
 """
 
-import os
 from os import access as check_access
+import os
 
 if check_access("file.txt", os.R_OK):
     print("Accessible")

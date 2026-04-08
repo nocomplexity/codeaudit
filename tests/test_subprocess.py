@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.security_checks import perform_validations
 

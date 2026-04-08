@@ -1,9 +1,8 @@
+import pytest
 from pathlib import Path
 
-import pytest
-
-from codeaudit.checkmodules import check_module_vulnerability, get_imported_modules
 from codeaudit.filehelpfunctions import read_in_source_file
+from codeaudit.checkmodules import get_imported_modules, check_module_vulnerability
 
 
 def test_module_check():

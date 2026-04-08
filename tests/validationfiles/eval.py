@@ -1,5 +1,5 @@
-import builtins
 import os
+import builtins
 
 b = builtins
 b.exec("2+2")  # flag 1

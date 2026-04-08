@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs

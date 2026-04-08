@@ -1,10 +1,10 @@
+import pytest
 from pathlib import Path
 
-import pytest
+from codeaudit.api_interfaces import version, get_overview
 
-from codeaudit.api_interfaces import get_overview, version
-from codeaudit.checkmodules import get_imported_modules
 from codeaudit.filehelpfunctions import read_in_source_file
+from codeaudit.checkmodules import get_imported_modules
 
 
 def test_api_version():
@@ -51,7 +51,7 @@ def test_get_overview_validfile():
     # This is the expected dictionary - note for testing output!
     expected_data = {
         "FileName": "obfuscating.py",
-        "Number_Of_Lines": 54,
+        "Number_Of_Lines": 68,
         "AST_Nodes": 32,
         "Std-Modules": 2,
         "External-Modules": 0,

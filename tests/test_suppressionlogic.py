@@ -1,5 +1,4 @@
 import textwrap
-
 import pytest
 
 from codeaudit.suppression import get_all_comments_by_line, match_suppression_keyword

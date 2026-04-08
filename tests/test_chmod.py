@@ -1,6 +1,5 @@
-from pathlib import Path
-
 import pytest
+from pathlib import Path
 
 from codeaudit.security_checks import perform_validations
 
@@ -21,7 +20,7 @@ def test_chmod_constructs():
     actual_data = result["result"]
 
     # This is the expected dictionary
-    expected_data = {"os.access": [5], "os.chmod": [8, 23, 25]}
+    expected_data = {"os.access": [6], "os.chmod": [9, 26, 28]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
