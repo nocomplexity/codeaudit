@@ -1,23 +1,21 @@
-# SPDX-FileCopyrightText: 2025-present Maikel Mardjan(https://nocomplexity.com/) and all contributors! 
+# SPDX-FileCopyrightText: 2025-present Maikel Mardjan(https://nocomplexity.com/) and all contributors!
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import pytest
-import pandas as pd
 import html
 
-from codeaudit.reporting import pylint_reporting  
+import pandas as pd
+import pytest
+
+from codeaudit.reporting import pylint_reporting
+
 
 def test_basic_functionality():
     result = {
         "file_privacy_check": {
             "file1": {
                 "privacy_check_result": [
-                    {
-                        "lineno": 10,
-                        "matched": True,
-                        "code": "print('hello')"
-                    }
+                    {"lineno": 10, "matched": True, "code": "print('hello')"}
                 ]
             }
         }
@@ -30,17 +28,15 @@ def test_basic_functionality():
     assert len(df) == 1
 
     assert df.loc[0, "line"] == 10
-    assert df.loc[0, "found"]  
-    
+    assert df.loc[0, "found"]
+
 
 def test_html_escaping():
     code = "<script>alert('x')</script>"
     result = {
         "file_privacy_check": {
             "file1": {
-                "privacy_check_result": [
-                    {"lineno": 1, "matched": True, "code": code}
-                ]
+                "privacy_check_result": [{"lineno": 1, "matched": True, "code": code}]
             }
         }
     }
@@ -57,9 +53,7 @@ def test_newline_conversion():
     result = {
         "file_privacy_check": {
             "file1": {
-                "privacy_check_result": [
-                    {"lineno": 2, "matched": False, "code": code}
-                ]
+                "privacy_check_result": [{"lineno": 2, "matched": False, "code": code}]
             }
         }
     }
@@ -100,11 +94,7 @@ def test_empty_input():
 def test_missing_keys():
     result = {
         "file_privacy_check": {
-            "file1": {
-                "privacy_check_result": [
-                    {}  # missing all fields
-                ]
-            }
+            "file1": {"privacy_check_result": [{}]}  # missing all fields
         }
     }
 
@@ -125,11 +115,7 @@ def test_none_file_privacy_check():
 
 
 def test_no_privacy_results():
-    result = {
-        "file_privacy_check": {
-            "file1": {}
-        }
-    }
+    result = {"file_privacy_check": {"file1": {}}}
 
     df = pylint_reporting(result)
 

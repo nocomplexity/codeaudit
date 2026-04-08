@@ -1,9 +1,10 @@
 """File 2 - not real Python file
-result should be 
-lines: 
+result should be
+lines:
 """
+
 import os
-from os import access as x 
+from os import access as x
 
 if x("file.txt", os.R_OK):
     print("Accessible")
@@ -15,4 +16,3 @@ if x("myfile", os.R_OK):
 return "some default data"
 
 text = "Hello".lower()
-

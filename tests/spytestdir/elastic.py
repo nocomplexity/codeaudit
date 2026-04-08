@@ -1,8 +1,10 @@
-#typical Elastic client setup 
-#From a security point of view: Data exfiltration to an external provider with too many risks.
+# typical Elastic client setup
+# From a security point of view: Data exfiltration to an external provider with too many risks.
 
 import os
+
 from elasticsearch import Elasticsearch
+
 
 def main():
     client = Elasticsearch(
@@ -14,10 +16,6 @@ def main():
         index="my-index-000001",
         from_=40,
         size=20,
-        query={
-            "term": {
-                "user.id": "kimchy"
-            }
-        },
+        query={"term": {"user.id": "kimchy"}},
     )
     print(resp)

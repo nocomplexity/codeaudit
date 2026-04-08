@@ -7,11 +7,10 @@ Copyright 2011 Allen B. Downey.
 Distributed under the GNU General Public License at gnu.org/licenses/gpl.html.
 """
 
-import sys
 import string
+import sys
 
 import matplotlib.pyplot as pyplot
-
 import Pmf
 
 

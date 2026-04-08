@@ -13,45 +13,43 @@ You should have received a copy of the GNU General Public License along with thi
 Reporting functions for codeaudit
 """
 
-import re
+import datetime
+import html
 import os
-from pathlib import Path
+import re
 import sys
+from importlib.resources import files
+from pathlib import Path
 
 import pandas as pd
-import html
-import datetime
 
-from codeaudit.security_checks import perform_validations, ast_security_checks
+from codeaudit import __version__
+from codeaudit.altairplots import multi_bar_chart
+from codeaudit.api_helpers import _collect_issue_lines
+from codeaudit.checkmodules import (
+    check_module_vulnerability,
+    get_all_modules,
+    get_imported_modules,
+    get_imported_modules_by_file,
+)
 from codeaudit.filehelpfunctions import (
-    get_filename_from_path,
     collect_python_source_files,
-    read_in_source_file,
+    get_filename_from_path,
     has_python_files,
     is_ast_parsable,
+    read_in_source_file,
 )
-from codeaudit.altairplots import multi_bar_chart
+from codeaudit.htmlhelpfunctions import dict_list_to_html_table, json_to_html
+from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
+from codeaudit.pypi_package_scan import get_package_source, get_pypi_download_info
+from codeaudit.security_checks import ast_security_checks, perform_validations
+from codeaudit.suppression import filter_sast_results
 from codeaudit.totals import (
     get_statistics,
     overview_count,
     overview_per_file,
     total_modules,
 )
-from codeaudit.checkmodules import (
-    get_imported_modules,
-    check_module_vulnerability,
-    get_all_modules,
-    get_imported_modules_by_file,
-)
-from codeaudit.htmlhelpfunctions import json_to_html, dict_list_to_html_table
-from codeaudit import __version__
-from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
-from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
-from codeaudit.suppression import filter_sast_results
-from codeaudit.api_helpers import _collect_issue_lines
-
-from importlib.resources import files
-
 
 PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
 DISCLAIMER_TEXT = (
@@ -429,44 +427,35 @@ def secrets_report(spy_output):
 def pylint_reporting(result):
     """
     Creates a pandas DataFrame of privacy findings with columns:
-    'line', 'found', and 'code'.
-
-    - Escapes HTML for safe rendering
-    - Converts newlines to <br>
-    - Wraps code in <pre><code> block
-    - Optimized for performance (fewer lookups, reusable template)
+    'lineno' and 'code'.
+    HTML-escaped and newlines converted to <br> for safe display.
     """
     rows = []
-    append_row = rows.append  # local reference (faster in loops)
 
-    # Predefine template (faster than rebuilding strings each loop)
-    template = '<pre><code class="language-python">{}</code></pre>'
+    # Check that file_privacy_check exists and is not empty
+    if result.get("file_privacy_check"):
+        for item in result["file_privacy_check"].values():
+            for entry in item.get("privacy_check_result", []):
+                # Escape HTML special characters
+                escaped_code = html.escape(entry["code"])
+                # Convert newlines to <br> and wrap in <pre><code>
+                code_html = f'<pre><code class="language-python">{escaped_code.replace("\n", "<br>")}</code></pre>'
+                # Add a row to the list
+                rows.append(
+                    {
+                        "lineno": entry["lineno"],
+                        "matched": entry["matched"],
+                        "code": code_html,
+                    }
+                )
 
-    # Safely get dict
-    file_checks = result.get("file_privacy_check") or {}
+    # Convert to pandas DataFrame
+    df = pd.DataFrame(rows, columns=["lineno", "matched", "code"])
+    df = df.rename(
+        columns={"lineno": "line", "matched": "found"}
+    )  # rename to UI frienly names
 
-    for item in file_checks.values():
-        entries = item.get("privacy_check_result", [])
-        for entry in entries:
-            code = entry.get("code", "")
-            lineno = entry.get("lineno")
-            matched = entry.get("matched")
-
-            # Escape HTML and replace newlines (done once per entry)
-            escaped_code = html.escape(code).replace("\n", "<br>")
-
-            # Format HTML block (faster than f-string in tight loops)
-            code_html = template.format(escaped_code)
-
-            append_row(
-                {
-                    "line": lineno,
-                    "found": matched,
-                    "code": code_html,
-                }
-            )
-
-    return pd.DataFrame(rows, columns=["line", "found", "code"])
+    return df
 
 
 def single_file_report(filename, scan_output):

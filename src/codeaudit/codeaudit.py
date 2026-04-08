@@ -13,14 +13,16 @@ You should have received a copy of the GNU General Public License along with thi
 CLI functions for codeaudit
 """
 
-import fire  # for working CLI with this PoC-thing (The Google way)
 import sys
+
+import fire  # for working CLI with this PoC-thing (The Google way)
+
 from codeaudit import __version__
 from codeaudit.reporting import (
     overview_report,
+    report_implemented_tests,
     report_module_information,
     scan_report,
-    report_implemented_tests,
 )
 
 codeaudit_ascii_art = r"""

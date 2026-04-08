@@ -1,7 +1,7 @@
+import os
 from os import makedirs as smurf
 from os import mkdir as frog
 from os import mkfifo as spider
-import os
 
 
 def create_directory(path):
@@ -14,7 +14,6 @@ def create_directory(path):
         print(f"Directory created or already exists: {path}")
     except Exception as e:
         print(f"Error creating directory {path}: {e}")
-
 
 
 def create_single_directory(path):
@@ -70,7 +69,6 @@ def create_file(path):
         print(f"Permission denied: {path}")
     except Exception as e:
         print(f"Error creating file {path}: {e}")
-
 
 
 def create_directories(path):

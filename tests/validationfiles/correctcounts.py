@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import fire
 import os
+
+import fire
 import nbformat as nbf
 
 
@@ -40,8 +41,8 @@ def create_directory(directory):
 
 
 def create_new_sphinx_project(projectname, author, projectdir):
-    import subprocess
     import os
+    import subprocess
 
     os.chdir(projectdir)  # Note: Directory MUST be empty!
     cmd = subprocess.run(
@@ -99,8 +100,8 @@ def get_commiters_list_of_gitrepro(directory):
     now command used is:  git shortlog --summary --numbered
     It works, but NOT in notebook, due to stdout redirecting issue(goes in zmq pipe)
     """
-    import subprocess
     import os
+    import subprocess
 
     os.chdir(directory)  # Note: Directory MUST be empty!
     cmd = subprocess.run(

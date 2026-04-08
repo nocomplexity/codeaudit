@@ -12,13 +12,12 @@ You should have received a copy of the GNU General Public License along with thi
 The checks for codeaudit
 """
 
+from importlib.resources import files
+
 import pandas as pd
 
-from codeaudit.filehelpfunctions import read_in_source_file, get_filename_from_path
+from codeaudit.filehelpfunctions import get_filename_from_path, read_in_source_file
 from codeaudit.issuevalidations import find_constructs
-
-
-from importlib.resources import files
 
 
 def load_sast_checks():

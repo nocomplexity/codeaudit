@@ -1,23 +1,26 @@
-import pytest
 from pathlib import Path
 
-from codeaudit.filehelpfunctions import read_in_source_file
+import pytest
 
-from codeaudit.totals import read_in_source_file , overview_per_file , count_ast_objects
+from codeaudit.filehelpfunctions import read_in_source_file
+from codeaudit.totals import count_ast_objects, overview_per_file, read_in_source_file
+
 
 def test_overview_per_file_check():
     current_file_directory = Path(__file__).parent
     # validation1.py is in a subfolder:
-    validation_file_path = current_file_directory / "validationfiles" / "correctcounts.py"
+    validation_file_path = (
+        current_file_directory / "validationfiles" / "correctcounts.py"
+    )
 
     # source = read_in_source_file(validation_file_path)
 
-    actual_data = overview_per_file(validation_file_path) 
-    actual_data.pop('FilePath', None)
+    actual_data = overview_per_file(validation_file_path)
+    actual_data.pop("FilePath", None)
 
     # This is the expected dictionary
     expected_data = {
-        "FileName": "correctcounts.py",        
+        "FileName": "correctcounts.py",
         "Number_Of_Lines": 115,
         "AST_Nodes": 57,
         "Std-Modules": 2,
@@ -36,7 +39,9 @@ def test_overview_per_file_check():
 def test_count_ast_objects():
     current_file_directory = Path(__file__).parent
     # validation1.py is in a subfolder:
-    validation_file_path = current_file_directory / "validationfiles" / "correctcounts.py"
+    validation_file_path = (
+        current_file_directory / "validationfiles" / "correctcounts.py"
+    )
 
     source = read_in_source_file(validation_file_path)
 

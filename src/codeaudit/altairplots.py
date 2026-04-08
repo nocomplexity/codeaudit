@@ -12,11 +12,11 @@ You should have received a copy of the GNU General Public License along with thi
 Altair Plotting functions for Python Code Audit (aka codeaudit)
 """
 
-import altair as alt
-import pandas as pd
-
 from collections import Counter
 from pathlib import Path
+
+import altair as alt
+import pandas as pd
 
 
 def module_count_barchart(scanresult):

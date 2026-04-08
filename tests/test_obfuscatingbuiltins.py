@@ -1,5 +1,6 @@
-import pytest
 from pathlib import Path
+
+import pytest
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
@@ -21,12 +22,12 @@ def test_obfucatedbuiltins_usage():
 
     # This is the expected dictionary
     expected_data = {
-        "exec": [5, 16, 21, 32, 36, 37],
-        "eval": [7, 11, 40],
-        "input": [25, 28, 52],
-        "compile": [31],
-        "importlib.import_module": [53],
-        "__import__": [36, 37, 40, 44, 47],
+        "exec": [6, 17, 22, 37, 43, 44],
+        "eval": [8, 12, 47],
+        "input": [28, 33, 64],
+        "compile": [36],
+        "importlib.import_module": [65],
+        "__import__": [43, 44, 47, 53, 58],
     }
 
     # Assert that the actual data matches the expected data

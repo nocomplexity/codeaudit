@@ -1,11 +1,12 @@
 import textwrap
+
 import pytest
 
-from codeaudit.suppression import get_all_comments_by_line , match_suppression_keyword
+from codeaudit.suppression import get_all_comments_by_line, match_suppression_keyword
+
 
 def test_get_all_comments_by_line(tmp_path):
-    source = textwrap.dedent(
-        """
+    source = textwrap.dedent("""
         # module comment
         #module comment
         x = 1  # inline comment
@@ -14,8 +15,7 @@ def test_get_all_comments_by_line(tmp_path):
         # trailing comment
         def foo():
             pass  # inside function
-        """
-    )
+        """)
 
     file_path = tmp_path / "example.py"
     file_path.write_text(source)
@@ -30,9 +30,6 @@ def test_get_all_comments_by_line(tmp_path):
         7: "trailing comment",
         9: "inside function",
     }
-
-
-
 
 
 @pytest.mark.parametrize(
@@ -51,30 +48,26 @@ def test_get_all_comments_by_line(tmp_path):
         ("# NOSONAR", True),
         ("# security-ignore", True),
         ("# ignore-security", True),
-
         # --- positive matches (risk handling) ---
         ("# false-positive", True),
         ("# falsepositive", True),
         ("# risk-accepted", True),
         ("# security-reviewed", True),
         ("# security-exception", True),
-
         # --- inline / mixed content ---
         ("# TODO: fix later  # nosec", True),
         ("Some comment with nosec inside", True),
         ("Reviewed: security-reviewed by team", True),
-
         # --- negative cases ---
         ("# no security issues found", False),
         ("# ignore this comment", False),
         ("# secure code", False),
         ("just a regular comment", False),
-        ("# nosecx", False),          # partial match should not count
-        ("# no sec", False),        # partial match should not count
-        ("# nosex", False), # this is not funny - AI will not do these things
+        ("# nosecx", False),  # partial match should not count
+        ("# no sec", False),  # partial match should not count
+        ("# nosex", False),  # this is not funny - AI will not do these things
         ("# false positive", False),  # space breaks the token
         ("# risk accepted", False),
-
         # --- empty / None ---
         ("", False),
         (None, False),
