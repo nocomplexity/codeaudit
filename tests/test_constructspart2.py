@@ -58,11 +58,11 @@ def test_shutil_constructs():
     # This is the expected dictionary
     expected_data = {
         "shutil.unpack_archive": [3],
-        "shutil.copy2": [5, 7],
+        "shutil.copy2": [5, 12],
         "shutil.copytree": [7],
-        "shutil.chown": [9],
-        "shutil.rmtree": [15],
-        "shutil.copy": [18],
+        "shutil.chown": [17],
+        "shutil.rmtree": [25],
+        "shutil.copy": [29],
     }
 
     # Assert that the actual data matches the expected data
