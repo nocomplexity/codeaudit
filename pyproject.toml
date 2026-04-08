@@ -8,7 +8,7 @@ dynamic = ["version"] # This tells Hatch that version is dynamically determined
 description = 'A modern Python security source code analyzer (SAST) based on distrust.'
 readme = "README.md"
 dependencies = ["fire>=0.7.0","pandas>=2.3","altair>=5.5"]
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 keywords = ["SAST", "Python SAST", "SAST API", "Complexity Checker"]
 authors = [
@@ -22,9 +22,6 @@ classifiers = [
   "Topic :: Software Development :: Quality Assurance",
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -58,4 +55,4 @@ extra-dependencies = [
 check = "mypy --install-types --non-interactive {args:src/codeaudit tests}"
 
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.14", "3.13", "3.12", "3.11", "3.10", "3.9", "3.8"]
+python = ["3.14", "3.13", "3.12", "3.11"
