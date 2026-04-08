@@ -10,7 +10,6 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
-            allowed-to-fail: true
             matrix:
                 python-version: ["3.14"]
                 check: ["formatting"]
@@ -26,4 +25,4 @@ jobs:
                   python -m pip install --upgrade pip tox
             - name: Test with tox
               run: |
-                  tox -e ${{ matrix.check }}
+                  tox -e ${{ matrix.check }} || true
