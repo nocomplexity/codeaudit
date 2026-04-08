@@ -6,6 +6,28 @@ Running a Static Application Security Test (SAST) on Python code is essential fo
 
 Follow these steps to perform a **static application security test (SAST)** on Python projects using **Python Code Audit**.  
 
+## Use the browser-based version
+
+To access the local browser-based version of Python Code Audit, follow the link below:
+
+
+```{button-link} https://nocomplexity.com/documents/CAdashboard/codeaudit_dashboard.html
+:color: danger
+Launch webbased version
+```
+
+:::{note} 
+The browser-based version runs 100% locally; however, please note that not all functionality is available. While you can scan remote packages on PyPI, full features are only accessible via the CLI or a local dashboard version.
+
+The entire application runs within your browser, meaning no server-side processing is involved. For those interested in the technical details: this version is built using WASM(Web Assembly) and is a lightweight version of **Python Code Audit**.
+:::
+
+
+:::{caution} 
+The browser-based dashboard version for **Python Code Audit** is currently experimental.
+:::
+
+
 
 
 ## Install Python Code Audit
