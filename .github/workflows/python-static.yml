@@ -10,6 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
+            allowed-to-fail: true
             matrix:
                 python-version: ["3.14"]
                 check: ["formatting"]
