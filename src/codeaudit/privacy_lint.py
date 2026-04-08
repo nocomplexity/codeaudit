@@ -31,7 +31,6 @@ import re
 
 from importlib.resources import files
 
-
 SECRETS_LIST = files("codeaudit.data").joinpath("secretslist.txt")
 
 

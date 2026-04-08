@@ -2,6 +2,7 @@
 Mind 100% sanitizing is often impossible - so there is always a risk.
 """
 
+
 def greet_user():
     name = input("What is your name? ")
     print(f"Hello, {name}!")

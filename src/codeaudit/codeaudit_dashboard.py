@@ -10,10 +10,10 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
-WASM Dashboard version of codeaudit - limited functionality - 
+WASM Dashboard version of codeaudit - limited functionality -
 """
 
-import inspect 
+import inspect
 import sys
 import asyncio
 
@@ -21,7 +21,8 @@ import datetime
 import json
 
 import panel as pn
-pn.extension('vega')
+
+pn.extension("vega")
 
 
 from codeaudit.api_interfaces import version, get_package_source
@@ -51,18 +52,20 @@ IS_PYODIDE = "pyodide" in sys.modules
 
 
 async def get_pypi_package_info_wasm(package_name):
-    url = f"https://pypi.org/pypi/{package_name}/json"    
+    url = f"https://pypi.org/pypi/{package_name}/json"
     if IS_PYODIDE:
         from pyodide.http import pyfetch
+
         try:
-            response = await pyfetch(url)  
+            response = await pyfetch(url)
             if not response.ok:
                 return False
-            return await response.json()  
+            return await response.json()
         except:
             return False
     else:
         import urllib.request
+
         try:
             with urllib.request.urlopen(url) as response:
                 return json.loads(response.read().decode("utf-8"))
@@ -72,15 +75,17 @@ async def get_pypi_package_info_wasm(package_name):
 
 async def get_pypi_download_info_wasm(package_name):
     data = await get_pypi_package_info_wasm(package_name)
-    if not data or 'info' not in data:
+    if not data or "info" not in data:
         return False
 
-    version_str = data.get('info', {}).get('version')
-    releases = data.get('releases', {}).get(version_str, [])
+    version_str = data.get("info", {}).get("version")
+    releases = data.get("releases", {}).get(version_str, [])
 
     for file_info in releases:
-        if file_info.get('packagetype') == 'sdist' and file_info.get('url').endswith(".tar.gz"):
-            return {"download_url": file_info.get('url'), "release": version_str}
+        if file_info.get("packagetype") == "sdist" and file_info.get("url").endswith(
+            ".tar.gz"
+        ):
+            return {"download_url": file_info.get("url"), "release": version_str}
     return False
 
 
@@ -109,7 +114,7 @@ async def get_package_source_wasm(url):
             f.write(content)
 
         with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(path=temp_dir, filter='data')
+            tar.extractall(path=temp_dir, filter="data")
 
         return temp_dir, tmpdir_obj
 
@@ -130,7 +135,7 @@ async def filescan_wasm(input_path, nosec=False):
     ca_version_info = version()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    output = ca_version_info | {"generated_on": timestamp_str}    
+    output = ca_version_info | {"generated_on": timestamp_str}
     pypi_data = await get_pypi_download_info_wasm(input_path)
 
     if pypi_data:
@@ -153,7 +158,7 @@ async def filescan_wasm(input_path, nosec=False):
             if decoded_res is None:
                 return {
                     "Error": f"Could not download or extract package from {url}. "
-                             f"This may be due to browser restrictions."
+                    f"This may be due to browser restrictions."
                 }
 
             src_dir, tmp_handle = decoded_res
@@ -165,9 +170,7 @@ async def filescan_wasm(input_path, nosec=False):
             }
 
             try:
-                scan_output = _codeaudit_directory_scan_wasm(
-                    src_dir, nosec_flag=nosec
-                )
+                scan_output = _codeaudit_directory_scan_wasm(src_dir, nosec_flag=nosec)
                 output |= scan_output
             finally:
                 if tmp_handle:
@@ -175,9 +178,7 @@ async def filescan_wasm(input_path, nosec=False):
 
             return output
     # ---------------------------------------------------------
-    return {
-        "Error": "Package not found on PyPI.org."
-    }
+    return {"Error": "Package not found on PyPI.org."}
 
 
 # - END of specific HELPERS to do CA things -#
@@ -185,30 +186,32 @@ async def filescan_wasm(input_path, nosec=False):
 
 # --- UI Component Definitions ---
 text_input = pn.widgets.TextInput(
-    name='Python Package Name',
-    placeholder='Enter PyPI package (e.g., requests)...'
+    name="Python Package Name", placeholder="Enter PyPI package (e.g., requests)..."
 )
 
 
-run_button = pn.widgets.Button(name='Run Scan', button_type='primary')
+run_button = pn.widgets.Button(name="Run Scan", button_type="primary")
 status = pn.pane.Markdown("### Ready to scan.")
-result_pane = pn.pane.JSON({}, name='JSON', sizing_mode="stretch_both", depth=-1)
-loading = pn.indicators.LoadingSpinner(value=False, size=60, color='primary', bgcolor='light' ,  name='Scanning...')
+result_pane = pn.pane.JSON({}, name="JSON", sizing_mode="stretch_both", depth=-1)
+loading = pn.indicators.LoadingSpinner(
+    value=False, size=60, color="primary", bgcolor="light", name="Scanning..."
+)
 
 overview_visuals = create_statistics_overview(result_pane.object)
 
-tabs =pn.Tabs(    
-    ('Package Overview', overview_visuals),
-    ('Used Modules', overview_visuals),
-    ('Complexity Insights', overview_visuals),    
-    ('Weaknesses Overview', overview_visuals),    
-    ('Weaknesses per file', overview_visuals),
-    ('Weaknesses Details', overview_visuals),
+tabs = pn.Tabs(
+    ("Package Overview", overview_visuals),
+    ("Used Modules", overview_visuals),
+    ("Complexity Insights", overview_visuals),
+    ("Weaknesses Overview", overview_visuals),
+    ("Weaknesses per file", overview_visuals),
+    ("Weaknesses Details", overview_visuals),
     dynamic=True,
-    sizing_mode="stretch_both"
+    sizing_mode="stretch_both",
 )
 
 # --- UI Callback ---
+
 
 async def run_scan(event):
     package_name = text_input.value.strip()
@@ -252,7 +255,9 @@ async def run_scan(event):
                 pn.Column(
                     pn.Row(
                         pn.pane.Vega(module_count_barchart(result), show_actions=True),
-                        pn.pane.Vega(module_distribution_view(result), show_actions=True),
+                        pn.pane.Vega(
+                            module_distribution_view(result), show_actions=True
+                        ),
                     ),
                     report_used_modules(result),
                     pn.Spacer(height=60),
@@ -271,9 +276,7 @@ async def run_scan(event):
 
             tabs[3] = (
                 "Weaknesses Overview",
-                pn.Column(
-                    pn.pane.Vega(weaknesses_overview(result), show_actions=True)
-                ),
+                pn.Column(pn.pane.Vega(weaknesses_overview(result), show_actions=True)),
             )
 
             tabs[4] = (
@@ -315,23 +318,21 @@ ca_sidebar = pn.Column(
     text_input,
     run_button,
     loading,
-    status,  
+    status,
     infotext,
-    disclaimer_text,    
+    disclaimer_text,
     sizing_mode="stretch_width",
 )
 
 
-main_pane = pn.Column(    
-    tabs, sizing_mode="stretch_both"
-)
+main_pane = pn.Column(tabs, sizing_mode="stretch_both")
 
 
 app = pn.template.MaterialTemplate(
-    header_background="#262626",    
+    header_background="#262626",
     title="Python Security Code Audit",
     sidebar=[ca_sidebar],
-    main=[main_pane]
+    main=[main_pane],
 )
 
 app.servable()
