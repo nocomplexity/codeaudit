@@ -70,7 +70,7 @@ Returns:
 Raises:
     SystemExit: If the provided path is not a directory, contains no Python
         files, or is neither a valid local directory nor a valid PyPI
-        package name.    
+        package name.
 str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 
@@ -191,7 +191,7 @@ FLAGS
 -n, --nosec=NOSEC
     Default: False
 
-            
+
 Args:
 
 -f, --filename=FILENAME
@@ -213,7 +213,7 @@ Returns:
     None: The function writes a static HTML security report to disk.
 
 Raises:
-    None: Errors and invalid inputs are reported to stdout.    
+    None: Errors and invalid inputs are reported to stdout.
 str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 
@@ -230,8 +230,8 @@ errors defaults to 'strict'.
 
 Creates an HTML report of all implemented security checks.
 
-This report provides a user-friendly overview of the static security checks 
-currently supported by Python Code Audit. It is intended to make it easier to review 
+This report provides a user-friendly overview of the static security checks
+currently supported by Python Code Audit. It is intended to make it easier to review
 the available validations without digging through the codebase.
 
 The generated HTML includes:
@@ -240,12 +240,12 @@ The generated HTML includes:
 - The version of Python Code Audit (codeaudit) used
 - A disclaimer about version-specific reporting
 
-The report is saved to the specified filename and is formatted to be 
+The report is saved to the specified filename and is formatted to be
 embeddable in larger multi-report documents.
 
 Help me continue developing Python Code Audit as free and open-source software.
 Join the community to contribute to the most complete, local first , Python Security Static scanner.
-Help!!  Join the journey, check: https://github.com/nocomplexity/codeaudit#contributing 
+Help!!  Join the journey, check: https://github.com/nocomplexity/codeaudit#contributing
 
 
 Parameters:

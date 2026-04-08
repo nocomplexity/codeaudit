@@ -1,5 +1,26 @@
 # Change Log
 
+## Version 1.6.2:
+
+## Changelog
+
+**Added**
+* **Automated Python Testing:** Implemented automation for testing across various Python versions to ensure cross-version compatibility.
+
+**Changed**
+
+* **Internal Logic Improvements:** Enhanced the `count_privacy_check_results` function to provide more robust egress count testing.
+* **CLI Reporting:** Updated the command-line interface to dynamically toggle between "issue" (singular) and "issues" (plural) based on the findings.
+* **Architecture Refactoring:** Refined internal logic for increased stability and to ensure the codebase is **WASM ready**.
+* **License Standardization:** Updated the **GPLv3** license banner across key Python files for stylistic consistency. (see also issue #4)
+
+**Fixed**
+* **Issue #6 (Defensive Coding):** Resolved `KeyError` and syntax error during code snippet creation through more defensive programming practices.
+
+**Documentation**
+* Typos fixed and various improvements.
+
+
 ## Version 1.6.1:
 
 **Added**

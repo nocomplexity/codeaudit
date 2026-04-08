@@ -429,35 +429,44 @@ def secrets_report(spy_output):
 def pylint_reporting(result):
     """
     Creates a pandas DataFrame of privacy findings with columns:
-    'lineno' and 'code'.
-    HTML-escaped and newlines converted to <br> for safe display.
+    'line', 'found', and 'code'.
+
+    - Escapes HTML for safe rendering
+    - Converts newlines to <br>
+    - Wraps code in <pre><code> block
+    - Optimized for performance (fewer lookups, reusable template)
     """
     rows = []
+    append_row = rows.append  # local reference (faster in loops)
 
-    # Check that file_privacy_check exists and is not empty
-    if result.get("file_privacy_check"):
-        for item in result["file_privacy_check"].values():
-            for entry in item.get("privacy_check_result", []):
-                # Escape HTML special characters
-                escaped_code = html.escape(entry["code"])
-                # Convert newlines to <br> and wrap in <pre><code>
-                code_html = f'<pre><code class="language-python">{escaped_code.replace("\n", "<br>")}</code></pre>'
-                # Add a row to the list
-                rows.append(
-                    {
-                        "lineno": entry["lineno"],
-                        "matched": entry["matched"],
-                        "code": code_html,
-                    }
-                )
+    # Predefine template (faster than rebuilding strings each loop)
+    template = '<pre><code class="language-python">{}</code></pre>'
 
-    # Convert to pandas DataFrame
-    df = pd.DataFrame(rows, columns=["lineno", "matched", "code"])
-    df = df.rename(
-        columns={"lineno": "line", "matched": "found"}
-    )  # rename to UI frienly names
+    # Safely get dict
+    file_checks = result.get("file_privacy_check") or {}
 
-    return df
+    for item in file_checks.values():
+        entries = item.get("privacy_check_result", [])
+        for entry in entries:
+            code = entry.get("code", "")
+            lineno = entry.get("lineno")
+            matched = entry.get("matched")
+
+            # Escape HTML and replace newlines (done once per entry)
+            escaped_code = html.escape(code).replace("\n", "<br>")
+
+            # Format HTML block (faster than f-string in tight loops)
+            code_html = template.format(escaped_code)
+
+            append_row(
+                {
+                    "line": lineno,
+                    "found": matched,
+                    "code": code_html,
+                }
+            )
+
+    return pd.DataFrame(rows, columns=["line", "found", "code"])
 
 
 def single_file_report(filename, scan_output):
