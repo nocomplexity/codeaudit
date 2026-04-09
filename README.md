@@ -54,6 +54,10 @@ Python Code Audit has the following features:
 pip install -U codeaudit
 ```
 
+If you would like to test this security tool without installing it, simply use the WASM version [available here](https://nocomplexity.com/codeauditapp/dashboardapp.html).
+
+
+
 If you have installed **Python Code Audit** previously and want to ensure you are using the latest validations and features, simply run this command again. Python Code Audit is frequently updated with new checks.
 
 
