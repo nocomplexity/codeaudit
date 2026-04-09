@@ -320,15 +320,12 @@ disclaimer_text = get_disclaimer_text()
 
 # Sidebar layout
 ca_sidebar = pn.Column(
-    "## 🔍 Code Security Scan",
-    pn.Spacer(height=10),
-    "### Input",
+    "## Package Code Security Scan",
     text_input,
     run_button,
-    pn.Spacer(height=15),
     loading,
     status,
-    pn.Spacer(height=20),    
+    pn.Spacer(height=20), 
     infotext,
     pn.Spacer(height=10),
     disclaimer_text,

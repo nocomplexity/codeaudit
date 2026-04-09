@@ -11,7 +11,7 @@ Follow these steps to perform a **static application security test (SAST)** on P
 To access the local browser-based version of Python Code Audit, follow the link below:
 
 
-```{button-link} https://nocomplexity.com/documents/CAdashboard/codeaudit_dashboard.html
+```{button-link} https://nocomplexity.com/codeaudit/dashboardapp.html
 :color: danger
 Launch webbased version
 ```
