@@ -325,7 +325,7 @@ ca_sidebar = pn.Column(
     run_button,
     loading,
     status,
-    pn.Spacer(height=20), 
+    pn.Spacer(height=20),
     infotext,
     pn.Spacer(height=10),
     disclaimer_text,
