@@ -22,6 +22,7 @@ from pathlib import Path
 import altair as alt
 import pandas as pd
 
+
 from codeaudit import __version__
 from codeaudit.checkmodules import (
     check_module_vulnerability,

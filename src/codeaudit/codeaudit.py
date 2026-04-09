@@ -18,6 +18,7 @@ import sys
 import fire  # for working CLI with this PoC-thing (The Google way)
 
 from codeaudit import __version__
+
 from codeaudit.reporting import (
     overview_report,
     report_implemented_tests,

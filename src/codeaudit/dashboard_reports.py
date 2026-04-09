@@ -98,8 +98,8 @@ def _require_panel():
         return pn
     except ImportError:
         raise ImportError(
-            "Optional dependency 'panel' not installed. "
-            "Run: pip install your-package[panel]"
+            "Optional dependency Python package 'panel' not installed. "
+            "Run: pip install panel"
         )
 
 

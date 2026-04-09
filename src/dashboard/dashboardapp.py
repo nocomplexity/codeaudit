@@ -23,6 +23,7 @@ import panel as pn
 
 pn.extension("vega")
 
+# from codeaudit import __version__
 
 from codeaudit.altairplots import (
     ast_nodes_overview,
@@ -35,7 +36,10 @@ from codeaudit.altairplots import (
     weaknesses_radial_overview,
 )
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
+
 from codeaudit.api_interfaces import get_package_source, version
+
+
 from codeaudit.dashboard_reports import (
     create_statistics_overview,
     get_disclaimer_text,
@@ -191,12 +195,13 @@ text_input = pn.widgets.TextInput(
 )
 
 
-run_button = pn.widgets.Button(name="Run Scan", button_type="primary")
+run_button = pn.widgets.Button(name="Start Scan", button_type="primary")
 status = pn.pane.Markdown("### Ready to scan.")
 result_pane = pn.pane.JSON({}, name="JSON", sizing_mode="stretch_both", depth=-1)
 loading = pn.indicators.LoadingSpinner(
     value=False, size=60, color="primary", bgcolor="light", name="Scanning..."
 )
+
 
 overview_visuals = create_statistics_overview(result_pane.object)
 
@@ -315,12 +320,17 @@ disclaimer_text = get_disclaimer_text()
 
 # Sidebar layout
 ca_sidebar = pn.Column(
-    "## Package Code Security Scan",
+    "## 🔍 Code Security Scan",
+    pn.Spacer(height=10),
+    "### Input",
     text_input,
     run_button,
+    pn.Spacer(height=15),
     loading,
     status,
+    pn.Spacer(height=20),    
     infotext,
+    pn.Spacer(height=10),
     disclaimer_text,
     sizing_mode="stretch_width",
 )

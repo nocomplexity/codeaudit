@@ -41,7 +41,7 @@ path = "src/codeaudit/__about__.py"
 
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/codeaudit"]
+packages = ["src/codeaudit" , "src/dashboard"]
 include = ["codeaudit/data/*.csv"]
 
 [project.scripts]
