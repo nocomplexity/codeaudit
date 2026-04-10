@@ -1,7 +1,7 @@
 {
   "name": "Python_Code_Audit",
   "version": "1.6.2",
-  "generated_on": "2026-04-09 17:20",
+  "generated_on": "2026-04-10 16:13",
   "file_security_info": {
     "0": {
       "FileName": "demofile.py",
@@ -44,161 +44,463 @@
       ],
       "file_name": "demofile.py",
       "sast_result": {
-        "assert": [
-          6,
-          42
+        "6": {
+          "line": 6,
+          "validation": "assert",
+          "severity": "Low",
+          "info": "Assertions are for debugging and development. Assertions can be disabled during runtime. Use in production can introduce vulnerabilities.",
+          "code": "<pre><code class='language-python'>    # If &#x27;b&#x27; is 0, an AssertionError will be raised with the given message.\n    assert b != 0, &quot;Cannot divide by zero!&quot;\n    return a / b</code></pre>"
+        },
+        "42": {
+          "line": 42,
+          "validation": "assert",
+          "severity": "Low",
+          "info": "Assertions are for debugging and development. Assertions can be disabled during runtime. Use in production can introduce vulnerabilities.",
+          "code": "<pre><code class='language-python'># Assert that x is greater than 5.\nassert x &gt; 5, &quot;x should be greater than 5&quot;\nprint(f&quot;Assertion passed: x ({x}) is greater than 5.&quot;)</code></pre>"
+        },
+        "28": {
+          "line": 28,
+          "validation": "exec",
+          "severity": "High",
+          "info": "This function can execute arbitrary code and should be used only with validated constructs.",
+          "code": "<pre><code class='language-python'>print(&quot;-&quot; * 20)\nexec(&quot;4*23&quot;) ; exec(&quot;4*23&quot;)</code></pre>"
+        },
+        "120": {
+          "line": 120,
+          "validation": "exec",
+          "severity": "High",
+          "info": "This function can execute arbitrary code and should be used only with validated constructs.",
+          "code": "<pre><code class='language-python'>    eval(&quot;2 + 2&quot;)\n    exec(&quot;4*23&quot;)</code></pre>"
+        },
+        "32": {
+          "line": 32,
+          "validation": "s.bind",
+          "severity": "Medium",
+          "info": "Binding to all interfaces can expose the service to a wider network attack surface.",
+          "code": "<pre><code class='language-python'>s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ns.bind((&#x27;0.0.0.0&#x27;, 31137))\ns.bind((&#x27;192.168.0.1&#x27;, 8080))</code></pre>"
+        },
+        "33": {
+          "line": 33,
+          "validation": "s.bind",
+          "severity": "Medium",
+          "info": "Binding to all interfaces can expose the service to a wider network attack surface.",
+          "code": "<pre><code class='language-python'>s.bind((&#x27;0.0.0.0&#x27;, 31137))\ns.bind((&#x27;192.168.0.1&#x27;, 8080))</code></pre>"
+        },
+        "46": {
+          "line": 46,
+          "validation": "pass",
+          "severity": "Low",
+          "info": "Using `pass` in an `except` block can silently ignore critical security exceptions.",
+          "code": "<pre><code class='language-python'>  do_some_stuff()\nexcept ZeroDivisionError:\n  pass</code></pre>"
+        },
+        "141": {
+          "line": 141,
+          "validation": "pass",
+          "severity": "Low",
+          "info": "Using `pass` in an `except` block can silently ignore critical security exceptions.",
+          "code": "<pre><code class='language-python'>        result = None                        # handle and recover\n    except Exception as exc:                 # catches *any* other error\n        # In real code, consider logging exc instead of pass</code></pre>"
+        },
+        "154": {
+          "line": 154,
+          "validation": "os.system",
+          "severity": "High",
+          "info": "Direct OS function calls can have significant security implications and require careful review.",
+          "code": "<pre><code class='language-python'>from os import system as clown\nclown(&#x27;ls -la&#x27;)</code></pre>"
+        },
+        "158": {
+          "line": 158,
+          "validation": "os.popen",
+          "severity": "High",
+          "info": "Direct OS function calls can have significant security implications and require careful review.",
+          "code": "<pre><code class='language-python'>import os\nos.popen(&#x27;malware -all&#x27;)\nbytes_written = os.write(fd, data_to_write)</code></pre>"
+        },
+        "159": {
+          "line": 159,
+          "validation": "os.write",
+          "severity": "Low",
+          "info": "Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.",
+          "code": "<pre><code class='language-python'>os.popen(&#x27;malware -all&#x27;)\nbytes_written = os.write(fd, data_to_write)\nbytes_written2 = os.writev(fd, buffers)</code></pre>"
+        },
+        "160": {
+          "line": 160,
+          "validation": "os.writev",
+          "severity": "Low",
+          "info": "Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.",
+          "code": "<pre><code class='language-python'>bytes_written = os.write(fd, data_to_write)\nbytes_written2 = os.writev(fd, buffers)</code></pre>"
+        },
+        "174": {
+          "line": 174,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>    with tarfile.open(file_path, &#x27;r:gz&#x27;) as tar:\n        tar.extractall(path=extract_path)</code></pre>"
+        },
+        "178": {
+          "line": 178,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>    with tarfile.open(file_path, &#x27;r:gz&#x27;) as donot:\n        donot.extractall(path=extract_path)</code></pre>"
+        },
+        "183": {
+          "line": 183,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>        # Extract a specific file (replace &#x27;file.txt&#x27; with actual member name)\n        tf.extract(&#x27;file.txt&#x27;)         \n        # Extract all files</code></pre>"
+        },
+        "185": {
+          "line": 185,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>        # Extract all files\n        tf.extractall()</code></pre>"
+        },
+        "193": {
+          "line": 193,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>extractor = MyExtractor()\nextractor.extractall(&quot;/some/directory&quot;)</code></pre>"
+        },
+        "354": {
+          "line": 354,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>        # This line is the vulnerability: it extracts directly without path validation.\n        zip_ref.extractall(extract_to_dir)\n    print(&quot;Extraction attempted (might be insecure).&quot;)</code></pre>"
+        },
+        "210": {
+          "line": 210,
+          "validation": "xmlrpc.server.SimpleXMLRPCServer",
+          "severity": "High",
+          "info": "Vulnerable to denial-of-service via decompression bombs.",
+          "code": "<pre><code class='language-python'>server = SimpleXMLRPCServer((&quot;localhost&quot;, 8000))\nprint(&quot;Listening on port 8000...&quot;)</code></pre>"
+        },
+        "223": {
+          "line": 223,
+          "validation": "os.fork",
+          "severity": "Low",
+          "info": "On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.",
+          "code": "<pre><code class='language-python'>pid = os.fork()</code></pre>"
+        },
+        "226": {
+          "line": 226,
+          "validation": "os.fork",
+          "severity": "Low",
+          "info": "On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.",
+          "code": "<pre><code class='language-python'>pid_zero = os.forkpty() \npid = os.fork()</code></pre>"
+        },
+        "232": {
+          "line": 232,
+          "validation": "os.fork",
+          "severity": "Low",
+          "info": "On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request.",
+          "code": "<pre><code class='language-python'>while True and nobreak:\n    cannothurt()  # Creates a new child process</code></pre>"
+        },
+        "225": {
+          "line": 225,
+          "validation": "os.forkpty",
+          "severity": "Low",
+          "info": "Use of forkpty can be unsafe when used on MacOS.",
+          "code": "<pre><code class='language-python'>pid_zero = os.forkpty() \npid = os.fork()</code></pre>"
+        },
+        "235": {
+          "line": 235,
+          "validation": "compile",
+          "severity": "High",
+          "info": "This function can be used to execute arbitrary code or crash the Python interpreter.",
+          "code": "<pre><code class='language-python'>compile(&#x27;nasty-string&#x27; ,&#x27;malware.bin&#x27;,mode=single, flags=0, dont_inherit=False, optimize=-1)</code></pre>"
+        },
+        "244": {
+          "line": 244,
+          "validation": "http.server.BaseHTTPRequestHandler",
+          "severity": "High",
+          "info": "These modules are for development only and are not secure for production use.",
+          "code": "<pre><code class='language-python'># Define a custom request handler\nclass SimpleHTTPRequestHandler(BaseHTTPRequestHandler):\n    &quot;&quot;&quot;</code></pre>"
+        },
+        "263": [
+          {
+            "line": 263,
+            "validation": "http.server.BaseHTTPRequestHandler",
+            "severity": "High",
+            "info": "These modules are for development only and are not secure for production use.",
+            "code": "<pre><code class='language-python'># The function to run the HTTP server\ndef run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):\n    &quot;&quot;&quot;</code></pre>"
+          },
+          {
+            "line": 263,
+            "validation": "http.server.HTTPServer",
+            "severity": "High",
+            "info": "These modules are for development only and are not secure for production use.",
+            "code": "<pre><code class='language-python'># The function to run the HTTP server\ndef run(server_class=HTTPServer, handler_class=BaseHTTPRequestHandler):\n    &quot;&quot;&quot;</code></pre>"
+          }
         ],
-        "base64": [
-          238,
-          239
-        ],
-        "bz2.BZ2File": [
-          447
-        ],
-        "bz2.open": [
-          440
-        ],
-        "compile": [
-          235
-        ],
-        "connection.recv": [
-          299
-        ],
-        "continue": [
-          52
-        ],
-        "eval": [
-          119
-        ],
-        "exec": [
-          28,
-          120
-        ],
-        "gzip.open": [
-          434
-        ],
-        "hashlib.md5": [
-          73
-        ],
-        "hashlib.sha1": [
-          74,
-          102
-        ],
-        "http.server.BaseHTTPRequestHandler": [
-          244,
-          263
-        ],
-        "http.server.HTTPServer": [
-          263
-        ],
-        "logging.config": [
-          163,
-          166
-        ],
-        "lzma.LZMAFile": [
-          476
-        ],
-        "lzma.open": [
-          460,
-          466
-        ],
-        "marshal.load": [
-          393
-        ],
-        "marshal.loads": [
-          387
-        ],
-        "os.access": [
-          116,
-          123
-        ],
-        "os.chmod": [
-          126
-        ],
-        "os.fork": [
-          223,
-          226,
-          232
-        ],
-        "os.forkpty": [
-          225
-        ],
-        "os.makedirs": [
-          351
-        ],
-        "os.popen": [
-          158
-        ],
-        "os.system": [
-          154
-        ],
-        "os.write": [
-          159
-        ],
-        "os.writev": [
-          160
-        ],
-        "pass": [
-          46,
-          141
-        ],
-        "pickle.load": [
-          316
-        ],
-        "pickle.loads": [
-          312,
-          320
-        ],
-        "random.random": [
-          335
-        ],
-        "random.seed": [
-          334
-        ],
-        "s.bind": [
-          32,
-          33
-        ],
-        "shelve.open": [
-          339
-        ],
-        "shutil.copy": [
-          372
-        ],
-        "shutil.rmtree": [
-          368
-        ],
-        "shutil.unpack_archive": [
-          363
-        ],
-        "sys.setprofile": [
-          416,
-          418
-        ],
-        "sys.settrace": [
-          422,
-          424
-        ],
-        "tarfile.TarFile": [
-          174,
-          178,
-          183,
-          185,
-          193,
-          354
-        ],
-        "tempfile.mktemp": [
-          428
-        ],
-        "xmlrpc.client": [
-          217
-        ],
-        "xmlrpc.server.SimpleXMLRPCServer": [
-          210
-        ],
-        "zipfile.ZipFile": [
-          352
-        ]
+        "312": {
+          "line": 312,
+          "validation": "pickle.loads",
+          "severity": "High",
+          "info": "Deserializing untrusted data with `pickle` can lead to arbitrary code execution.",
+          "code": "<pre><code class='language-python'>import pickle\npickle.loads(b&quot;cos\\nsystem\\n(S&#x27;echo hello world&#x27;\\ntR.&quot;)</code></pre>"
+        },
+        "320": {
+          "line": 320,
+          "validation": "pickle.loads",
+          "severity": "High",
+          "info": "Deserializing untrusted data with `pickle` can lead to arbitrary code execution.",
+          "code": "<pre><code class='language-python'>importmalware(&#x27;mysafefile.txt&#x27;)</code></pre>"
+        },
+        "363": {
+          "line": 363,
+          "validation": "shutil.unpack_archive",
+          "severity": "Medium",
+          "info": "Untrusted archives can contain malicious paths or payloads.",
+          "code": "<pre><code class='language-python'>import shutil\nshutil.unpack_archive(&quot;example.zip&quot;, &quot;extracted_files&quot;, format=&quot;zip&quot;, filter=&quot;data&quot;)</code></pre>"
+        },
+        "368": {
+          "line": 368,
+          "validation": "shutil.rmtree",
+          "severity": "Medium",
+          "info": "Vulnerable to path traversal attacks if not used carefully.",
+          "code": "<pre><code class='language-python'>shutil.rmtree(directory_to_delete) #risk when path is user supplied or malformed dir!</code></pre>"
+        },
+        "372": {
+          "line": 372,
+          "validation": "shutil.copy",
+          "severity": "Medium",
+          "info": "Files may be copied without authorization if paths are not validated.",
+          "code": "<pre><code class='language-python'>from shutil import copy as stealmydata \nstealmydata(&quot;source_file.txt&quot;, &quot;backup/source_file.txt&quot;, follow_symlinks=True)</code></pre>"
+        },
+        "428": {
+          "line": 428,
+          "validation": "tempfile.mktemp",
+          "severity": "Low",
+          "info": "This function is deprecated because of race conditions that can lead to security vulnerabilities.",
+          "code": "<pre><code class='language-python'>temp_filename = tempfile.mktemp()</code></pre>"
+        },
+        "52": {
+          "line": 52,
+          "validation": "continue",
+          "severity": "Low",
+          "info": "Skipping over exceptions can mask critical errors and security risks.",
+          "code": "<pre><code class='language-python'>    do_some_stuff()\n  except ZeroDivisionError:\n    continue  #bad security practice - strange things can happen without catching and logging</code></pre>"
+        },
+        "73": {
+          "line": 73,
+          "validation": "hashlib.md5",
+          "severity": "High",
+          "info": "MD5 is cryptographically broken and should not be used for security purposes.",
+          "code": "<pre><code class='language-python'>  # Create an MD5 hash object\n  md5_hash_object = hashlib.md5()\n  sha1_hash_object = hashlib.sha1()</code></pre>"
+        },
+        "74": {
+          "line": 74,
+          "validation": "hashlib.sha1",
+          "severity": "High",
+          "info": "SHA-1 is cryptographically broken and should not be used for security purposes.",
+          "code": "<pre><code class='language-python'>  md5_hash_object = hashlib.md5()\n  sha1_hash_object = hashlib.sha1()</code></pre>"
+        },
+        "102": {
+          "line": 102,
+          "validation": "hashlib.sha1",
+          "severity": "High",
+          "info": "SHA-1 is cryptographically broken and should not be used for security purposes.",
+          "code": "<pre><code class='language-python'>  # Create an MD5 hash object\n  sha1_hash_object = tooweak()</code></pre>"
+        },
+        "116": {
+          "line": 116,
+          "validation": "os.access",
+          "severity": "High",
+          "info": "Direct OS function calls can have significant security implications and require careful review.",
+          "code": "<pre><code class='language-python'>def nogood():\n    if check_access(&quot;file.txt&quot;, os.R_OK):\n        print(&quot;Accessible&quot;)</code></pre>"
+        },
+        "123": {
+          "line": 123,
+          "validation": "os.access",
+          "severity": "High",
+          "info": "Direct OS function calls can have significant security implications and require careful review.",
+          "code": "<pre><code class='language-python'>    if os.access(&quot;myfile&quot;, os.R_OK):\n        with open(&quot;myfile&quot;) as fp:</code></pre>"
+        },
+        "119": {
+          "line": 119,
+          "validation": "eval",
+          "severity": "High",
+          "info": "This function can execute arbitrary code. Never safe with untrusted input.",
+          "code": "<pre><code class='language-python'>    eval(&quot;2 + 2&quot;)\n    exec(&quot;4*23&quot;)</code></pre>"
+        },
+        "126": {
+          "line": 126,
+          "validation": "os.chmod",
+          "severity": "High",
+          "info": "Changing permissions carelessly can expose sensitive files.",
+          "code": "<pre><code class='language-python'>            return fp.read()\n    os.chmod(&quot;myfile&quot;, 0o644) # The 0o prefix denotes an octal number\n    print(f&quot;Permissions for &#x27;{myfile}&#x27; set to 644 (octal).&quot;)</code></pre>"
+        },
+        "299": {
+          "line": 299,
+          "validation": "connection.recv",
+          "severity": "High",
+          "info": "Uses pickle, which can execute arbitrary code when receiving data. ",
+          "code": "<pre><code class='language-python'>    # This call blocks until data is available.\n    received_data = connection.recv()\n    print(f&quot;Receiver process: Received &#x27;{received_data}&#x27;&quot;)</code></pre>"
+        },
+        "334": {
+          "line": 334,
+          "validation": "random.seed",
+          "severity": "Low",
+          "info": "The pseudo-random generators in this module are not suitable for security purposes. ",
+          "code": "<pre><code class='language-python'>  &quot;&quot;&quot;\n  random.seed(23)\n  random_number = random.random()</code></pre>"
+        },
+        "335": {
+          "line": 335,
+          "validation": "random.random",
+          "severity": "Low",
+          "info": "The pseudo-random generators in this module are not suitable for security purposes. ",
+          "code": "<pre><code class='language-python'>  random.seed(23)\n  random_number = random.random()\n  return random_number</code></pre>"
+        },
+        "339": {
+          "line": 339,
+          "validation": "shelve.open",
+          "severity": "High",
+          "info": "The `shelve` module uses `pickle` internally, making it unsafe for untrusted data.",
+          "code": "<pre><code class='language-python'>import shelve\nwith shelve.open(&#x27;spam&#x27;) as db:\n    db[&#x27;eggs&#x27;] = &#x27;eggs&#x27;</code></pre>"
+        },
+        "351": {
+          "line": 351,
+          "validation": "os.makedirs",
+          "severity": "Low",
+          "info": "Direct file system calls require careful input validation to prevent vulnerabilities.",
+          "code": "<pre><code class='language-python'>    print(f&quot;--- INSECURE EXTRACTION of {zip_path} to {extract_to_dir} ---&quot;)\n    os.makedirs(extract_to_dir, exist_ok=True)\n    with zipfile.ZipFile(zip_path, &#x27;r&#x27;) as zip_ref:</code></pre>"
+        },
+        "387": {
+          "line": 387,
+          "validation": "marshal.loads",
+          "severity": "High",
+          "info": "This module is not secure and should not be used to deserialize data from untrusted sources.",
+          "code": "<pre><code class='language-python'>    nastyobjects = marshal.loads(&#x27;/tmp/plantedmalware.obj&#x27;, allow_code=True)\n    print(nastyobjects)</code></pre>"
+        },
+        "416": {
+          "line": 416,
+          "validation": "sys.setprofile",
+          "severity": "Medium",
+          "info": "Provides low-level access to interpreter execution; dangerous if exposed.",
+          "code": "<pre><code class='language-python'>def run_with_profile():\n    sys.setprofile(profile_func)\n    result = my_func(5, 7)</code></pre>"
+        },
+        "418": {
+          "line": 418,
+          "validation": "sys.setprofile",
+          "severity": "Medium",
+          "info": "Provides low-level access to interpreter execution; dangerous if exposed.",
+          "code": "<pre><code class='language-python'>    result = my_func(5, 7)\n    sys.setprofile(None)  # Turn off profiling\n    print(f&quot;Result: {result}&quot;)</code></pre>"
+        },
+        "422": {
+          "line": 422,
+          "validation": "sys.settrace",
+          "severity": "Medium",
+          "info": "Provides low-level access to interpreter execution; dangerous if exposed.",
+          "code": "<pre><code class='language-python'>def run_with_trace2():\n    sys.settrace(trace_func)\n    my_func(2, 3)</code></pre>"
+        },
+        "424": {
+          "line": 424,
+          "validation": "sys.settrace",
+          "severity": "Medium",
+          "info": "Provides low-level access to interpreter execution; dangerous if exposed.",
+          "code": "<pre><code class='language-python'>    my_func(2, 3)\n    sys.settrace(None)  # Disable tracing</code></pre>"
+        },
+        "434": {
+          "line": 434,
+          "validation": "gzip.open",
+          "severity": "Medium",
+          "info": "Risk of decompression bombs or resource exhaustion with untrusted data.",
+          "code": "<pre><code class='language-python'>content = b&quot;Lots of content here&quot;\nwith untrusteddanger.open(&#x27;/home/joe/file.txt.gz&#x27;, &#x27;wb&#x27;) as f:\n    f.write(content)</code></pre>"
+        },
+        "440": {
+          "line": 440,
+          "validation": "bz2.open",
+          "severity": "Medium",
+          "info": "Decompressing untrusted data can lead to resource exhaustion attacks. ",
+          "code": "<pre><code class='language-python'># Open the compressed file in read text mode (&#x27;rt&#x27;)\nwith bz2.open(&quot;malware_example.bz2&quot;, &quot;rt&quot;) as f:\n    # Read the entire content of the file</code></pre>"
+        },
+        "447": {
+          "line": 447,
+          "validation": "bz2.BZ2File",
+          "severity": "Medium",
+          "info": "Decompressing untrusted data can lead to resource exhaustion attacks. ",
+          "code": "<pre><code class='language-python'>#now with the class function\nwith bz2.BZ2File(&quot;demo.bz2&quot;, mode=&#x27;r&#x27;) as f:\n    content = f.read()</code></pre>"
+        },
+        "460": {
+          "line": 460,
+          "validation": "lzma.open",
+          "severity": "Medium",
+          "info": "Risk of decompression bombs or resource exhaustion with untrusted data.",
+          "code": "<pre><code class='language-python'># Compress and write data to a file\nwith lzma.open(compressed_filename, &#x27;wb&#x27;) as f:\n    f.write(data)</code></pre>"
+        },
+        "466": {
+          "line": 466,
+          "validation": "lzma.open",
+          "severity": "Medium",
+          "info": "Risk of decompression bombs or resource exhaustion with untrusted data.",
+          "code": "<pre><code class='language-python'># Decompress and read data from the file\nwith lzma.open(compressed_filename, &#x27;rb&#x27;) as f:\n    decompressed_data = f.read()</code></pre>"
+        },
+        "476": {
+          "line": 476,
+          "validation": "lzma.LZMAFile",
+          "severity": "Medium",
+          "info": "Risk of decompression bombs or resource exhaustion with untrusted data.",
+          "code": "<pre><code class='language-python'>with lzma.LZMAFile(&quot;demo.xz&quot;, mode=&#x27;r&#x27;) as f:\n    content = f.read()</code></pre>"
+        },
+        "163": {
+          "line": 163,
+          "validation": "logging.config",
+          "severity": "Medium",
+          "info": "Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.",
+          "code": "<pre><code class='language-python'>import logging.config \nlogging.config.listen(port=DEFAULT_LOGGING_CONFIG_PORT, verify=None) </code></pre>"
+        },
+        "166": {
+          "line": 166,
+          "validation": "logging.config",
+          "severity": "Medium",
+          "info": "Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.",
+          "code": "<pre><code class='language-python'>logging.config.fileConfig(fname, defaults=None, disable_existing_loggers=True, encoding=None)\n#&lt;END LOGGING checks&gt;</code></pre>"
+        },
+        "238": {
+          "line": 238,
+          "validation": "base64",
+          "severity": "Low",
+          "info": "Base64 encoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.",
+          "code": "<pre><code class='language-python'>import base64\nencoded = base64.b64encode(b&#x27;data to be encoded&#x27;)\ndata = base64.b64decode(encoded)</code></pre>"
+        },
+        "239": {
+          "line": 239,
+          "validation": "base64",
+          "severity": "Low",
+          "info": "Base64 encoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.",
+          "code": "<pre><code class='language-python'>encoded = base64.b64encode(b&#x27;data to be encoded&#x27;)\ndata = base64.b64decode(encoded)</code></pre>"
+        },
+        "316": {
+          "line": 316,
+          "validation": "pickle.load",
+          "severity": "High",
+          "info": "Deserializing untrusted data with `pickle` can lead to arbitrary code execution.",
+          "code": "<pre><code class='language-python'>    with open(&#x27;data.pickle&#x27;, &#x27;rb&#x27;) as f:\n        data = pickle.load(f)</code></pre>"
+        },
+        "352": {
+          "line": 352,
+          "validation": "zipfile.ZipFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>    os.makedirs(extract_to_dir, exist_ok=True)\n    with zipfile.ZipFile(zip_path, &#x27;r&#x27;) as zip_ref:\n        # This line is the vulnerability: it extracts directly without path validation.</code></pre>"
+        },
+        "217": {
+          "line": 217,
+          "validation": "xmlrpc.client",
+          "severity": "High",
+          "info": "Vulnerable to denial-of-service via decompression bombs.",
+          "code": "<pre><code class='language-python'>with xmlrpc.client.ServerProxy(&quot;http://localhost:8000/&quot;) as proxy:\n    print(&quot;3 is even: %s&quot; % str(proxy.is_even(3)))</code></pre>"
+        },
+        "393": {
+          "line": 393,
+          "validation": "marshal.load",
+          "severity": "High",
+          "info": "This module is not secure and should not be used to deserialize data from untrusted sources.",
+          "code": "<pre><code class='language-python'>            # The allow_code parameter is passed directly to marshal.load()\n            loaded_object = marshal.load(f, allow_code=allow_code)\n        return loaded_object</code></pre>"
+        }
       }
     }
   }

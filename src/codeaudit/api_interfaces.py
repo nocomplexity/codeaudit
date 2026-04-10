@@ -15,6 +15,7 @@ Public API functions for Python Code Audit aka codeaudit on pypi.org
 
 import datetime
 import json
+import html
 import platform
 from collections import Counter
 from pathlib import Path
@@ -173,9 +174,9 @@ def _codeaudit_scan(filename, nosec_flag):
             filename
         )  # scans for weaknesses in the file
         sast_data = filter_sast_results(unfiltered_scan_output)
-    sast_data_results = sast_data["result"]
-    sast_result = dict(sorted(sast_data_results.items()))
-    output = {"file_name": name_of_file, "sast_result": sast_result}
+    sast_data_results = sast_data.get("result", {})
+    details = _build_weakness_details(sast_data_results, filename)
+    output = {"file_name": name_of_file, "sast_result": details}
     return output
 
 
@@ -271,26 +272,11 @@ def read_input_file(filename, safe_directory="data_folder"):
 
 def get_weakness_counts(input_file, nosec=False):
     """
-    Analyze a Python file or package (directory) and count occurrences of code weaknesses.
-
-    This function uses the `filescan` API call to retrieve security-related information
-    and aggregates the total number of occurrences per weakness construct.
-
-    Args:
-        input_file (str): Path to the file or directory (package) to scan.
-        nosec (bool): Whether to suppress findings marked with nosec comments.
-
-    Returns:
-        dict: A dictionary mapping each construct name (str) to the total
-              number of occurrences (int).
-
-    Raises:
-        ValueError: If the scan fails or returns an error result.
-        TypeError: If the scan result has an unexpected structure.
+    Analyze a Python file or package and count occurrences of code weaknesses.
     """
+    # Assuming filescan is imported from codeaudit.api_interfaces
     scan_result = filescan(input_file, nosec)
 
-    # Explicitly handle scan failure or unexpected return
     if not isinstance(scan_result, dict):
         raise ValueError("filescan() did not return a valid result dictionary")
 
@@ -299,7 +285,6 @@ def get_weakness_counts(input_file, nosec=False):
 
     file_security_info = scan_result.get("file_security_info")
     if not isinstance(file_security_info, dict):
-        # Valid scan, but no findings (e.g. empty or non-parsable input)
         return {}
 
     counter = Counter()
@@ -312,43 +297,15 @@ def get_weakness_counts(input_file, nosec=False):
         if not isinstance(sast_result, dict):
             continue
 
-        for construct, occurrences in sast_result.items():
-            if isinstance(occurrences, (list, tuple)):
-                counter[construct] += len(occurrences)
+        # Based on your data: sast_result keys are line numbers (e.g., 171)
+        # and values are dicts containing the 'validation' type.
+        for issue_details in sast_result.values():
+            if isinstance(issue_details, dict):
+                # We use the 'validation' field to identify the type of weakness
+                weakness_type = issue_details.get("validation", "Unknown")
+                counter[weakness_type] += 1
 
     return dict(counter)
-
-
-# def get_weakness_counts(input_file , nosec=False):
-#     """
-#     Analyze a Python file or package(directory) and count occurrences of code weaknesses.
-
-#     This function uses `filescan` API call to retrieve security-related information
-#     about the input file. This returns a dict. Then it counts how many times each code construct
-#     appears across all scanned files.
-
-#     Args:
-#         input_file (str): Path to the file or directory(package) to scan.
-
-#     Returns:
-#         dict: A dictionary mapping each construct name (str) to the total
-#               number of occurrences (int) across all scanned files.
-
-#     Notes:
-#         - The `filescan` function is expected to return a dictionary with
-#           a 'file_security_info' key, containing per-file information.
-#         - Each file's 'sast_result' should be a dictionary mapping
-#           construct names to lists of occurrences.
-#     """
-#     scan_result = filescan(input_file, nosec)
-#     counter = Counter()
-
-#     for file_info in scan_result.get('file_security_info', {}).values():
-#         sast_result = file_info.get('sast_result', {})
-#         for construct, occurrence in sast_result.items(): #occurrence is times the construct appears in a single file
-#             counter[construct] += len(occurrence)
-
-#     return dict(counter)
 
 
 def get_modules(filename):
@@ -606,3 +563,178 @@ def get_construct_counts(input_file):
             counter[construct] += len(occurence)
 
     return dict(counter)
+
+
+def _build_weakness_details(sastresult, filename_location):
+    """
+    Builds a mapping of line numbers to SAST issue details.
+
+    Processes static analysis results into a dictionary keyed by line number,
+    including severity, description, and code snippets. Handles invalid input,
+    duplicate line issues, and limits total processed entries for safety.
+
+    Args:
+        sastresult (dict): Mapping of issue identifiers to iterable line numbers.
+        filename_location (str): Path to the source file for extracting code snippets.
+
+    Returns:
+        dict: Dictionary keyed by line number containing issue detail dict(s).
+              If multiple issues exist on the same line, the value is a list.
+    """
+    if not isinstance(sastresult, dict) or not sastresult:
+        return {}
+
+    # Optional: basic path safety check (adjust as needed)
+    if not isinstance(filename_location, str) or ".." in filename_location:
+        return {}
+
+    result = {}
+    MAX_ISSUES = 10000  # prevent abuse / runaway loops
+    issue_count = 0
+
+    for error_str, line_numbers in sastresult.items():
+
+        # Validate key
+        if not isinstance(error_str, str):
+            continue
+
+        # Validate line_numbers
+        if not isinstance(line_numbers, (list, tuple, set)):
+            continue
+
+        # Safe retrieval of metadata
+        try:
+            severity, info_text = _get_test_info(error_str)
+        except Exception:
+            severity, info_text = "unknown", ""
+
+        for line_num in line_numbers:
+
+            # Limit total processed issues
+            issue_count += 1
+            if issue_count > MAX_ISSUES:
+                break
+
+            # Validate line number
+            if not isinstance(line_num, int) or line_num <= 0:
+                continue
+
+            # Safe code extraction
+            try:
+                code_snippet = _collect_issue_lines(filename_location, line_num)
+            except Exception:
+                code_snippet = ""
+
+            entry = {
+                "line": line_num,
+                "validation": error_str,
+                "severity": severity,
+                "info": info_text,
+                "code": code_snippet,
+            }
+
+            # Handle multiple issues on same line
+            if line_num in result:
+                # Convert to list if needed
+                if isinstance(result[line_num], list):
+                    result[line_num].append(entry)
+                else:
+                    result[line_num] = [result[line_num], entry]
+            else:
+                result[line_num] = entry
+
+        if issue_count > MAX_ISSUES:
+            break
+
+    return result
+
+
+def _get_test_info(error):
+    """
+    Retrieve severity and info text for a given SAST error identifier.
+
+    Args:
+        error (str): Identifier to match against the 'construct' column.
+
+    Returns:
+        tuple[str, str]: (severity, info_text). Defaults to ('unknown', '')
+        if no match is found or an error occurs.
+    """
+    DEFAULT = ("unknown", "")
+    # Validate input
+    if not isinstance(error, str) or not error:
+        return DEFAULT
+
+    try:
+        df = ast_security_checks()
+    except Exception:
+        return DEFAULT
+
+    # Validate expected structure
+    required_columns = {"construct", "severity", "info"}
+    if not hasattr(df, "columns") or not required_columns.issubset(df.columns):
+        return DEFAULT
+
+    try:
+        # Exact match
+        found_rows = df[df["construct"] == error]
+        if not found_rows.empty:
+            row = found_rows.iloc[0]
+            return (str(row.get("severity", "unknown")), str(row.get("info", "")))
+
+        # Controlled fallback (avoid overly broad matching)
+        if "extractall" in error:
+            fallback_rows = df[df["construct"] == "tarfile.TarFile"]
+            if not fallback_rows.empty:
+                row = fallback_rows.iloc[0]
+                return (str(row.get("severity", "unknown")), str(row.get("info", "")))
+
+    except Exception:
+        return DEFAULT
+
+    # Safe fallback instead of exit()
+    return DEFAULT
+
+
+def _collect_issue_lines(filename, line, context=1):
+    """
+    Safely extract source code lines around a specific line number for display.
+
+    Args:
+        filename (str): Path to the Python source file.
+        line (int): Target line number (1-based).
+        context (int, optional): Number of lines of context before and after the target line. Defaults to 1.
+
+    Returns:
+        str: HTML-formatted code snippet with <pre><code> wrapper. Returns empty string on failure.
+    """
+    # Validate inputs
+    if not isinstance(filename, str) or not filename:
+        return ""
+    if not isinstance(line, int) or line <= 0:
+        return ""
+
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except (OSError, UnicodeDecodeError):
+        return ""
+
+    # Calculate safe slice indices
+    start = max(line - context - 1, 0)  # zero-based
+    end = min(line + context, len(lines))
+
+    snippet_lines = lines[start:end]
+
+    snippet_lines = [l.rstrip("\n") for l in snippet_lines if l.strip() != ""]
+
+    # Escape HTML to prevent injection
+    escaped_lines = [html.escape(l) for l in snippet_lines]
+
+    code_lines = (
+        "<pre><code class='language-python'>"
+        + "\n".join(escaped_lines)
+        + "</code></pre>"
+    )
+
+    return code_lines

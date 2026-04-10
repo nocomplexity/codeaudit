@@ -48,7 +48,7 @@ from codeaudit import __version__
 from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
 from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
 from codeaudit.suppression import filter_sast_results
-from codeaudit.api_helpers import _collect_issue_lines
+from codeaudit.api_interfaces import _collect_issue_lines
 
 from importlib.resources import files
 
