@@ -37,7 +37,7 @@ from codeaudit.altairplots import (
 )
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
 
-from codeaudit.api_interfaces import get_package_source, version
+from codeaudit.api_interfaces import get_package_source, version_info
 
 
 from codeaudit.dashboard_reports import (
@@ -137,7 +137,7 @@ async def filescan_wasm(input_path, nosec=False):
     PYPI PACKAGE ONLY (for now)
     """
 
-    ca_version_info = version()
+    ca_version_info = version_info()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}

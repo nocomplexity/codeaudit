@@ -773,12 +773,9 @@ def create_htmlfile(html_input, outputfile):
 
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
-    code_audit_version = CA_VERSION
-
     output += (
-        f"<p>This Python security report was created on: <b>{timestamp_str}</b> with "
-        + PYTHON_CODE_AUDIT_TEXT
-        + f" version <b>{code_audit_version}</b></p>"
+        f"<p>This Python security report was created on: <b>{timestamp_str}</b> "
+        f"with {PYTHON_CODE_AUDIT_TEXT} version <b>{CA_VERSION}</b></p>"
     )
 
     output += "<hr>"
@@ -901,12 +898,11 @@ def report_implemented_tests(filename=DEFAULT_OUTPUT_FILE):
     number_of_test = len(df_checks)
 
     output += df_checks_sorted.to_html(escape=False, index=False)
-    code_audit_version = CA_VERSION
     output += "<br>"
     output += (
         f"<p>Number of implemented security validations:<b>{number_of_test}</b></p>"
     )
-    output += f"<p>Version of codeaudit: <b>{code_audit_version}</b>"
+    output += f"<p>Version of codeaudit: <b>{CA_VERSION}</b>"
     output += "<p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p>"
     output += DISCLAIMER_TEXT
     create_htmlfile(output, filename)

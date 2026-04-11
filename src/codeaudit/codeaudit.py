@@ -25,7 +25,6 @@ from codeaudit.reporting import (
     scan_report,
 )
 
-
 CA_VERSION = version("codeaudit")
 
 codeaudit_ascii_art = r"""
