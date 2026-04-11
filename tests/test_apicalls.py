@@ -5,7 +5,7 @@
 import pytest
 from pathlib import Path
 
-from codeaudit.api_interfaces import version, get_overview
+from codeaudit.api_interfaces import version_info, get_overview
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.checkmodules import get_imported_modules
@@ -13,7 +13,7 @@ from codeaudit.checkmodules import get_imported_modules
 
 def test_api_version():
 
-    actual_data = version()
+    actual_data = version_info()
     assert "name" in actual_data
     assert "version" in actual_data
     assert actual_data["name"] == "Python_Code_Audit"
