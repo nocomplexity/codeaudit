@@ -21,10 +21,12 @@ import zlib
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from codeaudit import __version__
+from importlib.metadata import version
+
+CA_VERSION = version("codeaudit")
 
 NOCX_HEADERS = {
-    "user-agent": f"Python Code Audit /{__version__} (https://github.com/nocomplexity/codeaudit)",
+    "user-agent": f"Python Code Audit /{CA_VERSION} (https://github.com/nocomplexity/codeaudit)",
     "Accept": "text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8",
     "Accept-Encoding": "gzip, deflate,br",
     "Connection": "keep-alive",

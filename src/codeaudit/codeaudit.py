@@ -14,10 +14,9 @@ CLI functions for codeaudit
 """
 
 import sys
+from importlib.metadata import version
 
 import fire  # for working CLI with this PoC-thing (The Google way)
-
-from codeaudit import __version__
 
 from codeaudit.reporting import (
     overview_report,
@@ -25,6 +24,9 @@ from codeaudit.reporting import (
     report_module_information,
     scan_report,
 )
+
+
+CA_VERSION = version("codeaudit")
 
 codeaudit_ascii_art = r"""
 ----------------------------------------------------
@@ -37,7 +39,7 @@ codeaudit_ascii_art = r"""
 
 def display_version():
     """Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version]."""
-    print(f"version: {__version__}")
+    print(f"version: {CA_VERSION}")
 
 
 def display_help():

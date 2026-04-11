@@ -19,12 +19,12 @@ import html
 import platform
 from collections import Counter
 from pathlib import Path
+from importlib.metadata import version
 
 import altair as alt
 import pandas as pd
 
 
-from codeaudit import __version__
 from codeaudit.checkmodules import (
     check_module_vulnerability,
     get_all_modules,
@@ -48,9 +48,9 @@ from codeaudit.totals import (
 )
 
 
-def version():
+def version_info():
     """Returns the version of Python Code Audit"""
-    ca_version = __version__
+    ca_version = version("codeaudit")
     return {"name": "Python_Code_Audit", "version": ca_version}
 
 
@@ -113,7 +113,7 @@ def filescan(input_path, nosec=False):
     """
     file_output = {}
     file_path = Path(input_path)
-    ca_version_info = version()
+    ca_version_info = version_info()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
@@ -403,7 +403,7 @@ def get_default_validations():
 
 def _generation_info():
     """Internal function to retrieve generation info for APIs output"""
-    ca_version_info = version()
+    ca_version_info = version_info()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
