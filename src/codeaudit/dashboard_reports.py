@@ -192,29 +192,51 @@ def report_sast_results(scanresult):
 
     # Collect files that have SAST results
     files_with_findings = []
-    for file_id, file_info in file_security_info.items():
-        if isinstance(file_info, dict):
-            sast_result = file_info.get("sast_result")
-            if isinstance(sast_result, dict) and len(sast_result) > 0:
-                files_with_findings.append(file_info)
+    for file_info in file_security_info.values():
+        if not isinstance(file_info, dict):
+            continue
+
+        sast_result = file_info.get("sast_result")
+        if isinstance(sast_result, dict) and len(sast_result) > 0:
+            files_with_findings.append(file_info)
 
     if not files_with_findings:
         return '<br><h2">✅ No security weaknesses found</h2>'
 
-    total_number_of_files = scanresult["statistics_overview"]["Number_Of_Files"]
+    # --- Safe statistics handling ---
+    stats = scanresult.get("statistics_overview")
+    if not isinstance(stats, dict):
+        stats = {}
+    total_number_of_files = stats.get("Number_Of_Files", 1)
+
     # --- HTML REPORT ---
-    html = SAST_REPORT_CSS + f"""
+    html = (
+        SAST_REPORT_CSS
+        + f"""
     <div class="sast-report">
         <h2>Detailed Code Security Report</h2>
         <p><strong>Package:</strong> {scanresult.get("package_name", "N/A")}</p>
         <p><strong>version:</strong> {scanresult.get("package_release", "N/A")}</p>
         <p><strong>Total files with findings:</strong> {len(files_with_findings)} of {total_number_of_files} files in total</p>
     """
+    )
 
     for file_info in files_with_findings:
         filename = file_info.get("FileName", "Unknown File")
         sast_result = file_info.get("sast_result", {})
-        num_issues = len(sast_result)
+
+        # --- Normalize findings (fix for list/dict inconsistency) ---
+        all_findings = []
+        for v in sast_result.values():
+            if isinstance(v, dict):
+                all_findings.append(v)
+            elif isinstance(v, list):
+                all_findings.extend([item for item in v if isinstance(item, dict)])
+
+        if not all_findings:
+            continue
+
+        num_issues = len(all_findings)
 
         html += f"""
         <p>⚠️ <b>{num_issues}</b> potential security issue{"s" if num_issues > 1 else ""} 
@@ -238,11 +260,19 @@ def report_sast_results(scanresult):
             <tbody>
         """
 
-        sorted_findings = sorted(
-            sast_result.values(), key=lambda x: int(x.get("line", 0))
-        )
+        # --- Safe sorting ---
+        def safe_line(x):
+            try:
+                return int(x.get("line", 0))
+            except (TypeError, ValueError):
+                return 0
+
+        sorted_findings = sorted(all_findings, key=safe_line)
 
         for finding in sorted_findings:
+            if not isinstance(finding, dict):
+                continue
+
             line = finding.get("line", "—")
             validation = finding.get("validation", "—")
             severity = finding.get("severity", "—")
@@ -263,6 +293,7 @@ def report_sast_results(scanresult):
         html += "</details><br>"
 
     html += "</div>"
+
     RESULT_HTML_PANE = {
         "background": "#FFFFE0",
         "padding": "16px",
@@ -273,8 +304,8 @@ def report_sast_results(scanresult):
         "border-left": "4px solid #E69F00",
         "border-radius": "10px",
     }
-    sast_result = pn.pane.HTML(html, styles=RESULT_HTML_PANE)
-    return sast_result
+
+    return pn.pane.HTML(html, styles=RESULT_HTML_PANE)
 
 
 def report_used_modules(scanresult):
@@ -387,11 +418,13 @@ def get_info_text():
             
             """,
         sizing_mode="stretch_width",
-        stylesheets=["""
+        stylesheets=[
+            """
                 .bk-panel {
                     background: transparent !important;
                 }
-            """],
+            """
+        ],
         styles=custom_style,
     )
     return infotext
