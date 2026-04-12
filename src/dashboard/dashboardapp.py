@@ -35,9 +35,7 @@ from codeaudit.altairplots import (
     weaknesses_radial_overview,
 )
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
-
 from codeaudit.api_interfaces import get_package_source, version_info
-
 from codeaudit.dashboard_reports import (
     create_statistics_overview,
     get_disclaimer_text,

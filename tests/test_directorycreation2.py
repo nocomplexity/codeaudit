@@ -1,4 +1,3 @@
-import pytest
 from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file

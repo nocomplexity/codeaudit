@@ -1,5 +1,3 @@
-import pytest
-
 from codeaudit.totals import count_comment_lines
 
 

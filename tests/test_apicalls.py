@@ -2,13 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import pytest
 from pathlib import Path
 
-from codeaudit.api_interfaces import version_info, get_overview
-
-from codeaudit.filehelpfunctions import read_in_source_file
-from codeaudit.checkmodules import get_imported_modules
+from codeaudit.api_interfaces import get_overview, version_info
 
 
 def test_api_version():

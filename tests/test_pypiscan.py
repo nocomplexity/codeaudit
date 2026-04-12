@@ -1,10 +1,10 @@
+from unittest.mock import patch
+
 import pytest
 
 from codeaudit.pypi_package_scan import get_pypi_download_info
 
 # Note This testfunction does NOT make real API calls to PyPI! So check if testdata is still correct in cause of errors.
-
-from unittest.mock import patch
 
 
 @pytest.fixture

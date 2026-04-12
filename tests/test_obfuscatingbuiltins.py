@@ -1,8 +1,5 @@
-import pytest
 from pathlib import Path
 
-from codeaudit.filehelpfunctions import read_in_source_file
-from codeaudit.issuevalidations import find_constructs
 from codeaudit.security_checks import perform_validations
 
 # constructs are tested in this test file based on SAST checks defined , not  running constructs directly for testing as in other test files.

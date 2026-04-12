@@ -15,10 +15,9 @@ EGRESS DETECTION LOGIC - see docs
 import ast
 import datetime
 import re
-from importlib.resources import files
 from importlib.metadata import version
+from importlib.resources import files
 from pathlib import Path
-
 
 from codeaudit.filehelpfunctions import (
     collect_python_source_files,

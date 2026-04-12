@@ -11,7 +11,6 @@ You should have received a copy of the GNU General Public License along with thi
 Validation file to see if SAST suppression works correct.
 """
 
-import pytest
 from pathlib import Path
 
 from codeaudit.security_checks import perform_validations

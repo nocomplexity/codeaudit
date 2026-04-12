@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2025-present Maikel Mardjan(https://nocomplexity.com/) and all contributors!
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-import pytest
 from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file

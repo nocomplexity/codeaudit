@@ -18,10 +18,9 @@ import json
 import tarfile
 import tempfile
 import zlib
+from importlib.metadata import version
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-
-from importlib.metadata import version
 
 CA_VERSION = version("codeaudit")
 

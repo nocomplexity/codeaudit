@@ -13,46 +13,43 @@ You should have received a copy of the GNU General Public License along with thi
 Reporting functions for codeaudit
 """
 
-import re
+import datetime
+import html
 import os
-from pathlib import Path
+import re
 import sys
-
 from importlib.metadata import version
+from importlib.resources import files
+from pathlib import Path
 
 import pandas as pd
-import html
-import datetime
 
-from codeaudit.security_checks import perform_validations, ast_security_checks
+from codeaudit.altairplots import multi_bar_chart
+from codeaudit.api_interfaces import _collect_issue_lines
+from codeaudit.checkmodules import (
+    check_module_vulnerability,
+    get_all_modules,
+    get_imported_modules,
+    get_imported_modules_by_file,
+)
 from codeaudit.filehelpfunctions import (
-    get_filename_from_path,
     collect_python_source_files,
-    read_in_source_file,
+    get_filename_from_path,
     has_python_files,
     is_ast_parsable,
+    read_in_source_file,
 )
-from codeaudit.altairplots import multi_bar_chart
+from codeaudit.htmlhelpfunctions import dict_list_to_html_table, json_to_html
+from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
+from codeaudit.pypi_package_scan import get_package_source, get_pypi_download_info
+from codeaudit.security_checks import ast_security_checks, perform_validations
+from codeaudit.suppression import filter_sast_results
 from codeaudit.totals import (
     get_statistics,
     overview_count,
     overview_per_file,
     total_modules,
 )
-from codeaudit.checkmodules import (
-    get_imported_modules,
-    check_module_vulnerability,
-    get_all_modules,
-    get_imported_modules_by_file,
-)
-from codeaudit.htmlhelpfunctions import json_to_html, dict_list_to_html_table
-
-from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
-from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
-from codeaudit.suppression import filter_sast_results
-from codeaudit.api_interfaces import _collect_issue_lines
-
-from importlib.resources import files
 
 CA_VERSION = version("codeaudit")
 

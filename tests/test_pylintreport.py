@@ -2,9 +2,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import pytest
-import pandas as pd
 import html
+
+import pandas as pd
 
 from codeaudit.reporting import pylint_reporting
 

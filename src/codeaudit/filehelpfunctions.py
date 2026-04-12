@@ -113,7 +113,7 @@ def is_ast_parsable(file_path):
             warnings.simplefilter("ignore", category=SyntaxWarning)
             ast.parse(source, filename=file_path)
         return True
-    except (SyntaxError, UnicodeDecodeError, ValueError) as e:
+    except (SyntaxError, UnicodeDecodeError, ValueError):
         return False
 
 

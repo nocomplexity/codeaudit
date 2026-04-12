@@ -14,16 +14,14 @@ Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
 
 import datetime
-import json
 import html
+import json
 import platform
 from collections import Counter
-from pathlib import Path
 from importlib.metadata import version
+from pathlib import Path
 
-import altair as alt
 import pandas as pd
-
 
 from codeaudit.checkmodules import (
     check_module_vulnerability,
