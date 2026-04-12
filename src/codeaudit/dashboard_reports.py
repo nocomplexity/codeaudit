@@ -210,16 +210,13 @@ def report_sast_results(scanresult):
     total_number_of_files = stats.get("Number_Of_Files", 1)
 
     # --- HTML REPORT ---
-    html = (
-        SAST_REPORT_CSS
-        + f"""
+    html = SAST_REPORT_CSS + f"""
     <div class="sast-report">
         <h2>Detailed Code Security Report</h2>
         <p><strong>Package:</strong> {scanresult.get("package_name", "N/A")}</p>
         <p><strong>version:</strong> {scanresult.get("package_release", "N/A")}</p>
         <p><strong>Total files with findings:</strong> {len(files_with_findings)} of {total_number_of_files} files in total</p>
     """
-    )
 
     for file_info in files_with_findings:
         filename = file_info.get("FileName", "Unknown File")
@@ -418,13 +415,11 @@ def get_info_text():
             
             """,
         sizing_mode="stretch_width",
-        stylesheets=[
-            """
+        stylesheets=["""
                 .bk-panel {
                     background: transparent !important;
                 }
-            """
-        ],
+            """],
         styles=custom_style,
     )
     return infotext

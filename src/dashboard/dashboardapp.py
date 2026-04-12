@@ -18,7 +18,6 @@ import datetime
 import inspect
 import json
 import sys
-from importlib.metadata import version
 
 import panel as pn
 
@@ -46,7 +45,6 @@ from codeaudit.dashboard_reports import (
     report_sast_results,
     report_used_modules,
 )
-
 
 # --- Environment Detection ---
 IS_PYODIDE = "pyodide" in sys.modules
