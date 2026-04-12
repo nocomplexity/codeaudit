@@ -18,12 +18,12 @@ import datetime
 import inspect
 import json
 import sys
+from importlib.metadata import version
 
 import panel as pn
 
 pn.extension("vega")
 
-# from codeaudit import __version__
 
 from codeaudit.altairplots import (
     ast_nodes_overview,
@@ -39,7 +39,6 @@ from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
 
 from codeaudit.api_interfaces import get_package_source, version_info
 
-
 from codeaudit.dashboard_reports import (
     create_statistics_overview,
     get_disclaimer_text,
@@ -47,6 +46,7 @@ from codeaudit.dashboard_reports import (
     report_sast_results,
     report_used_modules,
 )
+
 
 # --- Environment Detection ---
 IS_PYODIDE = "pyodide" in sys.modules
@@ -136,7 +136,6 @@ async def filescan_wasm(input_path, nosec=False):
 
     PYPI PACKAGE ONLY (for now)
     """
-
     ca_version_info = version_info()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
