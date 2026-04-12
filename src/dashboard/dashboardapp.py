@@ -148,7 +148,7 @@ async def filescan_wasm(input_path, nosec=False):
         release = pypi_data.get("release")
 
         if url is not None:
-            # WASM-safe / Desktop-compatible fetch
+            # WASM-safe
             if IS_PYODIDE:
                 decoded_res = await get_package_source_wasm(url)
             else:
