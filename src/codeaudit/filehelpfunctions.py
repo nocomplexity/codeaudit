@@ -18,8 +18,20 @@ import sys
 import warnings
 from pathlib import Path
 
+_EXCLUDE_DIRS = {"docs", "docker", "dist", "tests"}
+
 
 def read_in_source_file(file_path):
+    """
+    Reads the contents of a Python source file and returns it as a string.
+
+    Args:
+        file_path (str or Path): The path to the Python source file.
+
+    Returns:
+        str: The contents of the file.
+    """
+
     # Ensure file_path is a Path object
     file_path = Path(file_path)
 
@@ -34,8 +46,7 @@ def read_in_source_file(file_path):
         sys.exit(1)
 
     try:
-        with file_path.open("r", encoding="utf-8") as f:
-            return f.read()
+        return file_path.read_text(encoding="utf-8")
     except Exception as e:
         print(f"Failed to read file: {e}")
         sys.exit(1)
@@ -53,32 +64,33 @@ def collect_python_source_files(directory):
     Returns:
         list: A list of absolute paths to valid Python source files.
     """
-    EXCLUDE_DIRS = {"docs", "docker", "dist", "tests"}
+    directory = Path(directory)
     python_files = []
 
-    for root, dirs, files in os.walk(directory):
-        # Filter out unwanted directories
-        dirs[:] = [
-            d
-            for d in dirs
-            if not (d.startswith(".") or d.startswith("_") or d in EXCLUDE_DIRS)
-        ]
+    for file in directory.rglob("**/*.py"):
+        # Skip hidden directories (start with '.') or underscore-prefixed directories
+        if any(
+            part.startswith("_") or part.startswith(".") for part in file.parts[:-1]
+        ):
+            continue
 
-        for file in files:
-            if file.endswith(".py") and not file.startswith("."):
-                full_path = os.path.join(root, file)
-                if os.path.isfile(full_path):
-                    python_files.append(os.path.abspath(full_path))
-    # check if the file can be parsed using the AST
-    final_file_list = []
-    for python_file in python_files:
-        if is_ast_parsable(python_file):
-            final_file_list.append(python_file)
-        else:
+        # Skip directories in the exclusion list
+        if any(part in _EXCLUDE_DIRS for part in file.parts[:-1]):
+            continue
+
+        # Skip hidden files (start with '.') or underscore-prefixed files
+        if file.name.startswith("_") or file.name.startswith(".") and not file.exists():
+            continue
+
+        # Skip files that cannot be parsed into AST
+        if not is_ast_parsable(file):
             print(
-                f"Error: {python_file} will be skipped due to syntax error while parsing into AST."
+                f"Error: {file} will be skipped due to syntax error while parsing into AST."
             )
-    return final_file_list
+            continue
+        python_files.append(file.absolute().as_posix())
+
+    return python_files
 
 
 def get_filename_from_path(file_path):
