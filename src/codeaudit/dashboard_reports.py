@@ -12,6 +12,9 @@ You should have received a copy of the GNU General Public License along with thi
 API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to build custom reports.
 """
 
+import panel as pn
+pn.extension()
+
 from codeaudit.api_interfaces import version_info
 
 SAST_REPORT_CSS = """
@@ -94,6 +97,7 @@ def _require_panel():
     """
     try:
         import panel as pn
+        pn.extension()
 
         return pn
     except ImportError:
