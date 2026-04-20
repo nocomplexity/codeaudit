@@ -1,8 +1,30 @@
 # Change Log
 
+
+## Version 1.6.3:
+
+🚀 Added
+- WASM Test Drive: Updated documentation to highlight the WebAssembly (WASM) version, allowing users to test-drive the tool directly in the browser without local installation.
+
+- Enhanced FileScan API: The filescan API now returns detailed results on found weaknesses, matching the comprehensive output of the CLI version.
+
+🛠️ Changed
+- API Refactoring: Extensive refactoring of API functions for better modularity and performance.
+
+- Version Retrieval: Improved the logic for retrieving version information. Special thanks to @jurgenwigg (#PR16).
+
+🐞 Fixed
+- Dashboard Reporting: Squashed bugs and improved the reliability of the dashboard reporting APIs.
+
+- Project Metadata: Implemented fixes and improvements for pyproject.toml configuration.
+
+📝 Documentation
+- Updated [README.md](https://github.com/nocomplexity/codeaudit/blob/main/README.md) with link to the WASM-based demonstration.
+
+
 ## Version 1.6.2:
 
-## Changelog
+
 
 **Added**
 * **Automated Python Testing:** Implemented automation for testing across various Python versions to ensure cross-version compatibility.

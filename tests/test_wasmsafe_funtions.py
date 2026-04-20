@@ -23,8 +23,36 @@ def test_basic_working_scanning():
     expected_data = "eval.py"  # Assert that the actual data matches the expected data
     assert actual_data == expected_data
 
+def test_scan_wasm1():
+    current_file_directory = Path(__file__).parent
 
-def test_scan_wasm():
+    # validation file path
+    validation_file_path = current_file_directory / "validationfiles" / "zstd.py"
+
+    result = _codeaudit_scan_wasm(str(validation_file_path), False)
+    #Check lines, so the keys:
+    lines = result['sast_result']
+    line_numbers = set(lines.keys())
+    expected_set = {3, 10}
+
+    assert line_numbers == expected_set
+
+
+def test_scan_wasm1_validationscheck():
+    current_file_directory = Path(__file__).parent
+
+    # validation file path
+    validation_file_path = current_file_directory / "validationfiles" / "zstd.py"
+
+    result = _codeaudit_scan_wasm(str(validation_file_path), False)
+    #Check lines, so the keys:
+    lines = result['sast_result']
+    validations = [v["validation"] for v in lines.values()]
+    expected_set = ['compression.zstd.decompress', 'compression.zstd.open']
+
+    assert validations == expected_set
+
+def test_scan_wasm2():
     current_file_directory = Path(__file__).parent
 
     # validation file path

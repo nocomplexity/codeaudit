@@ -36,7 +36,9 @@ from codeaudit.altairplots import (
 )
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
 
-from codeaudit.api_interfaces import get_package_source, version_info
+from codeaudit.api_interfaces import get_package_source , version_info
+
+
 
 from codeaudit.dashboard_reports import (
     create_statistics_overview,
@@ -117,7 +119,7 @@ async def get_package_source_wasm(url):
             f.write(content)
 
         with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(path=temp_dir, filter="data")
+            tar.extractall(path=temp_dir, filter="data") # nosec Possible risks are mitigated and this happends in the WASM context.
 
         return temp_dir, tmpdir_obj
 
