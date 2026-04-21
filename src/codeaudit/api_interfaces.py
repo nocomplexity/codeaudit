@@ -19,10 +19,11 @@ import html
 import platform
 from collections import Counter
 from pathlib import Path
-from importlib.metadata import version
 
 import altair as alt
 import pandas as pd
+
+from codeaudit.__about__ import __version__
 
 
 from codeaudit.checkmodules import (
@@ -47,11 +48,11 @@ from codeaudit.totals import (
     total_modules,
 )
 
-
-def version_info():
-    """Returns the version of Python Code Audit"""
-    ca_version = version("codeaudit")
+def version():
+    """Returns the version of Python Code Audit - WASM safe"""
+    ca_version = __version__
     return {"name": "Python_Code_Audit", "version": ca_version}
+
 
 
 def filescan(input_path, nosec=False):

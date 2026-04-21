@@ -25,6 +25,7 @@ from importlib.metadata import version
 
 CA_VERSION = version("codeaudit")
 
+
 NOCX_HEADERS = {
     "user-agent": f"Python Code Audit /{CA_VERSION} (https://github.com/nocomplexity/codeaudit)",
     "Accept": "text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8",

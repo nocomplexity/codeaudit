@@ -12,10 +12,8 @@ You should have received a copy of the GNU General Public License along with thi
 API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to build custom reports.
 """
 
-import panel as pn
-pn.extension()
 
-from codeaudit.api_interfaces import version_info
+from codeaudit.__about__ import __version__
 
 SAST_REPORT_CSS = """
 <style>
@@ -84,26 +82,16 @@ details summary {
 </style>
 """
 
-
 def _require_panel():
-    """Import the optional Panel dependency.
-
-    Returns:
-        module: The imported panel module.
-
-    Raises:
-        ImportError: If the panel package is not installed. The error message
-            instructs the user to install the optional dependency.
-    """
+    """Import the optional Panel dependency safely."""
     try:
         import panel as pn
         pn.extension()
-
         return pn
     except ImportError:
         raise ImportError(
-            "Optional dependency Python package 'panel' not installed. "
-            "Run: pip install panel"
+            "Optional dependency 'panel' is not available in this environment "
+            "(e.g. WASM/Pyodide). Install it with: pip install panel"
         )
 
 
@@ -432,9 +420,8 @@ def get_disclaimer_text():
     """defines the sidebar disclaimer text"""
     pn = _require_panel()  # Panel module is needed for this function
     
-    # Get the version string from version_info
-    v_info = version_info()
-    version_id = v_info['version']
+    # Get the version string 
+    version_id = __version__
         
     disclaimer = (
         f"<br><b>Disclaimer:</b> This scan only evaluates Python files. "

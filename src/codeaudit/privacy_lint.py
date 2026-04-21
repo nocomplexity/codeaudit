@@ -16,8 +16,9 @@ import ast
 import datetime
 import re
 from importlib.resources import files
-from importlib.metadata import version
 from pathlib import Path
+
+from codeaudit.__about__ import __version__
 
 
 from codeaudit.filehelpfunctions import (
@@ -62,8 +63,8 @@ def data_egress_scan(input_path):
         returned dictionary.
     """
     file_output = {}
-    file_path = Path(input_path)
-    ca_version_info = {"name": "Python_Code_Audit", "version": version("codeaudit")}
+    file_path = Path(input_path)    
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}

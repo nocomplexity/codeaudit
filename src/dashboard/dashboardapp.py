@@ -13,16 +13,17 @@ You should have received a copy of the GNU General Public License along with thi
 WASM Dashboard version of codeaudit - limited functionality -
 """
 
+import panel as pn
+pn.extension("vega")
+
 import asyncio
 import datetime
 import inspect
 import json
 import sys
 
-import panel as pn
 
-pn.extension("vega")
-
+from codeaudit.__about__ import __version__
 
 from codeaudit.altairplots import (
     ast_nodes_overview,
@@ -36,7 +37,8 @@ from codeaudit.altairplots import (
 )
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
 
-from codeaudit.api_interfaces import get_package_source , version_info
+from codeaudit.api_interfaces import get_package_source 
+
 
 from codeaudit.dashboard_reports import (
     create_statistics_overview,
@@ -45,6 +47,10 @@ from codeaudit.dashboard_reports import (
     report_sast_results,
     report_used_modules,
 )
+
+#------- <TMP fix> ----------
+
+#------- </TMP fix> ----------
 
 # --- Environment Detection ---
 IS_PYODIDE = "pyodide" in sys.modules
@@ -133,8 +139,8 @@ async def filescan_wasm(input_path, nosec=False):
     Matches the behaviour of the original implementation for PyPI scans.
 
     PYPI PACKAGE ONLY (for now)
-    """
-    ca_version_info = version_info()
+    """        
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
@@ -201,6 +207,7 @@ loading = pn.indicators.LoadingSpinner(
 
 
 overview_visuals = create_statistics_overview(result_pane.object)
+
 
 tabs = pn.Tabs(
     ("Package Overview", overview_visuals),

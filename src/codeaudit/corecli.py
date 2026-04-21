@@ -14,10 +14,10 @@ CLI functions for codeaudit
 """
 
 import sys
-from importlib.metadata import version
 
 import fire  # for working CLI with this PoC-thing (The Google way)
 
+from codeaudit.__about__ import __version__
 from codeaudit.reporting import (
     overview_report,
     report_implemented_tests,
@@ -25,7 +25,7 @@ from codeaudit.reporting import (
     scan_report,
 )
 
-CA_VERSION = version("codeaudit")
+CA_VERSION = __version__
 
 codeaudit_ascii_art = r"""
 ----------------------------------------------------

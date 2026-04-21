@@ -37,7 +37,7 @@ Issues = "https://github.com/nocomplexity/codeaudit/issues"
 Source = "https://github.com/nocomplexity/codeaudit"
 
 [tool.hatch.version]
-source = "vcs"
+path = "src/codeaudit/__about__.py"
 
 
 [tool.hatch.build.targets.wheel]
@@ -46,7 +46,8 @@ include = ["src/codeaudit/data/*.csv"]
 
 
 [project.scripts]
-codeaudit = "codeaudit.codeaudit:main"
+codeaudit = "codeaudit.corecli:main"
+
 
 [tool.hatch.envs.types]
 extra-dependencies = [

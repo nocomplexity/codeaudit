@@ -18,11 +18,13 @@ import os
 from pathlib import Path
 import sys
 
-from importlib.metadata import version
 
 import pandas as pd
 import html
 import datetime
+from importlib.resources import files
+
+from codeaudit.__about__ import __version__
 
 from codeaudit.security_checks import perform_validations, ast_security_checks
 from codeaudit.filehelpfunctions import (
@@ -52,9 +54,8 @@ from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
 from codeaudit.suppression import filter_sast_results
 from codeaudit.api_interfaces import _collect_issue_lines
 
-from importlib.resources import files
 
-CA_VERSION = version("codeaudit")
+CA_VERSION = __version__
 
 PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
 DISCLAIMER_TEXT = (
