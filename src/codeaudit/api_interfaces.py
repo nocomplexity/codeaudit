@@ -114,7 +114,8 @@ def filescan(input_path, nosec=False):
     """
     file_output = {}
     file_path = Path(input_path)
-    ca_version_info = version_info()
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}        
+    
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
@@ -404,7 +405,7 @@ def get_default_validations():
 
 def _generation_info():
     """Internal function to retrieve generation info for APIs output"""
-    ca_version_info = version_info()
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}    
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
