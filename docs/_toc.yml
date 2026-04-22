@@ -22,7 +22,7 @@ parts:
     - file: codeauditoverview    
     - file: filescan
     - file: modulescan
-    - file: codeauditchecks  
+    - file: codeauditchecks      
   - file: data_exfiltration_detection
     sections:
     - file: data_egress_implementation
@@ -33,6 +33,7 @@ parts:
   - file: warnings
   - file: handling_errors
   - file: implementedvalidations
+  - file: validatetips
   - file: checksinformation
     sections:
     - file: checks/assert_check
