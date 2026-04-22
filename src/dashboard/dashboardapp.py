@@ -13,14 +13,14 @@ You should have received a copy of the GNU General Public License along with thi
 WASM Dashboard version of codeaudit - limited functionality -
 """
 
-import panel as pn
-pn.extension("vega")
-
 import asyncio
 import datetime
 import inspect
 import json
 import sys
+
+import panel as pn
+pn.extension("vega")
 
 from codeaudit.dashboard_reports import (
     create_statistics_overview,

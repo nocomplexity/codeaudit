@@ -1,7 +1,7 @@
 """
 License GPLv3 or higher.
 
-(C) 2026 Created by Maikel Mardjan - https://nocomplexity.com/
+(C) 2026  @jurgenwigg  
 
 This program is free software: you can redistribute it and/or modify it under the terms
 of the GNU General Public License as published by the Free Software Foundation, either
