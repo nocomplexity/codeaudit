@@ -112,3 +112,28 @@ def test_proper_python_file():
         mocked_is_ast.return_value = True
         result = collect_python_source_files(directory=_EXAMPLE_DIR)
         assert result == ["./example.py"]
+
+
+def test_file_starts_with_dot():
+    """Test that files starting with a dot are not included in the result.
+
+    Test vector:
+        - Directory is not on the excluded list.
+        - Tested file exists.
+        - Tested file starts with a dot.
+
+    Expected behavior:
+        - Walk through a directory with a file starting with a dot.
+        - Verify that the result is an empty list.
+    """
+    with (
+        patch("codeaudit.filehelpfunctions.os", autospec=True) as mocked_os,
+        patch(
+            "codeaudit.filehelpfunctions.is_ast_parsable", autospec=True
+        ) as mocked_is_ast,
+    ):
+        mocked_os.walk.return_value = [(".", [_EXAMPLE_DIR], [".example.py"])]
+        mocked_os.path.isfile.return_value = True
+        mocked_is_ast.return_value = False
+        result = collect_python_source_files(directory=_EXAMPLE_DIR)
+        assert result == []
