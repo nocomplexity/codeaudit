@@ -15,6 +15,7 @@ API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to 
 
 from codeaudit.__about__ import __version__
 
+
 SAST_REPORT_CSS = """
 <style>
 .sast-report {

@@ -22,8 +22,13 @@ import inspect
 import json
 import sys
 
-
-from codeaudit.__about__ import __version__
+from codeaudit.dashboard_reports import (
+    create_statistics_overview,
+    get_disclaimer_text,
+    get_info_text,
+    report_sast_results,
+    report_used_modules,
+)
 
 from codeaudit.altairplots import (
     ast_nodes_overview,
@@ -35,18 +40,10 @@ from codeaudit.altairplots import (
     weaknesses_overview,
     weaknesses_radial_overview,
 )
+
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
+from codeaudit.api_interfaces import get_package_source , version
 
-from codeaudit.api_interfaces import get_package_source 
-
-
-from codeaudit.dashboard_reports import (
-    create_statistics_overview,
-    get_disclaimer_text,
-    get_info_text,
-    report_sast_results,
-    report_used_modules,
-)
 
 #------- <TMP fix> ----------
 
@@ -140,7 +137,7 @@ async def filescan_wasm(input_path, nosec=False):
 
     PYPI PACKAGE ONLY (for now)
     """        
-    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
+    ca_version_info = version()
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
