@@ -59,6 +59,25 @@ check = "mypy --install-types --non-interactive {args:src/codeaudit tests}"
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.14", "3.13", "3.12", "3.11"]
 
+[tool.hatch.envs.hatch-test]
+randomize = true
+dependencies = ["pytest", "pytest-cov", "coverage"]
+
 [tool.black]
 target-version = ["py311", "py312", "py313", "py314"]
 extend-exclude ='(python2_file_willnotwork|dunderexec_with_parsing_error).py|validationfiles|suppression|spytestdir'
+
+[tool.coverage.run]
+branch = true
+source = ["src/codeaudit"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.hatch.envs.hatch-static-analysis]
+dependencies = ["black", "pylint"]
+
+[tool.hatch.envs.hatch-static-analysis.scripts]
+format-check = "black --target-version py313 --check src tests"
+format-fix = "black --target-version py313 src tests"
+lint-check = "pylint src tests"
