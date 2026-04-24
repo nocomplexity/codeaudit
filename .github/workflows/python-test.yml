@@ -6,7 +6,7 @@ name: Python Package Test
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,3 +22,7 @@ jobs:
       - name: Test with hatch
         run: |
           hatch test -vacr
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: .coverage
