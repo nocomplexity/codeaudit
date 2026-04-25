@@ -18,6 +18,7 @@ Dynamic Imports,__import__,Medium,"Importing modules dynamically can load untrus
 Dynamic Imports,importlib.import_module,Medium,"Importing modules dynamically can load untrusted code."
 Insecure Hashing Algorithm,hashlib.md5,High,MD5 is cryptographically broken and should not be used for security purposes.
 Insecure Hashing Algorithm,hashlib.sha1,High,SHA-1 is cryptographically broken and should not be used for security purposes.
+Insecure FTP use,ftplib.FTP,High,Never use this. Sends usernames and passwords in plain text and transfers data unencrypted. 
 Logging Configuration,logging.config,Medium,Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.
 Pickle Usage,pickle.loads,High,Deserializing untrusted data with `pickle` can lead to arbitrary code execution.
 Pickle Usage,pickle.load,High,Deserializing untrusted data with `pickle` can lead to arbitrary code execution.
