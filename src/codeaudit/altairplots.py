@@ -119,7 +119,7 @@ def module_distribution_view(scanresult):
     return donut
 
 
-def make_chart(y_field, df):
+def _make_chart(y_field, df):
     """Function to create a single bar chart with red and grey bars."""
 
     # Calculate the median (or use any other threshold if needed)
@@ -160,7 +160,7 @@ def multi_bar_chart(df):
         "Complexity_Score",
     ]
     rows = [
-        alt.hconcat(*[make_chart(metric, df) for metric in metrics[i : i + 2]])
+        alt.hconcat(*[_make_chart(metric, df) for metric in metrics[i : i + 2]])
         for i in range(0, len(metrics), 2)
     ]
 
@@ -245,18 +245,64 @@ def issue_overview(df):
 
 
 def complexity_heatmap(scanresult):
-    """Create an interactive heatmap of file complexity and size.
+    """Generate an interactive heatmap of file complexity and size.
 
-    Highlights high-risk files based on complexity and lines of code,
-    with dynamic filtering and threshold controls.
+    This function visualizes file-level risk by combining code complexity
+    and lines of code into a single interactive heatmap. Files are ranked
+    and filtered to highlight the most potentially risky candidates based
+    on a derived risk score.
+
+    The visualization includes:
+      - A heatmap of file metrics ("Complexity" and "Lines")
+      - A computed "RiskScore" used for sorting and prioritization
+      - Interactive sliders to control threshold levels for complexity
+        and file size
+      - An optional toggle to display only high-risk files
+      - Tooltip details for deeper inspection
+
+    Data is pre-filtered to improve usability and performance:
+      - Top 30 files by complexity
+      - Top 30 files by lines of code
+      - Combined and deduplicated set, sorted by risk score
 
     Args:
-        scanresult (dict): Scan result containing "file_security_info"
-            with file-level complexity and size metrics.
+        scanresult (dict): Scan output containing file-level metrics.
+            Expected structure:
+            {
+                "file_security_info": {
+                    "<file_id>": {
+                        "file_name": str,
+                        "Number_Of_Lines": int,
+                        "Complexity_Score": int | float,
+                        ...
+                    },
+                    ...
+                }
+            }
 
     Returns:
-        altair.Chart | str: Interactive heatmap chart, or a warning
-        message if input is invalid.
+        altair.Chart | str:
+            - An Altair layered chart (heatmap + text overlay) if input is valid.
+            - A warning message string if `scanresult` is invalid or empty.
+
+    Raises:
+        KeyError: If required keys (e.g., "file_security_info") are missing.
+        ValueError: If input data cannot be converted into a valid DataFrame.
+
+    Notes:
+        - RiskScore is computed as:
+              (Complexity / 80) + (Lines / 2000)
+          This normalization balances the influence of both metrics.
+        - Threshold defaults are set to 70% of the maximum observed values.
+        - The chart is optimized for exploratory analysis rather than
+          exhaustive dataset display.
+
+    Example:
+        >>> chart = complexity_heatmap(scanresult)
+        >>> if isinstance(chart, str):
+        ...     print(chart)
+        >>> else:
+        ...     chart.show()
     """
     if not scanresult or not isinstance(scanresult, dict):
         return "⚠️ No scan result available.\n\nPlease run a scan first."
@@ -596,18 +642,24 @@ def ast_nodes_overview(scanresult, width=800, height=400):
 
 
 def weaknesses_overview(scanresult):
-    """Create a bar chart of the most common security weaknesses.
+    """Generate a bar chart of the most common security weaknesses.
 
-    Aggregates and counts validation findings across all files in the
-    scan result, displaying the top occurrences in a bar chart.
+    Aggregates SAST validation findings across all scanned files and
+    displays the most frequent issues. Designed for quick identification
+    of recurring security patterns.
 
     Args:
-        scanresult (dict): Scan result containing "file_security_info"
-            with SAST validation findings per file.
+        scanresult (dict): Scan output containing "file_security_info" with
+            per-file SAST findings. Each finding should include a "validation" field.
 
     Returns:
-        altair.Chart: Bar chart of top security weaknesses, or a fallback
-        text chart if no data is available.
+        altair.Chart: Bar chart of top weaknesses, or a text-based chart if
+        input is invalid or no findings are present.
+
+    Notes:
+        - Only the top 50 most frequent weaknesses are shown.
+        - The top 5 are visually highlighted.
+        - Returns a fallback chart instead of raising errors for invalid input.
     """
     if not scanresult or not isinstance(scanresult, dict):
         return (

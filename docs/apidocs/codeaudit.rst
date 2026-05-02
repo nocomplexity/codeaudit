@@ -10,3 +10,9 @@ Public Interfaces module
    :undoc-members:
    :show-inheritance:
 
+
+.. automodule:: codeaudit.altairplots
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

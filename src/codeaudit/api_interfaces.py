@@ -1,7 +1,7 @@
 """
 License GPLv3 or higher.
 
-(C) 2025 Created by Maikel Mardjan - https://nocomplexity.com/
+(C) 2025 - 2026 Created by Maikel Mardjan and all contributors - https://nocomplexity.com/
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -48,11 +48,11 @@ from codeaudit.totals import (
     total_modules,
 )
 
+
 def version():
     """Returns the version of Python Code Audit - WASM safe"""
     ca_version = __version__
     return {"name": "Python_Code_Audit", "version": ca_version}
-
 
 
 def filescan(input_path, nosec=False):
@@ -114,8 +114,8 @@ def filescan(input_path, nosec=False):
     """
     file_output = {}
     file_path = Path(input_path)
-    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}        
-    
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
+
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
@@ -405,7 +405,7 @@ def get_default_validations():
 
 def _generation_info():
     """Internal function to retrieve generation info for APIs output"""
-    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}    
+    ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")
     output = ca_version_info | {"generated_on": timestamp_str}
