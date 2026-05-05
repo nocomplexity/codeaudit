@@ -1,8 +1,9 @@
 # Secure Coding Guidelines
 
-Security breaches that are possible when running untrusted Python programs are real.  
+Untrusted Python programs present a genuine security breach risk.
 
-This checklist is created for anyone who wants to create Python programs that are [**secure by design**](https://nocomplexity.com/documents/securitybydesign/intro.html).
+
+This checklist is created for anyone who wants to create Python programs that are [**secure by design**](http://securitybydesign.nocomplexity.com/).
 
 Programming in Python is fun, but when you create programs for others, you **SHOULD NOT** introduce security weaknesses.  
 
