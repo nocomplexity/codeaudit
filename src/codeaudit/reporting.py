@@ -24,7 +24,8 @@ import html
 import datetime
 from importlib.resources import files
 
-from codeaudit.__about__ import __version__
+from codeaudit import __version__
+
 
 from codeaudit.security_checks import perform_validations, ast_security_checks
 from codeaudit.filehelpfunctions import (
@@ -53,7 +54,6 @@ from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_sour
 from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
 from codeaudit.suppression import filter_sast_results
 from codeaudit.api_interfaces import _collect_issue_lines
-
 
 CA_VERSION = __version__
 

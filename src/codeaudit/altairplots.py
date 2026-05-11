@@ -12,11 +12,11 @@ You should have received a copy of the GNU General Public License along with thi
 Altair Plotting functions for Python Code Audit (aka codeaudit)
 """
 
-from collections import Counter
-from pathlib import Path
-
 import altair as alt
 import pandas as pd
+
+from collections import Counter
+from pathlib import Path
 
 
 def module_count_barchart(scanresult):
@@ -253,47 +253,60 @@ def complexity_heatmap(scanresult):
     on a derived risk score.
 
     The visualization includes:
-      - A heatmap of file metrics ("Complexity" and "Lines")
-      - A computed "RiskScore" used for sorting and prioritization
-      - Interactive sliders to control threshold levels for complexity
-        and file size
-      - An optional toggle to display only high-risk files
-      - Tooltip details for deeper inspection
+
+    - A heatmap of file metrics (``"Complexity"`` and ``"Lines"``)
+    - A computed ``"RiskScore"`` used for sorting and prioritization
+    - Interactive sliders to control threshold levels for complexity
+      and file size
+    - An optional toggle to display only high-risk files
+    - Tooltip details for deeper inspection
 
     Data is pre-filtered to improve usability and performance:
-      - Top 30 files by complexity
-      - Top 30 files by lines of code
-      - Combined and deduplicated set, sorted by risk score
+
+    - Top 30 files by complexity
+    - Top 30 files by lines of code
+    - Combined and deduplicated set, sorted by risk score
 
     Args:
         scanresult (dict): Scan output containing file-level metrics.
-            Expected structure:
-            {
-                "file_security_info": {
-                    "<file_id>": {
-                        "file_name": str,
-                        "Number_Of_Lines": int,
-                        "Complexity_Score": int | float,
+
+            Expected structure::
+
+                {
+                    "file_security_info": {
+                        "<file_id>": {
+                            "file_name": str,
+                            "Number_Of_Lines": int,
+                            "Complexity_Score": int | float,
+                            ...
+                        },
                         ...
-                    },
-                    ...
+                    }
                 }
-            }
 
     Returns:
         altair.Chart | str:
-            - An Altair layered chart (heatmap + text overlay) if input is valid.
-            - A warning message string if `scanresult` is invalid or empty.
+            - An Altair layered chart (heatmap + text overlay)
+              if input is valid.
+            - A warning message string if ``scanresult`` is invalid
+              or empty.
 
     Raises:
-        KeyError: If required keys (e.g., "file_security_info") are missing.
-        ValueError: If input data cannot be converted into a valid DataFrame.
+        KeyError: If required keys (for example,
+            ``"file_security_info"``) are missing.
+        ValueError: If input data cannot be converted into a valid
+            DataFrame.
 
     Notes:
-        - RiskScore is computed as:
+        - ``RiskScore`` is computed as::
+
               (Complexity / 80) + (Lines / 2000)
+
           This normalization balances the influence of both metrics.
-        - Threshold defaults are set to 70% of the maximum observed values.
+
+        - Threshold defaults are set to 70% of the maximum observed
+          values.
+
         - The chart is optimized for exploratory analysis rather than
           exhaustive dataset display.
 

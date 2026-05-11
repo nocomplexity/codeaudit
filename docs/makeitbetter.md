@@ -6,7 +6,7 @@ Great that you’re here at this section and want to contribute with code improv
 
 :::{admonition} Be sure to check out our Code of Conduct
 :class: note
-This project values respect and inclusiveness, and enforces a [Code of Conduct](CONTRIBUTE.md#code-of-conduct) in all interactions. This to ensure that our online spaces are enjoyable, inclusive, and productive for all contributors.
+This project values respect and inclusiveness, and enforces a [Code of Conduct](CoC-label) in all interactions. This to ensure that our online spaces are enjoyable, inclusive, and productive for all contributors.
 
 
 We adopt the [Collective Code Construction Contract(C4)](https://rfc.zeromq.org/spec/42/) to streamline collaboration. C4 is meant to provide a reusable optimal collaboration model for open source software projects. 

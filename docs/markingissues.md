@@ -18,7 +18,7 @@ Use caution when distributing software; it is difficult to predict every environ
 
 - **Confirmed False Positives**: The tool has flagged a pattern that you have manually verified as safe and non-exploitable.
 
-
+(markissues-label)=
 ## How to Mark Weaknesses
 To exclude a specific line or statement from future audits, insert a comment directly following the code:
 
@@ -72,7 +72,7 @@ If `myexample.py` contains a security weakness suppressed by a marker, the SAST 
 :::{note} 
 Python Code Audit only reports **potential security issues**. 
 It is up to the user, developer, security tester or someone with the required **security** and **Python** knowledge to decide if action is needed.
-But you can use [markers](#marking-false-positives-and-mitigations) as comments in your code to suppress reporting reviewed security findings that you have mitigated or are no risks for your context.
+But you can use [markers](markissues-label) as comments in your code to suppress reporting reviewed security findings that you have mitigated or are no risks for your context.
 
 This Python Code Audit SAST tool, but this accounts for all SAST tools, analyze code in isolation. So without the runtime environment or how the any knowledge on how code interacts with other components and who the users are. 
 

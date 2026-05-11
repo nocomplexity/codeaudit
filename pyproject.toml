@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
@@ -41,7 +41,7 @@ path = "src/codeaudit/__about__.py"
 
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/codeaudit" , "src/dashboard"]
+packages = ["src/codeaudit"]
 include = ["src/codeaudit/data/*.csv"]
 
 

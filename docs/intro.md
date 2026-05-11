@@ -21,7 +21,6 @@
 In the Getting Started section you can find installation instructions and a high-level overview of the main concepts.
 +++
 ```{button-ref} installation
-:link-type: ref
 :color: danger
 Quick Start Guide
 ```
@@ -33,7 +32,6 @@ Quick Start Guide
 Check out the User Guides for in-depth information on the key concepts of Python Code Audit.
 +++
 ```{button-ref} userguide
-:link-type: ref
 :color: danger
 User Guide
 ```
@@ -53,7 +51,6 @@ The API reference guide contains detailed information on all methods to create y
 
 +++
 ```{button-ref} apidocs/modules
-:link-type: ref
 :color: danger
 API Reference
 ```
@@ -67,7 +64,6 @@ The contributing guidelines will guide you!
 
 +++
 ```{button-ref} CONTRIBUTE
-:link-type: ref
 :color: danger
 Contribute and Join the team!
 ```
@@ -131,7 +127,7 @@ Enjoying **Python Code Audit**? Support us with a [GitHub star](https://github.c
 
 ## Background
 
-The availability of good, maintained FOSS SAST tools for Python is limited. While Bandit is a known tool, its usefulness is significantly limited: it struggles to identify a broad range of security weaknesses and fails to perform many crucial Python security validations. Additionally, its Command Line Interface (CLI) can present a steep learning curve for non-technical users. 
+The availability of well-maintained, open source SAST tools for Python is limited. While Bandit is a known tool, its usefulness is significantly limited. It struggles to identify a broad range of security weaknesses and fails to perform many crucial Python security validations based on modules from the Python Standard Library. Additionally, its Command Line Interface (CLI) can present a steep learning curve for non-technical users. 
 To keep up with current threats, you need a Python Application Security Testing tool that evolves to deliver deeper insights and [high accuracy](https://nocomplexity.com/stop-using-bandit/).
 
 
@@ -140,7 +136,7 @@ To keep up with current threats, you need a Python Application Security Testing 
 :::{note}
 This `Python Code Audit` tool is built to be fast, lightweight, and easy to use.
 
-By default, the tool scans Python code against more than **83 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
+By default, the tool scans Python code against more than **84 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
 
 :::
 

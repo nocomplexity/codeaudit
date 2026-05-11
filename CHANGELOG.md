@@ -1,5 +1,30 @@
 # Change Log
 
+## Version 1.6.5:
+
+
+**Added:**
+
+* **Plain FTP Validation:** Introduced a new validation check to detect the use of plain FTP. Using FTP in modern Python applications is considered a significant security risk (red flag).
+
+**Changed:**
+
+* **Version Retrieval:** Reverted the change that retrieved package versions from PyPI (originally introduced in PR #16) due to compatibility issues with WASM.
+* **CI/CD Configuration:** Updated `pyproject.toml` to enhance GitHub Actions testing workflows. (Credit: @jurgenwigg)
+
+**Fixed:**
+
+* **Docstring Improvements:** Enhanced and refined docstrings across the Altair APIs for better clarity and developer experience.
+
+**Documentation:**
+
+* **Manual Update:** Substantial improvements to the user manual, including a new section dedicated to integrating and using Python security validation tools.
+
+## Version 1.6.4:
+
+Fixed:
+- Dashboard Reporting: Resolved issue affecting dashboard rendering and data output within the Panel / WASM (WebAssembly) environment.
+
 
 ## Version 1.6.3:
 

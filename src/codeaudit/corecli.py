@@ -25,8 +25,6 @@ from codeaudit.reporting import (
     scan_report,
 )
 
-CA_VERSION = __version__
-
 codeaudit_ascii_art = r"""
 ----------------------------------------------------
  _                    __             _             
@@ -38,7 +36,7 @@ codeaudit_ascii_art = r"""
 
 def display_version():
     """Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version]."""
-    print(f"version: {CA_VERSION}")
+    print(f"version: {__version__}")
 
 
 def display_help():

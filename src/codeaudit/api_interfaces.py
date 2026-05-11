@@ -23,7 +23,7 @@ from pathlib import Path
 import altair as alt
 import pandas as pd
 
-from codeaudit.__about__ import __version__
+from codeaudit import __version__
 
 
 from codeaudit.checkmodules import (
@@ -96,12 +96,12 @@ def filescan(input_path, nosec=False):
         dict: A JSON-serializable dictionary containing scan results and
         metadata. The structure varies slightly depending on the scan type,
         but always includes:
-            - Version information from ``version()``.
-            - ``generated_on`` timestamp (``YYYY-MM-DD HH:MM``).
-            - Package or file-level security findings.
+        - Version information from ``version()``.
+        - ``generated_on`` timestamp (``YYYY-MM-DD HH:MM``).
+        - Package or file-level security findings.
 
-        If the input cannot be interpreted as a valid directory, Python file,
-        or PyPI package, a dictionary with an ``"Error"`` key is returned.
+    If the input cannot be interpreted as a valid directory, Python file,
+    or PyPI package, a dictionary with an ``"Error"`` key is returned.
 
     Raises:
         None explicitly. Any unexpected exceptions are allowed to propagate
@@ -366,36 +366,37 @@ def get_overview(input_path):
 def get_default_validations():
     """Retrieve the default implemented security validations.
 
-    This function collects the built-in Static Application Security Testing (SAST)
-    validations applied to standard Python modules. It retrieves the validation
-    definitions, converts them into a serializable format, and enriches the result
-    with generation metadata.
+    This function collects the built-in Static Application Security Testing
+    (SAST) validations applied to standard Python modules. It retrieves the
+    validation definitions, converts them into a serializable format, and
+    enriches the result with generation metadata.
 
     The returned structure is intended to be consumed by reporting, API, or
     documentation layers.
 
     Returns:
-        dict: A dictionary containing generation metadata and a list of security
-        validations. The dictionary has the following structure:
+        dict: A dictionary containing generation metadata and a list of
+        security validations.
 
-        {
-            "<metadata_key>": <metadata_value>,
-            ...,
-            "validations": [
-                {
-                    "<field>": <value>,
+        Example structure::
+
+            {
+                "<metadata_key>": "<metadata_value>",
+                ...,
+                "validations": [
+                    {
+                        "<field>": "<value>",
+                        ...
+                    },
                     ...
-                },
-                ...
-            ]
-        }
+                ]
+            }
 
-
-    **Notes**:
-
-        - Requires Python 3.9 or later due to use of the dictionary union operator (`|`).
-        - The `validations` list is derived from a pandas DataFrame using
-          `to_dict(orient="records")`.
+    Notes:
+        - Requires Python 3.9 or later due to use of the dictionary
+          union operator (``|``).
+        - The ``validations`` list is derived from a pandas DataFrame
+          using ``to_dict(orient="records")``.
     """
     df = ast_security_checks()
     result = df.to_dict(orient="records")

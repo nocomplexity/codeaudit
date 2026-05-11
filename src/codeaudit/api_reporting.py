@@ -19,9 +19,8 @@ So all results are returned as Pandas Dataframe. This makes things easier for fu
 
 """
 
-from collections import Counter
-
 import pandas as pd
+from collections import Counter
 
 
 def total_weaknesses(input_file):

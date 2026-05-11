@@ -18,8 +18,7 @@ import re
 from importlib.resources import files
 from pathlib import Path
 
-from codeaudit.__about__ import __version__
-
+from codeaudit import __version__
 
 from codeaudit.filehelpfunctions import (
     collect_python_source_files,
@@ -63,7 +62,7 @@ def data_egress_scan(input_path):
         returned dictionary.
     """
     file_output = {}
-    file_path = Path(input_path)    
+    file_path = Path(input_path)
     ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
     now = datetime.datetime.now()
     timestamp_str = now.strftime("%Y-%m-%d %H:%M")

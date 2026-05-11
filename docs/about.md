@@ -28,7 +28,7 @@ Use this Playbook to create better and faster security solutions for your securi
 :::
 
 :::{grid-item-card}
-:link: https://nocomplexity.com/documents/securitybydesign/intro.html
+:link: http://securitybydesign.nocomplexity.com/
 :link-type: url
 {octicon}`book;2em;caption-text` **Security By Design**        
 ^^^
