@@ -12,9 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to build custom reports.
 """
 
-
 from codeaudit.__about__ import __version__
-
 
 SAST_REPORT_CSS = """
 <style>
@@ -83,11 +81,12 @@ details summary {
 </style>
 """
 
+
 def _require_panel():
     """Import the optional Panel dependency safely."""
     try:
         import panel as pn
-        pn.extension()
+
         return pn
     except ImportError:
         raise ImportError(
@@ -177,11 +176,11 @@ def report_sast_results(scanresult):
 
     # --- Input validation ---
     if not scanresult or not isinstance(scanresult, dict):
-        return '<br><h2>⚠️ No scan result provided</h2>'
+        return "<br><h2>⚠️ No scan result provided</h2>"
 
     file_security_info = scanresult.get("file_security_info")
     if not isinstance(file_security_info, dict) or len(file_security_info) == 0:
-        return '<br><h2>⚠️ No file security info found</h2>'
+        return "<br><h2>⚠️ No file security info found</h2>"
 
     # Collect files that have SAST results
     files_with_findings = []
@@ -194,7 +193,7 @@ def report_sast_results(scanresult):
             files_with_findings.append(file_info)
 
     if not files_with_findings:
-        return '<br><h2>✅ No security weaknesses found</h2>'
+        return "<br><h2>✅ No security weaknesses found</h2>"
 
     # --- Safe statistics handling ---
     stats = scanresult.get("statistics_overview")
@@ -304,7 +303,7 @@ def report_used_modules(scanresult):
     # --- Input validation ---
     card1 = ""
     if not scanresult or not isinstance(scanresult, dict):
-        return '<br><h2>⚠️ No scan result provided</h2>'
+        return "<br><h2>⚠️ No scan result provided</h2>"
     modules_discovered = scanresult["module_overview"]
     core_modules = modules_discovered["core_modules"]
     external_modules = modules_discovered["imported_modules"]
@@ -417,13 +416,14 @@ def get_info_text():
     )
     return infotext
 
+
 def get_disclaimer_text():
     """defines the sidebar disclaimer text"""
     pn = _require_panel()  # Panel module is needed for this function
-    
-    # Get the version string 
+
+    # Get the version string
     version_id = __version__
-        
+
     disclaimer = (
         f"<br><b>Disclaimer:</b> This scan only evaluates Python files. "
         f"Security weaknesses can also exist in other files used by a Python package.<br><br>"
@@ -432,7 +432,7 @@ def get_disclaimer_text():
         f"However, it's not a substitute for human review in combination with business knowledge. "
         f"Undetected vulnerabilities may still exist."
         f'<p><strong><a href="https://nocomplexity.com/documents/codeaudit/intro.html">Python Code Audit</a></strong> '
-        f'Dashboard - version {version_id}</p>'                
+        f"Dashboard - version {version_id}</p>"
     )
 
     disclaimer_text = pn.pane.HTML(disclaimer)

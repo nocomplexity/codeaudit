@@ -12,8 +12,6 @@ You should have received a copy of the GNU General Public License along with thi
 Function to create nice APIs. So API helper functions.
 """
 
-import pandas as pd
-
 from codeaudit.api_interfaces import get_modules, get_overview, _build_weakness_details
 from codeaudit.checkmodules import get_all_modules
 from codeaudit.filehelpfunctions import (

@@ -23,7 +23,7 @@ from pathlib import Path
 import altair as alt
 import pandas as pd
 
-from codeaudit import __version__
+from codeaudit.__about__ import __version__  # using robust imports for WASM version
 
 
 from codeaudit.checkmodules import (
