@@ -52,7 +52,10 @@ Subprocess Usage,subprocess.check_output,Medium,Requires careful input validatio
 Subprocess Usage,subprocess.getstatusoutput,Medium,Requires careful input validation to prevent command injection vulnerabilities.
 Subprocess Usage,subprocess.getoutput,Medium,Requires careful input validation to prevent command injection vulnerabilities.
 Tarfile Extraction,tarfile.TarFile,High,Vulnerable to path traversal attacks if used with untrusted archives.
-Base64 Encoding ,base64,Low,"Base64 encoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code."
+Base64 Decoding ,base64.b64decode,Medium,"Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code."
+Base64 Decoding ,base64.z85decode,Medium,Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.
+Base64 Decoding ,base64.b85encode,Low,Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.
+Base64 Decoding ,base64.b64encode,Low,Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.
 XML-RPC Client,xmlrpc.client,High,Vulnerable to denial-of-service via decompression bombs.
 XML-RPC Server,xmlrpc.server.SimpleXMLRPCServer,High,Vulnerable to denial-of-service via decompression bombs.
 Cryptographically Unsafe Randomness,random.random,Low,The pseudo-random generators in this module are not suitable for security purposes. 

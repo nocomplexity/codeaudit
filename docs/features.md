@@ -1,7 +1,7 @@
 # Features
 
+**Python Code Audit** is a modern security-focused source code analysis tool for Python, built on a **zero-trust** mindset. It identifies security risks, hidden behaviours, and trust boundaries without ever executing the code. This makes it safe to use on both your own projects and third-party code.
 
-**Python Code Audit** is a modern Python **security** source code analysis tool built on a *zero-trust* mindset. It focuses on identifying security risks, hidden behaviors, and trust boundaries in Python code—without executing it.
 
 :::{admonition} Key Features of Python Code Audit
 :class: tip

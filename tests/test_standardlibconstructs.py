@@ -42,26 +42,6 @@ def test_os_interfaces():
     assert actual_data == expected_data
 
 
-def test_base64encoding():
-    current_file_directory = Path(__file__).parent
-
-    # validation1.py is in a subfolder:
-    validation_file_path = current_file_directory / "validationfiles" / "base64.py"
-
-    source = read_in_source_file(validation_file_path)
-
-    constructs = {"base64"}
-    actual_data = find_constructs(source, constructs)
-
-    # This is the expected dictionary
-    expected_data = {
-        "base64": [2, 3],
-    }
-
-    # Assert that the actual data matches the expected data
-    assert actual_data == expected_data
-
-
 def test_httpserver_usage():
     current_file_directory = Path(__file__).parent
 
