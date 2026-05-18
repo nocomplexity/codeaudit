@@ -1,7 +1,25 @@
 # Change Log
 
-## Version 1.6.5:
+## Version 1.6.6:
 
+**Added:**
+
+* Extended checking capabilities for Base64 encoding to improve validation rigor.
+
+**Changed**
+
+* Updated `pyproject.toml` configuration to align with the new WebAssembly (WASM) release requirements.
+
+**Fixed**
+
+* Resolved compatibility issues and bugs to fully support the new stable WASM version.
+
+**Documentation**
+
+* Miscellaneous documentation improvements and updates for clarity and coverage.
+
+
+## Version 1.6.5:
 
 **Added:**
 

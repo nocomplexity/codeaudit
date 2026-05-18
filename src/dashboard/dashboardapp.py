@@ -336,7 +336,7 @@ main_pane = pn.Column(tabs, sizing_mode="stretch_both")
 
 
 app = pn.template.MaterialTemplate(
-    header_background="#262626",
+    header_background="#1E2937",
     title="Python Security Code Audit",
     sidebar=[ca_sidebar],
     main=[main_pane],

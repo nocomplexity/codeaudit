@@ -109,5 +109,3 @@ def example():
 5. **Why the Difference Matters**
 - `wc -l` is useful for getting a raw count of lines in a file, often used for file statistics or quick checks.
 - `count_ast_lines` is more relevant for analyzing **executable code complexity** or **code coverage**, as it focuses on lines that represent actual Python syntax nodes, ignoring non-executable content like comments or blank lines.
-
-Let me know if you need further examples or clarification!

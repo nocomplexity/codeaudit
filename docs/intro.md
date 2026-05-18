@@ -136,7 +136,7 @@ To keep up with current threats, you need a Python Application Security Testing 
 :::{note}
 This `Python Code Audit` tool is built to be fast, lightweight, and easy to use.
 
-By default, the tool scans Python code against more than **84 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
+By default, the tool scans Python code against more than **87 rules** to detect potential security vulnerabilities. These rules target unsafe constructs of the standard Python libraries that could pose a security risk. 
 
 :::
 

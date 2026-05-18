@@ -1,15 +1,26 @@
-# Exception statements
+## Exception Statements
 
-Codeaudit checks the `onpass` in a except block.
+Codeaudit detects the use of `pass` within an `except` block.
 
-The Python code `try: do_some_stuff() except Exception: pass` presents potential security risks due to its overly broad exception handling and silent failure option.
+The Python pattern:
+```python
+try:
+    do_some_stuff()
+except Exception:
+    pass
+```
 
-This also applies when using `continue`!
+presents potential security risks due to:
+- **Overly broad exception handling** – catching `Exception` masks virtually all errors
+- **Silent failure** – using `pass` suppresses all evidence that something went wrong
 
-So Codeaudit also checks on:
-*  `pass` and 
-* `continue` 
-statements in exception clauses.
+This security concern also applies when using `continue` inside an exception block, as it similarly bypasses error reporting.
+
+**Python Code Audit detects:**
+
+- `pass` statements in exception clauses
+- `continue` statements in exception clauses
+
 
 ## Background
 
