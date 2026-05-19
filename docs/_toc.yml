@@ -10,7 +10,9 @@ parts:
   - file: whatissast
   - file: whysast
   - url: https://securitytesting.nocomplexity.com/ 
-    title: Mastering Security Testing for Python
+    title: Security Testing for Python
+  - url: http://securitybydesign.nocomplexity.com/
+    title: Security By Design
   
   
 

@@ -1,7 +1,7 @@
 {
   "name": "Python_Code_Audit",
-  "version": "1.6.5",
-  "generated_on": "2026-05-11 16:42",
+  "version": "1.6.6",
+  "generated_on": "2026-05-19 16:06",
   "file_security_info": {
     "0": {
       "FileName": "demofile.py",
@@ -211,6 +211,20 @@
           "severity": "High",
           "info": "This function can be used to execute arbitrary code or crash the Python interpreter.",
           "code": "<pre><code class='language-python'>compile(&#x27;nasty-string&#x27; ,&#x27;malware.bin&#x27;,mode=single, flags=0, dont_inherit=False, optimize=-1)</code></pre>"
+        },
+        "238": {
+          "line": 238,
+          "validation": "base64.b64encode",
+          "severity": "Low",
+          "info": "Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.",
+          "code": "<pre><code class='language-python'>import base64\nencoded = base64.b64encode(b&#x27;data to be encoded&#x27;)\ndata = base64.b64decode(encoded)</code></pre>"
+        },
+        "239": {
+          "line": 239,
+          "validation": "base64.b64decode",
+          "severity": "Medium",
+          "info": "Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.",
+          "code": "<pre><code class='language-python'>encoded = base64.b64encode(b&#x27;data to be encoded&#x27;)\ndata = base64.b64decode(encoded)</code></pre>"
         },
         "244": {
           "line": 244,
@@ -458,20 +472,6 @@
           "severity": "Medium",
           "info": "Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.",
           "code": "<pre><code class='language-python'>logging.config.fileConfig(fname, defaults=None, disable_existing_loggers=True, encoding=None)\n#&lt;END LOGGING checks&gt;</code></pre>"
-        },
-        "238": {
-          "line": 238,
-          "validation": "base64",
-          "severity": "Low",
-          "info": "Base64 encoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.",
-          "code": "<pre><code class='language-python'>import base64\nencoded = base64.b64encode(b&#x27;data to be encoded&#x27;)\ndata = base64.b64decode(encoded)</code></pre>"
-        },
-        "239": {
-          "line": 239,
-          "validation": "base64",
-          "severity": "Low",
-          "info": "Base64 encoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.",
-          "code": "<pre><code class='language-python'>encoded = base64.b64encode(b&#x27;data to be encoded&#x27;)\ndata = base64.b64decode(encoded)</code></pre>"
         },
         "316": {
           "line": 316,

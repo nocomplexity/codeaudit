@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyodide - Test codeaudit</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+        pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow-x: auto; max-height: 500px; }
+        button { padding: 10px 18px; font-size: 16px; margin: 5px; cursor: pointer; }
+        h1 { color: #333; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Pyodide Test Environment — <code>codeaudit</code></h1>
+    
+    <button onclick="installAndTest()">1. Install & Test codeaudit</button>
+    <button onclick="listPackages()">2. List All Installed Packages</button>
+    <button onclick="clearOutput()">Clear Output</button>
+
+    <pre id="output">Click a button to start...</pre>
+
+    <script>
+        let pyodideInstance = null;
+
+        async function getPyodide() {
+            const output = document.getElementById("output");
+            if (!pyodideInstance) {
+                output.textContent = "Loading Pyodide (first time can take 10–20 seconds)...\n";
+                
+                pyodideInstance = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.29.4/full/"
+                });
+
+                await pyodideInstance.loadPackage("micropip");
+                output.textContent += "✅ Pyodide + micropip ready.\n";
+            }
+            return pyodideInstance;
+        }
+
+        async function installAndTest() {
+            const output = document.getElementById("output");
+            try {
+                const pyodide = await getPyodide();
+                const micropip = pyodide.pyimport("micropip");
+
+                output.textContent += "\nInstalling codeaudit...\n";
+                await micropip.install("codeaudit");
+
+                output.textContent += "✅ codeaudit installed successfully!\n\n";
+
+                await pyodide.runPythonAsync(`
+                    import codeaudit
+                    print("Package imported successfully!")
+                    print("Version :", getattr(codeaudit, "__version__", "Unknown"))
+                `);
+
+                output.textContent += "🎉 Test completed!\n";
+
+            } catch (err) {
+                output.textContent += "❌ Error: " + err.message + "\n";
+                console.error(err);
+            }
+        }
+
+        async function listPackages() {
+            const output = document.getElementById("output");
+            try {
+                const pyodide = await getPyodide();
+
+                output.textContent += "\nFetching list of installed packages...\n";
+
+                const pkgList = await pyodide.runPythonAsync(`
+                    import micropip
+                    import sys
+                    from io import StringIO
+
+                    # Capture output properly
+                    old_stdout = sys.stdout
+                    sys.stdout = mystdout = StringIO()
+
+                    packages = micropip.list()
+                    print("=== INSTALLED PACKAGES IN PYODIDE ===")
+                    print(f"Total packages: {len(packages)}")
+                    print("-" * 60)
+                    
+                    for name in sorted(packages.keys()):
+                        pkg = packages[name]
+                        print(f"{name:25} {pkg.version:15} {pkg.source}")
+                    
+                    sys.stdout = old_stdout
+                    mystdout.getvalue()
+                `);
+
+                output.textContent += pkgList || "No output returned.";
+                output.textContent += "\n✅ Package list retrieved.\n";
+
+            } catch (err) {
+                output.textContent += "❌ Error listing packages: " + err.message + "\n";
+                console.error(err);
+            }
+        }
+
+        function clearOutput() {
+            document.getElementById("output").textContent = "";
+        }
+    </script>
+</body>
+</html>

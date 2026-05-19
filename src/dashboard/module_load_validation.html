@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyodide - Test codeaudit (WASM dashboard)</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+        button { padding: 10px 16px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Testing your <code>codeaudit</code> package in Pyodide</h1>
+    <button onclick="runTest()">Install & Test codeaudit</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function runTest() {
+            const output = document.getElementById("output");
+            output.textContent = "Loading Pyodide...\n";
+
+            try {
+                // Load Pyodide
+                let pyodide = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.29.4/full/"
+                });
+
+                output.textContent += "Pyodide loaded successfully.\n";
+                output.textContent += "Loading micropip...\n";
+
+                await pyodide.loadPackage("micropip");
+                const micropip = pyodide.pyimport("micropip");
+
+                output.textContent += "Installing codeaudit from PyPI...\n";
+
+                // Install your package
+                await micropip.install("codeaudit");
+
+                output.textContent += "✅ codeaudit installed successfully!\n\n";
+
+                // Run Python code to test it
+                await pyodide.runPythonAsync(`
+                    import codeaudit
+                    print("Package imported successfully!")
+                    print("Version:", codeaudit.__version__ if hasattr(codeaudit, "__version__") else "Unknown")
+                    
+                    # Add any basic test calls here
+                    # Example:
+                    # result = codeaudit.scan("example")
+                    # print(result)
+                `);
+
+                output.textContent += "All tests passed! 🎉\n";
+
+            } catch (err) {
+                output.textContent += "❌ Error: " + err.message + "\n";
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
