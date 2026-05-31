@@ -13,6 +13,8 @@ parts:
     title: Security Testing for Python
   - url: http://securitybydesign.nocomplexity.com/
     title: Security By Design
+  - url: https://nocomplexity.github.io/pythonsecurity/
+    title: Python Security Handbook
   
   
 
@@ -29,13 +31,11 @@ parts:
     sections:
     - file: data_egress_implementation
   - file: issues
-  - file: markingissues
-  - file: securecoding
+  - file: markingissues  
   - file: complexitycheck
   - file: warnings
   - file: handling_errors
-  - file: implementedvalidations
-  - file: validatetips
+  - file: implementedvalidations  
   - file: checksinformation
     sections:
     - file: checks/assert_check
