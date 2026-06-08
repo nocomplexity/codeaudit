@@ -25,6 +25,8 @@ from codeaudit.reporting import (
     scan_report,
 )
 
+from codeaudit.ci_workflowscan import ci_scan
+
 codeaudit_ascii_art = r"""
 ----------------------------------------------------
  _                    __             _             
@@ -95,6 +97,7 @@ def main():
                 "filescan": scan_report,
                 "checks": report_implemented_tests,
                 "version": display_version,
+                "cimode": ci_scan,
             }
         )
 
