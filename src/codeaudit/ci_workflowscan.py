@@ -20,15 +20,19 @@ from codeaudit.dashboard_reports import SAST_REPORT_CSS
 
 def ci_scan(input_path, output="text", nosec=True):
     """Basic SAST scan to be used in CI workflows
-    The nosec is set to true for CI workflows by default, it can be changed
-    Security weakness SHOULD be marked for an exit 0 status in your CI
 
-    Note: If you use JSON output you will have an exit status 0, since you have to determine yourself if there are weaknesses found in your code.
+    The nosec is set to true for CI workflows by default, it can be changed.
+    Security weakness SHOULD be marked for an exit 0 status in your CI.
 
-    Set an options in your CI job like e.g. allow_failure:True since jobs that run can result in detecting weaknesses and this is no failure of the job!
+    Note: If you use JSON output you will have an exit status 0, since you have to
+    determine yourself if there are weaknesses found in your code.
+
+    Set an option in your CI job like e.g. allow_failure: true since jobs that run
+    can result in detecting weaknesses and this is no failure of the job!
     """
     try:
         scanresult = filescan(input_path, nosec=nosec)
+
         # collect and return info from scanned files
         if output == "text":
             result, security_status = report_result_txt(scanresult)
@@ -44,12 +48,17 @@ def ci_scan(input_path, output="text", nosec=True):
             result = f"ERROR: Unsupported format '{output}'"
             print(result, file=sys.stderr)
             sys.exit(1)
-        if security_status == 0:  # no files with weakness found - or properly marked!
-            sys.exit(0)  # correct finish
+
+        # Exit codes:
+        #   0 = clean (no weaknesses or properly marked with nosec)
+        #   3 = weaknesses found (allowed in CI via allow_failure: true)
+        if security_status == 0:
+            sys.exit(0)  # clean finish
         else:
-            sys.exit(3)  # finish with detected weakness
+            sys.exit(3)  # weaknesses found → job "failed" but pipeline continues
+
     except Exception as e:
-        # Log the actual error 'e' for debugging CI failures
+        # Log the actual error for debugging CI failures
         print(f"ERROR: Scan failed. Details: {e}", file=sys.stderr)
         sys.exit(1)
 
