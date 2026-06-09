@@ -19,15 +19,27 @@ from codeaudit.dashboard_reports import SAST_REPORT_CSS
 
 PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
 DISCLAIMER_TEXT = (
-    "<p><b>Disclaimer:</b> <i>This SAST tool "
+    '<div class="sast-report"><p><b>Disclaimer:</b> <i>This SAST tool '
     + PYTHON_CODE_AUDIT_TEXT
-    + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p>"
+    + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p></div>"
 )
 
-NOSEC_WARNING = "<p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p>"
+NOSEC_WARNING = '<div class="sast-report"><p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p></div>'
+
+HTML_FOOTER = (
+    '<div class="sast-report"><p><hr>'
+    + 'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
+    + 'target="_blank">documentation</a> for help on found issues.<br>'
+    + 'Codeaudit is made with <span class="heart">&#10084;</span> by cyber security '
+    + 'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" '
+    + 'target="_blank">open simple security solutions</a>.<br>'
+    + '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" '
+    + 'target="_blank">Join the community</a> and contribute to make this tool better!'
+    + "</p></div>"
+)
 
 
-def ci_scan(input_path, format="text", nosec=True):
+def ci_scan(input_path, output="text", nosec=True):
     """Basic SAST scan to be used in CI workflows
     The nosec is set to true for CI workflows by default, it can be changed
     Security weakness SHOULD be marked for an exit 0 status in your CI
@@ -39,21 +51,21 @@ def ci_scan(input_path, format="text", nosec=True):
     try:
         scanresult = filescan(input_path, nosec=nosec)
         # collect and return info from scanned files
-        if format == "text":
-            output, security_status = report_result_txt(scanresult)
-            print(output)
-        elif format == "html":
-            output, security_status = report_result_html(scanresult)
+        if output == "text":
+            result, security_status = report_result_txt(scanresult)
+            print(result)
+        elif output == "html":
+            result, security_status = report_result_html(scanresult)
             if nosec:
-                output = NOSEC_WARNING + output
-            print(output)
-        elif format == "json":
-            output, security_status = report_result_json(scanresult)
-            print(output)
+                result = NOSEC_WARNING + result
+            print(result)
+        elif output == "json":
+            result, security_status = report_result_json(scanresult)
+            print(result)
         else:
             # Fallback handling for unsupported formats to prevent output crashes
-            output = f"ERROR: Unsupported format '{format}'"
-            print(output, file=sys.stderr)
+            result = f"ERROR: Unsupported format '{output}'"
+            print(result, file=sys.stderr)
             sys.exit(1)
         if security_status == 0:  # no files with weakness found - or properly marked!
             sys.exit(0)  # correct finish
@@ -66,7 +78,7 @@ def ci_scan(input_path, format="text", nosec=True):
 
 
 def report_result_json(scanresult):
-    """Returns scan result in json format.
+    """Returns scan result in json outputformat.
     Note: not (yet) directly usable since you still need to dive in the dict structure to retrieve results, if any for weaknesses found per file. The resulting json structure is outlined in the documentation. You can use e.g. the `jq` tool. Or join the Python Code Audit community to create CI json output that suites your needs!
     Note that it is hierarchical json structure. See the docs!
     """
@@ -79,7 +91,7 @@ def report_result_json(scanresult):
 
 
 def report_result_txt(scanresult):
-    """Returns scan result in txt format."""
+    """Returns scan result in txt output format."""
     # Ensure scanresult is a dictionary to prevent crash on .get()
     if not isinstance(scanresult, dict):
         print("❌ Error: Invalid scan result data format structure.", file=sys.stderr)
@@ -166,11 +178,11 @@ def report_result_html(scanresult):
     """HTML output - as artifact"""
     # --- Input validation ---
     if not scanresult or not isinstance(scanresult, dict):
-        return "<br><h2>⚠️ No scan result provided</h2>"
+        return "<br><h2>⚠️ No scan result provided</h2>", 1
 
     file_security_info = scanresult.get("file_security_info")
     if not isinstance(file_security_info, dict) or len(file_security_info) == 0:
-        return "<br><h2>⚠️ No file security info found</h2>"
+        return "<br><h2>⚠️ No file security info found</h2>", 1
 
     # Collect files that have SAST results
     files_with_findings = []
@@ -183,7 +195,8 @@ def report_result_html(scanresult):
             files_with_findings.append(file_info)
 
     if not files_with_findings:
-        return "<br><h2>✅ No security weaknesses found</h2>"
+        html = "<br><h2>✅ No security weaknesses found</h2>"
+        return html, 0
 
     # --- Safe statistics handling ---
     stats = scanresult.get("statistics_overview")
@@ -272,23 +285,9 @@ def report_result_html(scanresult):
         html += "</details><br>"
     html += "</div>"
     html += DISCLAIMER_TEXT
-
-    html += "<footer>"
-    html += (
-        '<div class="footer-links">'
-        'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
-        'target="_blank">documentation</a> for help on found issues.<br>'
-        'Codeaudit is made with <span class="heart">&#10084;</span> by cyber security '
-        'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" '
-        'target="_blank">open simple security solutions</a>.<br>'
-        '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" '
-        'target="_blank">Join the community</a> and contribute to make this tool better!'
-        "</div>"
-    )
-    html += "</footer>"
-    html += "</div>"
+    html += HTML_FOOTER
 
     if not files_with_findings:
-        return html, 0
+        return html, True
     else:
         return html, files_with_findings
