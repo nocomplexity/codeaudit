@@ -118,7 +118,7 @@ async def get_package_source_wasm(url):
         with tarfile.open(tar_path, "r:gz") as tar:
             tar.extractall(
                 path=temp_dir, filter="data"
-            )  # nosec Possible risks are mitigated and this happends in the WASM context.
+            )  # nosec Possible risks are mitigated and this happens in the WASM context.
 
         return temp_dir, tmpdir_obj
 

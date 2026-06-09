@@ -14,30 +14,33 @@ Functionality to use Python Code Audit within CI workflows.
 """
 
 import sys
-
 from codeaudit.api_interfaces import filescan
-
-import sys
 
 
 def ci_scan(input_path, format="text", nosec=True):
     """Basic SAST scan to be used in CI workflows
     The nosec is set to true for CI workflows by default, it can be changed
+    Security weakness SHOULD be marked for an exit 0 status in your CI
+
+    Note: If you use JSON output you will have an exit status 0, since you have to determine yourself if there are weaknesses found in your code.
     """
     try:
         scanresult = filescan(input_path, nosec=nosec)
         # collect and return info from scanned files
         if format == "text":
-            output = report_result_txt(scanresult)
+            output, security_status = report_result_txt(scanresult)
         elif format == "json":
-            output = report_result_json(scanresult)
+            output, security_status = report_result_json(scanresult)
         else:
             # Fallback handling for unsupported formats to prevent output crashes
             output = f"ERROR: Unsupported format '{format}'"
             print(output, file=sys.stderr)
             sys.exit(1)
         print(output)
-        sys.exit(0)  # correct finish
+        if security_status == 0:  # no files with weakness found - or properly marked!
+            sys.exit(0)  # correct finish
+        else:
+            sys.exit(20)  # finish with detected weakness
 
     except Exception as e:
         # Log the actual error 'e' for debugging CI failures
@@ -47,20 +50,15 @@ def ci_scan(input_path, format="text", nosec=True):
 
 def report_result_json(scanresult):
     """Returns scan result in json format.
-    Note: not (yet) directly usuable since you still need to dive in the dict structure to retrieve results, if any for weaknesses found per file.
+    Note: not (yet) directly usable since you still need to dive in the dict structure to retrieve results, if any for weaknesses found per file. The resulting json structure is outlined in the documentation. You can use e.g. the `jq` tool. Or join the Python Code Audit community to create CI json output that suites your needs!
+    Note that it is hierarchical json structure. See the docs!
     """
     if not isinstance(scanresult, dict):
         raise TypeError("Expected scanresult to be a dictionary")
-
     file_security_info = scanresult.get("file_security_info")
+    files_with_findings_count = 0
 
-    if not isinstance(file_security_info, dict) or len(file_security_info) == 0:
-        # Raising an error forces the calling function's 'try/except' block to trigger
-        raise ValueError("Critical Error: 'file_security_info' is missing or empty.")
-    return file_security_info
-
-
-import sys
+    return file_security_info, files_with_findings_count
 
 
 def report_result_txt(scanresult):
@@ -135,13 +133,13 @@ def report_result_txt(scanresult):
     total_number_of_files = stats.get("Number_Of_Files", 1)
 
     if files_with_findings_count == 0:
-        summary = "✅ No security issues found in file(s) or Package.\n"
+        summary = "✅ No security issue(s) found in file(s) or Package.\n"
     else:
         summary = ""
 
     summary += f"\nTotal files with findings: {files_with_findings_count} of {total_number_of_files} Python files checked."
 
     if files_with_findings_count == 0:
-        return summary
+        return summary, files_with_findings_count
     else:
-        return output + summary
+        return output + summary, files_with_findings_count

@@ -32,11 +32,11 @@ def total_weaknesses(input_file):
         sast_result = file_info.get("sast_result", {})
         for (
             construct,
-            occurence,
+            occurrence,
         ) in (
             sast_result.items()
-        ):  # occurence is times the construct appears in a single file
-            counter[construct] += len(occurence)
+        ):  # occurrence is times the construct appears in a single file
+            counter[construct] += len(occurrence)
 
     result = dict(counter)
     df = pd.DataFrame(list(result.items()), columns=["call", "count"])
