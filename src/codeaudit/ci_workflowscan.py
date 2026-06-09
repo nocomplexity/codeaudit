@@ -15,6 +15,7 @@ Functionality to use Python Code Audit within CI workflows.
 
 import sys
 from codeaudit.api_interfaces import filescan
+from codeaudit.dashboard_reports import SAST_REPORT_CSS
 
 
 def ci_scan(input_path, format="text", nosec=True):
@@ -29,14 +30,18 @@ def ci_scan(input_path, format="text", nosec=True):
         # collect and return info from scanned files
         if format == "text":
             output, security_status = report_result_txt(scanresult)
+            print(output)
+        elif format == "html":
+            output, security_status = report_result_html(scanresult)
+            print(output)
         elif format == "json":
             output, security_status = report_result_json(scanresult)
+            print(output)
         else:
             # Fallback handling for unsupported formats to prevent output crashes
             output = f"ERROR: Unsupported format '{format}'"
             print(output, file=sys.stderr)
             sys.exit(1)
-        print(output)
         if security_status == 0:  # no files with weakness found - or properly marked!
             sys.exit(0)  # correct finish
         else:
@@ -143,3 +148,117 @@ def report_result_txt(scanresult):
         return summary, files_with_findings_count
     else:
         return output + summary, files_with_findings_count
+
+
+def report_result_html(scanresult):
+    """HTML output - as artifact"""
+    # --- Input validation ---
+    if not scanresult or not isinstance(scanresult, dict):
+        return "<br><h2>⚠️ No scan result provided</h2>"
+
+    file_security_info = scanresult.get("file_security_info")
+    if not isinstance(file_security_info, dict) or len(file_security_info) == 0:
+        return "<br><h2>⚠️ No file security info found</h2>"
+
+    # Collect files that have SAST results
+    files_with_findings = []
+    for file_info in file_security_info.values():
+        if not isinstance(file_info, dict):
+            continue
+
+        sast_result = file_info.get("sast_result")
+        if isinstance(sast_result, dict) and len(sast_result) > 0:
+            files_with_findings.append(file_info)
+
+    if not files_with_findings:
+        return "<br><h2>✅ No security weaknesses found</h2>"
+
+    # --- Safe statistics handling ---
+    stats = scanresult.get("statistics_overview")
+    if not isinstance(stats, dict):
+        stats = {}
+    total_number_of_files = stats.get("Number_Of_Files", 1)
+
+    # --- HTML REPORT ---
+    html = SAST_REPORT_CSS + f"""
+    <div class="sast-report">
+        <h2>Detailed Code Security Report</h2>
+        <p><strong>Package:</strong> {scanresult.get("package_name", "N/A")}</p>
+        <p><strong>version:</strong> {scanresult.get("package_release", "N/A")}</p>
+        <p><strong>Total files with findings:</strong> {len(files_with_findings)} of {total_number_of_files} files in total</p>
+    """
+
+    for file_info in files_with_findings:
+        filename = file_info.get("FileName", "Unknown File")
+        sast_result = file_info.get("sast_result", {})
+
+        # --- Normalize findings (fix for list/dict inconsistency) ---
+        all_findings = []
+        for v in sast_result.values():
+            if isinstance(v, dict):
+                all_findings.append(v)
+            elif isinstance(v, list):
+                all_findings.extend([item for item in v if isinstance(item, dict)])
+
+        if not all_findings:
+            continue
+
+        num_issues = len(all_findings)
+
+        html += f"""
+        <p>⚠️ <b>{num_issues}</b> potential security issue{"s" if num_issues > 1 else ""} 
+        found in <b>{filename}</b></p>
+        """
+
+        html += "<details>"
+        html += "<summary>View identified security weaknesses</summary>"
+
+        html += """
+        <table>
+            <thead>
+                <tr>
+                    <th>Line</th>
+                    <th>Validation</th>
+                    <th>Severity</th>
+                    <th>Info</th>
+                    <th>Code Snippet</th>
+                </tr>
+            </thead>
+            <tbody>
+        """
+
+        # --- Safe sorting ---
+        def safe_line(x):
+            try:
+                return int(x.get("line", 0))
+            except (TypeError, ValueError):
+                return 0
+
+        sorted_findings = sorted(all_findings, key=safe_line)
+
+        for finding in sorted_findings:
+            if not isinstance(finding, dict):
+                continue
+
+            line = finding.get("line", "—")
+            validation = finding.get("validation", "—")
+            severity = finding.get("severity", "—")
+            info = finding.get("info", "—")
+            code = finding.get("code", "")
+
+            html += f"""
+                <tr>
+                    <td><strong>{line}</strong></td>
+                    <td><code>{validation}</code></td>
+                    <td><span class="severity-{severity}">{severity}</span></td>
+                    <td>{info}</td>
+                    <td>{code}</td>
+                </tr>
+            """
+
+        html += "</tbody></table>"
+        html += "</details><br>"
+    html += "</div>"
+    files_with_findings_count = 0
+
+    return html, files_with_findings_count
