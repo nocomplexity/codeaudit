@@ -14,8 +14,22 @@ Functionality to use Python Code Audit within CI workflows.
 """
 
 import sys
+import json
 from codeaudit.api_interfaces import filescan
 from codeaudit.dashboard_reports import SAST_REPORT_CSS
+
+PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
+DISCLAIMER_TEXT = (
+    '<div class="sast-report"><p><b>Disclaimer:</b> <i>This SAST tool '
+    + PYTHON_CODE_AUDIT_TEXT
+    + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p></div>"
+)
+FOOTER_TEXT = (
+    '<div class="sast-report"><p>Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
+    'target="_blank">documentation</a> for help on found issues.<br></p></div>'
+)
+
+NOSEC_WARNING = '<div class="sast-report"><p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p></div>'
 
 
 def ci_scan(input_path, output="text", nosec=True):
@@ -39,6 +53,8 @@ def ci_scan(input_path, output="text", nosec=True):
             print(result)
         elif output == "html":
             result, security_status = report_result_html(scanresult)
+            if nosec:
+                result = NOSEC_WARNING + result
             print(result)
         elif output == "json":
             result, security_status = report_result_json(scanresult)
@@ -72,8 +88,9 @@ def report_result_json(scanresult):
         raise TypeError("Expected scanresult to be a dictionary")
     file_security_info = scanresult.get("file_security_info")
     files_with_findings_count = 0
-
-    return file_security_info, files_with_findings_count
+    # Add brackets and parse
+    json_text = json.dumps(file_security_info, indent=4)
+    return json_text, files_with_findings_count
 
 
 def report_result_txt(scanresult):
@@ -270,4 +287,5 @@ def report_result_html(scanresult):
         html += "</tbody></table>"
         html += "</details><br>"
     html += "</div>"
+    html += DISCLAIMER_TEXT + FOOTER_TEXT
     return html, 1
