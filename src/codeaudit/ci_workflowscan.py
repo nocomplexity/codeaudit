@@ -51,8 +51,8 @@ def ci_scan(input_path, output="text", nosec=True):
             print(result)
         elif output == "html":
             result, security_status = report_result_html(scanresult)
-            if nosec:
-                result = NOSEC_WARNING + result
+            # if nosec:
+            #     result = NOSEC_WARNING + result
             print(result)
         elif output == "json":
             result, security_status = report_result_json(scanresult)
