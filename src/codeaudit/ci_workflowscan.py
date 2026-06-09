@@ -17,21 +17,21 @@ import sys
 from codeaudit.api_interfaces import filescan
 from codeaudit.dashboard_reports import SAST_REPORT_CSS
 
-PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
-DISCLAIMER_TEXT = (
-    '<div class="sast-report"><p><b>Disclaimer:</b> <i>This SAST tool '
-    + PYTHON_CODE_AUDIT_TEXT
-    + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p></div>"
-)
+# PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
+# DISCLAIMER_TEXT = (
+#     '<div class="sast-report"><p><b>Disclaimer:</b> <i>This SAST tool '
+#     + PYTHON_CODE_AUDIT_TEXT
+#     + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p></div>"
+# )
 
 NOSEC_WARNING = '<div class="sast-report"><p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p></div>'
 
-HTML_FOOTER = (
-    '<div class="sast-report"><p><hr>'
-    + 'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
-    + 'target="_blank">documentation</a> for help on found issues.<br>'
-    + "</p></div>"
-)
+# HTML_FOOTER = (
+#     '<div class="sast-report"><p><hr>'
+#     + 'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
+#     + 'target="_blank">documentation</a> for help on found issues.<br>'
+#     + "</p></div>"
+# )
 
 
 def ci_scan(input_path, output="text", nosec=True):
@@ -279,7 +279,7 @@ def report_result_html(scanresult):
         html += "</tbody></table>"
         html += "</details><br>"
     html += "</div>"
-    html += DISCLAIMER_TEXT
-    html += HTML_FOOTER
+    # html += DISCLAIMER_TEXT
+    # html += HTML_FOOTER
 
     return html, 1
