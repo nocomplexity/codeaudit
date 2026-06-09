@@ -17,6 +17,15 @@ import sys
 from codeaudit.api_interfaces import filescan
 from codeaudit.dashboard_reports import SAST_REPORT_CSS
 
+PYTHON_CODE_AUDIT_TEXT = '<a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a>'
+DISCLAIMER_TEXT = (
+    "<p><b>Disclaimer:</b> <i>This SAST tool "
+    + PYTHON_CODE_AUDIT_TEXT
+    + " provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p>"
+)
+
+NOSEC_WARNING = "<p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p>"
+
 
 def ci_scan(input_path, format="text", nosec=True):
     """Basic SAST scan to be used in CI workflows
@@ -24,6 +33,8 @@ def ci_scan(input_path, format="text", nosec=True):
     Security weakness SHOULD be marked for an exit 0 status in your CI
 
     Note: If you use JSON output you will have an exit status 0, since you have to determine yourself if there are weaknesses found in your code.
+
+    Set an options in your CI job like e.g. allow_failure:True since jobs that run can result in detecting weaknesses and this is no failure of the job!
     """
     try:
         scanresult = filescan(input_path, nosec=nosec)
@@ -33,6 +44,8 @@ def ci_scan(input_path, format="text", nosec=True):
             print(output)
         elif format == "html":
             output, security_status = report_result_html(scanresult)
+            if nosec:
+                output = NOSEC_WARNING + output
             print(output)
         elif format == "json":
             output, security_status = report_result_json(scanresult)
@@ -45,8 +58,7 @@ def ci_scan(input_path, format="text", nosec=True):
         if security_status == 0:  # no files with weakness found - or properly marked!
             sys.exit(0)  # correct finish
         else:
-            sys.exit(20)  # finish with detected weakness
-
+            sys.exit(3)  # finish with detected weakness
     except Exception as e:
         # Log the actual error 'e' for debugging CI failures
         print(f"ERROR: Scan failed. Details: {e}", file=sys.stderr)
@@ -182,7 +194,7 @@ def report_result_html(scanresult):
     # --- HTML REPORT ---
     html = SAST_REPORT_CSS + f"""
     <div class="sast-report">
-        <h2>Detailed Code Security Report</h2>
+        <h2>Code Security Scan Results</h2>
         <p><strong>Package:</strong> {scanresult.get("package_name", "N/A")}</p>
         <p><strong>version:</strong> {scanresult.get("package_release", "N/A")}</p>
         <p><strong>Total files with findings:</strong> {len(files_with_findings)} of {total_number_of_files} files in total</p>
@@ -259,6 +271,24 @@ def report_result_html(scanresult):
         html += "</tbody></table>"
         html += "</details><br>"
     html += "</div>"
-    files_with_findings_count = 0
+    html += DISCLAIMER_TEXT
 
-    return html, files_with_findings_count
+    html += "<footer>"
+    html += (
+        '<div class="footer-links">'
+        'Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" '
+        'target="_blank">documentation</a> for help on found issues.<br>'
+        'Codeaudit is made with <span class="heart">&#10084;</span> by cyber security '
+        'professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" '
+        'target="_blank">open simple security solutions</a>.<br>'
+        '<a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" '
+        'target="_blank">Join the community</a> and contribute to make this tool better!'
+        "</div>"
+    )
+    html += "</footer>"
+    html += "</div>"
+
+    if not files_with_findings:
+        return html, 0
+    else:
+        return html, files_with_findings
