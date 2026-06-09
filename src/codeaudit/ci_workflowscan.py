@@ -282,7 +282,4 @@ def report_result_html(scanresult):
     html += DISCLAIMER_TEXT
     html += HTML_FOOTER
 
-    if not files_with_findings:
-        return html, True
-    else:
-        return html, files_with_findings
+    return html, 1
