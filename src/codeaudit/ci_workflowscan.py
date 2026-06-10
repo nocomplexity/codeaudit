@@ -33,16 +33,17 @@ NOSEC_WARNING = '<div class="sast-report"><p><b>INFO</b>: The --nosec flag is ac
 
 
 def ci_scan(input_path, output="text", nosec=True):
-    """Basic SAST scan to be used in CI workflows
+    """Run a SAST scan for CI workflows.
 
-    The nosec is set to true for CI workflows by default, it can be changed.
-    Security weakness SHOULD be marked for an exit 0 status in your CI.
+    Args:
+        input_path: Path to the file or directory to scan.
+        output: Report format ("text", "html", or "json").
+        nosec: Whether to ignore findings marked with ``# nosec``.
 
-    Note: If you use JSON output you will have an exit status 0, since you have to
-    determine yourself if there are weaknesses found in your code.
-
-    Set an option in your CI job like e.g. allow_failure: true since jobs that run
-    can result in detecting weaknesses and this is no failure of the job!
+    Exits:
+        0: No reportable weaknesses found and used always for JSON output
+        3: Weaknesses found.
+        1: Scan error or invalid output format.
     """
     try:
         scanresult = filescan(input_path, nosec=nosec)
@@ -79,31 +80,32 @@ def ci_scan(input_path, output="text", nosec=True):
         sys.exit(1)
 
 
-def report_result_json(scanresult):
-    """Returns scan result in json outputformat.
-    Note: not (yet) directly usable since you still need to dive in the dict structure to retrieve results, if any for weaknesses found per file. The resulting json structure is outlined in the documentation. You can use e.g. the `jq` tool. Or join the Python Code Audit community to create CI json output that suites your needs!
-    Note that it is hierarchical json structure. See the docs!
-    """
-    if not isinstance(scanresult, dict):
-        raise TypeError("Expected scanresult to be a dictionary")
-    file_security_info = scanresult.get("file_security_info")
-    files_with_findings_count = 0
-    # Add brackets and parse
-    json_text = json.dumps(file_security_info, indent=4)
-    return json_text, files_with_findings_count
+def safe_line(x):
+    """Safe sorting helper function"""
+    try:
+        return int(x.get("line", 0))
+    except (TypeError, ValueError):
+        return 0
 
 
 def report_result_txt(scanresult):
-    """Returns scan result in txt output format."""
+    """Generate a human-readable text report for CI mode scan results.
+
+    Args:
+        scanresult: Dictionary returned by the scan engine.
+
+    Returns:
+        Tuple[str, int]: Report text and number of files with findings.
+    """
     # Ensure scanresult is a dictionary to prevent crash on .get()
     if not isinstance(scanresult, dict):
         print("❌ Error: Invalid scan result data format structure.", file=sys.stderr)
-        return ""
+        return "", 0
 
     file_security_info = scanresult.get("file_security_info")
     if not isinstance(file_security_info, dict) or len(file_security_info) == 0:
         print("⚠️ Warning: No file security info found!", file=sys.stderr)
-        return ""
+        return "", 0
 
     output = ""
     files_with_findings_count = 0
@@ -136,13 +138,6 @@ def report_result_txt(scanresult):
         file_scan_location = file_info.get("FilePath", "Unknown")
         output += f"File location: {file_scan_location} \n"
 
-        # --- Safe sorting ---
-        def safe_line(x):
-            try:
-                return int(x.get("line", 0))
-            except (TypeError, ValueError):
-                return 0
-
         sorted_findings = sorted(all_findings, key=safe_line)
 
         for finding in sorted_findings:
@@ -158,7 +153,7 @@ def report_result_txt(scanresult):
                 f"line:{line}\tweakness: {validation}\tseverity:{severity}->{info}\n"
             )
 
-    # Gather stats
+    # Gather sast results that are relevant for CI output
     stats = scanresult.get("statistics_overview")
     if not isinstance(stats, dict):
         stats = {}
@@ -255,13 +250,6 @@ def report_result_html(scanresult):
             <tbody>
         """
 
-        # --- Safe sorting ---
-        def safe_line(x):
-            try:
-                return int(x.get("line", 0))
-            except (TypeError, ValueError):
-                return 0
-
         sorted_findings = sorted(all_findings, key=safe_line)
 
         for finding in sorted_findings:
@@ -289,3 +277,108 @@ def report_result_html(scanresult):
     html += "</div>"
     html += DISCLAIMER_TEXT + FOOTER_TEXT
     return html, 1
+
+
+def report_result_json(scanresult):
+    """Returns scan result in JSON output format as tuple (json_string, files_with_findings_count).
+    By design no codesnippet is returned in this json output.
+    """
+    # Ensure scanresult is a dictionary to prevent crash on .get()
+    if not isinstance(scanresult, dict):
+        print("❌ Error: Invalid scan result data format structure.", file=sys.stderr)
+        error_json = json.dumps(
+            {"error": True, "message": "Invalid scan result data format structure."}
+        )
+        return error_json, 0
+
+    file_security_info = scanresult.get("file_security_info")
+    if not isinstance(file_security_info, dict) or len(file_security_info) == 0:
+        print("⚠️ Warning: No file security info found!", file=sys.stderr)
+        warning_json = json.dumps(
+            {"warning": True, "message": "No file security info found!"}
+        )
+        return warning_json, 0
+
+    # Prepare data structure for JSON output
+    files_data = []
+    files_with_findings_count = 0
+
+    for file_info in file_security_info.values():
+        if not isinstance(file_info, dict):
+            continue
+
+        sast_result = file_info.get("sast_result")
+        if not isinstance(sast_result, dict) or len(sast_result) == 0:
+            continue
+
+        # --- Normalize findings ---
+        all_findings = []
+        for v in sast_result.values():
+            if isinstance(v, dict):
+                all_findings.append(v)
+            elif isinstance(v, list):
+                all_findings.extend([item for item in v if isinstance(item, dict)])
+
+        if not all_findings:
+            continue
+
+        # If we made it here, this file actually has valid findings
+        files_with_findings_count += 1
+        filename = file_info.get("FileName", "Unknown File")
+        file_scan_location = file_info.get("FilePath", "Unknown")
+
+        sorted_findings = sorted(all_findings, key=safe_line)
+
+        # Format findings for this file
+        findings_list = []
+        for finding in sorted_findings:
+            if not isinstance(finding, dict):
+                continue
+
+            finding_entry = {
+                "line": finding.get("line", "—"),
+                "weakness": finding.get("validation", "—"),
+                "severity": finding.get("severity", "—"),
+                "info": finding.get("info", "—"),
+            }
+            findings_list.append(finding_entry)
+
+        # Add file data
+        file_data = {
+            "filename": filename,
+            "file_location": file_scan_location,
+            "num_issues": len(all_findings),
+            "findings": findings_list,
+        }
+        files_data.append(file_data)
+
+    # Gather stats
+    stats = scanresult.get("statistics_overview")
+    if not isinstance(stats, dict):
+        stats = {}
+    total_number_of_files = stats.get("Number_Of_Files", 1)
+
+    # Build the output structure
+    output_data = {
+        "files_data": files_data,
+        "total_files_with_findings": files_with_findings_count,
+        "total_files_checked": total_number_of_files,
+    }
+
+    # Build the summary structure
+    if files_with_findings_count == 0:
+        summary_data = {
+            "status": "clean",
+            "message": "✅ No security issue(s) found in file(s) or Package.",
+            "total_files_with_findings": files_with_findings_count,
+            "total_files_checked": total_number_of_files,
+        }
+        summary_json = json.dumps(summary_data, indent=2)
+        return summary_json, files_with_findings_count
+    else:
+        # For consistency, include the summary in the output data
+        output_data["summary"] = (
+            f"Total files with findings: {files_with_findings_count} of {total_number_of_files} Python files checked."
+        )
+        output_json = json.dumps(output_data, indent=2)
+        return output_json, files_with_findings_count
