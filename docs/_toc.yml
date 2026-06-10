@@ -35,6 +35,7 @@ parts:
   - file: complexitycheck
   - file: warnings
   - file: handling_errors
+  - file: cimode
   - file: implementedvalidations  
   - file: checksinformation
     sections:

@@ -33,6 +33,8 @@ Per line a the in construct that can cause a security risks is shown, along with
 
 ![Example view of filescan report](filescan.png)
 
+(excluded_directories)=
+## Excluded directories
 
 :::{note} 
 The `codeaudit filescan` command does **NOT** include all directories. This is done on purpose!

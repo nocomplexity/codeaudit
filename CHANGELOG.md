@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 1.7.0:
+
+**Added**
+
+* **CI Option:** Added a new Continuous Integration (CI) option. (See [issue #24](https://github.com/nocomplexity/codeaudit/issues/24))
+
+**Documentation**
+
+* **Fixes & Updates:** Minor documentation fixes and content updates.
+
+
+
 ## Version 1.6.6:
 
 **Added:**
