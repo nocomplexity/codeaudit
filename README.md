@@ -39,6 +39,7 @@ Python Code Audit has the following features:
 
 * **External Egress Detection**: Identifies embedded API keys and logic that enables communication with remote services, helping uncover hidden data exfiltration paths.
 
+* **CI/CD Ready:** Integrates seamlessly into any CI/CD workflow.
 
 * **HTML Reports**: All output is saved in simple, static HTML reports viewable in any browser.
 
@@ -50,11 +51,19 @@ Python Code Audit has the following features:
 
 ## Installation
 
+> [!TIP]
+> Try it instantly—no installs, no setup, no excuses.
+> 👉 Launch the browser version [here](https://nocomplexity.com/codeauditapp/dashboardapp.html)
+
+It runs 100% locally in your browser using WebAssembly (WASM). See the power of the tool in under 60 seconds.
+No downloads. No dependencies. Just click and do a security audit on Python Code.
+
+Loved the browser version? Unlock the full power. For advanced security code inspections, CI/CD integration, and all professional features, install the complete Python package:
+
 ```console
 pip install -U codeaudit
 ```
 
-If you would like to test this security tool without installing it, simply use the WASM version [available here](https://nocomplexity.com/codeauditapp/dashboardapp.html).
 
 
 

@@ -129,3 +129,7 @@ For robust validation and error handling in production code, always use standard
 * [The assert statement - Python Documentation](https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement)
 * [The dangers of assert in Python](https://snyk.io/blog/the-dangers-of-assert-in-python/)
 * [Feature: Python assert should be consider harmful](https://community.sonarsource.com/t/feature-python-assert-should-be-consider-harmful/38501) But note that Sonar did not implement this check.
+* [CVE-2017-1000433](https://nvd.nist.gov/vuln/detail/CVE-2017-1000433) and see the related [issues/451](https://github.com/IdentityPython/pysaml2/issues/451) 
+* [Advisory: pysaml2 Improper Authentication vulnerability](https://github.com/advisories/GHSA-924m-4pmx-c67h) 
+
+* [Rethinking Python Asserts in SAST](https://nocomplexity.com/python-asserts/)

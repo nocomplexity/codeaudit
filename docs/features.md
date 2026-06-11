@@ -32,6 +32,11 @@
 
 +++
 
+
+* **CI/CD Ready:** Integrates seamlessly into any CI/CD workflow.
+
++++
+
 * **Static HTML Reports**  
   Generates clean, self-contained HTML reports that can be viewed in any modern web browser.
 
