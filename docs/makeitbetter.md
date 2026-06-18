@@ -32,35 +32,96 @@ Consult the **Python Code Audit** [Architecture Overview](architecture) to learn
 
 :::
 
-## Getting started
-To get started with Python Code Audit’s codebase, take the following steps:
+To lower the barrier for new contributors, I'd make the tone more welcoming, reduce unnecessary wording, and make the steps easier to follow. Here's a revised version in MyST/Markdown:
 
-1. Clone and install the package
+## Getting Started
 
-The **Codeaudit** code repository is hosted at [Github](https://github.com/nocomplexity/codeaudit).
+Welcome! This guide will help you set up a local development environment for Python Code Audit and start contributing to the project.
+
+### 1. Clone the repository
+
+We recommend working in a dedicated virtual environment to avoid conflicts with other Python projects.
+
+The Python Code Audit source code is hosted on GitHub.
+
 
 ```bash
-git clone https://github.com/nocomplexity/codeaudit 
+git clone https://github.com/nocomplexity/codeaudit
 cd codeaudit
 ```
-2. Install the required development packages
+
+### 2. Install development dependencies
+
+Install `pytest`, which is used for running the test suite:
 
 ```bash
 pip install pytest
 ```
 
-3. Run the tests
+### 3. Install Hatch
 
-For all code tests, Python Code Audit uses `pytest`. 
+We use [Hatch](https://hatch.pypa.io/latest/) for packaging and testing across multiple Python versions. Hatch helps create reproducible builds and simplifies development workflows.
 
-Before making changes, make sure all the tests run **OK**! 
-
-Running tests is done with:
+Install Hatch with:
 
 ```bash
-cd /tests
-pytest -v 
+pip install hatch
 ```
+
+### 4. Install Jupyter Book
+
+The project documentation is built with [Jupyter Book](https://jupyterbook.org/) version 1.
+
+Install it with:
+
+```bash
+pip install "jupyter-book<2"
+```
+
+To build the documentation:
+
+```bash
+cd docs
+jb build .
+```
+
+If you have changed the table of contents or want to rebuild all example notebooks (for example, before creating a release), run:
+
+```bash
+jb clean .
+jb build .
+```
+
+Some sections of the documentation are generated from Jupyter notebooks, so a clean rebuild is occasionally required.
+
+### 5. (Optional) Install JupyterLab
+
+[JupyterLab](https://jupyterlab.readthedocs.io/) is useful for exploring the API and running the example notebooks included in the documentation.
+
+```bash
+pip install -U jupyterlab
+```
+
+### 6. Run the test suite
+
+Before making changes, verify that all tests pass in your local environment.
+
+Run the standard test suite with:
+
+```bash
+cd tests
+pytest -v
+```
+
+To test across all supported Python environments, use Hatch:
+
+```bash
+hatch test --all
+```
+
+If all tests pass, you're ready to start contributing.
+
+
 
 ## Development Guidelines
 
