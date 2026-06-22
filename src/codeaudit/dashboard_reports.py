@@ -13,6 +13,7 @@ API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to 
 """
 
 from codeaudit.__about__ import __version__
+from codeaudit.pypi_package_scan import get_latest_release_date, days_since_update
 
 SAST_REPORT_CSS = """
 <style>
@@ -111,6 +112,13 @@ def create_statistics_overview(scanresult):
     title = scanresult.get("package_name", "Unknown")
     version = scanresult.get("package_release", "N/A")
 
+    # Note below is only for PyPi packages
+    update_date = get_latest_release_date(
+        title
+    )  # Refactor candidate - can be done more efficient since another call is now made.
+    number_days_since_last_update = days_since_update(update_date)
+    indicator_row = update_health(number_days_since_last_update)
+
     # Style for statistic cards
     custom_style = {
         "background": "linear-gradient(135deg, #FFF3CC, #FFF9E6)",
@@ -164,7 +172,38 @@ def create_statistics_overview(scanresult):
     header = pn.pane.HTML(header_html, styles=header_style)
 
     # Final layout: Header + statistic rows
-    return pn.Column(header, *rows, sizing_mode="stretch_width")
+    return pn.Column(header, *rows, indicator_row, sizing_mode="stretch_width")
+
+
+def update_health(days):
+    """Create a Panel indicator showing package update age.
+
+    The indicator displays the number of days since the package was
+    last updated and color-codes the value to reflect maintenance
+    health:
+
+    * Green: fewer than 90 days
+    * Yellow: 90 to 320 days
+    * Red: more than 320 days
+
+    Args:
+        days (int): Number of days since the package was last updated.
+
+    Returns:
+        pn.indicators.Number: Panel Number indicator displaying the
+            update age and corresponding health status.
+    """
+    pn = _require_panel()  # Panel module is needed for this function
+    return pn.indicators.Number(
+        name="Last Update Age",
+        value=days,
+        format="{value} days",
+        colors=[
+            (89, "green"),  # < 90
+            (320, "gold"),  # 90-320
+            (99999, "red"),  # > 320
+        ],
+    )
 
 
 def report_sast_results(scanresult):

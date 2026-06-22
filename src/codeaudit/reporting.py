@@ -50,7 +50,13 @@ from codeaudit.checkmodules import (
 )
 from codeaudit.htmlhelpfunctions import json_to_html, dict_list_to_html_table
 
-from codeaudit.pypi_package_scan import get_pypi_download_info, get_package_source
+from codeaudit.pypi_package_scan import (
+    get_pypi_download_info,
+    get_package_source,
+    get_latest_release_date,
+    days_since_update,
+)
+
 from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
 from codeaudit.suppression import filter_sast_results
 from codeaudit.api_interfaces import _collect_issue_lines
@@ -569,6 +575,11 @@ def directory_scan_report(
         # Use real package name and retrieved release info
         output += f"<p>Below the result of the Codeaudit scan of (Package name - Release):</p>"
         output += f"<p><b> {package_name} - {release} </b></p>"
+        update_date = get_latest_release_date(
+            package_name
+        )  # Refactor candidate - can be done more efficient since another call is now made.
+        number_days_since_last_update = days_since_update(update_date)
+        output += f"<p>Package Last Updated: <b>{number_days_since_last_update}</b> days ago.</p>"
     else:
         output += f"<p>Below the result of the Codeaudit scan of the directory:<b> {name_of_package}</b></p>"
     output += f"<p>Total Python files found: <b>{len(files_to_check)}</b></p>"

@@ -21,6 +21,8 @@ import zlib
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from datetime import date, datetime
+
 from codeaudit import __version__
 
 NOCX_HEADERS = {
@@ -112,3 +114,56 @@ def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):
 
     except Exception as e:
         print(e)
+
+
+def get_latest_release_date(package_name):
+    """Get the upload date of the latest PyPI package release.
+
+    Retrieves package metadata from the PyPI JSON API and returns the
+    upload date of the source distribution (sdist) associated with the
+    latest published version.
+
+    Args:
+        package_name (str): Name of the PyPI package.
+
+    Returns:
+        date | None: Upload date of the latest source distribution, or
+            ``None`` if the package, release, or source distribution
+            cannot be found.
+    """
+    data = get_pypi_package_info(package_name)
+    if not data:
+        return None
+
+    latest_version = data.get("info", {}).get("version")
+    if not latest_version:
+        return None
+
+    release_files = data.get("releases", {}).get(latest_version, [])
+
+    for file_info in release_files:
+        if file_info.get("packagetype") == "sdist" and file_info.get(
+            "url", ""
+        ).endswith(".tar.gz"):
+            upload_time = file_info.get("upload_time")
+            if upload_time:
+                return datetime.strptime(upload_time[:10], "%Y-%m-%d").date()
+
+    return None
+
+
+def days_since_update(upload_date):
+    """Calculate the number of days since a package was last updated.
+
+    Args:
+        upload_date (date | None): Upload date of the latest package
+            release.
+
+    Returns:
+        int | None: Number of days since the update, or ``None`` if
+            ``upload_date`` is ``None``.
+    """
+    if upload_date is None:
+        return None
+
+    return (date.today() - upload_date).days
