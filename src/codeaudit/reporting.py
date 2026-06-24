@@ -46,7 +46,6 @@ from codeaudit.checkmodules import (
     get_imported_modules,
     check_module_vulnerability,
     get_all_modules,
-    get_imported_modules_by_file,
 )
 from codeaudit.htmlhelpfunctions import json_to_html, dict_list_to_html_table
 
@@ -59,7 +58,7 @@ from codeaudit.pypi_package_scan import (
 
 from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
 from codeaudit.suppression import filter_sast_results
-from codeaudit.api_interfaces import _collect_issue_lines
+from codeaudit.api_interfaces import _collect_issue_lines, get_modules
 
 CA_VERSION = __version__
 
@@ -229,7 +228,7 @@ def display_found_modules(modules_discovered):
     """
     core_modules = modules_discovered["core_modules"]
     external_modules = modules_discovered["imported_modules"]
-    output = "<p><b>Used Python Standard libraries:</b></p>"
+    output = "<p><b>Used Python Standard Libraries:</b></p>"
     output += (
         "<ul>\n"
         + "\n".join(f"  <li>{module}</li>" for module in core_modules)
@@ -512,7 +511,6 @@ def single_file_report(filename, scan_output):
     ]  # reorder the columns before converting to html
     df = df.sort_values(by="line")  # sort by line number
     if number_of_issues > 0:
-        # output = f'<p>&#9888;&#65039; <b>{number_of_issues}</b> potential <b>security issues</b> found!</p>'
         output = f'<p>&#9888;&#65039; <b>{number_of_issues}</b> potential <b>security issue{"s" if number_of_issues != 1 else ""}</b> found!</p>'
         output += "<details>"
         output += "<summary>View identified security weaknesses.</summary>"
@@ -530,12 +528,18 @@ def single_file_report(filename, scan_output):
     output += df_overview.to_html(escape=True, index=False)
     output += "</details>"
     output += "<br>"
-    output += "<details>"
-    output += "<summary>View used modules in this file.</summary>"
-    modules_found = get_imported_modules_by_file(filename)
-    output += display_found_modules(modules_found)
-    output += f'<p>To check for <b>reported vulnerabilities</b> in external modules used by this file, use the command:<br><div class="code-box">codeaudit modulescan {filename}</div><br></p>'
-    output += "</details>"
+    modules_found = get_modules(filename)
+    if any(modules_found.values()):
+        output += "<details>"
+        output += "<summary>View used modules in this file.</summary>"
+        output += display_found_modules(modules_found)
+        if modules_found and modules_found.get(
+            "imported_modules"
+        ):  # only display when external modules are found
+            output += f'<p>To check for <b>reported vulnerabilities</b> in external modules used by this file, use the command:<br><div class="code-box">codeaudit modulescan {filename}</div><br></p>'
+        output += "</details>"
+    else:
+        output += "<p>No modules found in this file.</p>"
     return output
 
 

@@ -311,7 +311,22 @@ def get_weakness_counts(input_file, nosec=False):
 
 
 def get_modules(filename):
-    """Gets modules of a Python file"""
+    """Extract imported modules from a Python source file.
+
+    Analyzes the specified Python file and returns the modules imported
+    directly within the source code. This approach relies on the actual
+    imports present in the file rather than dependency declarations such as
+    ``requirements.txt`` or ``pyproject.toml``, which may be incomplete or
+    outdated.
+
+    Args:
+        filename (str): Path to the Python file to analyze.
+
+    Returns:
+        dict: A dictionary containing discovered modules. Expected keys are:
+            - ``core_modules`` (list[str]): Standard library modules.
+            - ``imported_modules`` (list[str]): Third-party modules.
+    """
     modules_found = get_imported_modules_by_file(filename)
     return modules_found
 
@@ -731,7 +746,7 @@ def _collect_issue_lines(filename, line, context=1):
 
     snippet_lines = [l.rstrip("\n") for l in snippet_lines if l.strip() != ""]
 
-    # Escape HTML to prevent injection
+    # Escape HTML to prevent HTML injection
     escaped_lines = [html.escape(l) for l in snippet_lines]
 
     code_lines = (

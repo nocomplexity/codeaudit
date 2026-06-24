@@ -23,6 +23,22 @@ def test_module_check():
     assert actual_data == expected_data
 
 
+def test_module_notpresent_check():
+    # No modules present in this file , no PSL , no external modules,
+    current_file_directory = Path(__file__).parent
+    # validation1.py is in a subfolder:
+    validation_file_path = current_file_directory / "validationfiles" / "malware.py"
+    source = read_in_source_file(validation_file_path)
+
+    actual_data = get_imported_modules(source)
+
+    # This is the expected dictionary
+    expected_data = {"core_modules": [], "imported_modules": []}
+
+    # Assert that the actual data matches the expected data
+    assert actual_data == expected_data
+
+
 def test_module_vulnerability_info():
     ## note: Output can change if more info is added to OSV!
 

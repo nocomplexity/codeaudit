@@ -71,7 +71,7 @@ If needed, you can also export the `json` output for further processing in a sep
 ### HTML report example 
 
 
-```yml
+```yaml
 # SAST scan with Python Code Audit on GitLab.com
 image: python:3.13-slim
 
@@ -137,7 +137,7 @@ codeaudit-scan:
 
 For structured processing or integration with other tools:
 
-```yml
+```yaml
 codeaudit-scan:
   stage: scan
 
