@@ -56,13 +56,19 @@ We focus on delivering a simple, trustworthy security tool that performs its def
 
 The following design choices have been made for Python Code Audit:
 
-* **The Python AST library is used for complex validations.**  
+* **The Python AST library is used to determine weaknesses and perform code validation.**  
   * **Rationale:** As we are creating a Python-specific security checker, using the `ast` module provides **significant** advantages:  
     1. Code is not executed during examination, which is a major benefit when validating potentially malicious code.  
     2. Implementing basic checks using complex regex patterns would make the code and its maintenance unnecessarily difficult.  
     3. Users can add extra validations in a simple, straightforward manner.  
+
++++
+
 * **Python Code Audit is not designed for identifying weaknesses in web applications.**  
   * **Rationale:** We check Python source code, but do not perform XSS or SQL injection checks. Every Python web application **should** use a battle-tested FOSS framework that prevents these vulnerabilities by design. Testing for these would require building a fuzzer rather than a static code scanner. There are other tools that **must** always be used for validating web applications.  
+
++++
+
 * **Postpone code performance optimisations until truly necessary.**  
   * **Rationale:** We aim for a loosely coupled architecture of key functions; performance optimisations can be introduced at a later stage if required. In practice, performance optimisations are rarely needed. Most time will be spent by humans analysing results before deciding whether to use a Python package, or making security improvements to their own code. The baseline performance for scanning a 10MB Python package should be the priority.  
   * **Implication:** Ensure that performance optimisations can be applied later to specific functional blocks if they are found to be causing bottlenecks for users.

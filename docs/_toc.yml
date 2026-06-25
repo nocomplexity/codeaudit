@@ -68,9 +68,7 @@ parts:
  
 
 - caption: Architecture 
-  chapters:     
-  #- file: astlines
-  # - file: astlines2  
+  chapters:       
   - file: architecture
   - file: makeitbetter
   - file: project_philosophy  

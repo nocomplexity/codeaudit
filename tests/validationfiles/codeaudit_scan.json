@@ -1,0 +1,619 @@
+{
+  "name": "Python_Code_Audit",
+  "version": "1.7.0",
+  "generated_on": "2026-06-25 13:36",
+  "package_name": "codeaudit",
+  "package_release": "1.7.0",
+  "statistics_overview": {
+    "Number_Of_Files": 22,
+    "Number_Of_Lines": 5787,
+    "AST_Nodes": 2275,
+    "Core Modules": 21,
+    "External Modules": 24,
+    "Functions": 132,
+    "Classes": 1,
+    "Comment_Lines": 1503,
+    "Median_Complexity": 26.0,
+    "Maximum_Complexity": 70
+  },
+  "module_overview": {
+    "core_modules": [
+      "ast",
+      "asyncio",
+      "collections",
+      "datetime",
+      "gzip",
+      "html",
+      "importlib.resources",
+      "inspect",
+      "json",
+      "os",
+      "pathlib",
+      "platform",
+      "re",
+      "sys",
+      "tarfile",
+      "tempfile",
+      "tokenize",
+      "urllib.error",
+      "urllib.request",
+      "warnings",
+      "zlib"
+    ],
+    "imported_modules": [
+      "__about__",
+      "altair",
+      "codeaudit",
+      "codeaudit.__about__",
+      "codeaudit.altairplots",
+      "codeaudit.api_helpers",
+      "codeaudit.api_interfaces",
+      "codeaudit.checkmodules",
+      "codeaudit.ci_workflowscan",
+      "codeaudit.complexitycheck",
+      "codeaudit.dashboard_reports",
+      "codeaudit.filehelpfunctions",
+      "codeaudit.htmlhelpfunctions",
+      "codeaudit.issuevalidations",
+      "codeaudit.privacy_lint",
+      "codeaudit.pypi_package_scan",
+      "codeaudit.reporting",
+      "codeaudit.security_checks",
+      "codeaudit.suppression",
+      "codeaudit.totals",
+      "fire",
+      "pandas",
+      "panel",
+      "pyodide.http"
+    ]
+  },
+  "file_security_info": {
+    "0": {
+      "FileName": "api_helpers.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/api_helpers.py",
+      "Number_Of_Lines": 106,
+      "AST_Nodes": 48,
+      "Std-Modules": 0,
+      "External-Modules": 6,
+      "Functions": 2,
+      "Classes": 0,
+      "Comment_Lines": 20,
+      "Complexity_Score": 18,
+      "warnings": 0,
+      "core_modules": [],
+      "imported_modules": [
+        "codeaudit.api_interfaces",
+        "codeaudit.checkmodules",
+        "codeaudit.filehelpfunctions",
+        "codeaudit.security_checks",
+        "codeaudit.suppression",
+        "codeaudit.totals"
+      ],
+      "file_name": "api_helpers.py",
+      "sast_result": {}
+    },
+    "1": {
+      "FileName": "security_checks.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/security_checks.py",
+      "Number_Of_Lines": 58,
+      "AST_Nodes": 26,
+      "Std-Modules": 1,
+      "External-Modules": 3,
+      "Functions": 3,
+      "Classes": 0,
+      "Comment_Lines": 15,
+      "Complexity_Score": 2,
+      "warnings": 0,
+      "core_modules": [
+        "importlib.resources"
+      ],
+      "imported_modules": [
+        "codeaudit.filehelpfunctions",
+        "codeaudit.issuevalidations",
+        "pandas"
+      ],
+      "file_name": "security_checks.py",
+      "sast_result": {}
+    },
+    "2": {
+      "FileName": "checkmodules.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/checkmodules.py",
+      "Number_Of_Lines": 153,
+      "AST_Nodes": 78,
+      "Std-Modules": 4,
+      "External-Modules": 1,
+      "Functions": 7,
+      "Classes": 0,
+      "Comment_Lines": 33,
+      "Complexity_Score": 14,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "json",
+        "sys",
+        "urllib.request"
+      ],
+      "imported_modules": [
+        "codeaudit.filehelpfunctions"
+      ],
+      "file_name": "checkmodules.py",
+      "sast_result": {}
+    },
+    "3": {
+      "FileName": "__init__.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/__init__.py",
+      "Number_Of_Lines": 4,
+      "AST_Nodes": 1,
+      "Std-Modules": 0,
+      "External-Modules": 1,
+      "Functions": 0,
+      "Classes": 0,
+      "Comment_Lines": 3,
+      "Complexity_Score": 1,
+      "warnings": 0,
+      "core_modules": [],
+      "imported_modules": [
+        "__about__"
+      ],
+      "file_name": "__init__.py",
+      "sast_result": {}
+    },
+    "4": {
+      "FileName": "__about__.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/__about__.py",
+      "Number_Of_Lines": 4,
+      "AST_Nodes": 1,
+      "Std-Modules": 0,
+      "External-Modules": 0,
+      "Functions": 0,
+      "Classes": 0,
+      "Comment_Lines": 3,
+      "Complexity_Score": 1,
+      "warnings": 0,
+      "core_modules": [],
+      "imported_modules": [],
+      "file_name": "__about__.py",
+      "sast_result": {}
+    },
+    "5": {
+      "FileName": "complexitycheck.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/complexitycheck.py",
+      "Number_Of_Lines": 120,
+      "AST_Nodes": 58,
+      "Std-Modules": 3,
+      "External-Modules": 0,
+      "Functions": 13,
+      "Classes": 1,
+      "Comment_Lines": 25,
+      "Complexity_Score": 7,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "pathlib",
+        "warnings"
+      ],
+      "imported_modules": [],
+      "file_name": "complexitycheck.py",
+      "sast_result": {}
+    },
+    "6": {
+      "FileName": "api_interfaces.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/api_interfaces.py",
+      "Number_Of_Lines": 743,
+      "AST_Nodes": 269,
+      "Std-Modules": 6,
+      "External-Modules": 10,
+      "Functions": 19,
+      "Classes": 0,
+      "Comment_Lines": 299,
+      "Complexity_Score": 70,
+      "warnings": 0,
+      "core_modules": [
+        "collections",
+        "datetime",
+        "html",
+        "json",
+        "pathlib",
+        "platform"
+      ],
+      "imported_modules": [
+        "altair",
+        "codeaudit.__about__",
+        "codeaudit.checkmodules",
+        "codeaudit.filehelpfunctions",
+        "codeaudit.privacy_lint",
+        "codeaudit.pypi_package_scan",
+        "codeaudit.security_checks",
+        "codeaudit.suppression",
+        "codeaudit.totals",
+        "pandas"
+      ],
+      "file_name": "api_interfaces.py",
+      "sast_result": {}
+    },
+    "7": {
+      "FileName": "issuevalidations.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/issuevalidations.py",
+      "Number_Of_Lines": 142,
+      "AST_Nodes": 88,
+      "Std-Modules": 3,
+      "External-Modules": 1,
+      "Functions": 2,
+      "Classes": 0,
+      "Comment_Lines": 18,
+      "Complexity_Score": 43,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "collections",
+        "warnings"
+      ],
+      "imported_modules": [
+        "codeaudit.checkmodules"
+      ],
+      "file_name": "issuevalidations.py",
+      "sast_result": {}
+    },
+    "8": {
+      "FileName": "ci_workflowscan.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/ci_workflowscan.py",
+      "Number_Of_Lines": 384,
+      "AST_Nodes": 192,
+      "Std-Modules": 2,
+      "External-Modules": 2,
+      "Functions": 5,
+      "Classes": 0,
+      "Comment_Lines": 72,
+      "Complexity_Score": 58,
+      "warnings": 0,
+      "core_modules": [
+        "json",
+        "sys"
+      ],
+      "imported_modules": [
+        "codeaudit.api_interfaces",
+        "codeaudit.dashboard_reports"
+      ],
+      "file_name": "ci_workflowscan.py",
+      "sast_result": {}
+    },
+    "9": {
+      "FileName": "dashboard_reports.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/dashboard_reports.py",
+      "Number_Of_Lines": 439,
+      "AST_Nodes": 125,
+      "Std-Modules": 0,
+      "External-Modules": 2,
+      "Functions": 7,
+      "Classes": 0,
+      "Comment_Lines": 188,
+      "Complexity_Score": 29,
+      "warnings": 0,
+      "core_modules": [],
+      "imported_modules": [
+        "codeaudit.__about__",
+        "panel"
+      ],
+      "file_name": "dashboard_reports.py",
+      "sast_result": {}
+    },
+    "10": {
+      "FileName": "htmlhelpfunctions.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/htmlhelpfunctions.py",
+      "Number_Of_Lines": 98,
+      "AST_Nodes": 47,
+      "Std-Modules": 2,
+      "External-Modules": 0,
+      "Functions": 3,
+      "Classes": 0,
+      "Comment_Lines": 26,
+      "Complexity_Score": 13,
+      "warnings": 0,
+      "core_modules": [
+        "html",
+        "json"
+      ],
+      "imported_modules": [],
+      "file_name": "htmlhelpfunctions.py",
+      "sast_result": {}
+    },
+    "11": {
+      "FileName": "totals.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/totals.py",
+      "Number_Of_Lines": 181,
+      "AST_Nodes": 100,
+      "Std-Modules": 2,
+      "External-Modules": 3,
+      "Functions": 7,
+      "Classes": 0,
+      "Comment_Lines": 32,
+      "Complexity_Score": 18,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "warnings"
+      ],
+      "imported_modules": [
+        "codeaudit.checkmodules",
+        "codeaudit.complexitycheck",
+        "codeaudit.filehelpfunctions"
+      ],
+      "file_name": "totals.py",
+      "sast_result": {}
+    },
+    "12": {
+      "FileName": "privacy_lint.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/privacy_lint.py",
+      "Number_Of_Lines": 357,
+      "AST_Nodes": 191,
+      "Std-Modules": 5,
+      "External-Modules": 3,
+      "Functions": 15,
+      "Classes": 0,
+      "Comment_Lines": 74,
+      "Complexity_Score": 60,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "datetime",
+        "importlib.resources",
+        "pathlib",
+        "re"
+      ],
+      "imported_modules": [
+        "codeaudit",
+        "codeaudit.filehelpfunctions",
+        "codeaudit.pypi_package_scan"
+      ],
+      "file_name": "privacy_lint.py",
+      "sast_result": {}
+    },
+    "13": {
+      "FileName": "altairplots.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/altairplots.py",
+      "Number_Of_Lines": 1066,
+      "AST_Nodes": 242,
+      "Std-Modules": 2,
+      "External-Modules": 2,
+      "Functions": 12,
+      "Classes": 0,
+      "Comment_Lines": 193,
+      "Complexity_Score": 61,
+      "warnings": 0,
+      "core_modules": [
+        "collections",
+        "pathlib"
+      ],
+      "imported_modules": [
+        "altair",
+        "pandas"
+      ],
+      "file_name": "altairplots.py",
+      "sast_result": {}
+    },
+    "14": {
+      "FileName": "suppression.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/suppression.py",
+      "Number_Of_Lines": 238,
+      "AST_Nodes": 96,
+      "Std-Modules": 5,
+      "External-Modules": 0,
+      "Functions": 5,
+      "Classes": 0,
+      "Comment_Lines": 60,
+      "Complexity_Score": 35,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "collections",
+        "re",
+        "sys",
+        "tokenize"
+      ],
+      "imported_modules": [],
+      "file_name": "suppression.py",
+      "sast_result": {}
+    },
+    "15": {
+      "FileName": "corecli.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/corecli.py",
+      "Number_Of_Lines": 106,
+      "AST_Nodes": 39,
+      "Std-Modules": 1,
+      "External-Modules": 4,
+      "Functions": 3,
+      "Classes": 0,
+      "Comment_Lines": 23,
+      "Complexity_Score": 11,
+      "warnings": 0,
+      "core_modules": [
+        "sys"
+      ],
+      "imported_modules": [
+        "codeaudit.__about__",
+        "codeaudit.ci_workflowscan",
+        "codeaudit.reporting",
+        "fire"
+      ],
+      "file_name": "corecli.py",
+      "sast_result": {}
+    },
+    "16": {
+      "FileName": "reporting.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/reporting.py",
+      "Number_Of_Lines": 949,
+      "AST_Nodes": 412,
+      "Std-Modules": 7,
+      "External-Modules": 12,
+      "Functions": 15,
+      "Classes": 0,
+      "Comment_Lines": 298,
+      "Complexity_Score": 55,
+      "warnings": 0,
+      "core_modules": [
+        "datetime",
+        "html",
+        "importlib.resources",
+        "os",
+        "pathlib",
+        "re",
+        "sys"
+      ],
+      "imported_modules": [
+        "codeaudit",
+        "codeaudit.altairplots",
+        "codeaudit.api_interfaces",
+        "codeaudit.checkmodules",
+        "codeaudit.filehelpfunctions",
+        "codeaudit.htmlhelpfunctions",
+        "codeaudit.privacy_lint",
+        "codeaudit.pypi_package_scan",
+        "codeaudit.security_checks",
+        "codeaudit.suppression",
+        "codeaudit.totals",
+        "pandas"
+      ],
+      "file_name": "reporting.py",
+      "sast_result": {}
+    },
+    "17": {
+      "FileName": "pypi_package_scan.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/pypi_package_scan.py",
+      "Number_Of_Lines": 114,
+      "AST_Nodes": 58,
+      "Std-Modules": 7,
+      "External-Modules": 1,
+      "Functions": 3,
+      "Classes": 0,
+      "Comment_Lines": 22,
+      "Complexity_Score": 20,
+      "warnings": 0,
+      "core_modules": [
+        "gzip",
+        "json",
+        "tarfile",
+        "tempfile",
+        "urllib.error",
+        "urllib.request",
+        "zlib"
+      ],
+      "imported_modules": [
+        "codeaudit"
+      ],
+      "file_name": "pypi_package_scan.py",
+      "sast_result": {
+        "107": {
+          "line": 107,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>        with tarfile.open(tar_path, &quot;r:gz&quot;) as tar:\n            tar.extractall(\n                path=temp_dir, filter=&quot;data&quot;</code></pre>"
+        }
+      }
+    },
+    "18": {
+      "FileName": "api_reporting.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/api_reporting.py",
+      "Number_Of_Lines": 43,
+      "AST_Nodes": 14,
+      "Std-Modules": 1,
+      "External-Modules": 1,
+      "Functions": 1,
+      "Classes": 0,
+      "Comment_Lines": 21,
+      "Complexity_Score": 3,
+      "warnings": 0,
+      "core_modules": [
+        "collections"
+      ],
+      "imported_modules": [
+        "pandas"
+      ],
+      "file_name": "api_reporting.py",
+      "sast_result": {}
+    },
+    "19": {
+      "FileName": "filehelpfunctions.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/codeaudit/filehelpfunctions.py",
+      "Number_Of_Lines": 136,
+      "AST_Nodes": 56,
+      "Std-Modules": 5,
+      "External-Modules": 0,
+      "Functions": 5,
+      "Classes": 0,
+      "Comment_Lines": 51,
+      "Complexity_Score": 20,
+      "warnings": 0,
+      "core_modules": [
+        "ast",
+        "os",
+        "pathlib",
+        "sys",
+        "warnings"
+      ],
+      "imported_modules": [],
+      "file_name": "filehelpfunctions.py",
+      "sast_result": {}
+    },
+    "20": {
+      "FileName": "__init__.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/dashboard/__init__.py",
+      "Number_Of_Lines": 1,
+      "AST_Nodes": 0,
+      "Std-Modules": 0,
+      "External-Modules": 0,
+      "Functions": 0,
+      "Classes": 0,
+      "Comment_Lines": 0,
+      "Complexity_Score": 1,
+      "warnings": 0,
+      "core_modules": [],
+      "imported_modules": [],
+      "file_name": "__init__.py",
+      "sast_result": {}
+    },
+    "21": {
+      "FileName": "dashboardapp.py",
+      "FilePath": "/tmp/codeaudit_8w3ypze3/codeaudit-1.7.0/src/dashboard/dashboardapp.py",
+      "Number_Of_Lines": 345,
+      "AST_Nodes": 134,
+      "Std-Modules": 10,
+      "External-Modules": 6,
+      "Functions": 5,
+      "Classes": 0,
+      "Comment_Lines": 27,
+      "Complexity_Score": 32,
+      "warnings": 0,
+      "core_modules": [
+        "asyncio",
+        "datetime",
+        "gzip",
+        "inspect",
+        "json",
+        "sys",
+        "tarfile",
+        "tempfile",
+        "urllib.request",
+        "zlib"
+      ],
+      "imported_modules": [
+        "codeaudit.altairplots",
+        "codeaudit.api_helpers",
+        "codeaudit.api_interfaces",
+        "codeaudit.dashboard_reports",
+        "panel",
+        "pyodide.http"
+      ],
+      "file_name": "dashboardapp.py",
+      "sast_result": {
+        "119": {
+          "line": 119,
+          "validation": "tarfile.TarFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>        with tarfile.open(tar_path, &quot;r:gz&quot;) as tar:\n            tar.extractall(\n                path=temp_dir, filter=&quot;data&quot;</code></pre>"
+        }
+      }
+    }
+  }
+}

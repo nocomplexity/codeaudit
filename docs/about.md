@@ -19,13 +19,13 @@ Currently, I lead initiatives at NoComplexity.com, an innovative IT company focu
 :gutter: 3 
 
 :::{grid-item-card}
-:link: https://nocomplexity.com/documents/securityarchitecture/introduction.html
+:link: https://securitytesting.nocomplexity.com/
 :link-type: url
-{octicon}`book;2em;caption-text` **Open Security Reference Architecture**        
+{octicon}`book;2em;caption-text` **Mastering Security Testing for Python**        
 ^^^
-Cyber security can still be simple and effective.
-Use this Playbook to create better and faster security solutions for your security use case.
+Gain a deep understanding of the methodologies and specialised tools to conduct security validation for Python applications.
 :::
+
 
 :::{grid-item-card}
 :link: http://securitybydesign.nocomplexity.com/
@@ -34,14 +34,6 @@ Use this Playbook to create better and faster security solutions for your securi
 ^^^
 Security by design is a proven method to develop products that are less vulnerable for cyber security threats.
 Master the topic quickly with this eBook.
-:::
-
-:::{grid-item-card}
-:link: https://nocomplexity.com/documents/securitysolutions/intro.html
-:link-type: url
-{octicon}`book;2em;caption-text` **Open Security Solutions**        
-^^^
-Given the vast array of FOSS cybersecurity products available, this publication offers a handcrafted curated selection.
 :::
 
 :::{grid-item-card}
@@ -54,13 +46,22 @@ A manifesto to revolutionize cybersecurity through simplification.
 
 
 :::{grid-item-card}
-:link: https://nocomplexity.com/documents/simplifysecurity/intro.html#
+:link: https://nocomplexity.github.io/pythonsecurity/
 :link-type: url
-{octicon}`book;2em;caption-text` **Simplify Security**        
+{octicon}`book;2em;caption-text` **Python Security Handbook**        
 ^^^
-Find open simple cyber solutions that work. Simplify cyber security to accelerate its effectiveness.
+This book will give you a deep understanding of how to develop secure Python applications. It also equips you with the knowledge needed to assess the security of Python code written by others.
 :::
 
+
+:::{grid-item-card}
+:link: https://nocomplexity.com/documents/securityarchitecture/introduction.html
+:link-type: url
+{octicon}`book;2em;caption-text` **Open Security Reference Architecture**        
+^^^
+Cyber security can still be simple and effective.
+Use this Playbook to create better and faster security solutions for your security use case.
+:::
 
 :::{grid-item-card}
 :link: https://nocomplexity.com/documents/simplifyprivacy/intro.html
@@ -68,6 +69,15 @@ Find open simple cyber solutions that work. Simplify cyber security to accelerat
 {octicon}`book;2em;caption-text` **Simplify Digital Privacy**        
 ^^^
 This digital Playbook is all about protecting *your* digital privacy.
+:::
+
+
+:::{grid-item-card}
+:link: https://nocomplexity.com/documents/securitysolutions/intro.html
+:link-type: url
+{octicon}`book;2em;caption-text` **Open Security Solutions**        
+^^^
+Given the vast array of FOSS cybersecurity products available, this publication offers a handcrafted curated selection.
 :::
 
 

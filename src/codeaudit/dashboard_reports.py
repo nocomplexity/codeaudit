@@ -14,6 +14,7 @@ API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to 
 
 from codeaudit.__about__ import __version__
 from codeaudit.pypi_package_scan import get_latest_release_date, days_since_update
+from codeaudit.api_reporting import total_weaknesses
 
 SAST_REPORT_CSS = """
 <style>
@@ -118,6 +119,8 @@ def create_statistics_overview(scanresult):
     )  # Refactor candidate - can be done more efficient since another call is now made.
     number_days_since_last_update = days_since_update(update_date)
     indicator_row = update_health(number_days_since_last_update)
+    total_weaknesses_found = total_weaknesses(scanresult)
+    weaknesses_widget = weakness_count_indicator(total_weaknesses_found)
 
     # Style for statistic cards
     custom_style = {
@@ -172,7 +175,13 @@ def create_statistics_overview(scanresult):
     header = pn.pane.HTML(header_html, styles=header_style)
 
     # Final layout: Header + statistic rows
-    return pn.Column(header, *rows, indicator_row, sizing_mode="stretch_width")
+    return pn.Column(
+        header,
+        *rows,
+        weaknesses_widget,
+        indicator_row,
+        sizing_mode="stretch_width",
+    )
 
 
 def update_health(days):
@@ -195,13 +204,43 @@ def update_health(days):
     """
     pn = _require_panel()  # Panel module is needed for this function
     return pn.indicators.Number(
-        name="Last Update Age",
+        name="Last Update",
         value=days,
-        format="{value} days",
+        format="{value} days ago",
         colors=[
             (89, "green"),  # < 90
             (320, "gold"),  # 90-320
             (99999, "red"),  # > 320
+        ],
+    )
+
+
+def weakness_count_indicator(number):
+    """Create a Panel indicator showing the total number of weaknesses.
+
+    The indicator displays the number weakness with a colour.
+    health:
+
+    * Green: no weaknesses
+    * Yellow: 1 to 5 weaknesses found
+    * Red: more than 5 weaknesses found
+
+    Args:
+        number (int): Number of weaknesses in package found
+
+    Returns:
+        pn.indicators.Number: Panel Number indicator displaying the
+            weakness count with a colour status.
+    """
+    pn = _require_panel()  # Panel module is needed for this function
+    return pn.indicators.Number(
+        name="Security Weaknesses Identified",
+        value=number,
+        format="{value}",
+        colors=[
+            (0, "green"),
+            (5, "gold"),
+            (float("inf"), "red"),  # >5
         ],
     )
 

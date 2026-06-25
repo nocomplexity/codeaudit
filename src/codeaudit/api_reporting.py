@@ -19,25 +19,17 @@ So all results are returned as Pandas Dataframe. This makes things easier for fu
 
 """
 
-import pandas as pd
-from collections import Counter
 
+def total_weaknesses(scan_result):
+    """Returns the total weaknesses found
+    input: scan_result (dict): Scan output containing "file_security_info" with
+            per-file SAST findings. Each finding should include a "validation" field.
 
-def total_weaknesses(input_file):
-    """Returns the total weaknesses found"""
-    scan_result = input_file
-    counter = Counter()
+    """
+    total = 0
 
     for file_info in scan_result.get("file_security_info", {}).values():
         sast_result = file_info.get("sast_result", {})
-        for (
-            construct,
-            occurrence,
-        ) in (
-            sast_result.items()
-        ):  # occurrence is times the construct appears in a single file
-            counter[construct] += len(occurrence)
+        total += len(sast_result)
 
-    result = dict(counter)
-    df = pd.DataFrame(list(result.items()), columns=["call", "count"])
-    return df
+    return total

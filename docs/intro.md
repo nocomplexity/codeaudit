@@ -140,3 +140,13 @@ By default, the tool scans Python code against more than **87 rules** to detect 
 
 :::
 
+:::{admonition} Donate
+:class: hint
+Our mission is to make cybersecurity simpler and more robust. Join us in building a better open-source solution—your support makes it possible. All donations will be used strictly to fund the development and maintenance of Python Code Audit.
+
+```{button-link} https://buy.stripe.com/5kQ6oH3dm4RO1ujaOUgbm02
+:color: danger
+Make A Donation
+```
+If you are unable to make a small donation, that’s fine. Just enjoy this tool and [spread the word](share-label)!
+:::

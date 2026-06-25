@@ -10,10 +10,9 @@
 [![License](https://img.shields.io/badge/License-GPLv3-FFD700)](https://nocomplexity.com/documents/codeaudit/license.html)
 [![PyPI Downloads](https://static.pepy.tech/badge/codeaudit)](https://pepy.tech/projects/codeaudit)
 
-Python Code Audit - A modern Python source code analyzer based on distrust.
+Python Code Audit - A modern Python security source code analyzer based on distrust.
 
-Python Code Audit is a tool to find **security weaknesses** in Python code. This static application security testing (SAST) tool has **great** features to simplify the necessary security tasks and make it fun and easy. 
-
+Python Code Audit is a static application security testing (SAST) tool designed to identify **security weaknesses** in Python source code. It combines **powerful analysis features** with an intuitive workflow, making essential security audits both simple and engaging.
 
 This tool is designed for anyone who uses or creates Python programs and wants to understand and mitigate potential security risks.
 

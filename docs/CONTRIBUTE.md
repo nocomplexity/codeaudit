@@ -22,6 +22,8 @@ These are all activities we’d like to get help with :
 - Website design and development
 :::
 
+Or just make a [donation](donate-label)!
+
 The **Codeaudit** code repository is hosted at [Github](https://github.com/nocomplexity/codeaudit).
 
 Simple Guidelines:
