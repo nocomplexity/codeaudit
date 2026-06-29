@@ -95,10 +95,11 @@ def count_lines_iterate(filepath):
     """
     Counts the number of lines in a file by iterating through the file object.
     This method is memory-efficient for large files.
+    filepath is a Python file, so a text file
     """
     count = 0
     try:
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             for line in f:
                 count += 1
         return count
