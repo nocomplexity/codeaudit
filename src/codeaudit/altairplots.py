@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 Altair Plotting functions for Python Code Audit (aka codeaudit)
 """
 
+import re
 import altair as alt
 import pandas as pd
 
@@ -1064,3 +1065,30 @@ def weaknesses_radial_overview(scanresult):
     )
 
     return chart
+
+
+def extract_altair_html(plot_html):
+    """
+    Clean Altair HTML into a minimal embeddable fragment
+    containing only <div> and <script> elements.
+    """
+
+    html = plot_html
+
+    # 1. Remove DOCTYPE
+    html = re.sub(r"<!DOCTYPE[^>]*>", "", html, flags=re.IGNORECASE)
+
+    # 2. Remove head section entirely
+    html = re.sub(r"<head\b[^>]*>.*?</head>", "", html, flags=re.DOTALL | re.IGNORECASE)
+
+    # 3. Remove html and body tags (but NOT their contents yet)
+    html = re.sub(r"</?(html|body)\b[^>]*>", "", html, flags=re.IGNORECASE)
+
+    # 4. Extract ONLY valid <div>...</div> and <script>...</script> blocks
+    blocks = re.findall(
+        r"(?:<div\b[^>]*>.*?</div>|<script\b[^>]*>.*?</script>)",
+        html,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+
+    return "\n".join(blocks).strip() + "\n"

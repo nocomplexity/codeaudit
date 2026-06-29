@@ -1,5 +1,29 @@
 # Change Log
 
+## Version 1.7.1:
+
+
+**Added**
+
+* **PyPI Update Indicator:** Added an indicator for the last update of PyPI packages, implemented for both the CLI version and the Dashboard version.
+* **Test Coverage:** Added extra tests to improve codebase stability.
+* **Dashboard Overview (WASM version):** The total number of weaknesses is now displayed directly in the overview tab.
+
+**Changed**
+
+* **CLI Report Optimization (Modules):** The CLI report now only displays modules when they are actually found.
+* **CLI Report Optimization (Tips):** The CLI report now only displays the tip to check external modules for vulnerabilities if vulnerabilities are actually present in a file.
+
+
+**Fixed**
+
+* **Windows 11 Compatibility:** Fixed an issue to ensure `codeaudit overview` works properly on Windows 11, specifically resolving a bug in the `count_lines_iterate` function.
+* **Altair Visuals:** Fixed stability issues with the Altair Visual overview in the `codeaudit overview` section, making it stable again.
+
+**Documentation**
+
+* General documentation updates and minor fixes.
+
 ## Version 1.7.0:
 
 **Added**

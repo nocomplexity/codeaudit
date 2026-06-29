@@ -13,7 +13,6 @@ You should have received a copy of the GNU General Public License along with thi
 Reporting functions for codeaudit
 """
 
-import re
 import os
 from pathlib import Path
 import sys
@@ -35,7 +34,8 @@ from codeaudit.filehelpfunctions import (
     has_python_files,
     is_ast_parsable,
 )
-from codeaudit.altairplots import multi_bar_chart
+from codeaudit.altairplots import multi_bar_chart, extract_altair_html
+
 from codeaudit.totals import (
     get_statistics,
     overview_count,
@@ -205,7 +205,8 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     plot_html = plot.to_html()
     output += "<br><br>"
     output += "<h2>Visual Overview</h2>"
-    output += extract_altair_html(plot_html)
+    # output += extract_altair_html(plot_html)
+    output += plot_html
     output += "<p><b>&#128172; Advice:</b></p>"
     if advice is not None and advice != "":
         output += advice
@@ -780,9 +781,9 @@ def create_htmlfile(html_input, outputfile):
     output += '<meta charset="UTF-8"/>'
     output += "<title>Python_Code_Audit_SecurityReport</title>"
     output += f"<style>\n{css_content}\n</style>"
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>'
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>'
-    output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>'
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega@6"></script>'  # npm/altair dependency
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>'  # npm/altair dependency
+    output += '<script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>'  # npm/altair dependency
     output += "</head><body>"
     output += '<div class="container">'
     output += html_input
@@ -821,16 +822,6 @@ def create_htmlfile(html_input, outputfile):
         f"\t{output_path.as_uri()}\n"
     )
     print("=====================================================================\n")
-
-
-def extract_altair_html(plot_html):
-    match = re.search(r"<body[^>]*>(.*?)</body>", plot_html, re.DOTALL | re.IGNORECASE)
-    if match:
-        body_content = match.group(1).strip()
-        minimal_html = f"{body_content}\n"
-        return minimal_html
-    else:
-        return "<p>Altair plot was supposed to be here: But something went wrong! Fix needed."  # Empty fallback if <body> not found
 
 
 # Replace the second dot with <br>
