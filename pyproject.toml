@@ -32,6 +32,7 @@ classifiers = [
 test = ["pytest", "pytest-cov", "tox", "pylint", "black"]
 
 [project.urls]
+Homepage = "https://codeaudit.nocomplexity.com"
 Documentation = "https://github.com/nocomplexity/codeaudit#readme"
 Issues = "https://github.com/nocomplexity/codeaudit/issues"
 Source = "https://github.com/nocomplexity/codeaudit"
