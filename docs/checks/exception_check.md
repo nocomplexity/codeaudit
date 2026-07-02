@@ -1,6 +1,6 @@
 ## Exception Statements
 
-Codeaudit detects the use of `pass` within an `except` block.
+Python Code Audit  detects the use of `pass` within an `except` block.
 
 The Python pattern:
 ```python
@@ -10,7 +10,7 @@ except Exception:
     pass
 ```
 
-presents potential security risks due to:
+Presents potential security risks due to:
 - **Overly broad exception handling** – catching `Exception` masks virtually all errors
 - **Silent failure** – using `pass` suppresses all evidence that something went wrong
 
@@ -21,10 +21,16 @@ This security concern also applies when using `continue` inside an exception blo
 - `pass` statements in exception clauses
 - `continue` statements in exception clauses
 
+:::{important} 
+Treat the detection of `pass` and `continue` in exception handlers as a **signal** rather than proof of a security issue. Always examine whether the exception handler catches exceptions that are too broad (for example, `except:` or `except Exception:`).
+
+No static analysis tool can determine with 100% confidence whether a particular exception handler represents a security risk. Due to Python's dynamic nature. The intent of the code, the surrounding context, and the runtime behavior all influence whether suppressing an exception is appropriate.
+:::
+
 
 ## Background
 
-Checking exception statements in Python code for possible security issues should be done.
+Checking exception statements in Python code for possible security issues should always be done.
 Reasons are e.g.:
 
 1.  **Masking of Critical Errors and Vulnerabilities:**
@@ -66,8 +72,11 @@ Reasons are e.g.:
         # Optionally, re-raise the exception if the program cannot continue meaningfully
         # raise
     ```
+
   * **Avoid `pass`:** Only use `pass` if the exception is truly expected and handling it means doing nothing, and you have documented why that's the case. Such scenarios are rare.
+
   * **Use `finally` for Cleanup:** If resources need to be released regardless of whether an exception occurs, use a `finally` block or context managers (`with` statements).
+
     ```python
     try:
         f = open("my_file.txt", "r")
@@ -92,3 +101,4 @@ Reasons are e.g.:
 ## More info
 
 * [CWE-703: Improper Check or Handling of Exceptional Conditions](https://cwe.mitre.org/data/definitions/703.html)
+* [Python Security Handbook, Exception Statements](https://nocomplexity.github.io/pythonsecurity/constructs/exceptions/)

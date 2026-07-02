@@ -3,6 +3,7 @@ from pathlib import Path
 
 from codeaudit.filehelpfunctions import read_in_source_file
 from codeaudit.issuevalidations import find_constructs
+from codeaudit.api_interfaces import filescan
 
 
 def test_correct_exception_use():
@@ -17,7 +18,7 @@ def test_correct_exception_use():
     actual_data = find_constructs(source, constructs)
 
     # This is the expected dictionary
-    expected_data = {"pass": [19], "continue": [11]}
+    expected_data = {"pass": [20, 38, 51], "continue": [12]}
 
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
