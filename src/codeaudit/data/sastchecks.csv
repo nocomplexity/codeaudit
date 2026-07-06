@@ -16,6 +16,8 @@ Dangerous Built-in: exec,exec,High,This function can execute arbitrary code and 
 Dangerous Built-in: compile,compile,High,This function can be used to execute arbitrary code or crash the Python interpreter.
 Dynamic Imports,__import__,Medium,"Importing modules dynamically can load untrusted code."
 Dynamic Imports,importlib.import_module,Medium,"Importing modules dynamically can load untrusted code."
+Dynamic Imports,importlib.util.spec_from_file_location,Low,Can bypass the normal import mechanism and can execute arbitrary Python files.
+Dynamic Imports,importlib.util.module_from_spec,Low,Can bypass the normal import mechanism and can execute arbitrary Python files.
 Insecure Hashing Algorithm,hashlib.md5,High,MD5 is cryptographically broken and should not be used for security purposes.
 Insecure Hashing Algorithm,hashlib.sha1,High,SHA-1 is cryptographically broken and should not be used for security purposes.
 Insecure FTP use,ftplib.FTP,High,Never use this. Sends usernames and passwords in plain text and transfers data unencrypted. 

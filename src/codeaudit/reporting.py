@@ -900,7 +900,7 @@ def report_implemented_tests(filename=DEFAULT_OUTPUT_FILE):
     df_checks["construct"] = df_checks["construct"].apply(
         replace_second_dot
     )  # Make the validation column smaller - this is the simplest way! without using styling options from Pandas!
-    df_checks_sorted = df_checks.sort_values(by="construct")
+    df_checks_sorted = df_checks.sort_values(by="name")
     output = "<h1>Python Code Audit Implemented validations</h1>"  # prepared to be embedded to display multiple reports, so <h2> used
     number_of_test = len(df_checks)
 
