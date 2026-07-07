@@ -10,16 +10,14 @@ If you have improvements or CI configuration tips, contributions via pull reques
 [Data Exfiltration Detection functionality](data_exfiltration_detection) is not yet available in CI pipelines.
 :::
 
-
 :::{admonition} By default, CI scan mode uses the same analysis engine as the CLI version
 :class: important
 
 So Keep in mind:
 
-* [Some directories are excluded from SAST scanning](excluded_directories)
-* Findings marked with [markissues-label](markissues-label) are ignored by default in CI mode
-:::
-
+- [Some directories are excluded from SAST scanning](excluded_directories)
+- Findings marked with [markissues-label](markissues-label) are ignored by default in CI mode
+  :::
 
 ## CI Mode Command
 
@@ -31,10 +29,8 @@ codeaudit cimode [file|directory] [--output text|html|json] [--nosec True|False]
 
 ### Default behaviour
 
-* Output format: `text`
-* `nosec=True` (ignores lines marked with `# nosec`)
-
-
+- Output format: `text`
+- `nosec=True` (ignores lines marked with `# nosec`)
 
 ### Quick Test Run
 
@@ -46,20 +42,14 @@ codeaudit cimode .
 
 Here, `.` represents the current working directory.
 
-
 ### Command Options
 
-
 | Option         | Description                                                |
-| -------------- | ---------------------------------------------------------- |
+| :------------- | :--------------------------------------------------------- |
 | `-o, --output` | Output format: `text`, `html`, or `json` (default: `text`) |
 | `-n, --nosec`  | Ignore findings marked with `# nosec` (default: `True`)    |
 
-
-
-
 ## GitLab CI Integration
-
 
 Integrating Python Code Audit with [GitLab.com](https://gitlab.com) is straightforward and can be completed in just a few minutes.
 
@@ -67,9 +57,7 @@ For GitLab CI jobs, it is recommended to always save **artifacts**, even when th
 
 If needed, you can also export the `json` output for further processing in a separate secure environment, for example to integrate results into dashboards, ticketing systems, or additional analysis pipelines.
 
-
-### HTML report example 
-
+### HTML report example
 
 ```yaml
 # SAST scan with Python Code Audit on GitLab.com
@@ -88,7 +76,7 @@ codeaudit-scan:
     - pip install codeaudit
     - codeaudit --version
     - codeaudit cimode . --output html > codeaudit-output.html
-    
+
   allow_failure: true
 
   artifacts:
@@ -102,8 +90,7 @@ codeaudit-scan:
 
 If a scan detects security weaknesses, the job will fail by default. In many workflows, it is common to allow CI failures so that issues are visible without blocking all development activity.
 
-After the job completes, results are available in the CI **artifacts**. Use *Browse artifacts* to open the HTML report directly in your browser.
-
+After the job completes, results are available in the CI **artifacts**. Use _Browse artifacts_ to open the HTML report directly in your browser.
 
 ### Plain Text Output Example
 
@@ -132,7 +119,6 @@ codeaudit-scan:
     expose_as: "Python Code Audit Report"
 ```
 
-
 ### JSON Output Example
 
 For structured processing or integration with other tools:
@@ -160,6 +146,36 @@ codeaudit-scan:
     expose_as: "Python Code Audit Report"
 ```
 
+### GitLab CI Component Example
+
+`codeaudit` can be easily fitted as a GitLab CI component for easy integration into the GitLab pipelines.
+Example code for a `codeaudit-scan` component:
+
+```yaml
+spec:
+  inputs:
+    python_version:
+      default: "3.14"
+      description: "Python version to use for the scan"
+    stage:
+      default: "scan"
+      description: "Stage to run the scan in"
+    src_dir:
+      default: "."
+      description: "Directory to scan"
+---
+codeaudit-scan:
+  image: python:$[[ inputs.python_version ]]-alpine
+  stage: $[[ inputs.stage ]]
+  before_script:
+    - python -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip codeaudit
+  script:
+    - codeaudit cimode $[[ inputs.src_dir]]
+```
+
+Example above enforces projects to react on found issues. Intentionally results are not redirected to the file to not cover found issues.
 
 ## GitHub.com CI Integration
 
@@ -200,20 +216,17 @@ jobs:
 
       - name: Run SAST scan
         run: |
-           codeaudit cimode . --output text | tee codeaudit-output.text
-           exit ${PIPESTATUS[0]}
-        
+          codeaudit cimode . --output text | tee codeaudit-output.text
+          exit ${PIPESTATUS[0]}
+
       - name: Upload scan artifact
         uses: actions/upload-artifact@v4
         with:
           name: codeaudit-${{ github.ref_name }}
           path: codeaudit-output.text
-
 ```
 
-
-### HTML output 
-
+### HTML output
 
 ```yaml
 # SAST scan with Python Code Audit on GitHub Actions
@@ -242,7 +255,7 @@ jobs:
 
       - name: Install Python Code Audit
         run: pip install codeaudit
-        
+
       - name: Show version
         run: codeaudit --version
 
@@ -254,11 +267,9 @@ jobs:
         with:
           name: codeaudit-${{ github.ref_name }}
           path: codeaudit-output.html
-
 ```
 
-On GitHub Actions, HTML reports are **not rendered directly in the browser** like a live page. They are stored as **workflow artifacts**. 
-
+On GitHub Actions, HTML reports are **not rendered directly in the browser** like a live page. They are stored as **workflow artifacts**.
 
 To download SAST result artifacts from the workflow run:
 
@@ -271,6 +282,3 @@ After the job finishes:
 5. Download the artifact (usually a `.zip` file)
 6. Extract it locally
 7. Open `codeaudit-output.html` in your browser
-
-
-

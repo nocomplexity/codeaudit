@@ -18,6 +18,7 @@ import sys
 import fire  # for working CLI with this PoC-thing (The Google way)
 
 from codeaudit.__about__ import __version__
+from codeaudit.ci_workflowscan import ci_scan
 from codeaudit.reporting import (
     overview_report,
     report_implemented_tests,
@@ -25,11 +26,9 @@ from codeaudit.reporting import (
     scan_report,
 )
 
-from codeaudit.ci_workflowscan import ci_scan
-
 codeaudit_ascii_art = r"""
 ----------------------------------------------------
- _                    __             _             
+ _                    __             _
 |_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
 |   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
 ----------------------------------------------------
@@ -56,6 +55,7 @@ def display_help():
     commands = [
         "overview",
         "filescan",
+        "cimode",
         "modulescan",
         "checks",
         "version",
@@ -63,6 +63,7 @@ def display_help():
     functions = [
         overview_report,
         scan_report,
+        ci_scan,
         report_module_information,
         report_implemented_tests,
         display_version,
