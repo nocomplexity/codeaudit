@@ -172,7 +172,7 @@ codeaudit-scan:
     - source venv/bin/activate
     - pip install --upgrade pip codeaudit
   script:
-    - codeaudit cimode $[[ inputs.src_dir]]
+    - codeaudit cimode $[[ inputs.src_dir ]]
 ```
 
 Example above enforces projects to react on found issues. Intentionally results are not redirected to the file to not cover found issues.
