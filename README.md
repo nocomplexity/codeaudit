@@ -17,9 +17,10 @@ Python Code Audit is a static application security testing (SAST) tool designed 
 This tool is designed for anyone who uses or creates Python programs and wants to understand and mitigate potential security risks.
 
 This tool is created for:
-* Python Users who want to assess the security risks in the Python code they use.
-* Python Developers: Anyone, from professionals to hobbyists, who wants to deliver secure Python code.
-* Security-Conscious Users: People seeking a simple, fast way to gain insight into potential security vulnerabilities within Python packages or files.
+
+- Python Users who want to assess the security risks in the Python code they use.
+- Python Developers: Anyone, from professionals to hobbyists, who wants to deliver secure Python code.
+- Security-Conscious Users: People seeking a simple, fast way to gain insight into potential security vulnerabilities within Python packages or files.
 
 Creating secure software can be challenging. This tool, with its comprehensive [documentation](https://nocomplexity.com/documents/codeaudit/intro.html), acts as your helpful security colleague, making it easier to identify and address vulnerabilities.
 
@@ -27,32 +28,28 @@ Creating secure software can be challenging. This tool, with its comprehensive [
 
 Python Code Audit has the following features:
 
-* **Vulnerability Detection**: Identifies security vulnerabilities in Python files, essential for package security research.
+- **Vulnerability Detection**: Identifies security vulnerabilities in Python files, essential for package security research.
 
-* **Complexity & Statistics**: Reports security-relevant complexity using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count via Python's AST.
+- **Complexity & Statistics**: Reports security-relevant complexity using a fast, lightweight [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) count via Python's AST.
 
-* **Module Usage & External Vulnerabilities**: Detects used modules and reports known vulnerabilities for used external modules.
+- **Module Usage & External Vulnerabilities**: Detects used modules and reports known vulnerabilities for used external modules.
 
-* **Inline Issue Reporting**: Shows potential security issues with line numbers and code snippets.
+- **Inline Issue Reporting**: Shows potential security issues with line numbers and code snippets.
 
+- **External Egress Detection**: Identifies embedded API keys and logic that enables communication with remote services, helping uncover hidden data exfiltration paths.
 
-* **External Egress Detection**: Identifies embedded API keys and logic that enables communication with remote services, helping uncover hidden data exfiltration paths.
+- **CI/CD Ready:** Integrates seamlessly into any CI/CD workflow.
 
-* **CI/CD Ready:** Integrates seamlessly into any CI/CD workflow.
-
-* **HTML Reports**: All output is saved in simple, static HTML reports viewable in any browser.
-
-
+- **HTML Reports**: All output is saved in simple, static HTML reports viewable in any browser.
 
 > [!NOTE]
 > Python Code Audit uses the Python's Abstract Syntax Tree (AST) to get robust and reliable result. Using the Python AST makes contextual Vulnerability Detection possible and false positive are minimized.
-
 
 ## Installation
 
 > [!TIP]
 > Try it instantly—no installs, no setup, no excuses.
-> 
+>
 > 👉 Launch the browser version [here](https://nocomplexity.com/codeauditapp/dashboardapp.html)
 
 It runs 100% locally in your browser using WebAssembly (WASM). See the power of the tool in under 60 seconds.
@@ -64,11 +61,7 @@ Loved the browser version? Unlock the full power. For advanced security code ins
 pip install -U codeaudit
 ```
 
-
-
-
 If you have installed **Python Code Audit** previously and want to ensure you are using the latest validations and features, simply run this command again. Python Code Audit is frequently updated with new checks.
-
 
 ## Usage
 
@@ -82,7 +75,7 @@ This will show all commands:
 
 ```text
 ----------------------------------------------------
- _                    __             _             
+ _                    __             _
 |_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
 |   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
 ----------------------------------------------------
@@ -91,13 +84,14 @@ Python Code Audit - A modern Python security source code analyzer based on distr
 
 
 Commands to evaluate Python source code:
-Usage: codeaudit COMMAND <directory|package>  [report.html] 
+Usage: codeaudit COMMAND <directory|package>  [report.html]
 
 Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.
 
 Commands:
   overview             Generates an overview report of code complexity and security indicators.
   filescan             Scans Python source code or PyPI packages for security weaknesses.
+  cimode               Run a SAST scan for CI workflows.
   modulescan           Generate a report on known vulnerabilities in Python modules and packages.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
@@ -107,7 +101,7 @@ Use the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to 
 
 ## Example
 
-By running the `codeaudit filescan` command, detailed security information is determined for a Python file based on more than **89 validations** implemented. 
+By running the `codeaudit filescan` command, detailed security information is determined for a Python file based on more than **89 validations** implemented.
 
 The `codeaudit filescan` command shows all **potential** security issues that are detected in the source file in a HTML-report.
 
@@ -129,19 +123,17 @@ Paste the line below directly into your browser bar:
 
 ![Example view of filescan report](filescan.png)
 
-
 ## Contributing
 
 All contributions are welcome! Think of corrections on the documentation, code or more and better tests.
 
 Simple Guidelines:
 
-* Questions, Feature Requests, Bug Reports please use on the Github Issue Tracker.
+- Questions, Feature Requests, Bug Reports please use on the Github Issue Tracker.
 
-**Pull Requests are welcome!** 
+**Pull Requests are welcome!**
 
-When you contribute to Codeaudit, your contributions are made under the same license as the file you are working on. 
-
+When you contribute to Codeaudit, your contributions are made under the same license as the file you are working on.
 
 > [!NOTE]
 > This is an open community driven project. Contributors will be mentioned in the [documentation](https://nocomplexity.com/documents/codeaudit/intro.html).
@@ -150,7 +142,4 @@ We adopt the [Collective Code Construction Contract(C4)](https://rfc.zeromq.org/
 
 ## License
 
-
 `codeaudit` is distributed under the terms of the [GPL-3.0-or-later](https://spdx.org/licenses/GPL-3.0-or-later.html) license.
-
-
