@@ -82,3 +82,13 @@ dependencies = ["black", "pylint"]
 format-check = "black --target-version py313 --check src tests"
 format-fix = "black --target-version py313 src tests"
 lint-check = "pylint src tests"
+
+[tool.pytest]
+minversion = "9.0"
+addopts = ["-ra", "--showlocals"]
+strict = true
+filterwarnings = ["error"]
+log_level = "INFO"
+testpaths = [
+  "tests",
+]

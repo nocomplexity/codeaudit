@@ -240,40 +240,10 @@ footer {
   </thead>
   <tbody>
     <tr>
-      <td>Dynamic Imports</td>
-      <td>__import__</td>
-      <td>Medium</td>
-      <td>Importing modules dynamically can load untrusted code.</td>
-    </tr>
-    <tr>
       <td>Assertions</td>
       <td>assert</td>
       <td>Low</td>
       <td>Assertions are for debugging and development. Assertions can be disabled during runtime. Use in production can introduce vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Base64 Decoding</td>
-      <td>base64.b64decode</td>
-      <td>Medium</td>
-      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
-    </tr>
-    <tr>
-      <td>Base64 Decoding</td>
-      <td>base64.b64encode</td>
-      <td>Low</td>
-      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
-    </tr>
-    <tr>
-      <td>Base64 Decoding</td>
-      <td>base64.b85encode</td>
-      <td>Low</td>
-      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
-    </tr>
-    <tr>
-      <td>Base64 Decoding</td>
-      <td>base64.z85decode</td>
-      <td>Medium</td>
-      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
     </tr>
     <tr>
       <td>BZ2 File Handling</td>
@@ -288,34 +258,82 @@ footer {
       <td>Decompressing untrusted data can lead to resource exhaustion attacks.</td>
     </tr>
     <tr>
+      <td>Base64 Decoding</td>
+      <td>base64.b85encode</td>
+      <td>Low</td>
+      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
+    </tr>
+    <tr>
+      <td>Base64 Decoding</td>
+      <td>base64.b64encode</td>
+      <td>Low</td>
+      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
+    </tr>
+    <tr>
+      <td>Base64 Decoding</td>
+      <td>base64.z85decode</td>
+      <td>Medium</td>
+      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
+    </tr>
+    <tr>
+      <td>Base64 Decoding</td>
+      <td>base64.b64decode</td>
+      <td>Medium</td>
+      <td>Base64 encoding/decoding is not for security. It only visually hides data and provides no confidentiality. Often used to obfuscate malware in code.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.randbytes</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.seed</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.triangular</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.Random</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.randrange</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.randint</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Cryptographically Unsafe Randomness</td>
+      <td>random.uniform</td>
+      <td>Low</td>
+      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
+    </tr>
+    <tr>
       <td>Dangerous Built-in: compile</td>
       <td>compile</td>
       <td>High</td>
       <td>This function can be used to execute arbitrary code or crash the Python interpreter.</td>
-    </tr>
-    <tr>
-      <td>Zstandard (zstd) decompression</td>
-      <td>compression.zstd<br>decompress</td>
-      <td>High</td>
-      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
-    </tr>
-    <tr>
-      <td>Zstandard (zstd) decompression</td>
-      <td>compression.zstd<br>open</td>
-      <td>High</td>
-      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
-    </tr>
-    <tr>
-      <td>Unsafe Deserialization: multiprocessing</td>
-      <td>connection.recv</td>
-      <td>High</td>
-      <td>Uses pickle, which can execute arbitrary code when receiving data.</td>
-    </tr>
-    <tr>
-      <td>Overly Broad Exception Handling</td>
-      <td>continue</td>
-      <td>Low</td>
-      <td>Skipping over exceptions can mask critical errors and security risks.</td>
     </tr>
     <tr>
       <td>Dangerous Built-in: eval</td>
@@ -330,40 +348,34 @@ footer {
       <td>This function can execute arbitrary code and should be used only with validated constructs.</td>
     </tr>
     <tr>
-      <td>Insecure FTP use</td>
-      <td>ftplib.FTP</td>
-      <td>High</td>
-      <td>Never use this. Sends usernames and passwords in plain text and transfers data unencrypted.</td>
+      <td>Directory Creation</td>
+      <td>os.makedirs</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
     </tr>
     <tr>
-      <td>Gzip File Handling</td>
-      <td>gzip.open</td>
-      <td>Medium</td>
-      <td>Risk of decompression bombs or resource exhaustion with untrusted data.</td>
+      <td>Directory Creation</td>
+      <td>os.mkdir</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
     </tr>
     <tr>
-      <td>Insecure Hashing Algorithm</td>
-      <td>hashlib.md5</td>
-      <td>High</td>
-      <td>MD5 is cryptographically broken and should not be used for security purposes.</td>
+      <td>Directory Creation</td>
+      <td>os.makedev</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
     </tr>
     <tr>
-      <td>Insecure Hashing Algorithm</td>
-      <td>hashlib.sha1</td>
-      <td>High</td>
-      <td>SHA-1 is cryptographically broken and should not be used for security purposes.</td>
+      <td>Directory Creation</td>
+      <td>os.mknod</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
     </tr>
     <tr>
-      <td>HTTP Server (Base Handler)</td>
-      <td>http.server<br>BaseHTTPRequestHandler</td>
-      <td>High</td>
-      <td>These modules are for development only and are not secure for production use.</td>
-    </tr>
-    <tr>
-      <td>HTTP Server</td>
-      <td>http.server<br>HTTPServer</td>
-      <td>High</td>
-      <td>These modules are for development only and are not secure for production use.</td>
+      <td>Directory Creation</td>
+      <td>os.mkfifo</td>
+      <td>Low</td>
+      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
     </tr>
     <tr>
       <td>Dynamic Imports</td>
@@ -372,16 +384,70 @@ footer {
       <td>Importing modules dynamically can load untrusted code.</td>
     </tr>
     <tr>
+      <td>Dynamic Imports</td>
+      <td>__import__</td>
+      <td>Medium</td>
+      <td>Importing modules dynamically can load untrusted code.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Imports</td>
+      <td>importlib.util<br>module_from_spec</td>
+      <td>Low</td>
+      <td>Can bypass the normal import mechanism and can execute arbitrary Python files.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Imports</td>
+      <td>importlib.util<br>spec_from_file_location</td>
+      <td>Low</td>
+      <td>Can bypass the normal import mechanism and can execute arbitrary Python files.</td>
+    </tr>
+    <tr>
+      <td>Gzip File Handling</td>
+      <td>gzip.open</td>
+      <td>Medium</td>
+      <td>Risk of decompression bombs or resource exhaustion with untrusted data.</td>
+    </tr>
+    <tr>
+      <td>HTTP Server</td>
+      <td>http.server<br>HTTPServer</td>
+      <td>High</td>
+      <td>These modules are for development only and are not secure for production use.</td>
+    </tr>
+    <tr>
+      <td>HTTP Server (Base Handler)</td>
+      <td>http.server<br>BaseHTTPRequestHandler</td>
+      <td>High</td>
+      <td>These modules are for development only and are not secure for production use.</td>
+    </tr>
+    <tr>
       <td>Input Function</td>
       <td>input</td>
       <td>Low</td>
       <td>User input must be strictly sanitized and validated to prevent injection vulnerabilities.</td>
     </tr>
     <tr>
-      <td>Logging Configuration</td>
-      <td>logging.config</td>
+      <td>Insecure FTP use</td>
+      <td>ftplib.FTP</td>
+      <td>High</td>
+      <td>Never use this. Sends usernames and passwords in plain text and transfers data unencrypted.</td>
+    </tr>
+    <tr>
+      <td>Insecure Hashing Algorithm</td>
+      <td>hashlib.sha1</td>
+      <td>High</td>
+      <td>SHA-1 is cryptographically broken and should not be used for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Insecure Hashing Algorithm</td>
+      <td>hashlib.md5</td>
+      <td>High</td>
+      <td>MD5 is cryptographically broken and should not be used for security purposes.</td>
+    </tr>
+    <tr>
+      <td>Insecure Network Binding</td>
+      <td>s.bind</td>
       <td>Medium</td>
-      <td>Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.</td>
+      <td>Binding to all interfaces can expose the service to a wider network attack surface.</td>
     </tr>
     <tr>
       <td>LZMA File Handling</td>
@@ -396,6 +462,12 @@ footer {
       <td>Risk of decompression bombs or resource exhaustion with untrusted data.</td>
     </tr>
     <tr>
+      <td>Logging Configuration</td>
+      <td>logging.config</td>
+      <td>Medium</td>
+      <td>Parsing untrusted logging configurations can lead to vulnerabilities if not handled correctly.</td>
+    </tr>
+    <tr>
       <td>Marshal Usage</td>
       <td>marshal.load</td>
       <td>High</td>
@@ -408,22 +480,16 @@ footer {
       <td>This module is not secure and should not be used to deserialize data from untrusted sources.</td>
     </tr>
     <tr>
-      <td>Unsafe Deserialization: multiprocessing</td>
-      <td>multiprocessing.connection<br>Connection</td>
-      <td>High</td>
-      <td>Relies on pickle; dangerous with untrusted data.</td>
-    </tr>
-    <tr>
       <td>OS Access</td>
       <td>os.access</td>
       <td>High</td>
       <td>Direct OS function calls can have significant security implications and require careful review.</td>
     </tr>
     <tr>
-      <td>OS File Permissions</td>
-      <td>os.chmod</td>
+      <td>OS Execution</td>
+      <td>os.system</td>
       <td>High</td>
-      <td>Changing permissions carelessly can expose sensitive files.</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
     </tr>
     <tr>
       <td>OS Execution</td>
@@ -445,19 +511,13 @@ footer {
     </tr>
     <tr>
       <td>OS Execution</td>
-      <td>os.execlpe</td>
+      <td>os.popen</td>
       <td>High</td>
       <td>Direct OS function calls can have significant security implications and require careful review.</td>
     </tr>
     <tr>
       <td>OS Execution</td>
-      <td>os.execv</td>
-      <td>High</td>
-      <td>Direct OS function calls can have significant security implications and require careful review.</td>
-    </tr>
-    <tr>
-      <td>OS Execution</td>
-      <td>os.execve</td>
+      <td>os.execvpe</td>
       <td>High</td>
       <td>Direct OS function calls can have significant security implications and require careful review.</td>
     </tr>
@@ -469,9 +529,45 @@ footer {
     </tr>
     <tr>
       <td>OS Execution</td>
-      <td>os.execvpe</td>
+      <td>os.execve</td>
       <td>High</td>
       <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execv</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS Execution</td>
+      <td>os.execlpe</td>
+      <td>High</td>
+      <td>Direct OS function calls can have significant security implications and require careful review.</td>
+    </tr>
+    <tr>
+      <td>OS File Operations</td>
+      <td>os.writev</td>
+      <td>Low</td>
+      <td>Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.</td>
+    </tr>
+    <tr>
+      <td>OS File Operations</td>
+      <td>os.write</td>
+      <td>Low</td>
+      <td>Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.</td>
+    </tr>
+    <tr>
+      <td>OS File Operations</td>
+      <td>os.read</td>
+      <td>Low</td>
+      <td>Reading from unvalidated file descriptors can lead to information disclosure.</td>
+    </tr>
+    <tr>
+      <td>OS File Permissions</td>
+      <td>os.chmod</td>
+      <td>High</td>
+      <td>Changing permissions carelessly can expose sensitive files.</td>
     </tr>
     <tr>
       <td>OS Forking</td>
@@ -486,74 +582,20 @@ footer {
       <td>Use of forkpty can be unsafe when used on MacOS.</td>
     </tr>
     <tr>
-      <td>Directory Creation</td>
-      <td>os.makedev</td>
-      <td>Low</td>
-      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Directory Creation</td>
-      <td>os.makedirs</td>
-      <td>Low</td>
-      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Directory Creation</td>
-      <td>os.mkdir</td>
-      <td>Low</td>
-      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Directory Creation</td>
-      <td>os.mkfifo</td>
-      <td>Low</td>
-      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Directory Creation</td>
-      <td>os.mknod</td>
-      <td>Low</td>
-      <td>Direct file system calls require careful input validation to prevent vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>OS Execution</td>
-      <td>os.popen</td>
-      <td>High</td>
-      <td>Direct OS function calls can have significant security implications and require careful review.</td>
-    </tr>
-    <tr>
-      <td>OS File Operations</td>
-      <td>os.read</td>
-      <td>Low</td>
-      <td>Reading from unvalidated file descriptors can lead to information disclosure.</td>
-    </tr>
-    <tr>
-      <td>OS Execution</td>
-      <td>os.system</td>
-      <td>High</td>
-      <td>Direct OS function calls can have significant security implications and require careful review.</td>
-    </tr>
-    <tr>
-      <td>OS File Operations</td>
-      <td>os.write</td>
-      <td>Low</td>
-      <td>Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.</td>
-    </tr>
-    <tr>
-      <td>OS File Operations</td>
-      <td>os.writev</td>
-      <td>Low</td>
-      <td>Writing to unvalidated or unintended file descriptors can lead to data corruption, privilege escalation, or denial of service.</td>
-    </tr>
-    <tr>
       <td>Overly Broad Exception Handling</td>
       <td>pass</td>
       <td>Low</td>
       <td>Using `pass` in an `except` block can silently ignore critical security exceptions.</td>
     </tr>
     <tr>
+      <td>Overly Broad Exception Handling</td>
+      <td>continue</td>
+      <td>Low</td>
+      <td>Skipping over exceptions can mask critical errors and security risks.</td>
+    </tr>
+    <tr>
       <td>Pickle Usage</td>
-      <td>pickle.Unpickler</td>
+      <td>pickle.loads</td>
       <td>High</td>
       <td>Deserializing untrusted data with `pickle` can lead to arbitrary code execution.</td>
     </tr>
@@ -565,63 +607,9 @@ footer {
     </tr>
     <tr>
       <td>Pickle Usage</td>
-      <td>pickle.loads</td>
+      <td>pickle.Unpickler</td>
       <td>High</td>
       <td>Deserializing untrusted data with `pickle` can lead to arbitrary code execution.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.Random</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.randbytes</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.randint</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.random</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.randrange</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.seed</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.triangular</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Cryptographically Unsafe Randomness</td>
-      <td>random.uniform</td>
-      <td>Low</td>
-      <td>The pseudo-random generators in this module are not suitable for security purposes.</td>
-    </tr>
-    <tr>
-      <td>Insecure Network Binding</td>
-      <td>s.bind</td>
-      <td>Medium</td>
-      <td>Binding to all interfaces can expose the service to a wider network attack surface.</td>
     </tr>
     <tr>
       <td>Shelve Usage</td>
@@ -636,10 +624,10 @@ footer {
       <td>The `shelve` module uses `pickle` internally, making it unsafe for untrusted data.</td>
     </tr>
     <tr>
-      <td>Shutil Operations</td>
-      <td>shutil.chown</td>
+      <td>Shutil Copying</td>
+      <td>shutil.copytree</td>
       <td>Medium</td>
-      <td>Changing file ownership can introduce vulnerabilities.</td>
+      <td>Files may be copied without authorization if paths are not validated.</td>
     </tr>
     <tr>
       <td>Shutil Copying</td>
@@ -654,10 +642,16 @@ footer {
       <td>Files may be copied without authorization if paths are not validated.</td>
     </tr>
     <tr>
-      <td>Shutil Copying</td>
-      <td>shutil.copytree</td>
+      <td>Shutil Extraction</td>
+      <td>shutil.unpack_archive</td>
       <td>Medium</td>
-      <td>Files may be copied without authorization if paths are not validated.</td>
+      <td>Untrusted archives can contain malicious paths or payloads.</td>
+    </tr>
+    <tr>
+      <td>Shutil Operations</td>
+      <td>shutil.chown</td>
+      <td>Medium</td>
+      <td>Changing file ownership can introduce vulnerabilities.</td>
     </tr>
     <tr>
       <td>Shutil Removal</td>
@@ -666,38 +660,14 @@ footer {
       <td>Vulnerable to path traversal attacks if not used carefully.</td>
     </tr>
     <tr>
-      <td>Shutil Extraction</td>
-      <td>shutil.unpack_archive</td>
+      <td>Subprocess Usage</td>
+      <td>subprocess.run</td>
       <td>Medium</td>
-      <td>Untrusted archives can contain malicious paths or payloads.</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
     </tr>
     <tr>
       <td>Subprocess Usage</td>
       <td>subprocess.Popen</td>
-      <td>Medium</td>
-      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Subprocess Usage</td>
-      <td>subprocess.call</td>
-      <td>High</td>
-      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Subprocess Usage</td>
-      <td>subprocess.check_call</td>
-      <td>High</td>
-      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Subprocess Usage</td>
-      <td>subprocess.check_output</td>
-      <td>Medium</td>
-      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
-    </tr>
-    <tr>
-      <td>Subprocess Usage</td>
-      <td>subprocess.getoutput</td>
       <td>Medium</td>
       <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
     </tr>
@@ -709,15 +679,27 @@ footer {
     </tr>
     <tr>
       <td>Subprocess Usage</td>
-      <td>subprocess.run</td>
+      <td>subprocess.getoutput</td>
       <td>Medium</td>
       <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
     </tr>
     <tr>
-      <td>Sys Calls</td>
-      <td>sys.call_tracing</td>
+      <td>Subprocess Usage</td>
+      <td>subprocess.check_call</td>
+      <td>High</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.call</td>
+      <td>High</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Subprocess Usage</td>
+      <td>subprocess.check_output</td>
       <td>Medium</td>
-      <td>Provides low-level access to interpreter execution; dangerous if exposed.</td>
+      <td>Requires careful input validation to prevent command injection vulnerabilities.</td>
     </tr>
     <tr>
       <td>Sys Calls</td>
@@ -732,6 +714,12 @@ footer {
       <td>Provides low-level access to interpreter execution; dangerous if exposed.</td>
     </tr>
     <tr>
+      <td>Sys Calls</td>
+      <td>sys.call_tracing</td>
+      <td>Medium</td>
+      <td>Provides low-level access to interpreter execution; dangerous if exposed.</td>
+    </tr>
+    <tr>
       <td>Tarfile Extraction</td>
       <td>tarfile.TarFile</td>
       <td>High</td>
@@ -742,6 +730,18 @@ footer {
       <td>tempfile.mktemp</td>
       <td>Low</td>
       <td>This function is deprecated because of race conditions that can lead to security vulnerabilities.</td>
+    </tr>
+    <tr>
+      <td>Unsafe Deserialization: multiprocessing</td>
+      <td>connection.recv</td>
+      <td>High</td>
+      <td>Uses pickle, which can execute arbitrary code when receiving data.</td>
+    </tr>
+    <tr>
+      <td>Unsafe Deserialization: multiprocessing</td>
+      <td>multiprocessing.connection<br>Connection</td>
+      <td>High</td>
+      <td>Relies on pickle; dangerous with untrusted data.</td>
     </tr>
     <tr>
       <td>XML-RPC Client</td>
@@ -761,5 +761,17 @@ footer {
       <td>High</td>
       <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
     </tr>
+    <tr>
+      <td>Zstandard (zstd) decompression</td>
+      <td>compression.zstd<br>decompress</td>
+      <td>High</td>
+      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
+    </tr>
+    <tr>
+      <td>Zstandard (zstd) decompression</td>
+      <td>compression.zstd<br>open</td>
+      <td>High</td>
+      <td>Vulnerable to path traversal attacks if used with untrusted archives.</td>
+    </tr>
   </tbody>
-</table><br><p>Number of implemented security validations:<b>87</b></p><p>Version of codeaudit: <b>1.7.1</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b> <i>This SAST tool <a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a> provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p><p>This Python security report was created on: <b>2026-06-29 17:27</b> with <a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a> version <b>1.7.1</b></p><hr><footer><div class="footer-links">Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues.<br>Codeaudit is made with <span class="heart">&#10084;</span> by cyber security professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" target="_blank">open simple security solutions</a>.<br><a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">Join the community</a> and contribute to make this tool better!</div></footer></div></body></html>
+</table><br><p>Number of implemented security validations:<b>89</b></p><p>Version of codeaudit: <b>1.7.1</b><p>Because Python and cybersecurity are constantly changing, issue reports <b>SHOULD</b> specify the codeaudit version used.</p><p><b>Disclaimer:</b> <i>This SAST tool <a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a> provides a powerful, automatic security analysis for Python source code. However, it's not a substitute for human review in combination with business knowledge. Undetected vulnerabilities may still exist.</i></p><p>This Python security report was created on: <b>2026-07-09 10:13</b> with <a href="https://github.com/nocomplexity/codeaudit" target="_blank"><b>Python Code Audit</b></a> version <b>1.7.1</b></p><hr><footer><div class="footer-links">Check the <a href="https://nocomplexity.com/documents/codeaudit/intro.html" target="_blank">documentation</a> for help on found issues.<br>Codeaudit is made with <span class="heart">&#10084;</span> by cyber security professionals who advocate for <a href="https://nocomplexity.com/simplify-security/" target="_blank">open simple security solutions</a>.<br><a href="https://nocomplexity.com/documents/codeaudit/CONTRIBUTE.html" target="_blank">Join the community</a> and contribute to make this tool better!</div></footer></div></body></html>

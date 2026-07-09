@@ -3,7 +3,7 @@
 Python Code Audit commands for: version: 1.7.1
 ```
 ----------------------------------------------------
- _                    __             _             
+ _                    __             _
 |_) \/_|_|_  _ __    /   _  _| _    |_|    _| o _|_
 |   /  |_| |(_)| |   \__(_)(_|(/_   | ||_|(_| |  |_
 ----------------------------------------------------
@@ -18,6 +18,7 @@ Depending on the command, you must specify a local directory, a Python file, or 
 Commands:
   overview             Generates an overview report of code complexity and security indicators.
   filescan             Scans Python source code or PyPI packages for security weaknesses.
+  cimode               Run a SAST scan for CI workflows.
   modulescan           Generate a report on known vulnerabilities in Python modules and packages.
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
