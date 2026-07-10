@@ -1,5 +1,26 @@
 # Change Log
 
+## Version 1.8.0:
+
+
+**Added**
+
+* **Security Checks:** Added checks for `importlib.util.spec_from_file_location` and `importlib.util.module_from_spec` to mitigate recent CVE-2026-40156 vulnerabilities.
+* **Configuration:** Added `[tool.pytest]` section to `pyproject.toml`.
+
+**Changed**
+
+* **CLD Output for checks overview:** Sorted the `codeaudit` checks output now alphabetically by `Name`.
+* **Security:** Updated the secret list used for egress detection.
+
+**Fixed**
+
+* **Configuration:** Added the missing `homepage` field under `[project.urls]` in `pyproject.toml`.
+
+**Documentation**
+
+* **CLI Help:** Added help documentation for the CI command (`cimode`). *Big thanks to @jurgenwigg for [pull request #25](https://github.com/nocomplexity/codeaudit/pull/25)!*
+
 ## Version 1.7.1:
 
 
