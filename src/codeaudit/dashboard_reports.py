@@ -442,6 +442,7 @@ def get_info_text():
         """
         <p><b>Python Code Audit</b> is a Static Application Security Testing (SAST) tool used to find security weaknesses in Python code.</p>
         <p>Use the CLI version for powerful command-line scanning with many more options.<p>
+        <p><i>This tool runs entirely in your browser. No data is ever sent to a server. No analytics. No telemetry. Ever.</i></p>
             <br><br>     
             <a href="https://nocomplexity.com/documents/codeaudit/intro.html"
                 target="_blank"

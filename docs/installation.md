@@ -12,7 +12,11 @@ Launch web-based version
 ```
 
 :::{note} 
-The browser-based version runs 100% locally; however, please note that not all functionality is available. You can perform a security scan on packages available from PyPI. 
+The browser-based version runs 100% locally in your browser.
+No data is ever sent to a server. No analytics. No telemetry.
+
+Please note that not all functionality is available. You can perform a security scan on packages available from PyPI. 
+
 :::
 
 ## Install for full functionality
