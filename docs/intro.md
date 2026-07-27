@@ -10,6 +10,23 @@
 
 **Python Code Audit** is a Static Application **Security** Testing (SAST) tool used to find **security weaknesses** in Python code.
 
+::::{grid} 
+:gutter: 3 
+
+:::{grid-item-card}
+{octicon}`rocket;4em;caption-text` **Launch Web version**
+
+Audit Python packages instantly. No install required. Perfect for scanning PyPI packages before you use them. Runs entirely in your browser. Zero data sent to servers. No analytics. No telemetry. Ever.
+
++++
+
+```{button-link} https://nocomplexity.com/codeauditapp/dashboardapp.html
+:color: danger
+:align: center
+Launch 
+```
+:::
+::::
 
 ::::{grid} 2
 :class-container: text-center

@@ -56,7 +56,16 @@ def get_imported_modules(source_code):
 
 
 def get_standard_library_modules():
-    """works only Python 3.10+ or higher!"""
+    """Return the names of public Python standard library modules.
+
+    Requires Python 3.10 or later, where ``sys.stdlib_module_names`` is
+    available. Private modules (those whose names begin with ``"_"``) are
+    excluded from the result.
+
+    Returns:
+        list[str]: A sorted list of public standard library module names.
+        Returns an empty list if ``sys.stdlib_module_names`` is unavailable.
+    """
     names = []
     if hasattr(sys, "stdlib_module_names"):
         core_modules = sorted(list(sys.stdlib_module_names))
