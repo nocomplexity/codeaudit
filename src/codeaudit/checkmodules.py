@@ -19,6 +19,7 @@ import sys
 import urllib.request
 
 from codeaudit.filehelpfunctions import collect_python_source_files, read_in_source_file
+from pathlib import Path
 
 
 def get_imported_modules(source_code):
@@ -160,3 +161,21 @@ def get_imported_modules_by_file(python_file_name):
         "imported_modules": sorted(external_modules),
     }
     return all_modules_discovered
+
+
+def get_python_files_from_package(scanresult):
+    """Return a list of Python filenames (without .py) in a nested dict/list."""
+    filenames = []
+
+    if isinstance(scanresult, dict):
+        if "FileName" in scanresult:
+            filenames.append(Path(scanresult["FileName"]).stem)
+
+        for value in scanresult.values():
+            filenames.extend(get_python_files_from_package(value))
+
+    elif isinstance(scanresult, list):
+        for item in scanresult:
+            filenames.extend(get_python_files_from_package(item))
+
+    return filenames

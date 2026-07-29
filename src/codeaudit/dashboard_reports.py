@@ -15,6 +15,7 @@ API functions: Used for dashboard reporting (Panel / WASM) and notebooks, or to 
 from codeaudit.__about__ import __version__
 from codeaudit.pypi_package_scan import get_latest_release_date, days_since_update
 from codeaudit.api_reporting import total_weaknesses
+from codeaudit.api_interfaces import _clean_import_list, package_imports
 
 SAST_REPORT_CSS = """
 <style>
@@ -375,31 +376,6 @@ def report_sast_results(scanresult):
     return pn.pane.HTML(html, styles=RESULT_HTML_PANE)
 
 
-def clean_import_list(modules, package):
-    """Return a cleaned list of importable module names.
-
-    Removes the specified package, all of its submodules, and any private
-    modules whose final name component begins with an underscore.
-
-    Args:
-        modules (Iterable[str]): Module names to filter.
-        package (str): Package name to exclude.
-
-    Returns:
-        list[str]: Filtered module names.
-    """
-    cleaned_list = [
-        module
-        for module in modules
-        if (
-            module != package
-            and not module.startswith(f"{package}.")
-            and not module.rsplit(".", 1)[-1].startswith("_")
-        )
-    ]
-    return cleaned_list
-
-
 def report_used_modules(scanresult):
     """reports used modules for a package"""
     pn = _require_panel()  # Panel module is needed for this function
@@ -409,10 +385,11 @@ def report_used_modules(scanresult):
         return "<br><h2>⚠️ No scan result provided</h2>"
     modules_discovered = scanresult["module_overview"]
     core_modules = modules_discovered["core_modules"]
-    external_modules = modules_discovered["imported_modules"]
+    # external_modules = modules_discovered["imported_modules"]
+    external_modules = package_imports(scanresult)
     package_name = scanresult.get("package_name")
     if package_name:
-        external_modules = clean_import_list(external_modules, package_name)
+        external_modules = _clean_import_list(external_modules, package_name)
     card1 += "<details>"
     card1 += "<summary><b>Used Python Standard libraries</b></summary>"
     card1 += (

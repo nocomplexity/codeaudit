@@ -31,7 +31,10 @@ from codeaudit.checkmodules import (
     get_all_modules,
     get_imported_modules_by_file,
     get_standard_library_modules,
+    get_python_files_from_package,
 )
+
+
 from codeaudit.filehelpfunctions import (
     collect_python_source_files,
     get_filename_from_path,
@@ -308,6 +311,36 @@ def get_weakness_counts(input_file, nosec=False):
                 counter[weakness_type] += 1
 
     return dict(counter)
+
+
+def package_imports(scanresult):
+    """Return a list of external modules imported by a PyPI package.
+
+    Returns:
+        list[str]: Imported modules excluding the package's own modules.
+        None: If the input is invalid.
+    """
+    if not isinstance(scanresult, dict):
+        return None
+
+    module_overview = scanresult.get("module_overview")
+    if not isinstance(module_overview, dict):
+        return None
+
+    imported_modules = module_overview.get("imported_modules")
+    if not isinstance(imported_modules, list):
+        return None
+
+    package_files = set(get_python_files_from_package(scanresult))
+    external_modules = [
+        module for module in imported_modules if module not in package_files
+    ]
+
+    package_name = scanresult.get("package_name")
+    if package_name:
+        external_modules = _clean_import_list(external_modules, package_name)
+
+    return external_modules
 
 
 def get_modules(filename):
@@ -756,3 +789,28 @@ def _collect_issue_lines(filename, line, context=1):
     )
 
     return code_lines
+
+
+def _clean_import_list(modules, package):
+    """Return a cleaned list of importable module names.
+
+    Removes the specified package, all of its submodules, and any private
+    modules whose final name component begins with an underscore.
+
+    Args:
+        modules (Iterable[str]): Module names to filter.
+        package (str): Package name to exclude.
+
+    Returns:
+        list[str]: Filtered module names.
+    """
+    cleaned_list = [
+        module
+        for module in modules
+        if (
+            module != package
+            and not module.startswith(f"{package}.")
+            and not module.rsplit(".", 1)[-1].startswith("_")
+        )
+    ]
+    return cleaned_list
