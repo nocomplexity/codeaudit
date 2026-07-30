@@ -351,11 +351,11 @@ def package_imports(scanresult):
 
 
 def get_modules(filename):
-    """Extract imported modules from a Python source file.
+    """Extract modules used in a Python source file.
 
     Analyzes the specified Python file and returns the modules imported
     directly within the source code. This approach relies on the actual
-    imports present in the file rather than dependency declarations such as
+    imports **present** in the file rather than dependency declarations such as
     ``requirements.txt`` or ``pyproject.toml``, which may be incomplete or
     outdated.
 
@@ -365,7 +365,7 @@ def get_modules(filename):
     Returns:
         dict: A dictionary containing discovered modules. Expected keys are:
             - ``core_modules`` (list[str]): Standard library modules.
-            - ``imported_modules`` (list[str]): Third-party modules.
+            - ``imported_modules`` (list[str]): Imported modules in the file and third-party modules.
     """
     modules_found = get_imported_modules_by_file(filename)
     return modules_found
