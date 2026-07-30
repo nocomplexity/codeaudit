@@ -43,7 +43,7 @@ from codeaudit.altairplots import (
 )
 
 from codeaudit.api_helpers import _codeaudit_directory_scan_wasm
-from codeaudit.api_interfaces import get_package_source, version
+from codeaudit.api_interfaces import get_package_source, version, package_imports
 
 # --- Environment Detection ---
 IS_PYODIDE = "pyodide" in sys.modules
@@ -175,6 +175,12 @@ async def filescan_wasm(input_path, nosec=False):
             try:
                 scan_output = _codeaudit_directory_scan_wasm(src_dir, nosec_flag=nosec)
                 output |= scan_output
+                # correct statistics for imported modules and modules count
+                correct_imported_modules = package_imports(output)
+                output["module_overview"]["imported_modules"] = correct_imported_modules
+                output["statistics_overview"]["External Modules"] = len(
+                    correct_imported_modules
+                )
             finally:
                 if tmp_handle:
                     tmp_handle.cleanup()

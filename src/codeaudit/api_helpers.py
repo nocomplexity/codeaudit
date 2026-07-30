@@ -12,7 +12,12 @@ You should have received a copy of the GNU General Public License along with thi
 Function to create nice APIs. So API helper functions.
 """
 
-from codeaudit.api_interfaces import get_modules, get_overview, _build_weakness_details
+from codeaudit.api_interfaces import (
+    get_modules,
+    get_overview,
+    _build_weakness_details,
+    package_imports,
+)
 from codeaudit.checkmodules import get_all_modules
 from codeaudit.filehelpfunctions import (
     collect_python_source_files,
@@ -77,6 +82,7 @@ def _codeaudit_directory_scan_wasm(input_path, nosec_flag):
         "statistics_overview": package_overview,
         "module_overview": modules_discovered,
     }
+
     # File scanning
     for i, file in enumerate(files_to_check):
         try:

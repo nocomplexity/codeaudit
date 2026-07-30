@@ -151,7 +151,7 @@ def get_all_modules(directory_to_scan):
 
 
 def get_imported_modules_by_file(python_file_name):
-    "Function to get all modules of a single Python file - never trust requirements.txt or project.toml"
+    "Function to get all modules of a single(!) Python file - never trust requirements.txt or project.toml"
     source = read_in_source_file(python_file_name)
     used_modules = get_imported_modules(source)
     core_modules = used_modules["core_modules"]

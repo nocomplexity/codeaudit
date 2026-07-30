@@ -155,6 +155,13 @@ def filescan(input_path, nosec=False):
             try:
                 scan_output = _codeaudit_directory_scan(src_dir, nosec_flag=nosec)
                 output |= scan_output
+                # Replace the value of "imported_modules" in the nested dict
+                correct_imported_modules = package_imports(output)
+                output["module_overview"]["imported_modules"] = correct_imported_modules
+                # correct statistics for modules count in a package
+                output["statistics_overview"]["External Modules"] = len(
+                    correct_imported_modules
+                )
             finally:
                 # Cleaning up temp directory
                 tmp_handle.cleanup()  # deletes everything from temp directory
