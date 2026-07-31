@@ -321,11 +321,36 @@ def get_weakness_counts(input_file, nosec=False):
 
 
 def package_imports(scanresult):
-    """Return a list of external modules imported by a PyPI package.
+    """Return the external Python modules imported by a scanned package.
+
+    This function extracts the list of imported modules from a SAST scan and
+    filters out modules that belong to the package itself. If a package name is
+    available, the returned module names are further normalized by removing
+    imports that resolve to the package's own namespace.
+
+    Args:
+        scanresult (dict): Scan result containing package metadata. The
+            dictionary is expected to contain a ``module_overview`` mapping with
+            an ``imported_modules`` list. Optionally, it may include a
+            ``package_name`` key used for additional filtering.
 
     Returns:
-        list[str]: Imported modules excluding the package's own modules.
-        None: If the input is invalid.
+        list[str] | None: A list of external module names imported by the
+        package. Returns ``None`` if ``scanresult`` is not a dictionary or if
+        the expected ``module_overview`` or ``imported_modules`` entries are
+        missing or have an invalid type.
+
+    Example:
+        scanresult = filescan("packagename") E.g.:
+
+        >> scanresult = filescan("codeaudit") # Current version, without SAST details
+
+        >> modules_discovered = scanresult["module_overview"]
+
+        >> imported_modules = modules_discovered["imported_modules"]
+
+        >> imported_modules
+        ['altair', 'fire', 'pandas', 'panel', 'pyodide.http']
     """
     if not isinstance(scanresult, dict):
         return None

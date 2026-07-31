@@ -1,5 +1,21 @@
 # Change Log
 
+## Version 1.8.1:
+
+**Added**
+- Dashboard: Updated info text on Dashboard version.
+- Updated secrets list for egress scanning.
+
+**Changed**
+- Reporting (WASM version): Updated imported modules display logic—submodules and private modules are now hidden so that only real imported external modules are shown.
+
+**Fixed**
+- Reporting (WASM version): Resolved an error in the imported modules.
+
+**Documentation**
+- Improved API documentation.
+- Various minor improvements.
+
 ## Version 1.8.0:
 
 
