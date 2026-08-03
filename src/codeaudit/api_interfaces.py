@@ -41,7 +41,12 @@ from codeaudit.filehelpfunctions import (
     is_ast_parsable,
 )
 from codeaudit.privacy_lint import data_egress_scan
-from codeaudit.pypi_package_scan import get_package_source, get_pypi_download_info
+from codeaudit.pypi_package_scan import (
+    get_package_source,
+    get_pypi_download_info,
+    get_latest_release_date,
+    days_since_update,
+)
 from codeaudit.security_checks import ast_security_checks, perform_validations
 from codeaudit.suppression import filter_sast_results
 from codeaudit.totals import (
@@ -149,9 +154,16 @@ def filescan(input_path, nosec=False):
         )
         url = pypi_data["download_url"]
         release = pypi_data["release"]
+        update_date = get_latest_release_date(package_name)
+        days_since_last_update = days_since_update(update_date)
         if url is not None:
             src_dir, tmp_handle = get_package_source(url)
-            output |= {"package_name": package_name, "package_release": release}
+            output |= {
+                "package_name": package_name,
+                "package_release": release,
+                "update_date": update_date.isoformat(),
+                "days_since_last_update": days_since_last_update,
+            }
             try:
                 scan_output = _codeaudit_directory_scan(src_dir, nosec_flag=nosec)
                 output |= scan_output
