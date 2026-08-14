@@ -20,7 +20,7 @@ I will send a response indicating the next steps in handling your report. After 
 
 
 > [!TIP]
-> To learn more about security, please visit [Simplify Cyber Security](https://nocomplexity.com/simplify-security/). And do not hestite to join-in to make these Free and Open Security Playbooks better!
+> To learn more about security, please visit [Simplify Cyber Security](https://nocomplexity.com/simplify-security/). And do not hesitate to join-in to make these Free and Open Security Playbooks better!
 
 
 
