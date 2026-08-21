@@ -53,7 +53,7 @@ def collect_python_source_files(directory):
     Returns:
         list: A list of absolute paths to valid Python source files.
     """
-    EXCLUDE_DIRS = {"docs", "docker", "dist", "tests"}
+    EXCLUDE_DIRS = {"docs", "docker", "dist", "tests", "test"}
     python_files = []
 
     for root, dirs, files in os.walk(directory):
