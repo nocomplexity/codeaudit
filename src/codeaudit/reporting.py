@@ -22,6 +22,7 @@ import pandas as pd
 import html
 import datetime
 from importlib.resources import files
+from fileaudit.targz_check import validate_tar_gz
 
 from codeaudit import __version__
 
@@ -54,6 +55,7 @@ from codeaudit.pypi_package_scan import (
     get_package_source,
     get_latest_release_date,
     days_since_update,
+    get_targz_package_source,
 )
 
 from codeaudit.privacy_lint import data_egress_scan, has_privacy_findings
@@ -70,6 +72,7 @@ DISCLAIMER_TEXT = (
 )
 
 NOSEC_WARNING = "<p><b>INFO</b>: The --nosec flag is active. Security findings with in-line suppressions will be excluded from the report.</p>"
+
 
 SIMPLE_CSS_FILE = files("codeaudit") / "simple.css"
 
@@ -364,6 +367,19 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         html_output += "<br>"
         html_output += DISCLAIMER_TEXT
         create_htmlfile(html_output, filename)
+
+    elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
+        input_path
+    ):  # for local tar.gz or remote tar.gz scans
+        src_dir, tmp_handle = get_targz_package_source(input_path)
+        directory_scan_report(
+            src_dir,
+            nosec_flag=nosec,
+            filename=filename,
+        )  # create a package aka directory scan report
+        # Cleaning up temp directory
+        tmp_handle.cleanup()  # deletes everything from temp directory
+
     elif get_pypi_download_info(input_path):
         package_name = (
             input_path  # The variable input_path is now equal to the package name
@@ -398,7 +414,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
     else:
         # File is NOT a valid Python file, can not be parsed or directory is invalid.
         print(
-            f"Error: '{input_path}' isn't a valid Python file, directory path to a package or a package on PyPI.org."
+            f"Error: '{input_path}' isn't a valid Python file, directory path to a package, a valid targz, or a package on PyPI.org."
         )
 
 

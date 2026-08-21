@@ -1,7 +1,7 @@
 """
 License GPLv3 or higher.
 
-(C) 2026  @jurgenwigg  
+(C) 2026  @jurgenwigg
 
 This program is free software: you can redistribute it and/or modify it under the terms
 of the GNU General Public License as published by the Free Software Foundation, either
@@ -23,7 +23,7 @@ from pytest import mark
 
 from codeaudit.filehelpfunctions import collect_python_source_files
 
-_EXCLUDE_DIRS = {"docs", "docker", "dist", "tests"}
+_EXCLUDE_DIRS = {"docs", "docker", "dist", "tests", "test"}
 _EXAMPLE_DIR = "example_dir"
 
 

@@ -18,10 +18,12 @@ import json
 import tarfile
 import tempfile
 import zlib
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from datetime import date, datetime
+from fileaudit.targz_check import validate_tar_gz
 
 from codeaudit import __version__
 
@@ -79,6 +81,75 @@ def get_pypi_download_info(package_name):
                 break  # Found it, stop looking
 
     return {"download_url": sdist_download_url, "release": latest_version}
+
+
+def is_valid_tar_gz(path):
+    """Return True if the given path is a valid .tar.gz file.
+    Default values for validate_tar_gz are used! So note that NOT all tar.gz files will be accepted. Use PyPI tar.gz instead if possible.
+    """
+    return bool(validate_tar_gz(path, max_tar_members=3000))
+
+
+def get_targz_package_source(
+    source,
+    nocxheaders=None,
+    nocxtimeout=10,
+):
+    """Extract a local or remote tar.gz archive into a temporary directory.
+
+    Args:
+        source: Local tar.gz path or already-validated remote URL.
+        nocxheaders: Optional HTTP headers for remote downloads.
+        nocxtimeout: HTTP request timeout in seconds.
+
+    Returns:
+        tuple[str, tempfile.TemporaryDirectory]:
+            The extraction directory and its TemporaryDirectory handle.
+
+            The caller must keep the TemporaryDirectory handle alive while
+            the extracted files are needed and call ``cleanup()`` afterwards.
+
+    Raises:
+        FileNotFoundError: If a local source does not exist.
+        tarfile.TarError: If the source is not a valid tar.gz archive.
+        urllib.error.URLError: If downloading the remote archive fails.
+    """
+    tmpdir_obj = tempfile.TemporaryDirectory(prefix="codeaudit_")
+    temp_dir = Path(tmpdir_obj.name)
+
+    try:
+        source_path = Path(source)
+
+        if source_path.is_file():
+            # No need to copy a local archive into the temporary directory.
+            tar_path = source_path
+        else:
+            # The remote URL has already been validated upstream by the validate_tar_gz of the FileAudit module
+            tar_path = temp_dir / "package.tar.gz"
+
+            request = Request(
+                source,
+                headers=nocxheaders or {},
+            )
+
+            with (
+                urlopen(request, timeout=nocxtimeout) as response,
+                tar_path.open("wb") as destination,
+            ):
+                while chunk := response.read(1024 * 1024):
+                    destination.write(chunk)
+
+        with tarfile.open(tar_path, mode="r:gz") as tar:
+            tar.extractall(
+                path=temp_dir,
+                filter="data",
+            )
+
+        return str(temp_dir), tmpdir_obj
+
+    except Exception:
+        tmpdir_obj.cleanup()
+        raise
 
 
 def get_package_source(url, nocxheaders=NOCX_HEADERS, nocxtimeout=10):

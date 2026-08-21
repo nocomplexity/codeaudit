@@ -46,6 +46,8 @@ from codeaudit.pypi_package_scan import (
     get_pypi_download_info,
     get_latest_release_date,
     days_since_update,
+    is_valid_tar_gz,
+    get_targz_package_source,
 )
 from codeaudit.security_checks import ast_security_checks, perform_validations
 from codeaudit.suppression import filter_sast_results
@@ -55,6 +57,8 @@ from codeaudit.totals import (
     overview_per_file,
     total_modules,
 )
+
+SCAN_ERROR = "Invalid input: not a *.py file or directory with Python files, invalid/missing .tar.gz on given location, or package not found on PyPI."
 
 
 def version():
@@ -75,6 +79,7 @@ def filescan(input_path, nosec=False):
       directory.
     - **Single Python file**: Scans the file if it exists and can be parsed
       into an AST.
+    - Local or remote tar.gz archive, e.g. on a remote repository, E.g. to scan apps are on not (yet)PyPI
     - **PyPI package** on PyPI.org: Downloads the
       source distribution from PyPI, scans it, and cleans up temporary files.
 
@@ -89,7 +94,7 @@ def filescan(input_path, nosec=False):
     - `/docs`
     - `/docker`
     - `/dist`
-    - `/tests`
+    - `/test[s]`
     - all directories that start with . (dot) or _ (underscore)
 
     But you can easily change this if needed!
@@ -148,6 +153,25 @@ def filescan(input_path, nosec=False):
         )  # there is only 1 file , so index 0 equals as for package to make functionality that use the output that works on the dict or json can equal for a package or a single file!
         output |= {"file_security_info": file_output}
         return output
+    elif is_valid_tar_gz(input_path):
+        src_dir, tmp_handle = get_targz_package_source(input_path)
+        try:
+            package_name = get_filename_from_path(input_path)
+            output |= {"package_name": package_name}
+            scan_output = _codeaudit_directory_scan(src_dir, nosec_flag=nosec)
+            output |= scan_output
+            # Replace the value of "imported_modules" in the nested dict
+            correct_imported_modules = package_imports(output)
+            output["module_overview"]["imported_modules"] = correct_imported_modules
+            # correct statistics for modules count in a package
+            output["statistics_overview"]["External Modules"] = len(
+                correct_imported_modules
+            )
+        finally:
+            # Cleaning up temp directory
+            tmp_handle.cleanup()  # deletes everything from temp directory
+        return output
+
     elif pypi_data := get_pypi_download_info(input_path):
         package_name = (
             input_path  # The variable input_path is now equal to the package name
@@ -178,11 +202,10 @@ def filescan(input_path, nosec=False):
                 # Cleaning up temp directory
                 tmp_handle.cleanup()  # deletes everything from temp directory
             return output
+
     else:
         # Its not a directory nor a valid Python file:
-        return {
-            "Error": "File is not a *.py file, does not exist or is not a valid directory path towards a Python package."
-        }
+        return {"Error": SCAN_ERROR}
 
 
 def _codeaudit_scan(filename, nosec_flag):
