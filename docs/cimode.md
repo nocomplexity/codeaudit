@@ -263,7 +263,7 @@ jobs:
         run: codeaudit cimode . --output html > codeaudit-output.html
 
       - name: Upload scan artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: codeaudit-${{ github.ref_name }}
           path: codeaudit-output.html
