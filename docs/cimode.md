@@ -198,12 +198,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
@@ -220,7 +220,7 @@ jobs:
           exit ${PIPESTATUS[0]}
 
       - name: Upload scan artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: codeaudit-${{ github.ref_name }}
           path: codeaudit-output.text
@@ -243,10 +243,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
 
@@ -263,7 +263,7 @@ jobs:
         run: codeaudit cimode . --output html > codeaudit-output.html
 
       - name: Upload scan artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: codeaudit-${{ github.ref_name }}
           path: codeaudit-output.html

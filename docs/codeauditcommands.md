@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
 # Commands Overview
-Python Code Audit commands for: version: 1.8.1
+Python Code Audit commands for: version: 1.9.0
 ```
 ----------------------------------------------------
  _                    __             _
@@ -16,8 +16,8 @@ Usage: codeaudit COMMAND <directory|package>  [report.html]
 Depending on the command, you must specify a local directory, a Python file, or a package name hosted on PyPI.org.Reporting: The results are generated as a static HTML report for viewing in a web browser.
 
 Commands:
-  overview             Generates an overview report of code complexity and security indicators.
-  filescan             Scans Python source code or PyPI packages for security weaknesses.
+  overview             Generate an overview report of code complexity and security indicators.
+  filescan             Scan Python source code, PyPI packages, or tar.gz archives for security weaknesses.
   cimode               Run a SAST scan for CI workflows.
   modulescan           Generate a report on known vulnerabilities in Python modules and packages.
   checks               Creates an HTML report of all implemented security checks.
@@ -28,50 +28,76 @@ Use the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to 
 ```
 ## codeaudit overview
 ```text
-Generates an overview report of code complexity and security indicators.
+Generate an overview report of code complexity and security indicators.
 
-This function analyzes a Python project to produce a high-level overview of
-complexity and security-related metrics. The input may be either:
+This function analyzes a Python project and generates a high-level HTML
+overview of code complexity, project size, module dependencies, and
+security-related indicators.
 
-- A local directory containing Python source files
-- The name of a package hosted on PyPI.org
+The input can be one of the following:
 
-So:
-codeaudit overview <package-name|directory> [reportname.html]
+* A local directory containing Python source files
+* A local or remote ``.tar.gz`` source archive
+* The name of a package hosted on PyPI.org
 
-For PyPI packages, the source distribution (sdist) is downloaded,
+codeaudit overview <package-name|directory|archive.tar.gz> [reportname.html]
+
+For a local or remote ``.tar.gz`` archive, the archive is validated,
 extracted to a temporary directory, scanned, and removed after the report
-is generated.
+has been generated.
 
-The report includes summary statistics, security risk indicators based on
-complexity and total lines of code, a list of discovered modules, per-file
-metrics, and a visual overview. Results are written to a static HTML file.
+For a PyPI package, the source distribution (sdist) is downloaded,
+extracted to a temporary directory, scanned, and removed after the report
+has been generated.
+
+The report includes:
+
+* Summary statistics for the analyzed project
+* Security concern indicators based on maximum code complexity
+  and total lines of code
+* A list of discovered standard-library and external modules
+* Detailed metrics for each Python source file
+* A visual overview of the collected metrics
+* Advice for performing a full SAST scan with ``codeaudit filescan``
 
 Examples:
     Generate an overview report for a local project directory::
 
         codeaudit overview /projects/mycolleaguesproject
 
+    Generate an overview report for a local ``.tar.gz`` archive::
+
+        codeaudit overview /path/to/myproject.tar.gz
+
+    Generate an overview report for a remote ``.tar.gz`` archive::
+
+        codeaudit overview https://example.com/myproject.tar.gz
+
     Generate an overview report for a PyPI package::
 
-        codeaudit overview linkaudit #A nice project on PyPI.org
+        codeaudit overview linkaudit
 
-        codeaudit overview pydantic  #A complex project on PyPI.org from a security perspective?
+        codeaudit overview pydantic
+
+    Specify an output report file::
+
+        codeaudit overview /projects/mycolleaguesproject report.html
 
 Args:
-    directory (str): Path to a local directory containing Python source files
-        or the name of a package available on PyPI.org.
+    directory (str): Path to a local directory containing Python source
+        files, a local or remote ``.tar.gz`` source archive, or the name of
+        a package available on PyPI.org.
     filename (str, optional): Name (and optional path) of the HTML file to
-        write the overview report to. The filename should use the ``.html``
-        extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
+        write the overview report to. The filename should use the
+        ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
 
 Returns:
-    None. The function writes a static HTML overview report to disk.
+    None: The function writes a static HTML overview report to disk.
 
 Raises:
-    SystemExit: If the provided path is not a directory, contains no Python
-        files, or is neither a valid local directory nor a valid PyPI
-        package name.
+    SystemExit: If the provided path is not a directory, contains no
+        Python files, is an invalid ``.tar.gz`` archive, or is neither a
+        valid local input nor a valid PyPI package name.
 str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
 
@@ -133,26 +159,32 @@ errors defaults to 'strict'.
 ```
 ## codeaudit filescan
 ```text
-Scans Python source code or PyPI packages for security weaknesses.
+Scan Python source code, PyPI packages, or tar.gz archives for security weaknesses.
+
 This function performs static application security testing (SAST) on a
 specified input. The input can be one of the following:
 
 * A local directory containing Python source code
 * A single local Python file
+* A local or remote ``.tar.gz`` source archive
 * The name of a package hosted on PyPI
 
-codeaudit filescan <pythonfile|package-name|directory> [reportname.html] [--nosec]
+codeaudit filescan <pythonfile|package-name|directory|archive.tar.gz> [reportname.html] [--nosec]
 
 Based on the input type, the function analyzes the source code for potential
 security issues, generates an HTML report summarizing the findings, and
 writes the report to disk.
+
+For a local or remote ``.tar.gz`` archive, the archive is validated,
+extracted to a temporary directory, scanned as a source directory, and
+cleaned up after the scan completes.
 
 If a PyPI package name is provided, the function downloads the source
 distribution (sdist), extracts it to a temporary directory, scans the
 extracted source code, and cleans up all temporary files after the scan
 completes.
 
- Examples:
+Examples:
 
     Scan a local directory and write the report to ``report.html``::
 
@@ -166,49 +198,56 @@ completes.
 
         codeaudit filescan myexample.py
 
+    Scan a local tar.gz archive::
+
+        codeaudit filescan /path/to/package.tar.gz
+
+    Scan a remote tar.gz archive::
+
+        codeaudit filescan https://example.com/package.tar.gz
+
     Scan a package hosted on PyPI::
 
         codeaudit filescan linkaudit
 
         codeaudit filescan requests
 
-
     Specify an output report file::
 
         codeaudit filescan /path/to/project report.html
 
-    Enable filtering of issues marked with ``#nosec`` or another marker on potential code weaknesses that mitigated or known  ::
+    Enable filtering of issues marked with ``#nosec`` or another marker
+    indicating that potential code weaknesses have been reviewed or
+    intentionally ignored::
 
         codeaudit filescan myexample.py --nosec
 
 POSITIONAL ARGUMENTS
 INPUT_PATH
-    Path to a local Python file or directory, or the name of a package available on PyPI.
-
+    Path to a local Python file or directory, a local or remote ``.tar.gz``
+    archive, or the name of a package available on PyPI.
 
 FLAGS
 -f, --filename=FILENAME
     Default: 'codeaudit-report.html'
+    Name (and optional path) of the HTML file to write the scan report to.
+    The filename should use the ``.html`` extension.
+
 -n, --nosec=NOSEC
     Default: False
-
+    Whether to filter out issues marked as reviewed or ignored in the
+    source code.
 
 Args:
-
--f, --filename=FILENAME
-    Default: 'codeaudit-report.html'
-    Name (and optional path) of the HTML file to write the scan report to. The filename should use the ``.html`` extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
--n, --nosec=NOSEC
-    Default: False
-    Whether to filter out issues marked as reviewed or ignored in the source code. Defaults to ``False``, no filtering.
-
-    input_path (str): Path to a local Python file or directory, or the name
-        of a package available on PyPI.
+    input_path (str): Path to a local Python file or directory, a local or
+        remote ``.tar.gz`` archive, or the name of a package available on
+        PyPI.
     filename (str, optional): Name (and optional path) of the HTML file to
         write the scan report to. The filename should use the ``.html``
         extension. Defaults to ``DEFAULT_OUTPUT_FILE``.
     nosec (bool, optional): Whether to filter out issues marked as reviewed
-        or ignored in the source code. Defaults to ``False``, no filtering.
+        or ignored in the source code. Defaults to ``False``, meaning no
+        filtering is applied.
 
 Returns:
     None: The function writes a static HTML security report to disk.

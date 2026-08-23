@@ -1,5 +1,25 @@
 # Change Log
 
+## Version 1.9.0:
+
+**Added**
+
+* Support for scanning local and remote `.tar.gz` files using the `filescan` API function, simplifying package scanning before PyPI publication (available via `codeaudit filescan` and `codeaudit overview` CLI commands).
+* Added `"test"` to the default collection of excluded scan directories.
+
+**Changed**
+
+* Improved the `filescan` API function.
+* Dropped active installation support for Python versions older than 3.12 (code analysis support for older Python versions remains available).
+* Updated GitHub Actions to use Node.js 24.
+* Optimized the GitHub testing workflow to ignore documentation-only changes.
+
+
+**Documentation**
+
+* Updated and improved unit tests to reflect current functionality and test coverage.
+
+
 ## Version 1.8.1:
 
 **Added**
