@@ -143,7 +143,7 @@ def get_targz_package_source(
             tar.extractall(
                 path=temp_dir,
                 filter="data",
-            )
+            )  # nosec - evaluated in depth and secured with Python module fileaudit
 
         return str(temp_dir), tmpdir_obj
 

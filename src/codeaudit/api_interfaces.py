@@ -79,7 +79,7 @@ def filescan(input_path, nosec=False):
       directory.
     - **Single Python file**: Scans the file if it exists and can be parsed
       into an AST.
-    - Local or remote tar.gz archive, e.g. on a remote repository, E.g. to scan apps are on not (yet)PyPI
+    - **Local or remote** `tar.gz` archive, e.g. on a remote repository, E.g. to scan apps are on not (yet)PyPI
     - **PyPI package** on PyPI.org: Downloads the
       source distribution from PyPI, scans it, and cleans up temporary files.
 

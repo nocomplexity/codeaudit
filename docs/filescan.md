@@ -1,27 +1,30 @@
 # Command `codeaudit filescan`
 
-The **Python Code Audit** `filescan` command efficiently scans Python files or directories (packages) to:
-1. Identify and report potential security weaknesses and
-2. [Detect Data Exfiltration](data_exfiltration_detection)
+The **Python Code Audit** `filescan` command efficiently scans Python files, directories, or source packages to:
 
-The tool generates a report detailing discovered security issues and flagging any External Egress Risks identified within the Python code.
+1. Identify and report potential security weaknesses.
+2. [Detect Data Exfiltration](data_exfiltration_detection.md).
 
-See section [validations](checksinformation) for all security checks implemented!
+The tool generates a report detailing discovered security issues and flagging any **External Egress Risks** identified within the Python code.
 
+See the section on [validations](checksinformation.md) for an overview of all implemented security checks.
 
-To use the `codescan filescan` feature type in the console:
+To use the `filescan` feature, run the following command in the console:
 
+```text
+codeaudit filescan <pythonfile|package-name|directory|package.tar.gz> [OUTPUTFILE]
 ```
-codeaudit filescan <pythonfile|package-name|directory>  [OUTPUTFILE]
-```
 
-**Python Code Audit** will create a detailed security scan report based on a single Python file, a local directory or a package on PyPI.org
+The `<package.tar.gz>` input can be either a **local** `.tar.gz` source archive or a **remote** `.tar.gz` archive URL.
 
+**Python Code Audit** will create a detailed security scan report for any of the following:
 
-So the input for `codeaudit filescan`  can be:
-* A single Python file;
-* A package on PyPI.org: Python Code Audit checks this package on security weakness, so cloning the sources local is not needed!
-* A local directory with Python files, e.g. a local package development environment or a cloned package.
+* A single local Python file.
+* A local directory containing Python source code.
+* A package hosted on [PyPI.org](http://PyPI.org).
+* A local `.tar.gz` source package.
+* A remote `.tar.gz` source package.
+
 
 If you do not specify [OUTPUTFILE], a HTML output file, a HTML report file is created in the current directory and will be named codeaudit-report.html.
 
