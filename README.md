@@ -8,6 +8,7 @@
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/10970/badge)](https://www.bestpractices.dev/projects/10970)
 [![Documentation](https://img.shields.io/badge/Python%20Code%20Audit%20Handbook-Available-blue)](https://nocomplexity.com/documents/codeaudit/intro.html)
 [![License](https://img.shields.io/badge/License-GPLv3-FFD700)](https://nocomplexity.com/documents/codeaudit/license.html)
+[![Try WebAssembly Version](https://img.shields.io/badge/Try_Live-In%20Your%20Browser-8A2BE2)](https://nocomplexity.com/codeauditapp/dashboardapp.html)
 [![PyPI Downloads](https://static.pepy.tech/badge/codeaudit)](https://pepy.tech/projects/codeaudit)
 
 Python Code Audit - A modern Python security source code analyzer based on distrust.
@@ -15,6 +16,15 @@ Python Code Audit - A modern Python security source code analyzer based on distr
 Python Code Audit is a static application security testing (SAST) tool designed to identify **security weaknesses** in Python source code. It combines **powerful analysis features** with an intuitive workflow, making essential security audits both simple and engaging.
 
 This tool is designed for anyone who uses or creates Python programs and wants to understand and mitigate potential security risks.
+
+> [!TIP]
+> **Try it instantly — no installs, no setup, no excuses.**
+> 
+> 👉 [Launch the browser version](https://nocomplexity.com/codeauditapp/dashboardapp.html)
+
+It runs **100% locally** in your browser via WebAssembly (WASM). See the full power of **Python Code Audit** within 60 seconds.
+No downloads. No dependencies. Just click and run a security audit on any Python package on PyPI!
+
 
 This tool is created for:
 
@@ -46,14 +56,6 @@ Python Code Audit has the following features:
 > Python Code Audit uses the Python's Abstract Syntax Tree (AST) to get robust and reliable result. Using the Python AST makes contextual Vulnerability Detection possible and false positive are minimized.
 
 ## Installation
-
-> [!TIP]
-> Try it instantly—no installs, no setup, no excuses.
->
-> 👉 Launch the browser version [here](https://nocomplexity.com/codeauditapp/dashboardapp.html)
-
-It runs 100% locally in your browser using WebAssembly (WASM). See the power of the tool in under 60 seconds.
-No downloads. No dependencies. Just click and do a security audit on Python Code.
 
 Loved the browser version? Unlock the full power. For advanced security code inspections, CI/CD integration, and all professional features, install the complete Python package:
 
