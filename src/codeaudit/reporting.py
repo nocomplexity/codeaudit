@@ -160,7 +160,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
             print(f"ERROR: Directory '{directory}' contains no Python files.")
             exit(1)
     elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
-        directory
+        directory, max_file_size=15 * 1024 * 1024, max_tar_members=12000
     ):  # for local tar.gz or remote tar.gz scans
         package_name = directory
         advice = f'<p>&#128073; To perform a SAST scan on the source code, run:<pre><code class="language-python">codeaudit filescan {directory}</code></pre></p>'
@@ -410,7 +410,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         create_htmlfile(html_output, filename)
 
     elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
-        input_path
+        input_path, max_file_size=15 * 1024 * 1024, max_tar_members=12000
     ):  # for local tar.gz or remote tar.gz scans
         src_dir, tmp_handle = get_targz_package_source(input_path)
         directory_scan_report(

@@ -85,9 +85,11 @@ def get_pypi_download_info(package_name):
 
 def is_valid_tar_gz(path):
     """Return True if the given path is a valid .tar.gz file.
-    Default values for validate_tar_gz are used! So note that NOT all tar.gz files will be accepted. Use PyPI tar.gz instead if possible.
+    Custom validation values for validate_tar_gz are used. So note that NOT all tar.gz files will be accepted. Use PyPI package scan instead if possible.
     """
-    return bool(validate_tar_gz(path, max_tar_members=3000))
+    return bool(
+        validate_tar_gz(path, max_file_size=15 * 1024 * 1024, max_tar_members=12000)
+    )
 
 
 def get_targz_package_source(
