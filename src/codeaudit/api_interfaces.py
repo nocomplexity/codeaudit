@@ -139,11 +139,7 @@ def filescan(input_path, nosec=False):
         scan_output = _codeaudit_directory_scan(input_path, nosec_flag=nosec)
         output |= scan_output
         return output
-    elif (
-        file_path.suffix.lower() == ".py"
-        and file_path.is_file()
-        and is_ast_parsable(input_path)
-    ):  # check on parseable single Python file
+    elif is_ast_parsable(input_path):  # check on parseable single Python file
         # do a file check
         file_information = overview_per_file(input_path)
         module_information = get_modules(input_path)  # modules per file
@@ -464,11 +460,7 @@ def get_overview(input_path):
         else:
             output_msg = f"Directory path {input_path} contains no Python files."
             return {"Error": output_msg}
-    elif (
-        file_path.suffix.lower() == ".py"
-        and file_path.is_file()
-        and is_ast_parsable(input_path)
-    ):
+    elif is_ast_parsable(input_path):
         security_statistics = overview_per_file(input_path)
         return security_statistics
     else:

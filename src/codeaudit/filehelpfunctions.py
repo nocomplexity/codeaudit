@@ -18,6 +18,8 @@ import sys
 import warnings
 from pathlib import Path
 
+from fileaudit.python_check import validate_python
+
 
 def read_in_source_file(file_path):
     # Ensure file_path is a Path object
@@ -97,24 +99,16 @@ def get_filename_from_path(file_path):
 
 def is_ast_parsable(file_path):
     """
-    Checks whether a Python file can be parsed using the AST module.
+    Checks whether a Python file can be validated and parsed.
+    Uses the extensive security checker for valid Python files of the module https://github.com/nocomplexity/fileaudit
 
     Args:
-        file_path (str): Path to the Python source file.
+        file_path (str | Path): Path to the Python source file.
 
     Returns:
-        bool: True if the file can be parsed without syntax errors, False otherwise.
+        bool: True if the file passes Python validation, False otherwise.
     """
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            source = f.read()
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=SyntaxWarning)
-            ast.parse(source, filename=file_path)
-        return True
-    except (SyntaxError, UnicodeDecodeError, ValueError) as e:
-        return False
+    return validate_python(Path(file_path))
 
 
 def has_python_files(input_path):

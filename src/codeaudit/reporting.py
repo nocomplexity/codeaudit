@@ -379,11 +379,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         directory_scan_report(
             input_path, nosec_flag=nosec, filename=filename
         )  # create a package aka directory scan report
-    elif (
-        file_path.suffix == ".py"
-        and file_path.is_file()
-        and is_ast_parsable(input_path)
-    ):
+    elif is_ast_parsable(input_path):
         # create a sast file check report
         if not nosec:  # no filtering on reviewed items with markers in code
             scan_output = perform_validations(
@@ -744,9 +740,7 @@ def report_module_information(inputfile, reportname=DEFAULT_OUTPUT_FILE):
             "See codeaudit modulescan -h or check the manual https://codeaudit.nocomplexity.com"
         )
         exit(1)
-    elif (
-        file_path.suffix == ".py" and file_path.is_file() and is_ast_parsable(inputfile)
-    ):
+    elif is_ast_parsable(inputfile):
         source = read_in_source_file(inputfile)
         used_modules = get_imported_modules(source)
         # Initial call to print 0% progress

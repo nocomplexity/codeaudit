@@ -27,22 +27,16 @@ _EXCLUDE_DIRS = {"docs", "docker", "dist", "tests", "test"}
 _EXAMPLE_DIR = "example_dir"
 
 
-@mark.xfail(reason="'dirs' in the 'collect_python_source_files' is not used.")
 @mark.parametrize("directory", _EXCLUDE_DIRS)
 def test_excluded_dirs(directory):
-    """Test that excluded directories are not included in the result.
-
-    Test vector:
-        - Directory that is excluded from the search.
-
-    Expected behavior:
-        - Walk through a directory that is excluded from the search.
-        - Verify that the result is an empty list.
-    """
-    with patch("codeaudit.filehelpfunctions.os", autospec=True) as mocked_os:
-        mocked_os.walk.return_value = [(".", [directory], ["example.py"])]
+    """Excluded directories are not returned by the source-file collector."""
+    with patch(
+        "codeaudit.filehelpfunctions.os.walk",
+        return_value=[(".", [directory], ["example.py"])],
+    ):
         result = collect_python_source_files(directory=directory)
-        assert result == []
+
+    assert result == []
 
 
 def test_not_file():
