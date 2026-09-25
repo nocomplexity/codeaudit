@@ -1,6 +1,6 @@
 # Codeaudit
 
-![CodeauditLogo](https://github.com/nocomplexity/codeaudit/raw/main/docs/images/codeauditlogo.png)
+[![CodeauditLogo](https://github.com/nocomplexity/codeaudit/raw/main/docs/images/codeauditlogo.png)](https://codeaudit.nocomplexity.com/)
 
 [![PythonCodeAudit Badge](https://img.shields.io/badge/Python%20Code%20Audit-Security%20Verified-FF0000?style=flat-square)](https://github.com/nocomplexity/codeaudit)
 [![PyPI - Version](https://img.shields.io/pypi/v/codeaudit.svg)](https://pypi.org/project/codeaudit)
