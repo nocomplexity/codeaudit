@@ -231,6 +231,10 @@ async def run_scan(event):
         status.object = "⚠️ Please enter a package name."
         return
 
+    if len(package_name) > 100 or any(c.isspace() for c in package_name):
+        status.object = "⚠️ Package name 100 characters or fewer with no spaces."
+        return
+
     # --- UI state updates ---
     run_button.disabled = True
     loading.value = True
