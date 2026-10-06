@@ -1,4 +1,4 @@
-## Exception Statements
+# Exception Statements
 
 Python Code Audit  detects the use of `pass` within an `except` block.
 

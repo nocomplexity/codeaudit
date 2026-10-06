@@ -200,9 +200,6 @@ text_input = pn.widgets.TextInput(
 
 
 run_button = pn.widgets.Button(name="Start Scan", button_type="primary")
-checks_button = pn.widgets.Button(
-    name="Implemented Security Checks", button_type="primary"
-)
 status = pn.pane.Markdown("### Ready to scan.")
 result_pane = pn.pane.JSON({}, name="JSON", sizing_mode="stretch_both", depth=-1)
 loading = pn.indicators.LoadingSpinner(
@@ -333,8 +330,6 @@ ca_sidebar = pn.Column(
     run_button,
     loading,
     status,
-    pn.layout.Divider(),
-    checks_button,
     pn.Spacer(height=20),
     infotext,
     pn.Spacer(height=10),
