@@ -20,6 +20,7 @@ import json
 import sys
 
 import panel as pn
+import panel_material_ui as pmui
 
 pn.extension("vega")
 
@@ -197,7 +198,14 @@ async def filescan_wasm(input_path, nosec=False):
 text_input = pn.widgets.TextInput(
     name="Python Package Name", placeholder="Enter PyPI package (e.g., requests)..."
 )
+nosec_switch = pn.widgets.Switch(
+    label="Honor SAST suppressions", value=True, align="center"
+)
+tooltip = pn.widgets.TooltipIcon(
+    value="Disable security markers in the code during the scan"
+)
 
+switch_with_tooltip = pn.Row(nosec_switch, tooltip, align="center")
 
 run_button = pn.widgets.Button(name="Start Scan", button_type="primary")
 status = pn.pane.Markdown("### Ready to scan.")
@@ -209,7 +217,6 @@ loading = pn.indicators.LoadingSpinner(
 
 overview_visuals = create_statistics_overview(result_pane.object)
 
-
 tabs = pn.Tabs(
     ("Package Overview", overview_visuals),
     ("Used Modules", overview_visuals),
@@ -220,7 +227,6 @@ tabs = pn.Tabs(
     dynamic=True,
     sizing_mode="stretch_both",
 )
-
 # --- UI Callback ---
 
 
@@ -235,6 +241,12 @@ async def run_scan(event):
         status.object = "⚠️ Package name 100 characters or fewer with no spaces."
         return
 
+    # check NOSEC switch from UI
+    if nosec_switch.value:
+        respect_marker = True
+    else:
+        respect_marker = False
+
     # --- UI state updates ---
     run_button.disabled = True
     loading.value = True
@@ -245,7 +257,7 @@ async def run_scan(event):
         await asyncio.sleep(0.1)
 
         # ✅ WASM-safe: no threads, no nested event loops
-        result = await filescan_wasm(package_name)
+        result = await filescan_wasm(package_name, respect_marker)
 
         # --- Handle results ---
         if result is None:
@@ -258,7 +270,6 @@ async def run_scan(event):
         else:
             result_pane.object = result
             status.object = f"✅ Scan completed for **{package_name}**"
-
             # --- Update tabs ---
             tabs[0] = (
                 "Package Overview",
@@ -327,23 +338,21 @@ run_button.on_click(run_scan)
 infotext = get_info_text()
 disclaimer_text = get_disclaimer_text()
 
+scan_row = pn.Row(run_button, switch_with_tooltip)
 # Sidebar layout
 ca_sidebar = pn.Column(
     "## Package Code Security Scan",
     text_input,
-    run_button,
+    scan_row,
     loading,
     status,
     pn.Spacer(height=20),
     infotext,
     pn.Spacer(height=10),
     disclaimer_text,
-    sizing_mode="stretch_width",
 )
 
-
 main_pane = pn.Column(tabs, sizing_mode="stretch_both")
-
 
 app = pn.template.MaterialTemplate(
     header_background="#1E2937",
