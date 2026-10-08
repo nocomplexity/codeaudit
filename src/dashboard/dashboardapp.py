@@ -20,7 +20,6 @@ import json
 import sys
 
 import panel as pn
-import panel_material_ui as pmui
 
 pn.extension("vega")
 
@@ -215,18 +214,24 @@ loading = pn.indicators.LoadingSpinner(
 )
 
 
-overview_visuals = create_statistics_overview(result_pane.object)
+overview_content = pn.Column()
+modules_content = pn.Column()
+complexity_content = pn.Column()
+weaknesses_content = pn.Column()
+weaknesses_files_content = pn.Column()
+weaknesses_details_content = pn.Column()
 
 tabs = pn.Tabs(
-    ("Package Overview", overview_visuals),
-    ("Used Modules", overview_visuals),
-    ("Complexity Insights", overview_visuals),
-    ("Weaknesses Overview", overview_visuals),
-    ("Weaknesses per file", overview_visuals),
-    ("Weaknesses Details", overview_visuals),
+    ("Package Overview", overview_content),
+    ("Used Modules", modules_content),
+    ("Complexity Insights", complexity_content),
+    ("Weaknesses Overview", weaknesses_content),
+    ("Weaknesses per file", weaknesses_files_content),
+    ("Weaknesses Details", weaknesses_details_content),
     dynamic=True,
     sizing_mode="stretch_both",
 )
+
 # --- UI Callback ---
 
 
@@ -271,56 +276,38 @@ async def run_scan(event):
             result_pane.object = result
             status.object = f"✅ Scan completed for **{package_name}**"
             # --- Update tabs ---
-            tabs[0] = (
-                "Package Overview",
-                pn.Column(create_statistics_overview(result)),
-            )
+            overview_content.objects = [create_statistics_overview(result)]
 
-            tabs[1] = (
-                "Used Modules",
-                pn.Column(
-                    pn.Row(
-                        pn.pane.Vega(module_count_barchart(result), show_actions=True),
-                        pn.pane.Vega(
-                            module_distribution_view(result), show_actions=True
-                        ),
-                    ),
-                    report_used_modules(result),
-                    pn.Spacer(height=60),
+            modules_content.objects = [
+                pn.Row(
+                    pn.pane.Vega(module_count_barchart(result), show_actions=True),
+                    pn.pane.Vega(module_distribution_view(result), show_actions=True),
                 ),
-            )
+                report_used_modules(result),
+                pn.Spacer(height=60),
+            ]
 
-            tabs[2] = (
-                "Complexity Insights",
-                pn.Column(
-                    pn.pane.Vega(complexity_heatmap(result), show_actions=True),
-                    pn.pane.Vega(lines_of_code_overview(result), show_actions=True),
-                    pn.pane.Vega(ast_nodes_overview(result), show_actions=True),
-                    pn.Spacer(height=60),
-                ),
-            )
+            complexity_content.objects = [
+                pn.pane.Vega(complexity_heatmap(result), show_actions=True),
+                pn.pane.Vega(lines_of_code_overview(result), show_actions=True),
+                pn.pane.Vega(ast_nodes_overview(result), show_actions=True),
+                pn.Spacer(height=60),
+            ]
 
-            tabs[3] = (
-                "Weaknesses Overview",
-                pn.Column(pn.pane.Vega(weaknesses_overview(result), show_actions=True)),
-            )
+            weaknesses_content.objects = [
+                pn.pane.Vega(weaknesses_overview(result), show_actions=True)
+            ]
 
-            tabs[4] = (
-                "Weaknesses per file",
-                pn.Column(
-                    pn.pane.Vega(sast_files_overview(result), show_actions=True),
-                    pn.pane.Vega(weaknesses_radial_overview(result), show_actions=True),
-                    pn.Spacer(height=60),
-                ),
-            )
+            weaknesses_files_content.objects = [
+                pn.pane.Vega(sast_files_overview(result), show_actions=True),
+                pn.pane.Vega(weaknesses_radial_overview(result), show_actions=True),
+                pn.Spacer(height=60),
+            ]
 
-            tabs[5] = (
-                "Weaknesses Details",
-                pn.Column(
-                    report_sast_results(result),
-                    pn.Spacer(height=60),
-                ),
-            )
+            weaknesses_details_content.objects = [
+                report_sast_results(result),
+                pn.Spacer(height=60),
+            ]
 
     except Exception as e:
         status.object = f"❌ Error: {str(e)}"
