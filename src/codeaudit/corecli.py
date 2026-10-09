@@ -73,7 +73,7 @@ def display_help():
         summary = docstring.split("\n", 1)[0]
         print(f"  {command:<20} {summary}")
     print(
-        "\nUse the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://simplifysecurity.nocomplexity.com/\n"
+        "\nUse the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://pythonsecurity.nocomplexity.com/\n"
     )
 
 

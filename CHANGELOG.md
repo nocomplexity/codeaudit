@@ -1,5 +1,31 @@
 # Change Log
 
+## Version 1.9.1:
+
+**Added**
+
+* Extra badge in the `README.md` for direct launch of the WASM version.
+* A switch option in the UI for the WASM version to use or suppress markers in code when scanning.
+* AI policy section for contributions in the manual.
+
+**Changed**
+
+* Adjusted validation values for checking `targz` files (`max_file_size = 15 * 1024 * 1024`, `max_tar_members = 12000`).
+* Tightened security for validating Python files using `validate_python` from the `fileaudit` Python module.
+* Dashboard version: Improved validation for valid PyPI names on the client side.
+* Improved handling and status of tabs in the WASM version.
+* Minor updates to the CLI help text.
+* Changed the manual title from **Python Security Code Audit** to **Python Code Audit**.
+
+**Fixed**
+
+* Improved and updated unit tests for validating the correct working of excluded directories during scans (`test_excluded_dirs`).
+
+**Documentation**
+
+* General updates and fixes for the manual.
+
+
 ## Version 1.9.0:
 
 **Added**

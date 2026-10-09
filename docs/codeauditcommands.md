@@ -1,6 +1,6 @@
 % THIS FILE IS GENERATED! - Use CLIcommands.ipynb to make it better!
 # Commands Overview
-Python Code Audit commands for: version: 1.9.0
+Python Code Audit commands for: version: 1.9.1
 ```
 ----------------------------------------------------
  _                    __             _
@@ -23,7 +23,7 @@ Commands:
   checks               Creates an HTML report of all implemented security checks.
   version              Prints the module version. Or use codeaudit [-v] [--v] [-version] or [--version].
 
-Use the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://simplifysecurity.nocomplexity.com/
+Use the Python Code Audit documentation (https://codeaudit.nocomplexity.com) to audit and secure your Python programmes. Explore further essential open-source security tools at https://pythonsecurity.nocomplexity.com/
 
 ```
 ## codeaudit overview

@@ -18,7 +18,7 @@ When you contribute text or code to Python Code Audit, your contributions are ma
 
 :::{tip}
 All contributions are welcome!
-Think of corrections on the manual, code and more, or better tests.
+Think of corrections on the manual, code and more, or better tests. But be careful with [AI contributions](AI-policy).
 
 * Questions, Feature Requests, Bug Reports should all be reported on the [Github Issue Tracker](https://github.com/nocomplexity/codeaudit/issues) .
 
