@@ -14,6 +14,7 @@ Public API functions for Python Code Audit aka codeaudit on pypi.org
 """
 
 import gzip
+import os
 import json
 import tarfile
 import tempfile
@@ -84,12 +85,35 @@ def get_pypi_download_info(package_name):
 
 
 def is_valid_tar_gz(path):
-    """Return True if the given path is a valid .tar.gz file.
-    Custom validation values for validate_tar_gz are used. So note that NOT all tar.gz files will be accepted. Use PyPI package scan instead if possible.
+    """Return True only if the path points to a valid .tar.gz archive.
+
+    Archives must pass custom validation limits:
+    - Maximum file size: 15 MiB
+    - Maximum number of tar members: 12,000
     """
-    return bool(
-        validate_tar_gz(path, max_file_size=15 * 1024 * 1024, max_tar_members=12000)
-    )
+    try:
+        path = os.fspath(path)
+
+        return (
+            path.endswith(".tar.gz")
+            and validate_tar_gz(
+                path,
+                max_file_size=15 * 1024 * 1024,
+                max_tar_members=12000,
+            )
+            and tarfile.is_tarfile(path)
+        )
+    except (OSError, ValueError, TypeError, AttributeError, tarfile.TarError):
+        return False
+
+
+# def is_valid_tar_gz(path):
+#     """Return True if the given path is a valid .tar.gz file.
+#     Custom validation values for validate_tar_gz are used. So note that NOT all tar.gz files will be accepted. Use PyPI package scan instead if possible.
+#     """
+#     return bool(
+#         validate_tar_gz(path, max_file_size=15 * 1024 * 1024, max_tar_members=12000)
+#     )
 
 
 def get_targz_package_source(

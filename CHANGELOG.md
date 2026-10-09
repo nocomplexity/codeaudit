@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.9.2:
+
+* Fixed issue for API scan
+
 ## Version 1.9.1:
 
 **Added**
