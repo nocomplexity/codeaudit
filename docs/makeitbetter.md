@@ -38,6 +38,16 @@ To lower the barrier for new contributors, I'd make the tone more welcoming, red
 
 Welcome! This guide will help you set up a local development environment for Python Code Audit and start contributing to the project.
 
+### 0. Create and activate an new environment
+
+I prefer using [`conda`](https://nocomplexity.com/documents/pythonbook/environments.html#environments) but use what you want.
+
+Set up a new environment:
+```bash
+conda create --name codeaudit_dev python=3.15
+```
+
+
 ### 1. Clone the repository
 
 We recommend working in a dedicated virtual environment to avoid conflicts with other Python projects.
@@ -48,14 +58,16 @@ The Python Code Audit source code is hosted on GitHub.
 ```bash
 git clone https://github.com/nocomplexity/codeaudit
 cd codeaudit
+pip install -e .
 ```
+
 
 ### 2. Install development dependencies
 
 Install `pytest`, which is used for running the test suite:
 
 ```bash
-pip install pytest
+pip install -U pytest
 ```
 
 ### 3. Install Hatch
