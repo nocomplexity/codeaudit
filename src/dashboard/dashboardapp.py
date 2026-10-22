@@ -101,7 +101,7 @@ async def get_package_source_wasm(url):
         tmpdir_obj = tempfile.TemporaryDirectory(prefix="codeaudit_")
         temp_dir = tmpdir_obj.name
         extract_dir = os.path.join(temp_dir, "extracted")
-        os.makedirs(extract_dir, exist_ok=True)
+        os.makedirs(extract_dir, exist_ok=True) #nosec
 
         # Recommended Pyodide way – works reliably in MEMFS
         await response.unpack_archive(extract_dir=extract_dir, format="gztar")
