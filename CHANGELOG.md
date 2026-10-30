@@ -1,5 +1,21 @@
 # Change Log
 
+## Version 1.9.3:
+
+**Changed**
+
+* Updated functions `weaknesses_overview` and `total_weaknesses`.
+
+**Fixed**
+
+* Fixed issue in API function `get_weakness_counts` and included extra tests.
+* Corrected severity for the `input` function.
+
+**Documentation**
+* Validated and documented correct working and compatibility for Python 3.15.
+
+
+
 ## Version 1.9.2:
 
 * Fixed issue for API scan

@@ -9,7 +9,7 @@ Directory Creation,os.mknod,Low,Direct file system calls require careful input v
 Directory Creation,os.makedev,Low,Direct file system calls require careful input validation to prevent vulnerabilities.
 OS Forking,os.fork,Low,"On macOS use of this function is unsafe when mixed with using higher-level system APIs, and that includes using urllib.request."
 Dangerous Built-in: eval,eval,High,This function can execute arbitrary code. Never safe with untrusted input.
-Input Function,input,Low,User input must be strictly sanitized and validated to prevent injection vulnerabilities.
+Input Function,input,High,User input must be strictly sanitized and validated to prevent injection vulnerabilities.
 Overly Broad Exception Handling,pass,Low,Using `pass` in an `except` block can silently ignore critical security exceptions.
 Overly Broad Exception Handling,continue,Low,Skipping over exceptions can mask critical errors and security risks.
 Dangerous Built-in: exec,exec,High,This function can execute arbitrary code and should be used only with validated constructs.
