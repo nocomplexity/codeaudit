@@ -87,3 +87,15 @@ def test_total_weaknesses_realoutput_file():
         scan_result = json.load(f)
 
     assert total_weaknesses(scan_result) == 2
+
+
+def test_total_weaknesses_realoutput_file2():
+    current_file_directory = Path(__file__).parent
+
+    validation_file_path = (
+        current_file_directory.parent / "validationfiles" / "zip_example.json"
+    )
+    with open(validation_file_path, encoding="utf-8") as f:
+        scan_result = json.load(f)
+
+    assert total_weaknesses(scan_result) == 16

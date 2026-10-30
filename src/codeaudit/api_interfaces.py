@@ -315,38 +315,56 @@ def read_input_file(filename, safe_directory="data_folder"):
 
 def get_weakness_counts(input_file, nosec=False):
     """
-    Analyze a Python file or package and count occurrences of code weaknesses.
+    Count SAST weaknesses.
+
+    Accepts either:
+    - A scan result dictionary.
+    - A file/package path that will be scanned.
     """
-    # Assuming filescan is imported from codeaudit.api_interfaces
-    scan_result = filescan(input_file, nosec)
+
+    # Accept an existing scan result or scan a file/package
+    if isinstance(input_file, dict):
+        scan_result = input_file
+    else:
+        scan_result = filescan(input_file, nosec)
 
     if not isinstance(scan_result, dict):
-        raise ValueError("filescan() did not return a valid result dictionary")
+        raise ValueError("Invalid scan result")
 
     if "Error" in scan_result:
         raise ValueError(scan_result["Error"])
 
     file_security_info = scan_result.get("file_security_info")
+
     if not isinstance(file_security_info, dict):
         return {}
 
     counter = Counter()
 
     for file_info in file_security_info.values():
+
         if not isinstance(file_info, dict):
             continue
 
         sast_result = file_info.get("sast_result", {})
+
         if not isinstance(sast_result, dict):
             continue
 
-        # Based on your data: sast_result keys are line numbers (e.g., 171)
-        # and values are dicts containing the 'validation' type.
-        for issue_details in sast_result.values():
-            if isinstance(issue_details, dict):
-                # We use the 'validation' field to identify the type of weakness
-                weakness_type = issue_details.get("validation", "Unknown")
-                counter[weakness_type] += 1
+        for finding in sast_result.values():
+
+            # Support individual findings and lists of findings
+            findings = finding if isinstance(finding, list) else [finding]
+
+            for issue in findings:
+
+                if not isinstance(issue, dict):
+                    continue
+
+                weakness_type = issue.get("validation", "Unknown")
+
+                if isinstance(weakness_type, str) and weakness_type:
+                    counter[weakness_type] += 1
 
     return dict(counter)
 

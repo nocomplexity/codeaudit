@@ -19,17 +19,33 @@ So all results are returned as Pandas Dataframe. This makes things easier for fu
 
 """
 
-
 def total_weaknesses(scan_result):
-    """Returns the total weaknesses found
-    input: scan_result (dict): Scan output containing "file_security_info" with
-            per-file SAST findings. Each finding should include a "validation" field.
+    """Count all individual weaknesses in a scan result.
 
-    """
+    Walks through each file's SAST findings and adds up every
+    individual weakness found.
+
+    Args:
+        scan_result (dict): Scan output with a "file_security_info" key
+            mapping file names to their per-file results. Each file's
+            "sast_result" maps check names to either a single finding
+            or a list of findings.
+
+    Returns:
+        int: Total number of individual weaknesses across all files.
+    """    
     total = 0
 
-    for file_info in scan_result.get("file_security_info", {}).values():
+    file_security_info = scan_result.get("file_security_info", {})
+
+    for file_info in file_security_info.values():
         sast_result = file_info.get("sast_result", {})
-        total += len(sast_result)
+
+        for finding in sast_result.values():
+            if isinstance(finding, list):
+                total += len(finding)
+            else:
+                total += 1
 
     return total
+

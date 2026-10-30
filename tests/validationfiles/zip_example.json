@@ -1,0 +1,144 @@
+{
+  "name": "Python_Code_Audit",
+  "version": "1.9.2",
+  "generated_on": "2026-10-30 15:59",
+  "file_security_info": {
+    "0": {
+      "FileName": "zipfile_example.py",
+      "FilePath": "/home/guidovanrossum/projects/pythondev/PySASTbenchmark/testfiles/zipfile_example.py",
+      "Number_Of_Lines": 89,
+      "AST_Nodes": 41,
+      "Std-Modules": 4,
+      "External-Modules": 0,
+      "Functions": 1,
+      "Classes": 0,
+      "Comment_Lines": 11,
+      "Complexity_Score": 7,
+      "warnings": 0,
+      "core_modules": [
+        "compression",
+        "os",
+        "shutil",
+        "zipfile"
+      ],
+      "imported_modules": [],
+      "file_name": "zipfile_example.py",
+      "sast_result": {
+        "28": {
+          "line": 28,
+          "validation": "compression.zstd.decompress",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>restored = zstd.decompress(cdata)\nprint(&quot;Matches original:&quot;, restored == data)</code></pre>"
+        },
+        "88": {
+          "line": 88,
+          "validation": "compression.zstd.decompress",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>restored = zstd.decompress(cdata)\nprint(&quot;Matches original:&quot;, restored == data)</code></pre>"
+        },
+        "52": {
+          "line": 52,
+          "validation": "shutil.unpack_archive",
+          "severity": "Medium",
+          "info": "Untrusted archives can contain malicious paths or payloads.",
+          "code": "<pre><code class='language-python'>import shutil\nshutil.unpack_archive(&quot;example.zip&quot;, &quot;extracted_files&quot;, format=&quot;zip&quot;, filter=&quot;data&quot;)</code></pre>"
+        },
+        "62": {
+          "line": 62,
+          "validation": "shutil.unpack_archive",
+          "severity": "Medium",
+          "info": "Untrusted archives can contain malicious paths or payloads.",
+          "code": "<pre><code class='language-python'>shutil.unpack_archive(&quot;example.zip&quot;, &quot;extracted_files&quot;, format=&quot;zip&quot;, filter=&quot;data&quot;)</code></pre>"
+        },
+        "64": {
+          "line": 64,
+          "validation": "shutil.copy2",
+          "severity": "Medium",
+          "info": "Files may be copied without authorization if paths are not validated.",
+          "code": "<pre><code class='language-python'>shutil.copy2(&quot;source_file.txt&quot;, &quot;backup/source_file.txt&quot;, follow_symlinks=True)</code></pre>"
+        },
+        "66": [
+          {
+            "line": 66,
+            "validation": "shutil.copy2",
+            "severity": "Medium",
+            "info": "Files may be copied without authorization if paths are not validated.",
+            "code": "<pre><code class='language-python'>shutil.copytree(&quot;project&quot;, &quot;project_backup&quot;, symlinks=False, ignore=None, copy_function=shutil.copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False)</code></pre>"
+          },
+          {
+            "line": 66,
+            "validation": "shutil.copytree",
+            "severity": "Medium",
+            "info": "Files may be copied without authorization if paths are not validated.",
+            "code": "<pre><code class='language-python'>shutil.copytree(&quot;project&quot;, &quot;project_backup&quot;, symlinks=False, ignore=None, copy_function=shutil.copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False)</code></pre>"
+          }
+        ],
+        "68": {
+          "line": 68,
+          "validation": "shutil.chown",
+          "severity": "Medium",
+          "info": "Changing file ownership can introduce vulnerabilities.",
+          "code": "<pre><code class='language-python'>shutil.chown(&quot;logs/server.log&quot;, user=&quot;admin&quot;, group=&quot;admin&quot;, dir_fd=None, follow_symlinks=True)</code></pre>"
+        },
+        "74": {
+          "line": 74,
+          "validation": "shutil.rmtree",
+          "severity": "Medium",
+          "info": "Vulnerable to path traversal attacks if not used carefully.",
+          "code": "<pre><code class='language-python'># Use shutil.rmtree() to remove the directory and its contents\nshutil.rmtree(directory_to_delete)</code></pre>"
+        },
+        "77": {
+          "line": 77,
+          "validation": "shutil.copy",
+          "severity": "Medium",
+          "info": "Files may be copied without authorization if paths are not validated.",
+          "code": "<pre><code class='language-python'>from shutil import copy as stealmydata \nstealmydata(&quot;source_file.txt&quot;, &quot;backup/source_file.txt&quot;, follow_symlinks=True)</code></pre>"
+        },
+        "21": {
+          "line": 21,
+          "validation": "compression.zstd.open",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>with zstd.open(&quot;file.zst&quot;) as f:\n    file_content = f.read()</code></pre>"
+        },
+        "81": {
+          "line": 81,
+          "validation": "compression.zstd.open",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>with zstd.open(&quot;file.zst&quot;) as f:\n    file_content = f.read()</code></pre>"
+        },
+        "40": {
+          "line": 40,
+          "validation": "os.makedirs",
+          "severity": "Low",
+          "info": "Direct file system calls require careful input validation to prevent vulnerabilities.",
+          "code": "<pre><code class='language-python'>    print(f&quot;--- INSECURE EXTRACTION of {zip_path} to {extract_to_dir} ---&quot;)\n    os.makedirs(extract_to_dir, exist_ok=True)\n    with zipfile.ZipFile(zip_path, &#x27;r&#x27;) as zip_ref:</code></pre>"
+        },
+        "41": {
+          "line": 41,
+          "validation": "zipfile.ZipFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>    os.makedirs(extract_to_dir, exist_ok=True)\n    with zipfile.ZipFile(zip_path, &#x27;r&#x27;) as zip_ref:\n        # This line is the vulnerability: it extracts directly without path validation.</code></pre>"
+        },
+        "47": {
+          "line": 47,
+          "validation": "zipfile.ZipFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'>with zipfile.ZipFile(&#x27;spam.zip&#x27;) as myzip:\n    with myzip.open(&#x27;eggs.txt&#x27;) as myfile:</code></pre>"
+        },
+        "56": {
+          "line": 56,
+          "validation": "zipfile.ZipFile",
+          "severity": "High",
+          "info": "Vulnerable to path traversal attacks if used with untrusted archives.",
+          "code": "<pre><code class='language-python'># Open the ZIP file in read mode\nwith zipfile.ZipFile(&#x27;example.zip&#x27;, &#x27;r&#x27;) as my_zip:\n    # Extract all contents to the &quot;extracted_files&quot; folder</code></pre>"
+        }
+      }
+    }
+  }
+}

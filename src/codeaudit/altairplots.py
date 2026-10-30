@@ -18,7 +18,8 @@ import pandas as pd
 
 from collections import Counter
 from pathlib import Path
-
+from codeaudit.api_interfaces import get_weakness_counts
+from codeaudit.api_reporting import total_weaknesses
 
 def module_count_barchart(scanresult):
     """Create a bar chart showing module counts by category.
@@ -689,20 +690,8 @@ def weaknesses_overview(scanresult):
             .mark_text()
             .encode(text="msg:N")
         )
-
-    # --- Count every 'validation' across all files ---
-    counter = Counter()
-    for file_info in file_security_info.values():
-        if not isinstance(file_info, dict):
-            continue
-        sast_result = file_info.get("sast_result")
-        if not isinstance(sast_result, dict):
-            continue
-        for finding in sast_result.values():
-            if isinstance(finding, dict):
-                validation = finding.get("validation")
-                if validation and isinstance(validation, str):
-                    counter[validation] += 1
+    # --- Count every validation across all files ---
+    counter = Counter(get_weakness_counts(scanresult))    
 
     if not counter:
         return (
@@ -875,7 +864,7 @@ def sast_files_overview(scanresult):
                 "base_name": base_name,
                 "parent_folder": parent_folder,
                 "full_path": str(filepath),
-                "issues": len(sast_result),
+                "issues": total_weaknesses(scanresult),
                 "complexity": file_info.get("Complexity_Score", 0),
             }
         )
@@ -977,19 +966,8 @@ def weaknesses_radial_overview(scanresult):
         )
 
     # --- Count every 'validation' across all files ---
-    counter = Counter()
-    for file_info in file_security_info.values():
-        if not isinstance(file_info, dict):
-            continue
-        sast_result = file_info.get("sast_result")
-        if not isinstance(sast_result, dict):
-            continue
-        for finding in sast_result.values():
-            if isinstance(finding, dict):
-                validation = finding.get("validation")
-                if validation and isinstance(validation, str):
-                    counter[validation] += 1
-
+    counter = Counter(get_weakness_counts(scanresult))    
+   
     if not counter:
         return (
             alt.Chart(
