@@ -19,6 +19,15 @@ Currently, I lead initiatives at NoComplexity.com, an innovative IT company focu
 :gutter: 3 
 
 :::{grid-item-card}
+:link: https://github.com/nocomplexity/fileaudit
+:link-type: url
+{octicon}`book;2em;caption-text` **Python File Audit**        
+^^^
+Simplify Python Security by adding one line! Build secure Python applications by default. Validate files before you use them.Protect your Python applications and scripts against untrusted or malicious files.
+:::
+
+
+:::{grid-item-card}
 :link: https://securitytesting.nocomplexity.com/
 :link-type: url
 {octicon}`book;2em;caption-text` **Mastering Security Testing for Python**        
