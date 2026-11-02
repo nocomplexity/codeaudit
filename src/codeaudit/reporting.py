@@ -378,8 +378,8 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
     if file_path.is_dir():
         directory_scan_report(
             input_path, nosec_flag=nosec, filename=filename
-        )  # create a package aka directory scan report
-    elif is_ast_parsable(input_path):
+        )  # create a package aka directory scan report        
+    elif file_path.name.endswith(".py") and is_ast_parsable(input_path):
         # create a sast file check report
         if not nosec:  # no filtering on reviewed items with markers in code
             scan_output = perform_validations(
@@ -404,7 +404,6 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         html_output += "<br>"
         html_output += DISCLAIMER_TEXT
         create_htmlfile(html_output, filename)
-
     elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
         input_path, max_file_size=15 * 1024 * 1024, max_tar_members=12000
     ):  # for local tar.gz or remote tar.gz scans

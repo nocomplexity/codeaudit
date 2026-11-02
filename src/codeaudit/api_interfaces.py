@@ -138,8 +138,8 @@ def filescan(input_path, nosec=False):
         output |= {"package_name": package_name}
         scan_output = _codeaudit_directory_scan(input_path, nosec_flag=nosec)
         output |= scan_output
-        return output
-    elif is_ast_parsable(input_path):  # check on parseable single Python file
+        return output    
+    elif file_path.name.endswith(".py") and is_ast_parsable(input_path): # check on parsable single Python file    
         # do a file check
         file_information = overview_per_file(input_path)
         module_information = get_modules(input_path)  # modules per file

@@ -98,17 +98,33 @@ def get_filename_from_path(file_path):
 
 
 def is_ast_parsable(file_path):
-    """
-    Checks whether a Python file can be validated and parsed.
-    Uses the extensive security checker for valid Python files of the module https://github.com/nocomplexity/fileaudit
+    """Check whether a Python source file passes validation.
+
+    Uses the security-focused Python validation functionality provided by
+    the `fileaudit` module to check whether the file contains valid,
+    parsable Python code.
+
+    Note:
+        This function is intended for Python source files only.
+        Passing a non-Python file may raise an exception. Ensure that
+        the file has a `.py` extension before calling this function.
 
     Args:
         file_path (str | Path): Path to the Python source file.
 
     Returns:
-        bool: True if the file passes Python validation, False otherwise.
+        bool: True if the Python file passes validation, False otherwise.
+
+    Raises:
+        Exception: If the underlying validation functionality raises
+            an exception, for example, when processing an unsupported
+            file type.
+
+    References:
+        https://github.com/nocomplexity/fileaudit
     """
     return validate_python(Path(file_path))
+
 
 
 def has_python_files(input_path):
