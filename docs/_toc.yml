@@ -72,7 +72,8 @@ parts:
   - file: architecture
   - file: makeitbetter
   - file: project_philosophy  
-  - file: codeauditcommands  
+  - file: codeauditcommands
+  - file: benchmarksuite
   - file: changelog
   
   

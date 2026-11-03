@@ -144,9 +144,10 @@ package-lock.json
 .DS_Store
 .nox
 
-#Python Code Audit items for local testing / confi
+#Python Code Audit items for local testing / config
 .coverage
 .vscode
 src/codeaudit/.ipynb_checkpoints/
+src/dashboard/pyodide
 
 	

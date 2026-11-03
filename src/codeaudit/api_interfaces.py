@@ -312,16 +312,25 @@ def read_input_file(filename, safe_directory="data_folder"):
     except json.JSONDecodeError as e:
         raise json.JSONDecodeError(f"Invalid JSON in file: {file_path}", e.doc, e.pos)
 
-
 def get_weakness_counts(input_file, nosec=False):
-    """
-    Count SAST weaknesses.
+    """Count SAST weaknesses from a scan result or by scanning a file/package.
 
-    Accepts either:
-    - A scan result dictionary.
-    - A file/package path that will be scanned.
-    """
+    Accepts either a pre-computed scan result dictionary or a path to a file
+    or package. In the latter case the path is scanned with `filescan`.
 
+    Args:
+        input_file: Path to a file/package to scan, or an existing scan result
+            dictionary.
+        nosec: Whether to pass the `nosec` flag to `filescan`. Defaults to False.
+
+    Returns:
+        A dictionary mapping each weakness type (str) to its total occurrence
+        count (int) across all scanned files. Returns an empty dict if no
+        valid security information is present.
+
+    Raises:
+        ValueError: If the scan result is invalid or contains an error.
+    """    
     # Accept an existing scan result or scan a file/package
     if isinstance(input_file, dict):
         scan_result = input_file
@@ -529,6 +538,50 @@ def get_default_validations():
     return output
 
 
+def get_weakness_counts_per_file(scanresult):
+    """Creates an overview of the SAST scan: Number of weaknesses per file.
+
+    Aggregates SAST findings 
+
+    Args:
+        scanresult (dict): Scan result containing "file_security_info"
+            with per-file SAST findings and metadata.
+
+    Returns:
+        result (dict): Just number of weaknesses per file scanned
+    """    
+    file_security_info = scanresult.get("file_security_info")
+    if not isinstance(file_security_info, dict) or not file_security_info:
+        return None
+
+    records = []
+    for file_info in file_security_info.values():
+        if not isinstance(file_info, dict):
+            continue
+
+        sast_result = file_info.get("sast_result")
+        if not isinstance(sast_result, dict):
+            continue
+
+        filepath = file_info.get("FilePath") or file_info.get("file_name", "")
+        path_obj = Path(str(filepath))
+
+        base_name = file_info.get("FileName") or path_obj.name or "Unknown"
+        parent_folder = path_obj.parent.name if len(path_obj.parts) > 1 else None
+        if parent_folder in ("", ".", "/"):
+            parent_folder = None
+
+        records.append(
+            {
+                "base_name": base_name,                                
+                "issues": len(sast_result),                
+            }
+        )
+    if not records:
+        return None
+    return records
+
+
 def _generation_info():
     """Internal function to retrieve generation info for APIs output"""
     ca_version_info = {"name": "Python_Code_Audit", "version": __version__}
@@ -654,43 +707,6 @@ def egress_check(input_path):
     """
     output = data_egress_scan(input_path)
     return output
-
-
-def get_construct_counts(input_file):
-    """
-    Analyze a Python file or package(directory) and count occurrences of code constructs (aka weaknesses).
-
-    This function uses `filescan` API call to retrieve security-related information
-    about the input file. This returns a dict. Then it counts how many times each code construct
-    appears across all scanned files.
-
-    Args:
-        input_file (str): Path to the file or directory(package) to scan.
-
-    Returns:
-        dict: A dictionary mapping each construct name (str) to the total
-              number of occurrences (int) across all scanned files.
-
-    Notes:
-        - The `filescan` function is expected to return a dictionary with
-          a 'file_security_info' key, containing per-file information.
-        - Each file's 'sast_result' should be a dictionary mapping
-          construct names to lists of occurrences.
-    """
-    scan_result = filescan(input_file)
-    counter = Counter()
-
-    for file_info in scan_result.get("file_security_info", {}).values():
-        sast_result = file_info.get("sast_result", {})
-        for (
-            construct,
-            occurence,
-        ) in (
-            sast_result.items()
-        ):  # occurence is times the construct appears in a single file
-            counter[construct] += len(occurence)
-
-    return dict(counter)
 
 
 def _build_weakness_details(sastresult, filename_location):
