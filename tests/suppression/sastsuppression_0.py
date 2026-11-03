@@ -80,3 +80,7 @@ exec("do_something()")  # nosec nosec nosec
 assert True  # my comment # nosec
 os.chmod("binary", 0o755)  # my audit note nosec
 gzip.open("backup.gz", "rb")  # my comment line #nosec
+
+# - check ruff suppression 
+cmd = [python, "-c", "import sys, json; print(json.dumps(sys.path))"]
+return [Path(i) for i in json.loads(check_output(cmd, text=True))]  # ruff:ignore[subprocess-without-shell-equals-true]

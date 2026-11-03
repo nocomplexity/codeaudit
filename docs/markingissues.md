@@ -43,6 +43,7 @@ This is one comment but divided over multiple lines, so `black` is heavily used 
 - `false-positive`
 - `falsepositive`
 - `risk-accepted`
+- `ruff:ignore`
 - `security-accepted`
 - `security-reviewed`
 - `security-exception`

@@ -56,6 +56,7 @@ def test_get_all_comments_by_line(tmp_path):
         ("# false-positive", True),
         ("# falsepositive", True),
         ("# risk-accepted", True),
+        ("# ruff:ignore", True),
         ("# security-reviewed", True),
         ("# security-exception", True),
 

@@ -117,33 +117,6 @@ def get_start_to_end_lines(filename):
 
     return end_lines
 
-
-# def get_start_to_end_lines(filename):
-#     """
-#     Parse AST once and build mapping: start_line → highest end_line found for nodes
-#     starting on that line.
-#     """
-#     end_lines = {}
-
-#     try:
-#         with open(filename, 'r', encoding='utf-8') as f:
-#             source = f.read()
-#         tree = ast.parse(source)
-
-#         for node in ast.walk(tree):
-#             if not hasattr(node, 'lineno'):
-#                 continue
-#             start = node.lineno
-#             end = getattr(node, 'end_lineno', start)
-#             # Take the maximum end line if multiple nodes start on same line
-#             if start not in end_lines or end > end_lines[start]:
-#                 end_lines[start] = end
-#     except Exception:
-#         pass
-
-#     return end_lines
-
-
 def is_suppressed(line, comments_by_line, start_to_end, match_func):
     """
     Check if the statement starting at `line` is suppressed by looking at comments
@@ -225,6 +198,7 @@ def match_suppression_keyword(comment_line):
         "false-positive",
         "falsepositive",
         "risk-accepted",
+        "ruff:ignore",
         "security-accepted",
         "security-reviewed",
         "security-exception",
@@ -234,5 +208,5 @@ def match_suppression_keyword(comment_line):
         return False
 
     normalized = " ".join(word.lstrip("#").lower() for word in comment_line.split())
-    tokens = re.split(r"[^\w\-]+", normalized)
+    tokens = re.split(r"[^\w\-:]+", normalized)    
     return any(marker.lower() in tokens for marker in MARKER_LIST)
