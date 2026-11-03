@@ -32,6 +32,9 @@ def get_project_root():
 PROJECT_ROOT = get_project_root()
 BENCHMARK_FILES = PROJECT_ROOT / "tests" / "benchmarkfiles" / "validpython"
 
+import ast
+from pathlib import Path
+
 
 def extract_sast_meta(source):
     """
@@ -44,14 +47,30 @@ def extract_sast_meta(source):
         The SAST_META value as a Python dict, or None if not found / invalid.
     """
     if isinstance(source, (str, Path)):
-        path = Path(source)
         try:
-            if path.is_file():
-                source = path.read_text(encoding="utf-8")
-        except (OSError, ValueError):
-            # Not a valid path (e.g. contains null bytes or is too long),
-            # so treat the input as source code.
-            pass
+            path = Path(source)
+        except (ValueError, TypeError) as exc:
+            # Input cannot be a path (e.g. null byte in string, wrong type).
+            # This is expected for source-code strings, so stay quiet-ish,
+            # but still report the reason instead of swallowing it.
+            print(f"extract_sast_meta: not a valid path ({type(exc).__name__}: {exc})")
+        else:
+            try:
+                if path.is_file():
+                    source = path.read_text(encoding="utf-8")
+            except ValueError as exc:
+                # e.g. embedded null byte in the path.
+                print(
+                    f"extract_sast_meta: invalid path "
+                    f"({type(exc).__name__}: {exc}); treating as source"
+                )
+            except OSError as exc:
+                # Permissions, broken symlink, I/O error, etc.
+                print(
+                    f"extract_sast_meta: could not read file "
+                    f"({type(exc).__name__}: {exc.strerror or 'I/O error'}); "
+                    f"falling back to treating input as source"
+                )
 
     try:
         tree = ast.parse(source)
@@ -85,6 +104,7 @@ def extract_sast_meta(source):
             return data if isinstance(data, dict) else None
 
     return None
+
 
 def create_sast_meta_overview(directory):
     """Creates a list which contains the SAST_META data of all files in a directory
@@ -157,7 +177,6 @@ def benchmark_overview_issues_per_file(benchmark_files=BENCHMARK_FILES):
     )   
     return table
 
-
 def cwe_to_html(cwe_value, column_name="cwe_id"):
     """
     Convert a CWE value (single int, or list of ints) into an HTML clickable string.
@@ -168,16 +187,33 @@ def cwe_to_html(cwe_value, column_name="cwe_id"):
     if cwe_value is None:
         return ""
 
-    # Handle NaN (float) safely
+    # Handle NaN (float) safely.  pd.isna raises TypeError/ValueError for
+    # array-like inputs (lists, tuples, sets), which we handle explicitly
+    # below — so those are expected.  Anything else is reported rather than
+    # silently swallowed.
     try:
         if pd.isna(cwe_value):
             return ""
-    except (TypeError, ValueError):
-        pass
+    except (TypeError, ValueError) as exc:
+        # Only report if the input isn't one of the shapes we already know
+        # how to handle; otherwise list inputs would print on every row.
+        if not isinstance(cwe_value, (list, tuple, set)):
+            print(
+                f"cwe_to_html[{column_name}]: pd.isna() failed unexpectedly "
+                f"({type(exc).__name__}: {exc})"
+            )
 
     def make_link(n):
         n = str(n).strip()
-        return f'<a href="https://cwe.mitre.org/data/definitions/{n}.html" target="_blank">{n}</a>'
+        if not n.isdigit():
+            print(
+                f"cwe_to_html[{column_name}]: refusing non-numeric CWE value {n!r}"
+            )
+            return ""
+        return (
+            f'<a href="https://cwe.mitre.org/data/definitions/{n}.html" '
+            f'target="_blank">{n}</a>'
+        )
 
     # List / tuple / set of CWEs
     if isinstance(cwe_value, (list, tuple, set)):
@@ -185,6 +221,7 @@ def cwe_to_html(cwe_value, column_name="cwe_id"):
 
     # Single value (int, numpy int, or string)
     return make_link(cwe_value)
+
 
 
 def owasp_to_html(value):
@@ -197,13 +234,14 @@ def owasp_to_html(value):
     """
     if value is None:
         return ""
-
     try:
         if pd.isna(value):
             return ""
-    except (TypeError, ValueError):
-        pass
+    except (TypeError, ValueError) as e:
+        print(f"Warning: Could not evaluate pd.isna() on value due to {e}. Continuing.")
 
+    if value is None:
+        return ""
     text = str(value).strip()
 
     # Match "A04:2021 - Insecure Design" / "A02:2025 - Security Misconfiguration"
