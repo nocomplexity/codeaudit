@@ -71,7 +71,7 @@ def collect_python_source_files(directory):
                 full_path = os.path.join(root, file)
                 if os.path.isfile(full_path):
                     python_files.append(os.path.abspath(full_path))
-    # check if the file can be parsed using the AST
+    # check if the found python file can be parsed using the AST - so extra security check to keep SAST scanning highly secure!
     final_file_list = []
     for python_file in python_files:
         if is_ast_parsable(python_file):
@@ -113,17 +113,22 @@ def is_ast_parsable(file_path):
         file_path (str | Path): Path to the Python source file.
 
     Returns:
-        bool: True if the Python file passes validation, False otherwise.
+        bool: True if the Python file passes validation
 
     Raises:
-        Exception: If the underlying validation functionality raises
+        Exception: If check fails. The underlying validation functionality raises
             an exception, for example, when processing an unsupported
-            file type.
+            file type or invalid Python file
 
     References:
         https://github.com/nocomplexity/fileaudit
     """
-    return validate_python(Path(file_path))
+    try:
+        return bool(validate_python(Path(file_path)))
+    except Exception as e:
+        print(f'Python security check failed for file:{file_path}: {e}') # Exception should not be passed silently.
+        return False
+    
 
 
 
