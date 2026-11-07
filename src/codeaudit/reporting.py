@@ -22,7 +22,7 @@ import pandas as pd
 import html
 import datetime
 from importlib.resources import files
-from fileaudit.targz_check import validate_tar_gz
+from fileaudit.targz_check import validate_tar_gz , TarValidationError
 
 from codeaudit import __version__
 
@@ -161,7 +161,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
             exit(1)
     elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
         directory, max_file_size=15 * 1024 * 1024, max_tar_members=12000
-    ):  # for local tar.gz or remote tar.gz scans
+    ):  # for local tar.gz or remote tar.gz scans - mind checking extension first MUST be done!
         package_name = directory
         advice = f'<p>&#128073; To perform a SAST scan on the source code, run:<pre><code class="language-python">codeaudit filescan {directory}</code></pre></p>'
         release = "N.A."
@@ -406,7 +406,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         create_htmlfile(html_output, filename)
     elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
         input_path, max_file_size=15 * 1024 * 1024, max_tar_members=12000
-    ):  # for local tar.gz or remote tar.gz scans
+    ):  # for local tar.gz or remote tar.gz scans - mind checking extension first MUST be done!
         src_dir, tmp_handle = get_targz_package_source(input_path)
         directory_scan_report(
             src_dir,

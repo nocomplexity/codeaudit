@@ -24,7 +24,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from datetime import date, datetime
-from fileaudit.targz_check import validate_tar_gz
+from fileaudit.targz_check import validate_tar_gz , TarValidationError
 
 from codeaudit import __version__
 
@@ -94,26 +94,23 @@ def is_valid_tar_gz(path):
     try:
         path = os.fspath(path)
 
-        return (
-            path.endswith(".tar.gz")
-            and validate_tar_gz(
-                path,
-                max_file_size=15 * 1024 * 1024,
-                max_tar_members=12000,
-            )
-            and tarfile.is_tarfile(path)
+        validate_tar_gz(
+            path,
+            max_file_size=15 * 1024 * 1024,
+            max_tar_members=12000,
         )
-    except (OSError, ValueError, TypeError, AttributeError, tarfile.TarError):
+
+        return tarfile.is_tarfile(path)
+
+    except (
+        OSError,
+        ValueError,
+        TypeError,
+        AttributeError,
+        tarfile.TarError,
+        TarValidationError,
+    ):
         return False
-
-
-# def is_valid_tar_gz(path):
-#     """Return True if the given path is a valid .tar.gz file.
-#     Custom validation values for validate_tar_gz are used. So note that NOT all tar.gz files will be accepted. Use PyPI package scan instead if possible.
-#     """
-#     return bool(
-#         validate_tar_gz(path, max_file_size=15 * 1024 * 1024, max_tar_members=12000)
-#     )
 
 
 def get_targz_package_source(
