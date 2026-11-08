@@ -7,7 +7,7 @@ name = "codeaudit"
 dynamic = ["version"] # This tells Hatch that version is dynamically determined
 description = 'A modern Python security source code analyzer (SAST) based on distrust.'
 readme = "README.md"
-dependencies = ["fire==0.7.1","pandas>=2.3","altair==6.0.0","fileaudit"]
+dependencies = ["fire==0.7.1","pandas>=2.3","altair==6.0.0","fileaudit==0.2.5"]
 requires-python = ">=3.12"
 license = "GPL-3.0-or-later"
 keywords = ["SAST", "Python SAST", "SAST API", "Complexity Checker"]

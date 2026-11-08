@@ -79,6 +79,24 @@ SIMPLE_CSS_FILE = files("codeaudit") / "simple.css"
 DEFAULT_OUTPUT_FILE = "codeaudit-report.html"
 
 
+def safe_validate_tar_gz(directory, **kwargs):
+    """Safely validates a TAR.GZ archive.
+
+    Returns False if validation raises an exception. 
+    validate_tar_gz gives True or raises an exception is the check fails. See fileaudit apidocs.
+
+    Args:
+        directory: Path to the TAR.GZ archive.
+        **kwargs: Additional keyword arguments passed to validate_tar_gz().
+
+    Returns:
+        bool: True if validation succeeds, False otherwise.
+    """
+    try:
+        return validate_tar_gz(directory, **kwargs)
+    except Exception:
+        return False
+
 def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
     """Generate an overview report of code complexity and security indicators.
 
@@ -159,7 +177,7 @@ def overview_report(directory, filename=DEFAULT_OUTPUT_FILE):
         if not has_python_files(directory):
             print(f"ERROR: Directory '{directory}' contains no Python files.")
             exit(1)
-    elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
+    elif file_path.name.endswith(".tar.gz") and safe_validate_tar_gz(
         directory, max_file_size=15 * 1024 * 1024, max_tar_members=12000
     ):  # for local tar.gz or remote tar.gz scans - mind checking extension first MUST be done!
         package_name = directory
@@ -404,7 +422,7 @@ def scan_report(input_path, filename=DEFAULT_OUTPUT_FILE, nosec=False):
         html_output += "<br>"
         html_output += DISCLAIMER_TEXT
         create_htmlfile(html_output, filename)
-    elif file_path.name.endswith(".tar.gz") and validate_tar_gz(
+    elif file_path.name.endswith(".tar.gz") and safe_validate_tar_gz(
         input_path, max_file_size=15 * 1024 * 1024, max_tar_members=12000
     ):  # for local tar.gz or remote tar.gz scans - mind checking extension first MUST be done!
         src_dir, tmp_handle = get_targz_package_source(input_path)

@@ -1,5 +1,29 @@
 # Change Log
 
+## Version 1.9.4:
+
+**Added**
+
+- Added new API function: `get_weakness_counts_per_file`.
+
+- Added a benchmark help function file to dynamically generate an overview of the Python SAST benchmark files.
+
+- Added a benchmarking suite for Python SAST scanners.
+
+**Changed**
+
+- Breaking Change: Removed the API function get_construct_counts. Use the improved get_weakness_count (or `get_weakness_counts_per_file)` function instead.
+
+- Updated `pyproject.toml` to use a fixed version for [`fileaudit`](https://pypi.org/project/fileaudit/).
+
+**Fixed**
+
+- Improved handling for `tar.gz` sdist files.
+
+**Documentation**
+
+- Updated the manual with documentation covering the Python SAST scanner benchmarking suite and helper files.
+
 ## Version 1.9.3:
 
 **Changed**
