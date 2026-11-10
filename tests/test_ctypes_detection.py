@@ -32,3 +32,23 @@ def test_ctypes_use():
  
     # Assert that the actual data matches the expected data
     assert actual_data == expected_data
+
+
+def test_ctypes_mascaraed():
+    current_file_directory = Path(__file__).parent
+
+    # validation1.py is in a subfolder:
+    validation_file_path = (
+        current_file_directory / "validationfiles" / "ctypes_example2.py"
+    )
+
+    result = perform_validations(validation_file_path)
+
+    # actual_data = find_constructs(source, constructs)
+    actual_data = result["result"]
+
+    # This is the expected dictionary
+    expected_data = {'ctypes.CDLL': [5, 8, 12]}
+    
+    # Assert that the actual data matches the expected data
+    assert actual_data == expected_data
