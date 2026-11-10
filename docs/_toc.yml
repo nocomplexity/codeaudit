@@ -43,6 +43,7 @@ parts:
     - file: checks/input_check
     - file: checks/builtinfunctions_check
     - file: checks/chmod_check
+    - file: checks/ctypes_check
     - file: checks/binding_check
     - file: checks/directorycreation_check
     - file: checks/dynamicimport_check

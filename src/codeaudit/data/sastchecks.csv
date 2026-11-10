@@ -2,6 +2,12 @@ name,construct,severity,info
 Assertions,assert,Low,Assertions are for debugging and development. Assertions can be disabled during runtime. Use in production can introduce vulnerabilities.
 Insecure Network Binding,s.bind,Medium,Binding to all interfaces can expose the service to a wider network attack surface.
 OS File Permissions,os.chmod,High,Changing permissions carelessly can expose sensitive files.
+Ctypes library loading,ctypes.CDLL,High,"Enables arbitrary native code execution, direct memory access and can bypass sandboxing."
+Ctypes library loading,ctypes.WinDLL,High,"Enables arbitrary native code execution, direct memory access and can bypass sandboxing."
+Ctypes library loading,ctypes.OleDLL,High,"Enables arbitrary native code execution, direct memory access and can bypass sandboxing."
+Ctypes library loading,ctypes.windll.LoadLibrary,High,"Enables arbitrary native code execution, direct memory access and can bypass sandboxing."
+Ctypes library loading,ctypes.cdll.LoadLibrary,High,"Enables arbitrary native code execution, direct memory access and can bypass sandboxing."
+Ctypes library loading,ctypes.oledll.LoadLibrary,High,"Enables arbitrary native code execution, direct memory access and can bypass sandboxing."
 Directory Creation,os.makedirs,Low,Direct file system calls require careful input validation to prevent vulnerabilities.
 Directory Creation,os.mkdir,Low,Direct file system calls require careful input validation to prevent vulnerabilities.
 Directory Creation,os.mkfifo,Low,Direct file system calls require careful input validation to prevent vulnerabilities.
