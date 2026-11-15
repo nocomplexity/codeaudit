@@ -1,5 +1,22 @@
 # Change Log
 
+## Version 1.9.5:
+
+**Added**
+
+* Added check and associated test for discovering Python `ctypes` library loading.
+* Configured GitHub Action for [PyPI.org](https://pypi.org/project/codeaudit/#security) attestation.
+
+**Changed**
+
+* Updated the benchmark suite with a `ctypes` example.
+
+
+**Documentation**
+
+* Updated documentation with information regarding the Python `ctypes` library loading check.
+
+
 ## Version 1.9.4:
 
 **Added**
