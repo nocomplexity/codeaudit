@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 1.9.6:
+
+**Fixed**
+- Corrected Github publsih action for attestation
+
 ## Version 1.9.5:
 
 **Added**
