@@ -22,3 +22,7 @@ If you clone the project, you will find the benchmark files at:
 ```bash
 ../codeaudit/tests/benchmarkfiles
 ```
+
+Note that there are also files with errors and warnings in this test suite. Under the directory `benchmarkfiles` you find the directories:
+- `validpython`  and
+- `invalidpython` This directory is also part of the benchmark suite. Good SAST scanners reject the files in this directory, **but** will inform you! 
